@@ -1,0 +1,1 @@
+<h1 class="head-title"><?php echo $this->Html->link('イベンター', '/'); ?></h1>

@@ -1,0 +1,1 @@
+<p class="foot-txt">copyright(c) 2015 イベンター制作委員会</p>

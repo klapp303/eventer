@@ -1,0 +1,97 @@
+@charset "utf-8";
+.txt-b {
+    font-weight: bold;
+}
+
+.txt-alt {
+    color: #ff0000;
+}
+
+.txt-c {
+    text-align: center;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.cf {
+    display: inline-block;
+}
+
+.cf:before, .cf:after {
+    content: "";
+    display: block;
+}
+
+.cf:after {
+    clear: both;
+}
+
+/* body */
+body {
+    background-color: #ccffff;
+    color: #000000;
+    margin: 0;
+}
+
+/* container */
+#container {
+    background-color: #efffff;
+    width: 800px;
+}
+
+ /* header */
+#header {
+    background-color: #000033;
+    color: #ffffff;
+    width: 800px;
+    margin: 0;
+    text-align: left;
+    box-shadow: -1px 1px 5px #000099;
+}
+
+/* footer */
+#footer {
+    background-color: #000033;
+    color: #ffffff;
+    width: 800px;
+    margin: 0;
+    text-align: left;
+    box-shadow: -1px 1px 5px #000099;
+}
+
+/* menu_side */
+#menu_side {
+    background-color: #000033;
+    color: #ffffff;
+    width: 200px;
+    margin: 0;
+    text-align: left;
+    float: right;
+    box-shadow: -1px 1px 5px #000099;
+}
+
+/* content */
+#content {
+    background-color: #efffff;
+    color: #000000;
+    width: 760px;
+    margin: 30px 20px 10px 20px;
+    text-align: left;
+}
+
+#content >table, #content >form {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#content >table >tbody >tr >th, #content >table >tbody >tr >td,
+#content >table >tr >th, #content >table >tr >td{
+    padding-left: 5px;
+    padding-right: 5px;
+}
