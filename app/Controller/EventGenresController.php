@@ -28,14 +28,14 @@ App::uses('AppController', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
-class EventsController extends AppController {
+class EventGenresController extends AppController {
 
 /**
  * This controller does not use a model
  *
  * @var array
  */
-	public $uses = array('Event', 'EventGenre', 'EntryGenre'); //使用するModel
+	public $uses = array('EventGenre'); //使用するModel
 
 /**
  * Displays a view
@@ -48,7 +48,7 @@ class EventsController extends AppController {
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      'order' => array('date' => 'asc')
+      'order' => array('date' => 'desc')
   );
 
   public function beforeFilter() {
@@ -57,26 +57,22 @@ class EventsController extends AppController {
   }
 
   public function index() {
-//    $event_lists = $this->Event->find('all', array(
+//    $event_genre_lists = $this->EventGenre->find('all', array(
 //        'order' => array('date' => 'desc')
 //    ));
     $this->Paginator->settings = $this->paginate;
-    $event_lists = $this->Paginator->paginate('Event');
-    $event_counts = count($event_lists);
-    $event_genres = $this->EventGenre->find('list');
-    $entry_genres = $this->EntryGenre->find('list');
-    $this->set('event_lists', $event_lists);
-    $this->set('event_counts', $event_counts);
-    $this->set('event_genres', $event_genres);
-    $this->set('entry_genres', $entry_genres);
+    $sample_lists = $this->Paginator->paginate('Sample');
+    $sample_counts = count($sample_lists);
+    $this->set('sample_lists', $sample_lists);
+    $this->set('sample_counts', $sample_counts);
   }
 
   public function add() {
     if ($this->request->is('post')) {
-      $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->Event->validates()) { //validate成功の処理
-        $this->Event->save($this->request->data); //validate成功でsave
-        if ($this->Event->save($this->request->data)) {
+      $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
+      if ($this->Sample->validates()) { //validate成功の処理
+        $this->Sample->save($this->request->data); //validate成功でsave
+        if ($this->Sample->save($this->request->data)) {
           $this->Session->setFlash('登録しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('登録できませんでした。', 'flashMessage');
@@ -86,38 +82,34 @@ class EventsController extends AppController {
       }
     }
 
-    $this->redirect('/events/');
+    $this->redirect('/samples/');
   }
 
   public function edit($id = null) {
-//    $event_lists = $this->Event->find('all', array(
+//    $sample_lists = $this->Sample->find('all', array(
 //        'order' => array('date' => 'desc')
 //    ));
     $this->Paginator->settings = $this->paginate;
-    $event_lists = $this->Paginator->paginate('Event');
-    $event_counts = count($event_lists);
-    $event_genres = $this->EventGenre->find('list');
-    $entry_genres = $this->EntryGenre->find('list');
-    $this->set('event_lists', $event_lists);
-    $this->set('event_counts', $event_counts);
-    $this->set('event_genres', $event_genres);
-    $this->set('entry_genres', $entry_genres);
+    $sample_lists = $this->Paginator->paginate('Sample');
+    $sample_counts = count($sample_lists);
+    $this->set('sample_lists', $sample_lists);
+    $this->set('sample_counts', $sample_counts);
 
     if (empty($this->request->data)) {
-      $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
-      $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
+      $this->request->data = $this->Sample->findById($id); //postデータがなければ$idからデータを取得
+      $this->set('id', $this->request->data['Sample']['id']); //viewに渡すために$idをセット
     } else {
-      $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->Event->validates()) { //validate成功の処理
-        $this->Event->save($this->request->data); //validate成功でsave
-        if ($this->Event->save($id)) {
+      $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
+      if ($this->Sample->validates()) { //validate成功の処理
+        $this->Sample->save($this->request->data); //validate成功でsave
+        if ($this->Sample->save($id)) {
           $this->Session->setFlash('修正しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('修正できませんでした。', 'flashMessage');
         }
-        $this->redirect('/events/');
+        $this->redirect('/samples/');
       } else { //validate失敗の処理
-        $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
+        $this->set('id', $this->request->data['Sample']['id']); //viewに渡すために$idをセット
 //        $this->render('index'); //validate失敗でindexを表示
       }
     }
@@ -129,13 +121,13 @@ class EventsController extends AppController {
     }
     
     if ($this->request->is('post')) {
-      $this->Event->Behaviors->enable('SoftDelete');
-      if ($this->Event->delete($id)) {
+      $this->Sample->Behaviors->enable('SoftDelete');
+      if ($this->Sample->delete($id)) {
         $this->Session->setFlash('削除しました。', 'flashMessage');
       } else {
         $this->Session->setFlash('削除できませんでした。', 'flashMessage');
       }
-      $this->redirect('/events/');
+      $this->redirect('/samples/');
     }
   }
 }
