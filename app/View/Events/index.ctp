@@ -34,7 +34,16 @@
   )); ?>
 
   <table class="detail-list">
-    <tr><th>開催日</th><th>イベント名</th><th class="tbl-ico">種類</th><th class="tbl-num">金額</th><th class="tbl-num">枚数</th><th class="tbl-ico">状態</th><th>申込開始日</th><th>入金締切日</th><th>action</th></tr>
+    <tr><th>開催日<?php echo $this->Paginator->sort('date', '▼'); ?></th>
+        <th>イベント名<?php echo $this->Paginator->sort('title', '▼'); ?></th>
+        <th class="tbl-ico">種類</th>
+        <th class="tbl-num">金額</th>
+        <th class="tbl-num">枚数</th>
+        <th class="tbl-ico">状態</th>
+        <th>申込開始日<?php echo $this->Paginator->sort('entry_start', '▼'); ?></th>
+        <th>入金締切日<?php echo $this->Paginator->sort('payment_end', '▼'); ?></th>
+        <th>action</th></tr>
+    
     <?php for($i = 0; $i < $event_counts; $i++){ ?>
     <tr><td><?php echo $event_lists[$i]['Event']['date']; ?></td>
         <td><?php echo $event_lists[$i]['Event']['title']; ?></td>
