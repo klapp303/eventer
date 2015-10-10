@@ -76,6 +76,7 @@ class EventsController extends AppController {
           'conditions' => array('Event.id' => $this->request->params['id'])
       ));
       $this->set('event_detail', $event_detail);
+      $this->layout = 'eventer_normal';
       $this->render('event');
     }
   }

@@ -47,7 +47,7 @@ class UsersController extends AppController {
 
   public function beforeFilter() {
     parent::beforeFilter();
-    $this->layout = 'eventer_login';
+    $this->layout = 'eventer_normal';
     // ユーザ自身による登録とログアウトを許可する
     $this->Auth->allow('add', 'logout');
   }
