@@ -48,6 +48,8 @@
 
 			<?php echo $this->Flash->render(); ?>
 
+      <?php echo $this->element('bourbon_house'); ?>
+
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
