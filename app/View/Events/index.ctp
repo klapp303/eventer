@@ -36,29 +36,29 @@
   <table class="detail-list">
     <tr><th>開催日<?php echo $this->Paginator->sort('date', '▼'); ?></th>
         <th>イベント名<?php echo $this->Paginator->sort('title', '▼'); ?></th>
-        <th class="tbl-ico">種類</th>
-        <th class="tbl-num">金額</th>
-        <th class="tbl-num">枚数</th>
-        <th class="tbl-ico">状態</th>
+        <th class="tbl-ico">種類<br>
+                            状態</th>
+        <th class="tbl-num">金額<br>
+                            枚数</th>
         <th>申込開始日<?php echo $this->Paginator->sort('entry_start', '▼'); ?></th>
         <th>入金締切日<?php echo $this->Paginator->sort('payment_end', '▼'); ?></th>
         <th>action</th></tr>
     
-    <?php for($i = 0; $i < $event_counts; $i++){ ?>
-    <tr><td><?php echo $event_lists[$i]['Event']['date']; ?></td>
-        <td><?php echo $event_lists[$i]['Event']['title']; ?></td>
-        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_lists[$i]['Event']['genre_id']; ?>"><?php echo $event_lists[$i]['EventGenre']['title']; ?></span></td>
-        <td class="tbl-num"><?php echo $event_lists[$i]['Event']['amount']; ?>円</td>
-        <td class="tbl-num"><?php echo $event_lists[$i]['Event']['number']; ?>枚</td>
-        <td class="tbl-ico"><?php if ($event_lists[$i]['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
-                              elseif ($event_lists[$i]['Event']['status'] == 1) {echo '<span class="icon-true">申込中</span>';} 
-                              elseif ($event_lists[$i]['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
-        <td><?php echo $event_lists[$i]['Event']['entry_start']; ?></td>
-        <td><?php echo $event_lists[$i]['Event']['payment_end']; ?></td>
-        <td><?php echo $this->Form->postLink('詳細', array('action' => 'index', $event_lists[$i]['Event']['id'])); ?>
-            <?php if ($event_lists[$i]['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
-            <?php echo $this->Form->postLink('修正', array('action' => 'edit', $event_lists[$i]['Event']['id'])); ?>
-            <?php echo $this->Form->postLink('削除', array('action' => 'deleted', $event_lists[$i]['Event']['id'])); ?>
+    <?php foreach ($event_lists AS $event_list) { ?>
+    <tr><td><?php echo $event_list['Event']['date']; ?></td>
+        <td><?php echo $event_list['Event']['title']; ?></td>
+        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_list['Event']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
+                            <?php if ($event_list['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
+                              elseif ($event_list['Event']['status'] == 1) {echo '<span class="icon-true">申込中</span>';} 
+                              elseif ($event_list['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
+        <td class="tbl-num"><?php echo $event_list['Event']['amount']; ?>円<br>
+                            <?php echo $event_list['Event']['number']; ?>枚</td>
+        <td><?php echo $event_list['Event']['entry_start']; ?></td>
+        <td><?php echo $event_list['Event']['payment_end']; ?></td>
+        <td><?php echo $this->Html->link('詳細', '/event/'.$event_list['Event']['id'], array('target' => '_blank')); ?>
+            <?php if ($event_list['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
+            <br><?php echo $this->Form->postLink('修正', array('action' => 'edit', $event_list['Event']['id'])); ?>
+            <?php echo $this->Form->postLink('削除', array('action' => 'deleted', $event_list['Event']['id'])); ?>
             <?php } ?></td></tr>
     <?php } ?>
   </table>

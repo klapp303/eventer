@@ -32,6 +32,10 @@
 	/*Router::connect('/pages/*',
           array('controller' => 'Pages', 'action' => 'index'));*/
 
+  Router::connect('/event/:id',
+          array('controller' => 'Events', 'action' => 'index'),
+          array('id' => '[0-9]+')); //idを数字のみに制限
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

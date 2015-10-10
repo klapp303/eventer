@@ -48,7 +48,7 @@ class EventsController extends AppController {
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      'order' => array('date' => 'asc')
+      'order' => array('id' => 'desc')
   );
 
   public function beforeFilter() {
@@ -60,15 +60,24 @@ class EventsController extends AppController {
 //    $event_lists = $this->Event->find('all', array(
 //        'order' => array('date' => 'desc')
 //    ));
-    $this->Paginator->settings = $this->paginate;
+    $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+        'conditions' => array('date >=' => date('Y-m-d')),
+        'order' => array('date' => 'asc')
+    );
     $event_lists = $this->Paginator->paginate('Event');
-    $event_counts = count($event_lists);
-    $event_genres = $this->EventGenre->find('list');
-    $entry_genres = $this->EntryGenre->find('list');
+    $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+    $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
     $this->set('event_lists', $event_lists);
-    $this->set('event_counts', $event_counts);
     $this->set('event_genres', $event_genres);
     $this->set('entry_genres', $entry_genres);
+
+    if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
+      $event_detail = $this->Event->find('first', array(
+          'conditions' => array('Event.id' => $this->request->params['id'])
+      ));
+      $this->set('event_detail', $event_detail);
+      $this->render('event');
+    }
   }
 
   public function add() {
@@ -93,13 +102,14 @@ class EventsController extends AppController {
 //    $event_lists = $this->Event->find('all', array(
 //        'order' => array('date' => 'desc')
 //    ));
-    $this->Paginator->settings = $this->paginate;
+    $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+        'conditions' => array('date >=' => date('Y-m-d')),
+        'order' => array('date' => 'asc')
+    );
     $event_lists = $this->Paginator->paginate('Event');
-    $event_counts = count($event_lists);
-    $event_genres = $this->EventGenre->find('list');
-    $entry_genres = $this->EntryGenre->find('list');
+    $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+    $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
     $this->set('event_lists', $event_lists);
-    $this->set('event_counts', $event_counts);
     $this->set('event_genres', $event_genres);
     $this->set('entry_genres', $entry_genres);
 
@@ -123,7 +133,7 @@ class EventsController extends AppController {
     }
   }
 
-  public function deleted($id = null){
+  public function deleted($id = null) {
     if (empty($id)) {
       throw new NotFoundException(__('存在しないデータです。'));
     }
