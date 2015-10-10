@@ -77,11 +77,13 @@ class UsersController extends AppController {
         $this->User->save($this->request->data); //validate成功でsave
         if ($this->User->save($this->request->data)) {
           $this->Session->setFlash('登録しました。', 'flashMessage');
+          $this->render('result'); //save成功でresultページを表示
         } else {
           $this->Session->setFlash('登録できませんでした。', 'flashMessage');
         }
       } else { //validate失敗の処理
-        $this->render('index'); //validate失敗でindexを表示
+        $this->Session->setFlash('登録内容が正しくありません。', 'flashMessage');
+        $this->render('add'); //validate失敗で元ページに戻る
       }
     }
   }
