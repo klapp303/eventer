@@ -87,6 +87,28 @@
     text-align: center;
 }
 
+/* ボタンアイコン */
+.icon-button {
+    font-size: 12px;
+    background: #D8D8D8;
+    border: solid 2px #000000;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    padding: 0 10px;
+}
+
+.icon-button a {
+    text-decoration: none;
+}
+
+.icon-button a:link,
+.icon-button a:visited,
+.icon-button a:hover,
+.icon-button a:active {
+    color: #000000;
+}
+
 /* アイコン */
 .icon-true {
     font-size: 12px;

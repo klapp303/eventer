@@ -1,3 +1,4 @@
+<!-- 未使用 -->
 <?php echo $this->Html->script('jquery-hide', array('inline' => FALSE)); ?>
 <h3>ユーザ登録</h3>
 

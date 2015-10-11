@@ -31,8 +31,7 @@
 
 		echo $this->Html->css(array(
         'common',
-        'detail',
-        'top'
+        'detail'
     ));
 
     echo $this->Html->script(array(

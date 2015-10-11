@@ -67,7 +67,18 @@ class UsersController extends AppController {
   }
 
   public function index() {
-      $this->redirect('/users/login/');
+      if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
+        if ($this->Session->read('Auth.User.id') == $this->request->params['id']) { //パラメータのidがSession情報と一致する場合のみ
+          $user_detail = $this->User->find('first', array(
+              'conditions' => array('User.id' => $this->request->params['id'])
+          ));
+          $this->set('user_detail', $user_detail);
+          $this->layout = 'eventer_fullwidth';
+          $this->render('user');
+        }
+      } else {
+          $this->redirect('/users/login/');
+      }
   }
 
   public function add() {
@@ -77,7 +88,6 @@ class UsersController extends AppController {
           $this->User->save($this->request->data); //validate成功でsave
           if ($this->User->save($this->request->data)) {
             $this->Session->setFlash('登録しました。', 'flashMessage');
-            $this->render('result'); //save成功でresultページを表示
           } else {
             $this->Session->setFlash('登録できませんでした。', 'flashMessage');
           }
@@ -88,7 +98,8 @@ class UsersController extends AppController {
       }
   }
 
-/*  public function edit($id = null) {
+  public function edit($id = null) {
+      $this->layout = 'eventer_fullwidth';
       if (empty($this->request->data)) {
         $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
         $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
@@ -97,17 +108,16 @@ class UsersController extends AppController {
         if ($this->User->validates()) { //validate成功の処理
           $this->User->save($this->request->data); //validate成功でsave
           if ($this->User->save($id)) {
-            $this->Session->setFlash('修正しました。', 'flashMessage');
+            $this->Session->setFlash('変更しました。', 'flashMessage');
           } else {
-            $this->Session->setFlash('修正できませんでした。', 'flashMessage');
+            $this->Session->setFlash('変更できませんでした。', 'flashMessage');
           }
-          $this->redirect('/users/');
         } else { //validate失敗の処理
-          $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
-//          $this->render('index'); //validate失敗でindexを表示
+          $this->Session->setFlash('変更内容が正しくありません。', 'flashMessage');
         }
+        $this->redirect('/user/'.$id); //postデータがあればvalidate結果に関わらず元ページに戻る
       }
-  }*/
+  }
 
 /*  public function deleted($id = null){
       if (empty($id)) {
