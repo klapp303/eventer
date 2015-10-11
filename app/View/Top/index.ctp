@@ -4,4 +4,7 @@
 
 <h3>コンテンツ2</h3>
 
-<h3>コンテンツ3</h3>
+<h3>Session情報</h3>
+<pre>
+  <?php print_r($this->Session->read('Auth')); ?>
+</pre>

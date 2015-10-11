@@ -24,7 +24,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo 'イベント管理'; ?>
+		<?php echo 'イベ幸'; ?>
 	</title>
 	<?php
 //		echo $this->Html->meta('icon');

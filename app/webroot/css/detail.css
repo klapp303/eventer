@@ -3,12 +3,11 @@
 .head-title {
     font-weight: bold;
     font-size: 25px;
-    padding: 5px 5px 5px 50px;
-    margin: 0;
+    padding: 0 50px;
     text-shadow: 2px 2px 1px #999999;
 }
 
-.head-title a{
+.head-title a {
     text-decoration: none;
 }
 
@@ -16,6 +15,32 @@
 .head-title a:visited,
 .head-title a:hover,
 .head-title a:active {
+    color: #ffffff;
+}
+
+.head-msg {
+    height: 38px;
+    margin-right: 20px;
+}
+
+.head-welcome {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.head-handlename {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.head-handlename a {
+    text-decoration: none;
+}
+
+.head-handlename a:link,
+.head-handlename a:visited,
+.head-handlename a:hover,
+.head-handlename a:active {
     color: #ffffff;
 }
 
@@ -33,19 +58,19 @@
     padding-left: 0;
 }
 
-.menu-list li{
+.menu-list li {
     margin: 10px 0 10px 0;
     text-align: center;
 }
 
-.menu-list a{
+.menu-list a {
     text-decoration: none;
 }
 
 .menu-list a:link,
 .menu-list a:visited,
 .menu-list a:hover,
-.menu-list a:active{
+.menu-list a:active {
     color: #ffffff;
 }
 
