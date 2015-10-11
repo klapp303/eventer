@@ -17,7 +17,7 @@ class Sample extends AppModel {
       )
   );*/
 
-  public $validate = array(
+  /*public $validate = array(
       'title' => array(
           'rule' => 'notBlank',
           'required' => 'true'
@@ -27,7 +27,7 @@ class Sample extends AppModel {
           'required' => 'true',
           'message' => '金額を正しく入力してください。'
       )
-  );
+  );*/
 
 //  public $filtetArgs = ['' => ['' => '', '' => '']];
 }

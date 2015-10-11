@@ -31,7 +31,7 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model { //半角文字だけかを判定するcustom validation
   public function isHalfLetter($data) {
-    $str = current($data);
-    return preg_match('/^[\x21-\x7E]*$/', $str);
+      $str = current($data);
+      return preg_match('/^[\x21-\x7E]*$/', $str);
   }
 }

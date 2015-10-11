@@ -46,10 +46,10 @@ class UsersController extends AppController {
  */
 
   public function beforeFilter() {
-    parent::beforeFilter();
-    $this->layout = 'eventer_normal';
-    // ユーザ自身による登録とログアウトを許可する
-    $this->Auth->allow('add', 'logout');
+      parent::beforeFilter();
+      $this->layout = 'eventer_normal';
+      // ユーザ自身による登録とログアウトを許可する
+      $this->Auth->allow('add', 'logout');
   }
 
   public function login() {
@@ -71,57 +71,57 @@ class UsersController extends AppController {
   }
 
   public function add() {
-    if ($this->request->is('post')) {
-      $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->User->validates()) { //validate成功の処理
-        $this->User->save($this->request->data); //validate成功でsave
-        if ($this->User->save($this->request->data)) {
-          $this->Session->setFlash('登録しました。', 'flashMessage');
-          $this->render('result'); //save成功でresultページを表示
-        } else {
-          $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+      if ($this->request->is('post')) {
+        $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->User->validates()) { //validate成功の処理
+          $this->User->save($this->request->data); //validate成功でsave
+          if ($this->User->save($this->request->data)) {
+            $this->Session->setFlash('登録しました。', 'flashMessage');
+            $this->render('result'); //save成功でresultページを表示
+          } else {
+            $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+          }
+        } else { //validate失敗の処理
+          $this->Session->setFlash('登録内容が正しくありません。', 'flashMessage');
+          $this->render('add'); //validate失敗で元ページに戻る
         }
-      } else { //validate失敗の処理
-        $this->Session->setFlash('登録内容が正しくありません。', 'flashMessage');
-        $this->render('add'); //validate失敗で元ページに戻る
       }
-    }
   }
 
 /*  public function edit($id = null) {
-    if (empty($this->request->data)) {
-      $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
-      $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
-    } else {
-      $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->User->validates()) { //validate成功の処理
-        $this->User->save($this->request->data); //validate成功でsave
-        if ($this->User->save($id)) {
-          $this->Session->setFlash('修正しました。', 'flashMessage');
-        } else {
-          $this->Session->setFlash('修正できませんでした。', 'flashMessage');
-        }
-        $this->redirect('/users/');
-      } else { //validate失敗の処理
+      if (empty($this->request->data)) {
+        $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
         $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
-//        $this->render('index'); //validate失敗でindexを表示
+      } else {
+        $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->User->validates()) { //validate成功の処理
+          $this->User->save($this->request->data); //validate成功でsave
+          if ($this->User->save($id)) {
+            $this->Session->setFlash('修正しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash('修正できませんでした。', 'flashMessage');
+          }
+          $this->redirect('/users/');
+        } else { //validate失敗の処理
+          $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
+//          $this->render('index'); //validate失敗でindexを表示
+        }
       }
-    }
   }*/
 
 /*  public function deleted($id = null){
-    if (empty($id)) {
-      throw new NotFoundException(__('存在しないデータです。'));
-    }
-    
-    if ($this->request->is('post')) {
-      $this->User->Behaviors->enable('SoftDelete');
-      if ($this->User->delete($id)) {
-        $this->Session->setFlash('削除しました。', 'flashMessage');
-      } else {
-        $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
       }
-      $this->redirect('/users/');
-    }
+    
+      if ($this->request->is('post')) {
+        $this->User->Behaviors->enable('SoftDelete');
+        if ($this->User->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/users/');
+      }
   }*/
 }

@@ -46,8 +46,8 @@ class TopController extends AppController {
  */
 
   public function beforeFilter() {
-    parent::beforeFilter();
-    $this->layout = 'eventer_fullwidth';
+      parent::beforeFilter();
+      $this->layout = 'eventer_fullwidth';
   }
 
   public function index() {

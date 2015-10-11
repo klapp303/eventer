@@ -52,101 +52,101 @@ class EventsController extends AppController {
   );
 
   public function beforeFilter() {
-    parent::beforeFilter();
-    $this->layout = 'eventer_fullwidth';
+      parent::beforeFilter();
+      $this->layout = 'eventer_fullwidth';
   }
 
   public function index() {
-//    $event_lists = $this->Event->find('all', array(
-//        'order' => array('date' => 'desc')
-//    ));
-    $this->Paginator->settings = array( //eventsページのイベント一覧を設定
-        'conditions' => array('date >=' => date('Y-m-d')),
-        'order' => array('date' => 'asc')
-    );
-    $event_lists = $this->Paginator->paginate('Event');
-    $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
-    $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-    $this->set('event_lists', $event_lists);
-    $this->set('event_genres', $event_genres);
-    $this->set('entry_genres', $entry_genres);
+//      $event_lists = $this->Event->find('all', array(
+//          'order' => array('date' => 'desc')
+//      ));
+      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+          'conditions' => array('date >=' => date('Y-m-d')),
+          'order' => array('date' => 'asc')
+      );
+      $event_lists = $this->Paginator->paginate('Event');
+      $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+      $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
+      $this->set('event_lists', $event_lists);
+      $this->set('event_genres', $event_genres);
+      $this->set('entry_genres', $entry_genres);
 
-    if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
-      $event_detail = $this->Event->find('first', array(
-          'conditions' => array('Event.id' => $this->request->params['id'])
-      ));
-      $this->set('event_detail', $event_detail);
-      $this->layout = 'eventer_normal';
-      $this->render('event');
-    }
+      if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
+        $event_detail = $this->Event->find('first', array(
+            'conditions' => array('Event.id' => $this->request->params['id'])
+        ));
+        $this->set('event_detail', $event_detail);
+        $this->layout = 'eventer_normal';
+        $this->render('event');
+      }
   }
 
   public function add() {
-    if ($this->request->is('post')) {
-      $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->Event->validates()) { //validate成功の処理
-        $this->Event->save($this->request->data); //validate成功でsave
-        if ($this->Event->save($this->request->data)) {
-          $this->Session->setFlash('登録しました。', 'flashMessage');
-        } else {
-          $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+      if ($this->request->is('post')) {
+        $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->Event->validates()) { //validate成功の処理
+          $this->Event->save($this->request->data); //validate成功でsave
+          if ($this->Event->save($this->request->data)) {
+            $this->Session->setFlash('登録しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+          }
+        } else { //validate失敗の処理
+          $this->render('index'); //validate失敗でindexを表示
         }
-      } else { //validate失敗の処理
-        $this->render('index'); //validate失敗でindexを表示
       }
-    }
 
-    $this->redirect('/events/');
+      $this->redirect('/events/');
   }
 
   public function edit($id = null) {
-//    $event_lists = $this->Event->find('all', array(
-//        'order' => array('date' => 'desc')
-//    ));
-    $this->Paginator->settings = array( //eventsページのイベント一覧を設定
-        'conditions' => array('date >=' => date('Y-m-d')),
-        'order' => array('date' => 'asc')
-    );
-    $event_lists = $this->Paginator->paginate('Event');
-    $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
-    $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-    $this->set('event_lists', $event_lists);
-    $this->set('event_genres', $event_genres);
-    $this->set('entry_genres', $entry_genres);
+//      $event_lists = $this->Event->find('all', array(
+//          'order' => array('date' => 'desc')
+//      ));
+      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+          'conditions' => array('date >=' => date('Y-m-d')),
+          'order' => array('date' => 'asc')
+      );
+      $event_lists = $this->Paginator->paginate('Event');
+      $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+      $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
+      $this->set('event_lists', $event_lists);
+      $this->set('event_genres', $event_genres);
+      $this->set('entry_genres', $entry_genres);
 
-    if (empty($this->request->data)) {
-      $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
-      $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
-    } else {
-      $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
-      if ($this->Event->validates()) { //validate成功の処理
-        $this->Event->save($this->request->data); //validate成功でsave
-        if ($this->Event->save($id)) {
-          $this->Session->setFlash('修正しました。', 'flashMessage');
-        } else {
-          $this->Session->setFlash('修正できませんでした。', 'flashMessage');
-        }
-        $this->redirect('/events/');
-      } else { //validate失敗の処理
+      if (empty($this->request->data)) {
+        $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
         $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
-//        $this->render('index'); //validate失敗でindexを表示
+      } else {
+        $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->Event->validates()) { //validate成功の処理
+          $this->Event->save($this->request->data); //validate成功でsave
+          if ($this->Event->save($id)) {
+            $this->Session->setFlash('修正しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash('修正できませんでした。', 'flashMessage');
+          }
+          $this->redirect('/events/');
+        } else { //validate失敗の処理
+          $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
+//          $this->render('index'); //validate失敗でindexを表示
+        }
       }
-    }
   }
 
   public function deleted($id = null) {
-    if (empty($id)) {
-      throw new NotFoundException(__('存在しないデータです。'));
-    }
-    
-    if ($this->request->is('post')) {
-      $this->Event->Behaviors->enable('SoftDelete');
-      if ($this->Event->delete($id)) {
-        $this->Session->setFlash('削除しました。', 'flashMessage');
-      } else {
-        $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
       }
-      $this->redirect('/events/');
-    }
+    
+      if ($this->request->is('post')) {
+        $this->Event->Behaviors->enable('SoftDelete');
+        if ($this->Event->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/events/');
+      }
   }
 }
