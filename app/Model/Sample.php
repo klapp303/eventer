@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Sample extends AppModel {
   public $useTable = 'Samples';
-  public $actAs = ['SoftDelete'/*, 'Search.Searchable'*/];
+  public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
 
   /*public $belongsTo = array(
       'SamplesGenre' => array(
