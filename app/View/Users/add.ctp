@@ -7,7 +7,7 @@
       )
   ); ?><!-- form start -->
   <?php echo $this->Form->input('username', array('type' => 'text', 'label' => 'ユーザ名', 'placeholder' => 'ログイン時に使用します')); ?>（半角英数のみ）<br>
-  <?php echo $this->Form->input('handlename', array('type' => 'text', 'label' => 'ハンドルネーム', 'placeholder' => '他ユーザに表示されます')); ?>（16文字以内）<br>
+  <?php echo $this->Form->input('handlename', array('type' => 'text', 'label' => 'ハンドルネーム', 'placeholder' => '他ユーザに公開されます')); ?>（16文字以内）<br>
   <?php echo $this->Form->input('password', array('type' => 'text', 'label' => 'パスワード', 'placeholder' => 'ログイン時に使用します')); ?>（半角英数のみ）
   
   <?php echo $this->Form->submit('登録'); ?>
