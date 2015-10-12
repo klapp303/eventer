@@ -27,6 +27,13 @@ class Event extends AppModel {
       )
   );
 
+  public $hasMany = array(
+      'UserList' => array(
+          'className' => 'EventUser', //関連付けるModel
+          'foreignKey' => 'event_id' //関連付けるfield
+      )
+  );
+
   public $validate = array(
       'title' => array(
           'rule' => 'notBlank',

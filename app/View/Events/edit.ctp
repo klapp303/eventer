@@ -52,6 +52,8 @@
   <?php } ?>
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
   
+  <?php echo $this->Form->input('UserList', array('type' => 'select', 'label' => '参加者', 'multiple' => 'checkbox', 'options' => $user_lists)); ?><br>
+  
   <?php echo $this->Form->submit('修正する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->
 

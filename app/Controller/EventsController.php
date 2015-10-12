@@ -35,7 +35,7 @@ class EventsController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Event', 'EventGenre', 'EntryGenre'); //使用するModel
+	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User'); //使用するModel
 
 /**
  * Displays a view
@@ -68,9 +68,11 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
+      $user_lists = $this->User->find('list', array('fields' => 'handlename')); //チェックボックス選択肢用
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
       $this->set('entry_genres', $entry_genres);
+      $this->set('user_lists', $user_lists);
 
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $event_detail = $this->Event->find('first', array(
@@ -98,7 +100,7 @@ class EventsController extends AppController {
         if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
           $this->request->data['Event']['entry_end'] = null;
         }
-        if (isset($this->request->data['announcement_date']) == TRUE) { //当落発表日
+        if (isset($this->request->data['announcement_date']) == TRUE) { //結果発表日
           $this->request->data['Event']['announcement_date'] = null;
         }
         if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
@@ -132,9 +134,11 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
+      $user_lists = $this->User->find('list', array('fields' => 'handlename')); //チェックボックス選択肢用
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
       $this->set('entry_genres', $entry_genres);
+      $this->set('user_lists', $user_lists);
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
@@ -154,7 +158,7 @@ class EventsController extends AppController {
         if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
           $this->request->data['Event']['entry_end'] = null;
         }
-        if (isset($this->request->data['announcement_date']) == TRUE) { //当落発表日
+        if (isset($this->request->data['announcement_date']) == TRUE) { //結果発表日
           $this->request->data['Event']['announcement_date'] = null;
         }
         if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
