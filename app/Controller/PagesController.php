@@ -73,4 +73,7 @@ class PagesController extends AppController {
       ));
       $this->set('entry_genre_lists', $entry_genre_lists);
   }
+
+  public function issue_lists() {
+  }
 }
