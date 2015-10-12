@@ -10,7 +10,7 @@
   <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名')); ?>
   <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?><br>
   <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?>
-  <?php echo $this->Form->input('time_start', array('type' => 'text', 'label' => '開催時刻')); ?><br>
+  <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24')); ?><br>
   <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額')); ?>円
   <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数')); ?>枚<br>
   <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><br>
