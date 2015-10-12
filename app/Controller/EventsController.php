@@ -88,6 +88,23 @@ class EventsController extends AppController {
 
   public function add() {
       if ($this->request->is('post')) {
+        //viewでchekckedのfieldをnullに書き換える、JSが無効な場合を考えて残す
+        if (isset($this->request->data['time_start']) == TRUE) { //開催時刻
+          $this->request->data['Event']['time_start'] = null;
+        }
+        if (isset($this->request->data['entry_start']) == TRUE) { //申込開始日
+          $this->request->data['Event']['entry_start'] = null;
+        }
+        if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
+          $this->request->data['Event']['entry_end'] = null;
+        }
+        if (isset($this->request->data['announcement_date']) == TRUE) { //当落発表日
+          $this->request->data['Event']['announcement_date'] = null;
+        }
+        if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
+          $this->request->data['Event']['payment_end'] = null;
+        }
+        //書き換えここまで
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
           $this->Event->save($this->request->data); //validate成功でsave
@@ -127,6 +144,23 @@ class EventsController extends AppController {
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
         }
       } else {
+        //viewでchekckedのfieldをnullに書き換える、JSが無効な場合を考えて残す
+        if (isset($this->request->data['time_start']) == TRUE) { //開催時刻
+          $this->request->data['Event']['time_start'] = null;
+        }
+        if (isset($this->request->data['entry_start']) == TRUE) { //申込開始日
+          $this->request->data['Event']['entry_start'] = null;
+        }
+        if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
+          $this->request->data['Event']['entry_end'] = null;
+        }
+        if (isset($this->request->data['announcement_date']) == TRUE) { //当落発表日
+          $this->request->data['Event']['announcement_date'] = null;
+        }
+        if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
+          $this->request->data['Event']['payment_end'] = null;
+        }
+        //書き換えここまで
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
           $this->Event->save($this->request->data); //validate成功でsave
