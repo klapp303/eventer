@@ -67,7 +67,7 @@ class EventGenresController extends AppController {
       $this->set('sample_counts', $sample_counts);
   }
 
-  public function add() {
+  /*public function add() {
       if ($this->request->is('post')) {
         $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Sample->validates()) { //validate成功の処理
@@ -83,9 +83,9 @@ class EventGenresController extends AppController {
       }
 
       $this->redirect('/samples/');
-  }
+  }*/
 
-  public function edit($id = null) {
+  /*public function edit($id = null) {
 //      $sample_lists = $this->Sample->find('all', array(
 //          'order' => array('date' => 'desc')
 //      ));
@@ -113,9 +113,9 @@ class EventGenresController extends AppController {
 //          $this->render('index'); //validate失敗でindexを表示
         }
       }
-  }
+  }*/
 
-  public function deleted($id = null){
+  /*public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
@@ -129,5 +129,5 @@ class EventGenresController extends AppController {
         }
         $this->redirect('/samples/');
       }
-  }
+  }*/
 }

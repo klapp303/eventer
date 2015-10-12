@@ -123,7 +123,7 @@ class UsersController extends AppController {
       }
   }
 
-/*  public function deleted($id = null){
+/*  public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }

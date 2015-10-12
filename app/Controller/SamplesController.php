@@ -54,6 +54,7 @@ class SamplesController extends AppController {
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
+      //$this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function index() {
@@ -65,6 +66,18 @@ class SamplesController extends AppController {
       $sample_counts = count($sample_lists);
       $this->set('sample_lists', $sample_lists);
       $this->set('sample_counts', $sample_counts);
+
+      if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
+        $sample_detail = $this->Sample->find('first', array(
+            'conditions' => array('Sample.id' => $this->request->params['id'])
+        ));
+        if (!empty($sample_detail)) { //データが存在する場合
+          $this->set('sample_detail', $sample_detail);
+          $this->render('sample');
+        } else { //データが存在しない場合
+          $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+        }
+      }
   }
 
   public function add() {
@@ -97,7 +110,11 @@ class SamplesController extends AppController {
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Sample->findById($id); //postデータがなければ$idからデータを取得
-        $this->set('id', $this->request->data['Sample']['id']); //viewに渡すために$idをセット
+        if (!empty($this->request->data)) { //データが存在する場合
+          $this->set('id', $id); //viewに渡すために$idをセット
+        } else { //データが存在しない場合
+          $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+        }
       } else {
         $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Sample->validates()) { //validate成功の処理
@@ -115,7 +132,7 @@ class SamplesController extends AppController {
       }
   }
 
-  public function deleted($id = null){
+  public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
