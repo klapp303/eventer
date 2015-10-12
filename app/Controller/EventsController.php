@@ -54,6 +54,7 @@ class EventsController extends AppController {
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
+      //$this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function index() {
@@ -116,7 +117,7 @@ class EventsController extends AppController {
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
-        $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
+        $this->set('id', $id); //viewに渡すために$idをセット
       } else {
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
@@ -134,11 +135,11 @@ class EventsController extends AppController {
       }
   }
 
-  public function deleted($id = null) {
+  public function delete($id = null) {
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
-    
+      
       if ($this->request->is('post')) {
         $this->Event->Behaviors->enable('SoftDelete');
         if ($this->Event->delete($id)) {

@@ -28,6 +28,4 @@ class EntryGenre extends AppModel {
           'message' => '値段を正しく入力してください。'
       )
   );*/
-
-//  public $filtetArgs = ['' => ['' => '', '' => '']];
 }

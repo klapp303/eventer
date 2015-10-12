@@ -56,8 +56,8 @@
         <td><?php echo $event_list['Event']['payment_end']; ?></td>
         <td><?php echo $this->Html->link('詳細', '/event/'.$event_list['Event']['id'], array('target' => '_blank')); ?>
             <?php if ($event_list['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
-            <br><?php echo $this->Form->postLink('修正', array('action' => 'edit', $event_list['Event']['id'])); ?>
-            <?php echo $this->Form->postLink('削除', array('action' => 'deleted', $event_list['Event']['id'])); ?>
+            <br><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?>
+            <?php echo $this->Form->postLink('削除', array('action' => 'delete', $event_list['Event']['id']), null, '本当に削除しますか'); ?>
             <?php } ?></td></tr>
     <?php } ?>
   </table>
