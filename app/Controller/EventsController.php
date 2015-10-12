@@ -76,9 +76,13 @@ class EventsController extends AppController {
         $event_detail = $this->Event->find('first', array(
             'conditions' => array('Event.id' => $this->request->params['id'])
         ));
-        $this->set('event_detail', $event_detail);
-        $this->layout = 'eventer_normal';
-        $this->render('event');
+        if (!empty($event_detail)) { //データが存在する場合
+          $this->set('event_detail', $event_detail);
+          $this->layout = 'eventer_normal';
+          $this->render('event');
+        } else { //データが存在しない場合
+          $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+        }
       }
   }
 
@@ -117,7 +121,11 @@ class EventsController extends AppController {
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
-        $this->set('id', $id); //viewに渡すために$idをセット
+        if (!empty($this->request->data)) { //データが存在する場合
+          $this->set('id', $id); //viewに渡すために$idをセット
+        } else { //データが存在しない場合
+          $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+        }
       } else {
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
