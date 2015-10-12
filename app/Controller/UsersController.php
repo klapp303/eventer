@@ -50,6 +50,7 @@ class UsersController extends AppController {
       $this->layout = 'eventer_normal';
       // ユーザ自身による登録とログアウトを許可する
       $this->Auth->allow('add', 'logout');
+      //$this->User->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function login() {
@@ -101,6 +102,9 @@ class UsersController extends AppController {
   public function edit($id = null) {
       $this->layout = 'eventer_fullwidth';
       if (empty($this->request->data)) {
+        if (!$this->request->is('post')) { //post送信でない場合
+          $this->redirect('/user/'.$id);
+        }
         $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
         $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
       } else {
@@ -131,7 +135,7 @@ class UsersController extends AppController {
         } else {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');
         }
-        $this->redirect('/users/');
+        $this->redirect('/users/login/');
       }
   }*/
 }
