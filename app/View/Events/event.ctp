@@ -8,12 +8,12 @@
   </table>
   
   <table class="detail-list">
-    <tr><th class="tbl-ico">種類</th><th class="tbl-ico">状態</th><th>申込方法</th><th>申込開始日</th><th>申込終了日</th><th>結果発表日</th><th>入金締切日</th></tr>
+    <tr><th class="tbl-ico">種類</th><th class="tbl-ico">状態</th><th class="tbl-ico">申込方法</th><th>申込開始日</th><th>申込終了日</th><th>結果発表日</th><th>入金締切日</th></tr>
     <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['Event']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span></td>
         <td class="tbl-ico"><?php if ($event_detail['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
                               elseif ($event_detail['Event']['status'] == 1) {echo '<span class="icon-true">申込中</span>';}
                               elseif ($event_detail['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
-        <td><?php echo $event_detail['EntryGenre']['title']; ?></td>
+        <td class="tbl-ico"><span class="icon-genre"><?php echo $event_detail['EntryGenre']['title']; ?></span></td>
         <td><?php echo $event_detail['Event']['entry_start']; ?></td>
         <td><?php echo $event_detail['Event']['entry_end']; ?></td>
         <td><?php echo $event_detail['Event']['announcement_date']; ?></td>

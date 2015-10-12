@@ -35,7 +35,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('EventGenre', 'EntryGenre'); //使用するModel
+	public $uses = array('User', 'EventGenre', 'EntryGenre'); //使用するModel
 
 /**
  * Displays a view
@@ -53,21 +53,24 @@ class PagesController extends AppController {
   public function index() {
   }
 
+  public function user_lists() {
+      $user_lists = $this->User->find('all', array(
+          'order' => array('id' => 'asc')
+      ));
+      $this->set('user_lists', $user_lists);
+  }
+
   public function event_genres() {
       $event_genre_lists = $this->EventGenre->find('all', array(
           'order' => array('id' => 'asc')
       ));
-      $event_genre_counts = count($event_genre_lists);
       $this->set('event_genre_lists', $event_genre_lists);
-      $this->set('event_genre_counts', $event_genre_counts);
   }
   
   public function entry_genres() {
       $entry_genre_lists = $this->EntryGenre->find('all', array(
           'order' => array('id' => 'asc')
       ));
-      $entry_genre_counts = count($entry_genre_lists);
       $this->set('entry_genre_lists', $entry_genre_lists);
-      $this->set('entry_genre_counts', $entry_genre_counts);
   }
 }
