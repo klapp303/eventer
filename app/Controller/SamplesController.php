@@ -63,9 +63,9 @@ class SamplesController extends AppController {
 //      ));
       $this->Paginator->settings = $this->paginate;
       $sample_lists = $this->Paginator->paginate('Sample');
-      $sample_counts = count($sample_lists);
+      //$sample_counts = count($sample_lists);
       $this->set('sample_lists', $sample_lists);
-      $this->set('sample_counts', $sample_counts);
+      //$this->set('sample_counts', $sample_counts);
 
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $sample_detail = $this->Sample->find('first', array(
@@ -104,9 +104,9 @@ class SamplesController extends AppController {
 //      ));
       $this->Paginator->settings = $this->paginate;
       $sample_lists = $this->Paginator->paginate('Sample');
-      $sample_counts = count($sample_lists);
+      //$sample_counts = count($sample_lists);
       $this->set('sample_lists', $sample_lists);
-      $this->set('sample_counts', $sample_counts);
+      //$this->set('sample_counts', $sample_counts);
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Sample->findById($id); //postデータがなければ$idからデータを取得

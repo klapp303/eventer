@@ -24,14 +24,14 @@
   )); ?>
 
   <table class="detail-list">
-    <tr><th>日付</th><th>タイトル</th><th class="tbl-num">数値</th><th class="tbl-ico">状態</th><th>action</th></tr>
-    <?php for($i = 0; $i < $sample_counts; $i++){ ?>
-    <tr><td><?php echo $sample_lists[$i]['Sample']['date']; ?></td>
-        <td><?php echo $sample_lists[$i]['Sample']['title']; ?></td>
-        <td class="tbl-num"><?php echo $sample_lists[$i]['Sample']['amount']; ?></td>
-        <td class="tbl-ico"><?php if ($sample_lists[$i]['Sample']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
-                              elseif ($sample_lists[$i]['Sample']['status'] == 1) {echo '<span class="icon-true">確定</span>';} ?></td>
-        <td><?php echo $this->Form->postLink('修正', array('action' => 'edit', $sample_lists[$i]['Sample']['id'])); ?>
-            <?php echo $this->Form->postLink('削除', array('action' => 'deleted', $sample_lists[$i]['Sample']['id'])); ?></td></tr>
+    <tr><th>日付<?php echo $this->Paginator->sort('date', '▼'); ?></th><th>タイトル</th><th class="tbl-num">数値</th><th class="tbl-ico">状態</th><th>action</th></tr>
+    <?php foreach ($sample_lists AS $sample_list) { ?>
+    <tr><td><?php echo $sample_list['Sample']['date']; ?></td>
+        <td><?php echo $sample_list['Sample']['title']; ?></td>
+        <td class="tbl-num"><?php echo $sample_list['Sample']['amount']; ?></td>
+        <td class="tbl-ico"><?php if ($sample_list['Sample']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
+                              elseif ($sample_list['Sample']['status'] == 1) {echo '<span class="icon-true">確定</span>';} ?></td>
+        <td><?php echo $this->Html->link('修正', '/samples/edit/'.$sample_list['Sample']['id']); ?>
+            <?php echo $this->Form->postLink('削除', array('action' => 'deleted', $sample_list['Sample']['id']), null, '本当に削除しますか'); ?></td></tr>
     <?php } ?>
   </table>
