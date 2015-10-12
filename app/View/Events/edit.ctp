@@ -11,19 +11,44 @@
   <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名')); ?><br>
   <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?><br>
   <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?>
-  <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class'=>'js-input_time_start')); ?>
-    なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start">'; ?><br>
+  <?php if ($this->request->data['Event']['time_start'] == null) { ?>
+    <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class' => 'js-input_time_start', 'disabled' => 'disabled')); ?>
+      なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start" checked="checked">'; ?><br>
+  <?php } else { ?>
+    <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class' => 'js-input_time_start')); ?>
+      なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start">'; ?><br>
+  <?php } ?>
   <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額')); ?>円
   <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数')); ?>枚<br>
   <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><br>
-  <?php echo $this->Form->input('entry_start', array('type' => 'date', 'label' => '申込開始日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_entry_start')); ?>
-    なし<?php echo '<input type="checkbox" name="entry_start" class="js-checkbox_entry_start">'; ?>
-  <?php echo $this->Form->input('entry_end', array('type' => 'date', 'label' => '申込終了日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_entry_end')); ?>
-    なし<?php echo '<input type="checkbox" name="entry_end" class="js-checkbox_entry_end">'; ?><br>
-  <?php echo $this->Form->input('announcement_date', array('type' => 'date', 'label' => '当落発表日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_announcement_date')); ?>
-    なし<?php echo '<input type="checkbox" name="announcement_date" class="js-checkbox_announcement_date">'; ?>
-  <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_payment_end')); ?>
-    なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
+  <?php if ($this->request->data['Event']['entry_start'] == null) { ?>
+    <?php echo $this->Form->input('entry_start', array('type' => 'date', 'label' => '申込開始日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_entry_start', 'disabled' => 'disabled')); ?>
+      なし<?php echo '<input type="checkbox" name="entry_start" class="js-checkbox_entry_start" checked="checked">'; ?>
+  <?php } else { ?>
+    <?php echo $this->Form->input('entry_start', array('type' => 'date', 'label' => '申込開始日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_entry_start')); ?>
+      なし<?php echo '<input type="checkbox" name="entry_start" class="js-checkbox_entry_start">'; ?>
+  <?php } ?>
+  <?php if ($this->request->data['Event']['entry_end'] == null) { ?>
+    <?php echo $this->Form->input('entry_end', array('type' => 'date', 'label' => '申込終了日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_entry_end', 'disabled' => 'disabled')); ?>
+      なし<?php echo '<input type="checkbox" name="entry_end" class="js-checkbox_entry_end" checked="checked">'; ?><br>
+  <?php } else { ?>
+    <?php echo $this->Form->input('entry_end', array('type' => 'date', 'label' => '申込終了日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_entry_end')); ?>
+      なし<?php echo '<input type="checkbox" name="entry_end" class="js-checkbox_entry_end">'; ?><br>
+  <?php } ?>
+  <?php if ($this->request->data['Event']['announcement_date'] == null) { ?>
+    <?php echo $this->Form->input('announcement_date', array('type' => 'date', 'label' => '当落発表日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_announcement_date', 'disabled' => 'disabled')); ?>
+      なし<?php echo '<input type="checkbox" name="announcement_date" class="js-checkbox_announcement_date" checked="checked">'; ?>
+  <?php } else { ?>
+    <?php echo $this->Form->input('announcement_date', array('type' => 'date', 'label' => '当落発表日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_announcement_date')); ?>
+      なし<?php echo '<input type="checkbox" name="announcement_date" class="js-checkbox_announcement_date">'; ?>
+  <?php } ?>
+  <?php if ($this->request->data['Event']['payment_end'] == null) { ?>
+    <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_payment_end', 'disabled' => 'disabled')); ?>
+      なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end" checked="checked">'; ?><br>
+  <?php } else { ?>
+    <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_payment_end')); ?>
+      なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
+  <?php } ?>
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
   
   <?php echo $this->Form->submit('修正する'); ?>
