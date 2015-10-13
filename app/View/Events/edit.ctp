@@ -96,10 +96,10 @@
     <?php foreach ($event_lists AS $event_list) { ?>
     <tr><td class="tbl-date_events"><?php echo $event_list['Event']['date']; ?></td>
         <td><?php echo $event_list['Event']['title']; ?></td>
-        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_list['Event']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
-                            <?php if ($event_list['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
-                              elseif ($event_list['Event']['status'] == 1) {echo '<span class="icon-true">申込中</span>';} 
-                              elseif ($event_list['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
+        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_list['Event']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span>
+                            <br><?php if ($event_list['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
+                                  elseif ($event_list['Event']['status'] == 1) {echo '<span class="icon-true">申込中</span>';} 
+                                  elseif ($event_list['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
         <td class="tbl-num"><?php echo $event_list['Event']['amount']; ?>円<br>
                             <?php echo $event_list['Event']['number']; ?>枚</td>
         <td class="tbl-date_events"><?php echo $event_list['Event']['entry_start']; ?></td>
