@@ -32,9 +32,9 @@
   <label>参加者</label><br>
   <?php $i = 0; ?>
   <?php foreach ($user_lists AS $user_list) { ?>
-      <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
-      <label><?php echo $user_list['User']['handlename']; ?></label>
-      <?php $i++; ?>
+    <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
+    <label><?php echo $user_list['User']['handlename']; ?></label>
+    <?php $i++; ?>
   <?php } ?><br>
   
   <?php echo $this->Form->submit('登録する'); ?>
