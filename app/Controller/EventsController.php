@@ -96,7 +96,15 @@ class EventsController extends AppController {
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $this->Event->recursive = 2; //Event→EventUser→Userの2階層下までassociate
         $event_detail = $this->Event->find('first', array(
-            'conditions' => array('Event.id' => $this->request->params['id'])
+            'conditions' => array(
+                'and' => array(
+                    'Event.id' => $this->request->params['id'],
+                    'or' => array( //作成者か参加者の場合のみ
+                        array('user_id' => $login_id),
+                        array('Event.id' => $join_lists)
+                    )
+                )
+            )
         ));
         if (!empty($event_detail)) { //データが存在する場合
           $this->set('event_detail', $event_detail);
