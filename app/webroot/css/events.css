@@ -1,4 +1,5 @@
 @charset "utf-8";
+/* イベント一覧用 */
 .tbl-date_events {
     width: 70px;
 }
@@ -13,4 +14,34 @@
 
 .tbl-action_events {
     width: 110px;
+}
+
+/* イベント登録フォーム用 */
+#EventAddForm >label,
+#EventEditForm >label {
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#EventAddForm >input, #EventAddForm >select,
+#EventEditForm >input, #EventEditForm >select {
+    margin-bottom: 10px;
+}
+
+#EventAddForm >.submit,
+#EventEditForm >.submit {
+    margin: 10px 20px;
+}
+
+/* 参加者登録フォーム用 */
+.form-user_events {
+    width: 740px;
+    max-height: 100px;
+    overflow: auto;
+}
+
+.checkbox_user {
+    margin-right: 20px;
+    white-space: nowrap;
 }
