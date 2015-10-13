@@ -35,7 +35,7 @@ class EventsController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User'); //使用するModel
+	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser'); //使用するModel
 
 /**
  * Displays a view
@@ -141,22 +141,27 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-      $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
-          'fields' => array('id', 'handlename'),
-          'conditions' => array('and' => array(
-              array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
-              array('id !=' => 1) //管理者を除外
-          ))
-      ));
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
       $this->set('entry_genres', $entry_genres);
-      $this->set('user_lists', $user_lists);
 
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
         if (!empty($this->request->data)) { //データが存在する場合
           $this->set('id', $id); //viewに渡すために$idをセット
+          $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
+              'fields' => 'user_id',
+              'conditions' => array('event_id' => $id)
+          ));
+          $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
+              'fields' => array('id', 'handlename'),
+              'conditions' => array('and' => array(
+                  array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
+                  array('id !=' => 1), //管理者を除外
+                  array('id !=' =>  $checked_lists) //登録済参加者を除外
+              ))
+          ));
+          $this->set('user_lists', $user_lists);
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
           $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない

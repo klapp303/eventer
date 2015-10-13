@@ -53,7 +53,7 @@
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
   
   <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
-  <label>参加者</label><br>
+  <label>参加者を追加（参加済みユーザは表示されません）</label><br>
   <?php $i = 0; ?>
   <?php foreach ($user_lists AS $user_list) { ?>
       <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
