@@ -159,6 +159,7 @@ class EventsController extends AppController {
           $this->set('id', $id); //viewに渡すために$idをセット
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+          $this->render('index');
         }
       } else {
         //viewでchekckedのfieldをnullに書き換える、JSが無効な場合を考えて残す
