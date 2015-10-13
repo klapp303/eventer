@@ -58,11 +58,24 @@ class EventsController extends AppController {
   }
 
   public function index() {
+      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
 //      $event_lists = $this->Event->find('all', array(
 //          'order' => array('date' => 'desc')
 //      ));
+      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+          'conditions' => array('user_id' => $login_id),
+          'fields' => 'event_id'
+      ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
-          'conditions' => array('date >=' => date('Y-m-d')),
+          'conditions' => array(
+              'and' => array(
+                  'date >=' => date('Y-m-d'),
+                  'or' => array(
+                      array('user_id' => $login_id),
+                      array('Event.id' => $join_lists)
+                  )
+              )
+          ),
           'order' => array('date' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('Event');
@@ -71,7 +84,7 @@ class EventsController extends AppController {
       $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
           'fields' => array('id', 'handlename'),
           'conditions' => array('and' => array(
-              array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
+              array('id !=' => $login_id), //ログインユーザを除外
               array('id !=' => 1) //管理者を除外
           ))
       ));
@@ -131,11 +144,24 @@ class EventsController extends AppController {
   }
 
   public function edit($id = null) {
+      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
 //      $event_lists = $this->Event->find('all', array(
 //          'order' => array('date' => 'desc')
 //      ));
+      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+          'conditions' => array('user_id' => $login_id),
+          'fields' => 'event_id'
+      ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
-          'conditions' => array('date >=' => date('Y-m-d')),
+          'conditions' => array(
+              'and' => array(
+                  'date >=' => date('Y-m-d'),
+                  'or' => array(
+                      array('user_id' => $login_id),
+                      array('Event.id' => $join_lists)
+                  )
+              )
+          ),
           'order' => array('date' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('Event');
@@ -148,20 +174,25 @@ class EventsController extends AppController {
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
         if (!empty($this->request->data)) { //データが存在する場合
-          $this->set('id', $id); //viewに渡すために$idをセット
-          $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
-              'fields' => 'user_id',
-              'conditions' => array('event_id' => $id)
-          ));
-          $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
-              'fields' => array('id', 'handlename'),
-              'conditions' => array('and' => array(
-                  array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
-                  array('id !=' => 1), //管理者を除外
-                  array('id !=' =>  $checked_lists) //登録済参加者を除外
-              ))
-          ));
-          $this->set('user_lists', $user_lists);
+          if ($this->request->data['Event']['user_id'] == $login_id) { //データの作成者とログインユーザが一致する場合
+            $this->set('id', $id); //viewに渡すために$idをセット
+            $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
+                'fields' => 'user_id',
+                'conditions' => array('event_id' => $id)
+            ));
+            $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
+                'fields' => array('id', 'handlename'),
+                'conditions' => array('and' => array(
+                    array('id !=' => $login_id), //ログインユーザを除外
+                    array('id !=' => 1), //管理者を除外
+                    array('id !=' =>  $checked_lists) //登録済参加者を除外
+                ))
+            ));
+            $this->set('user_lists', $user_lists);
+          } else { //データの作成者とログインユーザが一致しない場合
+            $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+          $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない
+          }
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
           $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない
