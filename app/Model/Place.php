@@ -3,10 +3,10 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Sample Model.
+ * Place Model.
  */
-class Sample extends AppModel {
-  public $useTable = 'Samples';
+class Place extends AppModel {
+  public $useTable = 'Places';
   public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
 
   /*public $belongsTo = array(

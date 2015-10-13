@@ -35,7 +35,7 @@ class EventsController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser'); //使用するModel
+	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser', 'Place'); //使用するModel
 
 /**
  * Displays a view
@@ -80,6 +80,7 @@ class EventsController extends AppController {
       );
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+      $place_lists = $this->Place->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
       $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
           'fields' => array('id', 'handlename'),
@@ -90,6 +91,7 @@ class EventsController extends AppController {
       ));
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
+      $this->set('place_lists', $place_lists);
       $this->set('entry_genres', $entry_genres);
       $this->set('user_lists', $user_lists);
 
@@ -174,9 +176,11 @@ class EventsController extends AppController {
       );
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+      $place_lists = $this->Place->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
+      $this->set('place_lists', $place_lists);
       $this->set('entry_genres', $entry_genres);
 
       if (empty($this->request->data)) {

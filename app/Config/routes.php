@@ -36,6 +36,10 @@
           array('controller' => 'Events', 'action' => 'index'),
           array('id' => '[0-9]+')); //idを数字のみに制限
 
+  Router::connect('/places/place_detail/:id',
+          array('controller' => 'Places', 'action' => 'place_detail'),
+          array('id' => '[0-9]+')); //idを数字のみに制限
+
   Router::connect('/user/:id',
           array('controller' => 'Users', 'action' => 'index'),
           array('id' => '[0-9]+')); //idを数字のみに制限

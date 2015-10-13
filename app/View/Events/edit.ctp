@@ -11,7 +11,7 @@
   <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
   <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名', 'size' => 20)); ?><br>
   <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?>
-  <?php echo $this->Form->input('', array('type' => 'select', 'label' => '会場', 'options' => $event_genres)); ?><br>
+  <?php echo $this->Form->input('place_id', array('type' => 'select', 'label' => '会場', 'options' => $place_lists)); ?><br>
   <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?>
   <?php if ($this->request->data['Event']['time_start'] == null) { ?>
     <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class' => 'js-input_time_start', 'disabled' => 'disabled')); ?>

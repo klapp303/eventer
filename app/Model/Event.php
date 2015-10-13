@@ -15,6 +15,11 @@ class Event extends AppModel {
           'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => 'title' //関連付け先Modelの使用field
       ),
+      'EventPlace' => array(
+          'className' => 'Place', //関連付けるModel
+          'foreignKey' => 'place_id', //関連付けるためのfield、関連付け先は上記Modelのid
+          'fields' => 'name' //関連付け先Modelの使用field
+      ),
       'EntryGenre' => array(
           'className' => 'EntryGenre', //関連付けるModel
           'foreignKey' => 'entry_id', //関連付けるためのfield、関連付け先は上記Modelのid
