@@ -9,13 +9,13 @@ class EventUser extends AppModel {
   public $useTable = 'Event_users';
   public $actsAs = array('SoftDelete');
 
-  /*public $belongsTo = array(
-      'EventsGenre' => array(
-          'className' => 'EventsGenre', //関連付けるModel
-          'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => 'title' //関連付け先Modelの使用field
+  public $belongsTo = array(
+      'UserProfile' => array(
+          'className' => 'User', //関連付けるModel
+          'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
+          'fields' => 'handlename' //関連付け先Modelの使用field
       )
-  );*/
+  );
 
   /*public $validate = array(
       'title' => array(

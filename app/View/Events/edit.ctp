@@ -52,7 +52,14 @@
   <?php } ?>
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
   
-  <?php echo $this->Form->input('UserList', array('type' => 'select', 'label' => '参加者', 'multiple' => 'checkbox', 'options' => $user_lists)); ?><br>
+  <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
+  <label>参加者</label><br>
+  <?php $i = 0; ?>
+  <?php foreach ($user_lists AS $user_list) { ?>
+      <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
+      <label><?php echo $user_list['User']['handlename']; ?></label>
+      <?php $i++; ?>
+  <?php } ?><br>
   
   <?php echo $this->Form->submit('修正する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->

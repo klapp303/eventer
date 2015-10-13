@@ -27,8 +27,15 @@
   <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_payment_end')); ?>
     なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
-  
-  <?php echo $this->Form->input('UserList', array('type' => 'select', 'label' => '参加者', 'multiple' => 'checkbox', 'options' => $user_lists)); ?><br>
+   
+  <!-- FormHelperで難しかったのでHTMLタグ打ち -->
+  <label>参加者</label><br>
+  <?php $i = 0; ?>
+  <?php foreach ($user_lists AS $user_list) { ?>
+      <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
+      <label><?php echo $user_list['User']['handlename']; ?></label>
+      <?php $i++; ?>
+  <?php } ?><br>
   
   <?php echo $this->Form->submit('登録する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->

@@ -68,13 +68,20 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-      $user_lists = $this->User->find('list', array('fields' => 'handlename')); //チェックボックス選択肢用
+      $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
+          'fields' => array('id', 'handlename'),
+          'conditions' => array('and' => array(
+              array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
+              array('id !=' => 1) //管理者を除外
+          ))
+      ));
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
       $this->set('entry_genres', $entry_genres);
       $this->set('user_lists', $user_lists);
 
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
+        $this->Event->recursive = 2; //Event→EventUser→Userの2階層下までassociate
         $event_detail = $this->Event->find('first', array(
             'conditions' => array('Event.id' => $this->request->params['id'])
         ));
@@ -109,7 +116,7 @@ class EventsController extends AppController {
         //書き換えここまで
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
-          $this->Event->save($this->request->data); //validate成功でsave
+          $this->Event->saveAssociated($this->request->data); //validate成功でsave
           if ($this->Event->save($this->request->data)) {
             $this->Session->setFlash('登録しました。', 'flashMessage');
           } else {
@@ -134,7 +141,13 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-      $user_lists = $this->User->find('list', array('fields' => 'handlename')); //チェックボックス選択肢用
+      $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
+          'fields' => array('id', 'handlename'),
+          'conditions' => array('and' => array(
+              array('id !=' => $this->Session->read('Auth.User.id')), //ログインユーザを除外
+              array('id !=' => 1) //管理者を除外
+          ))
+      ));
       $this->set('event_lists', $event_lists);
       $this->set('event_genres', $event_genres);
       $this->set('entry_genres', $entry_genres);
@@ -167,7 +180,7 @@ class EventsController extends AppController {
         //書き換えここまで
         $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
-          $this->Event->save($this->request->data); //validate成功でsave
+          $this->Event->saveAssociated($this->request->data); //validate成功でsave
           if ($this->Event->save($id)) {
             $this->Session->setFlash('修正しました。', 'flashMessage');
           } else {

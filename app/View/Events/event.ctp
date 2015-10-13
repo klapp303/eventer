@@ -25,5 +25,8 @@
     <tr><td class="tbl-num"><?php echo $event_detail['Event']['amount']; ?>円</td>
         <td class="tbl-num"><?php echo $event_detail['Event']['number']; ?>枚</td>
         <td><?php echo $event_detail['UserName']['handlename']; ?></td>
-        <td>表示できたらそれはとっても嬉しいなって</td></tr>
+        <td><?php $user_lists = $event_detail['UserList']; ?>
+            <?php foreach ($user_lists AS $user_list) { ?>
+            <?php echo $user_list['UserProfile']['handlename']; ?>
+            <?php } ?></td></tr>
   </table>
