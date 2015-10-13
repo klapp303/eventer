@@ -18,9 +18,9 @@
         作れなくはないけど面倒だから後回し。
         </td><td><span class="icon-genre">minor</span></td></tr>
     <tr><td class="tbl-num">2</td><td>イベント参加者の選択フォーム</td><td>
-        これがないとチケット代の回収状況とかを出せない。<br>
-        イベント登録画面でどうやって選択させるかが課題、決まってない。
-        </td><td><span class="icon-genre">major</span></td></tr>
+        対応したったｗｗｗ別窓は動きがややこしいのでパス。<br>
+        とりあえずmax-height決めてあるから、ある一定以上の人数になったら埋め込みスクロール。
+        </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">3</td><td>会場のデータ管理とイベントとの紐付け</td><td>
         会場のデータをどこまで取るか決めてないので未実装。<br>
         実装自体は比較的楽だと思われ。やる事見えてるしここから始めるかも。
@@ -32,7 +32,8 @@
         </td><td><span class="icon-genre">minor</span></td></tr>
     <tr><td class="tbl-num">5</td><td>デザイン諸々</td><td>
         システムがある程度固まらないとレイアウト崩れ起こりやすいので後回し。<br>
-        動きゃいいんだよ！！！
+        動きゃいいんだよ！！！<br>
+        イベント管理のページは固まりつつあるのでデザインちょっといじった。（追記）
         </td><td><span class="icon-genre">minor</span></td></tr>
     <tr><td class="tbl-num">6</td><td>収支管理の機能</td><td>
         もう一つの目玉機能・・・多分。<br>
@@ -43,9 +44,9 @@
         データさえあれば、それを表示する事は可能、希望とか聞いてみたいかも。
         </td><td><span class="icon-genre">minor</span></td></tr>
     <tr><td class="tbl-num">8</td><td>イベントの公開、非公開の設定</td><td>
-        自分で使う事考えたら、他ユーザに公開するかどうかの選択肢ほしいかも。<br>
-        公開するユーザを選ぶとかになるとまたややこしいのでパス。
-        </td><td><span class="icon-genre">major</span></td></tr>
+        参加者選択をしなければ可能だからこれ自体の実装はなしかな。<br>
+        登録項目増えると使う時に億劫だし。
+        </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">9</td><td>同じイベント別日程の処理</td><td>
         昼の部、夜の部とかそういうの。<br>
         現状は別々に登録して別々に管理だけど、一緒にしてしまうとそれはそれで問題…うーん。
