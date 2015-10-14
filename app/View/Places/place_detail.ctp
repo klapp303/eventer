@@ -1,3 +1,6 @@
+<?php echo $this->Html->script('http://maps.googleapis.com/maps/api/js?sensor=false', array('inline' => FALSE)); ?>
+<?php/* echo $this->Html->script('js-googlemap', array('inline' => FALSE)); */?>
+<?php echo $this->Html->css('places', array('inline' => FALSE)); ?>
 <h3>会場詳細</h3>
 
   <table class="detail-list">
@@ -12,3 +15,5 @@
     <tr><th>Google Map</th></tr>
     <tr><td class="tbl-map">表示できたらそれはとっても嬉しいなって</td></tr>
   </table>
+
+<div id="tbl-map"></div>
