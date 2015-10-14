@@ -10,15 +10,13 @@
         <td><?php echo $this->Html->link($place_detail['Place']['url'], $place_detail['Place']['url'], array('target' => '_blank')); ?></td></tr>
   </table>
 
-<?php
-  //GoogleMapオプション
+<div id="map" class="fr cf">
+<?php //GoogleMapオプション
   $map_options = array(
       'latitude' => $place_detail['Place']['latitude'],
       'longitude' => $place_detail['Place']['longitude'],
       'windowText' => $place_detail['Place']['name']
-  );
-?>
-<div id="map" class="fr cf">
+  ); ?>
   <?php if ($place_detail['Place']['latitude']) { ?>
     <?php echo $this->GoogleMap->map($map_options); ?>
   <?php } ?>
