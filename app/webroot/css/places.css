@@ -43,9 +43,3 @@
 #PlaceEditForm >.submit {
     margin: 10px 20px;
 }
-
-/* GoogleMap用 */
-#tbl-map {
-    width: 350px;
-    height: 350px;
-}

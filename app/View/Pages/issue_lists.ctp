@@ -22,7 +22,7 @@
         とりあえずmax-height決めてあるから、ある一定以上の人数になったら埋め込みスクロールにはなる。
         </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">3</td><td>会場のデータ管理とイベントとの紐付け<span class="txt-alt">←New</span></td><td>
-        サンプルデータと共に実装済み。<br>
+        サンプルデータと共に実装済み。GoogleMapクソ便利じゃね？（自画自賛）<br>
         書き換えられるとおかしくなるから、登録削除のみで編集はなしかな…あとデフォルトのは削除不可。
         </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">4</td><td>新規登録の諸々<span class="txt-alt">←New</span></td><td>
