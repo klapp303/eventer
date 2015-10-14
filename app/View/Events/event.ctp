@@ -4,7 +4,11 @@
     <tr><th>イベント名</th><th>開催日時</th><th>会場</th></tr>
     <tr><td><?php echo $event_detail['Event']['title']; ?></td>
         <td><?php echo $event_detail['Event']['date']; ?><br><?php echo $event_detail['Event']['time_start']; ?></td>
-        <td><?php echo $event_detail['EventPlace']['name']; ?></td></tr>
+        <td><?php if ($event_detail['Event']['place_id'] < 2) { ?>
+              <?php echo 'その他'; ?>
+            <?php } elseif ($event_detail['EventPlace']['name']) { ?>
+              <?php echo $this->Html->link($event_detail['EventPlace']['name'], '/places/place_detail/'.$event_detail['Event']['place_id']); ?>
+            <?php } ?></td></tr>
   </table>
   
   <table class="detail-list">
