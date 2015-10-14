@@ -1,3 +1,5 @@
+<span class="fr cf"><?php echo $this->element('access_search', array('data' => $event_detail)); ?></span>
+
 <h3>イベント詳細</h3>
 
   <table class="detail-list">

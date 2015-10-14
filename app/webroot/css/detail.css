@@ -87,6 +87,16 @@
     text-align: center;
 }
 
+/* 枠付きアラート文 */
+.txt-block {
+    text-align: center;
+    background: #CEF6F5;
+    border: solid 2px #000000;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
 /* ボタンアイコン */
 .icon-button {
     font-size: 12px;
