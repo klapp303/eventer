@@ -17,23 +17,23 @@
         セキュリティ的な意味で現状は未実装。<br>
         作れなくはないけど面倒だから後回し。
         </td><td><span class="icon-genre">minor</span></td></tr>
-    <tr><td class="tbl-num">2</td><td>イベント参加者の選択フォーム</td><td>
+    <tr><td class="tbl-num">2</td><td>イベント参加者の選択フォーム<span class="txt-alt">←New</span></td><td>
         対応したったｗｗｗ別窓は動きがややこしいのでパス。<br>
-        とりあえずmax-height決めてあるから、ある一定以上の人数になったら埋め込みスクロール。
+        とりあえずmax-height決めてあるから、ある一定以上の人数になったら埋め込みスクロールにはなる。
         </td><td><span class="icon-false">closed</span></td></tr>
-    <tr><td class="tbl-num">3</td><td>会場のデータ管理とイベントとの紐付け</td><td>
-        会場のデータをどこまで取るか決めてないので未実装。<br>
-        実装自体は比較的楽だと思われ。やる事見えてるしここから始めるかも。
-        </td><td><span class="icon-genre">major</span></td></tr>
-    <tr><td class="tbl-num">4</td><td>新規登録の諸々</td><td>
+    <tr><td class="tbl-num">3</td><td>会場のデータ管理とイベントとの紐付け<span class="txt-alt">←New</span></td><td>
+        サンプルデータと共に実装済み。<br>
+        書き換えられるとおかしくなるから、登録削除のみで編集はなしかな…あとデフォルトのは削除不可。
+        </td><td><span class="icon-false">closed</span></td></tr>
+    <tr><td class="tbl-num">4</td><td>新規登録の諸々<span class="txt-alt">←New</span></td><td>
         URL入力で誰でもアクセスできるから、登録時にもログイン認証は必須。<br>
-        今のところ既にあるアカウントで入って登録しかないんだよなぁ…<br>
-        普通はメール認証とかするけど、その方向は考えてないです。だって面倒でしょ？
-        </td><td><span class="icon-genre">minor</span></td></tr>
+        と思ってたけどメアド登録させるからそっちの方向でいけそう。<br>
+        閲覧専用のアカウントを1つ用意してもいいかも…？
+        </td><td><span class="icon-genre">major</span></td></tr>
     <tr><td class="tbl-num">5</td><td>デザイン諸々</td><td>
         システムがある程度固まらないとレイアウト崩れ起こりやすいので後回し。<br>
         動きゃいいんだよ！！！<br>
-        イベント管理のページは固まりつつあるのでデザインちょっといじった。（追記）
+        システム面があらかた揃ったページからデザインちょっといじった。（追記）
         </td><td><span class="icon-genre">minor</span></td></tr>
     <tr><td class="tbl-num">6</td><td>収支管理の機能</td><td>
         もう一つの目玉機能・・・多分。<br>
@@ -43,7 +43,7 @@
         どの情報を載せるか決めてないので後回し。<br>
         データさえあれば、それを表示する事は可能、希望とか聞いてみたいかも。
         </td><td><span class="icon-genre">minor</span></td></tr>
-    <tr><td class="tbl-num">8</td><td>イベントの公開、非公開の設定</td><td>
+    <tr><td class="tbl-num">8</td><td>イベントの公開、非公開の設定<span class="txt-alt">←New</span></td><td>
         参加者選択をしなければ可能だからこれ自体の実装はなしかな。<br>
         登録項目増えると使う時に億劫だし。
         </td><td><span class="icon-false">closed</span></td></tr>
@@ -64,4 +64,8 @@
         ここのリストが片付くメドが立ってからやな…<br>
         てか必要なんですかねぇ…
         </td><td><span class="icon-genre">minor</span></td></tr>
+    <tr><td class="tbl-num">13</td><td>ユーザのメアド管理して通知メールを適宜とばす<span class="txt-alt">←New</span></td><td>
+        管理者側がどのメアドを使うか決められてない。<br>
+        メール系は実装可能なんだけど、やった事ないし手こずる…かも？
+        </td><td><span class="icon-genre">major</span></td></tr>
   </table>
