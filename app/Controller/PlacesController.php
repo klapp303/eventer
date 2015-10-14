@@ -48,7 +48,8 @@ class PlacesController extends AppController {
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      'order' => array('id' => 'asc')
+      'order' => array('id' => 'asc'),
+      'conditions' => array('id !=' => 1) //id=1は'その他'なので除外する
   );
 
   public function beforeFilter() {
@@ -84,7 +85,10 @@ class PlacesController extends AppController {
 
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $place_detail = $this->Place->find('first', array(
-            'conditions' => array('Place.id' => $this->request->params['id'])
+            'conditions' => array('and' => array(
+                'Place.id' => $this->request->params['id'],
+                'Place.id !=' => 1 //id=1は'その他'なので除外する
+            ))
         ));
         if (!empty($place_detail)) { //データが存在する場合
           $this->set('place_detail', $place_detail);
@@ -96,23 +100,23 @@ class PlacesController extends AppController {
       }
   }
 
-  /*public function add() {
+  public function add() {
       if ($this->request->is('post')) {
-        $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
-        if ($this->Sample->validates()) { //validate成功の処理
-          $this->Sample->save($this->request->data); //validate成功でsave
-          if ($this->Sample->save($this->request->data)) {
+        $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->Place->validates()) { //validate成功の処理
+          $this->Place->save($this->request->data); //validate成功でsave
+          if ($this->Place->save($this->request->data)) {
             $this->Session->setFlash('登録しました。', 'flashMessage');
           } else {
             $this->Session->setFlash('登録できませんでした。', 'flashMessage');
           }
         } else { //validate失敗の処理
-          $this->render('index'); //validate失敗でindexを表示
+          $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+          $this->redirect('/places/place_lists/'); //validate失敗で元ページを表示
         }
-      }
-
-      $this->redirect('/samples/');
-  }*/
+      $this->redirect('/places/place_lists/');
+      } //postデータがなければaddページを表示
+  }
 
   /*public function edit($id = null) {
 //      $sample_lists = $this->Sample->find('all', array(
@@ -148,19 +152,22 @@ class PlacesController extends AppController {
       }
   }*/
 
-  /*public function delete($id = null){
+  public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
     
-      if ($this->request->is('post')) {
-        $this->Sample->Behaviors->enable('SoftDelete');
-        if ($this->Sample->delete($id)) {
+      if ($this->request->is('post') and $id > 6) { //削除不可に設定したい会場データ
+        $this->Place->Behaviors->enable('SoftDelete');
+        if ($this->Place->delete($id)) {
           $this->Session->setFlash('削除しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');
         }
-        $this->redirect('/samples/');
+        $this->redirect('/places/place_lists/');
+      } else {
+        $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        $this->redirect('/places/place_lists/');
       }
-  }*/
+  }
 }
