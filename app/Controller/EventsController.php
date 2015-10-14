@@ -71,7 +71,7 @@ class EventsController extends AppController {
               'and' => array(
                   'date >=' => date('Y-m-d'),
                   'or' => array(
-                      array('user_id' => $login_id),
+                      array('Event.user_id' => $login_id),
                       array('Event.id' => $join_lists)
                   )
               )
@@ -102,7 +102,7 @@ class EventsController extends AppController {
                 'and' => array(
                     'Event.id' => $this->request->params['id'],
                     'or' => array( //作成者か参加者の場合のみ
-                        array('user_id' => $login_id),
+                        array('Event.user_id' => $login_id),
                         array('Event.id' => $join_lists)
                     )
                 )
@@ -167,7 +167,7 @@ class EventsController extends AppController {
               'and' => array(
                   'date >=' => date('Y-m-d'),
                   'or' => array(
-                      array('user_id' => $login_id),
+                      array('Event.user_id' => $login_id),
                       array('Event.id' => $join_lists)
                   )
               )
