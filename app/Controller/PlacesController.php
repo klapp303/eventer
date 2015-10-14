@@ -35,7 +35,7 @@ class PlacesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Place'); //使用するModel
+	public $uses = array('Place', 'EventUser', 'Event'); //使用するModel
 
 /**
  * Displays a view
@@ -74,14 +74,7 @@ class PlacesController extends AppController {
   }
 
   public function place_detail() {
-//      $place_lists = $this->Place->find('all', array(
-//          'order' => array('id' => 'asc')
-//      ));
-      $this->Paginator->settings = $this->paginate;
-      $place_lists = $this->Paginator->paginate('Place');
-      //$place_counts = count($place_lists);
-      $this->set('place_lists', $place_lists);
-      //$this->set('place_counts', $place_counts);
+      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
 
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $place_detail = $this->Place->find('first', array(
@@ -92,6 +85,27 @@ class PlacesController extends AppController {
         ));
         if (!empty($place_detail)) { //データが存在する場合
           $this->set('place_detail', $place_detail);
+          //会場に紐付くイベント一覧を取得
+          $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+              'conditions' => array('user_id' => $login_id),
+              'fields' => 'event_id'
+          ));
+          $this->Paginator->settings = array( //place_detailページのイベント一覧を設定
+              'conditions' => array(
+                  'and' => array(
+                      'date >=' => date('Y-m-d'),
+                      'place_id' => $this->request->params['id'], //eventsページの一覧から会場で更に絞り込み
+                      'or' => array(
+                          array('Event.user_id' => $login_id),
+                          array('Event.id' => $join_lists)
+                      )
+                  )
+              ),
+              'order' => array('date' => 'asc')
+          );
+          $event_lists = $this->Paginator->paginate('Event');
+          $this->set('event_lists', $event_lists);
+          //取得ここまで
           $this->layout = 'eventer_normal';
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');

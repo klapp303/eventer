@@ -43,3 +43,20 @@
 #PlaceEditForm >.submit {
     margin: 10px 20px;
 }
+
+/* イベント一覧用 */
+#event-list_place { /* floatによるレイアウト崩れを防ぐ */
+    min-height: 400px;
+}
+
+.event-list_place {
+    width: 390px;
+}
+
+.tbl-date {
+    width: 70px;
+}
+
+.tbl-action_place {
+    width: 55px;
+}

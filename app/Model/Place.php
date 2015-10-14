@@ -17,17 +17,21 @@ class Place extends AppModel {
       )
   );*/
 
-  /*public $validate = array(
-      'title' => array(
+  public $validate = array(
+      'name' => array(
           'rule' => 'notBlank',
           'required' => 'true'
       ),
-      'amount' => array(
+      'access' => array(
+          'rule' => 'notBlank',
+          'required' => 'true'
+      ),
+      'capacity' => array(
           'rule' => 'numeric',
           'required' => 'true',
-          'message' => '金額を正しく入力してください。'
+          'message' => '人数を正しく入力してください。'
       )
-  );*/
+  );
 
 //  public $filtetArgs = ['' => ['' => '', '' => '']];
 }

@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* イベント一覧用 */
-.tbl-date_events {
+.tbl-date {
     width: 70px;
 }
 
@@ -12,7 +12,7 @@
     width: 70px;
 }
 
-.tbl-action_events {
+.tbl-action {
     width: 110px;
 }
 
