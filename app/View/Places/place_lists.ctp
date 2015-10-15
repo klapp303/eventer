@@ -4,8 +4,7 @@
     追加する際は、既に会場が登録されていないか確認してください。
   </P>
   
-  <label>会場を新規に追加する場合はこちらから</label>
-  <span class="icon-button"><?php echo $this->Html->link('新規追加', '/places/add/'); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 会場の新規登録はこちら', '/places/add/'); ?></span>
 </div>
 
 <h3>会場一覧</h3>
