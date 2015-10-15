@@ -1,23 +1,46 @@
 @charset "utf-8";
 /* ユーザ登録フォーム用 */
-#UserAddForm >label,
-#UserEditForm >label {
+.UserAddForm >tbody >tr >td >label,
+.UserEditForm >tbody >tr >td >label,
+.UserLoginForm >tbody >tr >td >label {
     margin-left: 20px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
 
-#UserAddForm >input, #UserAddForm >select,
-#UserEditForm >input, #UserEditForm >select {
+.UserAddForm >tbody >tr >td >input,
+.UserEditForm >tbody >tr >td >input,
+.UserLoginForm >tbody >tr >td >input {
     margin-bottom: 10px;
 }
 
-#UserAddForm >.submit,
-#UserEditForm >.submit {
-    margin: 10px 20px;
+.UserAddForm >tbody >tr >td >.submit,
+.UserEditForm >tbody >tr >td >.submit {
+    margin-top: 10px;
+    margin-left: 131px;
+}
+
+.UserLoginForm >tbody >tr >td >.submit {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 113px;
 }
 
 /* プロフィールページ用 */
 .tbl-prof_user {
     width: 540px;
+}
+
+.tbl-prof_user >tbody >tr {
+    height: 36px;
+}
+
+.tbl-prof_user >tbody >tr >th {
+    width: 250px;
+}
+
+/* ページリンク用 */
+.link-page_users {
+    margin-left: 50px;
+    margin-bottom: 20px;
 }
