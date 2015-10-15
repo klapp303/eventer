@@ -27,10 +27,6 @@
 }
 
 /* プロフィールページ用 */
-.tbl-prof_user {
-    width: 540px;
-}
-
 .tbl-prof_user >tbody >tr {
     height: 36px;
 }

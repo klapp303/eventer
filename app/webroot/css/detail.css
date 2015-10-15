@@ -79,6 +79,10 @@
     width: 740px;
 }
 
+.detail-list-min {
+    width: 540px;
+}
+
 .tbl-num {
     text-align: right;
 }

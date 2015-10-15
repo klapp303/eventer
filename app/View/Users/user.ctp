@@ -4,7 +4,7 @@
     <?php } ?>
     ユーザ情報</h3>
 
-  <table class="tbl-prof_user">
+  <table class="detail-list-min tbl-prof_user">
     <tr><th>ハンドルネーム</th><td><?php echo $user_detail['User']['handlename']; ?></td></tr>
     <tr><th>メールアドレス<span class="txt-min txt-n">（ログインに使用）</span></th><td><?php echo $user_detail['User']['username']; ?></td></tr>
     <tr><th>パスワード<span class="txt-min txt-n">（ログインに使用）</span></th><td>表示しないよ！！</td></tr>
