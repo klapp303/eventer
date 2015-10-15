@@ -44,10 +44,11 @@
         他が実装できて手を付けられる段階まで来てるけどまだ概観が見えてないから後回し（ぇ<br>
         もうひとつの目玉機能・・・になったらイイね！！<hr>
         </td><td><span class="icon-like">minor</span></td></tr>
-    <tr><td class="tbl-num">7</td><td>TOPページ</td><td>
-        地味にまだできていないっていう・・・／(^o^)＼ﾅﾝﾃｺｯﾀｲ<br>
-        とりあえず<s>簡単そうだし</s>次はこのあたりからかな。<hr>
-        </td><td><span class="icon-alt">major</span></td></tr>
+    <tr><td class="tbl-num">7</td><td>TOPページ<span class="txt-alt">←New</span></td><td>
+        TOPページがようやくできたぞー！直近は向こう1ヶ月で表示してます。<br>
+        ステータス変更が未対応の件数を出しておきながら、一覧で修正できないという・・・<br>
+        一応暫定的に編集ページのリンクボタンは設置したけど、そうだね元ページに戻らないね。<hr>
+        </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">8</td><td>デザイン諸々<span class="txt-alt">←New</span></td><td>
         メール関連はレイアウトに影響しないし、収支管理はまた別ページだろうから、<br>
         とりあえず既存のページに施してみた。オサレじゃなくても見やすけりゃいいんだよ！！<hr>
