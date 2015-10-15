@@ -35,7 +35,7 @@ class PlacesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Place', 'EventUser', 'Event'); //使用するModel
+	public $uses = array('Place', 'EventUser', 'Event', 'Option'); //使用するModel
 
 /**
  * Displays a view
@@ -63,6 +63,12 @@ class PlacesController extends AppController {
   }
 
   public function place_lists() {
+      $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+      ));
+      $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
+      $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
+
 //      $place_lists = $this->Place->find('all', array(
 //          'order' => array('id' => 'asc')
 //      ));
@@ -167,11 +173,16 @@ class PlacesController extends AppController {
   }*/
 
   public function delete($id = null){
+      $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+      ));
+      $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
+
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
     
-      if ($this->request->is('post') and $id > 6) { //削除不可に設定したい会場データ
+      if ($this->request->is('post') and $id > $PLACE_BLOCK_KEY) { //削除不可に設定したい会場データ
         $this->Place->Behaviors->enable('SoftDelete');
         if ($this->Place->delete($id)) {
           $this->Session->setFlash('削除しました。', 'flashMessage');

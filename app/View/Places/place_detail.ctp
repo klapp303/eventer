@@ -7,7 +7,9 @@
     <tr><td><?php echo $place_detail['Place']['name']; ?></td>
         <td class="tbl-num"><?php echo $place_detail['Place']['capacity']; ?>名</td>
         <td><?php echo $place_detail['Place']['access']; ?>駅</td>
-        <td><?php echo $this->Html->link($place_detail['Place']['url'], $place_detail['Place']['url'], array('target' => '_blank')); ?></td></tr>
+        <td><?php if ($place_detail['Place']['url']) { ?>
+            <?php echo $this->Html->link($place_detail['Place']['url'], $place_detail['Place']['url'], array('target' => '_blank')); ?>
+            <?php } ?></td></tr>
   </table>
 
 <div id="map" class="fr cf">
@@ -33,9 +35,7 @@
   )); ?>
 
   <table class="event-list_place">
-    <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('date', '▼'); ?></th>
-        <th>イベント名<?php echo $this->Paginator->sort('title', '▼'); ?></th>
-        <th class="tbl-action_place">action</th></tr>
+    <tr><th class="tbl-date">開催日</th><th>イベント名</th><th class="tbl-action_place">action</th></tr>
     
     <?php foreach ($event_lists AS $event_list) { ?>
     <tr><td class="tbl-date"><?php echo $event_list['Event']['date']; ?></td>

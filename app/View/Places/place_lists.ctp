@@ -28,6 +28,8 @@
         <td class="tbl-num"><?php echo $place_list['Place']['capacity']; ?>名</td>
         <td><?php echo $place_list['Place']['access']; ?>駅</td>
         <td class="tbl-action_places"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/'.$place_list['Place']['id'], array('target' => '_blank')); ?></span>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, '本当に削除しますか'); ?></span></td></tr>
+          <?php if ($place_list['Place']['id'] > $PLACE_BLOCK_KEY) { ?>
+            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, '本当に削除しますか'); ?></span>
+        <?php } ?></td></tr>
     <?php } ?>
   </table>
