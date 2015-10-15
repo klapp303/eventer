@@ -283,4 +283,20 @@ class EventsController extends AppController {
       $event_lists = $this->Paginator->paginate('Event');
       $this->set('event_lists', $event_lists);
   }
+
+  public function event_lists_delete($id = null) {
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->Event->Behaviors->enable('SoftDelete');
+        if ($this->Event->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/events/event_lists/');
+      }
+  }
 }

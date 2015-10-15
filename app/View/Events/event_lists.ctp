@@ -25,7 +25,7 @@
                                   elseif ($event_list['Event']['status'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
         <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['Event']['id'], array('target' => '_blank')); ?></span>
             <?php if ($event_list['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $event_list['Event']['id']), null, '本当に削除しますか'); ?></span>
+            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'event_lists_delete', $event_list['Event']['id']), null, '本当に削除しますか'); ?></span>
             <?php } ?></td></tr>
     <?php } ?>
   </table>

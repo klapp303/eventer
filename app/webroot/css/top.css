@@ -1,9 +1,36 @@
 @charset "utf-8";
-/* サンプルがないのでbudgetの記述 */
-.tbl-budget_top {
-    padding-left: 50px;
+/* コンテンツ説明文用 */
+.intro_top {
+    height: 90px;
+    margin-left: 20px;
 }
 
-.title-ex-now_top {
-    margin-top: 50px;
+.intro_top >p {
+    margin-right: 20px;
+    margin-bottom: 30px;
+}
+
+/* イベント一覧用 */
+.tbl-date {
+    width: 70px;
+}
+
+.tbl-ico {
+    width: 80px;
+}
+
+.tbl-num {
+    width: 70px;
+}
+
+.tbl-today {
+    width: 80px;
+}
+
+.tbl-current {
+    width: 110px;
+}
+
+.tbl-action {
+    width: 55px;
 }
