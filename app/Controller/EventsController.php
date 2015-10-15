@@ -258,4 +258,29 @@ class EventsController extends AppController {
         $this->redirect('/events/');
       }
   }
+
+  public function event_lists() {
+      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
+//      $event_lists = $this->Event->find('all', array(
+//          'order' => array('date' => 'desc')
+//      ));
+      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+          'conditions' => array('user_id' => $login_id),
+          'fields' => 'event_id'
+      ));
+      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+          'conditions' => array(
+              'and' => array(
+                  'date <' => date('Y-m-d'), //過去のイベントを取得
+                  'or' => array(
+                      array('Event.user_id' => $login_id),
+                      array('Event.id' => $join_lists)
+                  )
+              )
+          ),
+          'order' => array('date' => 'desc')
+      );
+      $event_lists = $this->Paginator->paginate('Event');
+      $this->set('event_lists', $event_lists);
+  }
 }

@@ -84,3 +84,7 @@
             <?php } ?></td></tr>
     <?php } ?>
   </table>
+
+<div class="link-page_events">
+  <span class="link-page"><?php echo $this->Html->link('⇨ 過去のイベントはこちら', '/events/event_lists/'); ?></span>
+</div>
