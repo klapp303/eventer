@@ -6,7 +6,7 @@
       'inputDefaults' => array('div' => '')
       )
   ); ?><!-- form start -->
-  <?php echo $this->Form->input('username', array('type' => 'text', 'label' => 'ユーザ名')); ?><br>
+  <?php echo $this->Form->input('username', array('type' => 'text', 'label' => 'メールアドレス')); ?><br>
   <?php echo $this->Form->input('password', array('type' => 'text', 'label' => 'パスワード')); ?>
   
   <?php echo $this->Form->submit('ログイン'); ?>

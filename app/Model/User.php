@@ -15,20 +15,24 @@ class User extends AppModel {
           'rule_1' => array(
               'rule' => 'notBlank',
               'required' => 'true',
-              'message' => 'ユーザ名を正しく入力してください。'
+              'message' => 'メールアドレスを正しく入力してください。'
           ),
-          'rule_2' => array(
+          /*'rule_2' => array(
               'rule' => 'alphaNumeric',
               'message' => 'ユーザ名は半角英数のみです'
-          ),
-          'rule_3' => array(
+          ),*/
+          /*'rule_3' => array(
               'rule' => 'isHalfLetter',
               'message' => 'ユーザ名は半角英数のみです'
-          ),
-          'rule_4' => array(
+          ),*/
+          /*'rule_4' => array(
               'rule' => array('between', 4, 10),
               'message' => 'ユーザ名は4～10文字です'
-          )
+          ),*/
+          'rule_5' => array(
+              'rule' => array('email', true),
+              'message' => 'メールアドレスを正しく入力してください。'
+          ),
       ),
       'handlename' => array(
           'rule_1' => array(

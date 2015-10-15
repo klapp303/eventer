@@ -1,4 +1,23 @@
 @charset "utf-8";
+/* ユーザ登録フォーム用 */
+#UserAddForm >label,
+#UserEditForm >label {
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#UserAddForm >input, #UserAddForm >select,
+#UserEditForm >input, #UserEditForm >select {
+    margin-bottom: 10px;
+}
+
+#UserAddForm >.submit,
+#UserEditForm >.submit {
+    margin: 10px 20px;
+}
+
+/* プロフィールページ用 */
 .tbl-prof_user {
     width: 540px;
 }
