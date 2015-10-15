@@ -27,21 +27,22 @@
 }
 
 /* 会場登録フォーム用 */
-#PlaceAddForm >label,
-#PlaceEditForm >label {
+.PlaceAddForm >tbody >tr >td >label,
+.PlaceEditForm >tbody >tr >td >label {
     margin-left: 20px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
 
-#PlaceAddForm >input, #PlaceAddForm >select,
-#PlaceEditForm >input, #PlaceEditForm >select {
+.PlaceAddForm >tbody >tr >td >input,
+.PlaceEditForm >tbody >tr >td >input {
     margin-bottom: 10px;
 }
 
-#PlaceAddForm >.submit,
-#PlaceEditForm >.submit {
-    margin: 10px 20px;
+.PlaceAddForm >tbody >tr >td >.submit,
+.PlaceEditForm >tbody >tr >td >.submit {
+    margin-top: 10px;
+    margin-left: 108px;
 }
 
 /* イベント一覧用 */

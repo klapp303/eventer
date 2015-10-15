@@ -25,7 +25,7 @@
     
     <?php foreach ($place_lists AS $place_list) { ?>
     <tr><td><?php echo $place_list['Place']['name']; ?></td>
-        <td class="tbl-num"><?php echo $place_list['Place']['capacity']; ?>名</td>
+        <td class="tbl-num"><?php echo $place_list['Place']['capacity']; ?>人</td>
         <td><?php echo $place_list['Place']['access']; ?>駅</td>
         <td class="tbl-action_places"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/'.$place_list['Place']['id'], array('target' => '_blank')); ?></span>
           <?php if ($place_list['Place']['id'] > $PLACE_BLOCK_KEY) { ?>
