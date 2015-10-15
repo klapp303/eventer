@@ -51,7 +51,7 @@
     <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_payment_end')); ?>
       なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
   <?php } ?>
-  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定'))); ?><br>
+  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><br>
   
   <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
   <label>参加者を追加</label><span class="txt-min">（既に選択されている参加者は選べません）</span><br>
@@ -97,9 +97,10 @@
     <tr><td class="tbl-date"><?php echo $event_list['Event']['date']; ?></td>
         <td><?php echo $event_list['Event']['title']; ?></td>
         <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_list['Event']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span>
-                            <br><?php if ($event_list['Event']['status'] == 0) {echo '<span class="icon-false">未定</span>';}
-                                  elseif ($event_list['Event']['status'] == 1) {echo '<span class="icon-like">申込中</span>';} 
-                                  elseif ($event_list['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';} ?></td>
+                            <br><?php if ($event_list['Event']['status'] == 0) {echo '<span class="icon-genre">未定</span>';}
+                                  elseif ($event_list['Event']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
+                                  elseif ($event_list['Event']['status'] == 2) {echo '<span class="icon-true">確定</span>';}
+                                  elseif ($event_list['Event']['status'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
         <td class="tbl-num"><?php echo $event_list['Event']['amount']; ?>円<br>
                             <?php echo $event_list['Event']['number']; ?>枚</td>
         <td class="tbl-date"><?php echo $event_list['Event']['entry_start']; ?></td>
