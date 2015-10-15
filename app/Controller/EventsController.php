@@ -261,9 +261,6 @@ class EventsController extends AppController {
 
   public function event_lists() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
-//      $event_lists = $this->Event->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
       $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('user_id' => $login_id),
           'fields' => 'event_id'
@@ -282,6 +279,19 @@ class EventsController extends AppController {
       );
       $event_lists = $this->Paginator->paginate('Event');
       $this->set('event_lists', $event_lists);
+      
+      //未対応のイベント
+      $event_undecided_lists = $this->Event->find('all', array(
+          'conditions' => array(
+              'and' => array(
+                  'Event.date <' => date('Y-m-d'),
+                  'Event.status <' => 2,
+                  'Event.user_id' => $login_id
+              )
+          ),
+          'order' => array('date' => 'asc')
+      ));
+      $this->set('event_undecided_lists', $event_undecided_lists);
   }
 
   public function event_lists_delete($id = null) {
