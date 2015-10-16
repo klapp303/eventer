@@ -16,5 +16,5 @@
   </table>
 
 <div class="link-page_users">
-  <span class="link-page"><?php echo $this->Html->link('⇨ パスワード変更はこちら', '#'); ?></span>
+  <span class="link-page"><?php echo $this->Form->postLink('⇨ パスワード変更はこちら', array('action' => 'pw_edit', $user_detail['User']['id'])); ?></span>
 </div>

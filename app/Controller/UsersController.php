@@ -123,6 +123,30 @@ class UsersController extends AppController {
       }
   }
 
+  public function pw_edit($id = null) {
+      $this->layout = 'eventer_fullwidth';
+      if (empty($this->request->data)) {
+        if (!$this->request->is('post')) { //post送信でない場合
+          $this->redirect('/user/'.$id);
+        }
+        $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
+        $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
+      } else {
+        $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->User->validates()) { //validate成功の処理
+          $this->User->save($this->request->data); //validate成功でsave
+          if ($this->User->save($id)) {
+            $this->Session->setFlash('変更しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+          }
+        } else { //validate失敗の処理
+          $this->Session->setFlash('変更内容が正しくありません。', 'flashMessage');
+        }
+        $this->redirect('/user/'.$id); //postデータがあればvalidate結果に関わらず元ページに戻る
+      }
+  }
+
 /*  public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
