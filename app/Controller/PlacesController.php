@@ -138,39 +138,30 @@ class PlacesController extends AppController {
       } //postデータがなければaddページを表示
   }
 
-  /*public function edit($id = null) {
-//      $sample_lists = $this->Sample->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
-      $this->Paginator->settings = $this->paginate;
-      $sample_lists = $this->Paginator->paginate('Sample');
-      //$sample_counts = count($sample_lists);
-      $this->set('sample_lists', $sample_lists);
-      //$this->set('sample_counts', $sample_counts);
-
+  public function edit($id = null) {
       if (empty($this->request->data)) {
-        $this->request->data = $this->Sample->findById($id); //postデータがなければ$idからデータを取得
+        $this->request->data = $this->Place->findById($id); //postデータがなければ$idからデータを取得
         if (!empty($this->request->data)) { //データが存在する場合
           $this->set('id', $id); //viewに渡すために$idをセット
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
         }
       } else {
-        $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
-        if ($this->Sample->validates()) { //validate成功の処理
-          $this->Sample->save($this->request->data); //validate成功でsave
-          if ($this->Sample->save($id)) {
+        $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
+        if ($this->Place->validates()) { //validate成功の処理
+          $this->Place->save($this->request->data); //validate成功でsave
+          if ($this->Place->save($id)) {
             $this->Session->setFlash('修正しました。', 'flashMessage');
           } else {
             $this->Session->setFlash('修正できませんでした。', 'flashMessage');
           }
-          $this->redirect('/samples/');
+          $this->redirect('/places/place_lists/');
         } else { //validate失敗の処理
-          $this->set('id', $this->request->data['Sample']['id']); //viewに渡すために$idをセット
+          $this->set('id', $this->request->data['Place']['id']); //viewに渡すために$idをセット
 //          $this->render('index'); //validate失敗でindexを表示
         }
       }
-  }*/
+  }
 
   public function delete($id = null){
       $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
