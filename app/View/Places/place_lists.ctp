@@ -29,7 +29,7 @@
         <td class="tbl-action_places"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/'.$place_list['Place']['id'], array('target' => '_blank')); ?></span>
           <span class="icon-button"><?php echo $this->Html->link('修正', '/places/edit/'.$place_list['Place']['id']); ?></span>
           <?php if ($place_list['Place']['id'] > $PLACE_BLOCK_KEY) { ?>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, '本当に削除しますか'); ?></span>
+            <div class="delete_places"><span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, '本当に削除しますか'); ?></span></div>
         <?php } ?></td></tr>
     <?php } ?>
   </table>

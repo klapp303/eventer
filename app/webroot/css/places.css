@@ -27,6 +27,10 @@
     width: 110px;
 }
 
+.delete_places {
+    margin-left: 53px;
+}
+
 /* 会場登録フォーム用 */
 .PlaceAddForm >tbody >tr >td >label,
 .PlaceEditForm >tbody >tr >td >label {
