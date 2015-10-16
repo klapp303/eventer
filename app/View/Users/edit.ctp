@@ -1,6 +1,8 @@
 <?php echo $this->Html->css('users', array('inline' => FALSE)); ?>
 <h3>ユーザ情報の変更</h3>
 
+<p class="txt-min">（次回ログイン時から変更が反映されます）</p>
+
   <table class="UserEditForm">
     <?php echo $this->Form->create('User', array( //使用するModel
         'type' => 'put', //変更はput送信
@@ -20,6 +22,10 @@
     <tr>
       <td><label>最寄り駅（任意）</label></td>
       <td><?php echo $this->Form->input('station', array('type' => 'text', 'label' => false, 'placeholder' => '例）東京')); ?>駅</td>
+    </tr>
+    <tr>
+      <td><label>参加者機能</label></td>
+      <td><?php echo $this->Form->input('community_id', array('type' => 'select', 'label' => false, 'options' => array(0 => '利用しない', 1 => '利用する'))); ?></td>
     </tr>
     
     <tr>

@@ -31,16 +31,22 @@
    
   <!-- FormHelperで難しかったのでHTMLタグ打ち -->
   <label>参加者</label><span class="txt-min">（参加者にもイベントは表示されるようになります）</span><br>
-  <?php $i = 0; ?>
-  <div class="form-user_events">
-  <?php foreach ($user_lists AS $user_list) { ?>
-    <span class="checkbox_user">
-    <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
-    <?php echo $user_list['User']['handlename']; ?>
-    </span>
-    <?php $i++; ?>
+  <?php if ($this->Session->read('Auth.User.community_id') == 1) { ?>
+    <?php $i = 0; ?>
+    <div class="form-user_events">
+    <?php foreach ($user_lists AS $user_list) { ?>
+      <span class="checkbox_user">
+      <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
+      <?php echo $user_list['User']['handlename']; ?>
+      </span>
+      <?php $i++; ?>
+    <?php } ?>
+    </div>
+  <?php } else { ?>
+    <div class="alt_events">
+      <p class="txt-min">参加者機能を利用するにはプロフィールから設定を変更してください。</p>
+    </div>
   <?php } ?>
-  </div>
   
   <?php echo $this->Form->submit('登録する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->

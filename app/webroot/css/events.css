@@ -68,6 +68,10 @@
     margin-bottom: 10px;
 }
 
+.alt_events {
+    margin-left: 40px;
+}
+
 /* ページリンク用 */
 .link-page_events {
     text-align: right;

@@ -91,7 +91,8 @@ class EventsController extends AppController {
           'fields' => array('id', 'handlename'),
           'conditions' => array('and' => array(
               array('id !=' => $login_id), //ログインユーザを除外
-              array('id >' => $USER_CARBON_KEY) //管理者及び閲覧用アカウントを除外
+              array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
+              array('community_id' => 1) //参加者機能利用者のみ
           ))
       ));
       $this->set('event_lists', $event_lists);
@@ -208,7 +209,8 @@ class EventsController extends AppController {
                 'conditions' => array('and' => array(
                     array('id !=' => $login_id), //ログインユーザを除外
                     array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
-                    array('id !=' =>  $checked_lists) //登録済参加者を除外
+                    array('id !=' =>  $checked_lists), //登録済参加者を除外
+                    array('community_id' => 1) //参加者機能利用者のみ
                 )),
                 'order' => array('id' => 'asc')
             ));
