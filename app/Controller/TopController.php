@@ -136,6 +136,18 @@ class TopController extends AppController {
           'order' => array('date' => 'asc')
       ));
       $this->set('event_undecided_lists', $event_undecided_lists);
+      
+      //未対応の収支
+      $budget_undecided_lists = $this->EventUser->find('all', array(
+          'conditions' => array(
+              'EventDetail.user_id' => $login_id,
+              'EventUser.payment' => 0,
+              'EventDetail.deleted !=' => 1 //紐付くテーブルのSoftDeleteは無視されるので記述
+          ),
+          'order' => array('EventDetail.date' => 'asc')
+      ));
+      $budget_undecided_count = count($budget_undecided_lists);
+      $this->set('budget_undecided_count', $budget_undecided_count);
 
 //      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
 //          'conditions' => array(

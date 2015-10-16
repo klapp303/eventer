@@ -63,7 +63,7 @@
   </div>
   <?php } ?>
 
-<h3>未対応のイベント</h3>
+<h3>管理未対応のイベント、収支</h3>
 
   <?php $event_undecided_count = count($event_undecided_lists); ?>
   <?php if (count($event_undecided_count) == 0) { ?>
@@ -76,6 +76,9 @@
   <div class="intro_top">
     <p>
       未対応のイベントが <?php echo $this->Html->link($event_undecided_count.'件', '/events/event_lists/'); ?> あります。
+    </p>
+    <p>
+      未対応の収支が <?php echo $this->Html->link($budget_undecided_count.'件', '/budgets/in_lists/'); ?> あります。
     </p>
   </div>
   <?php } ?>
