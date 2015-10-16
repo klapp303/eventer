@@ -86,7 +86,6 @@ class EventsController extends AppController {
           'conditions' => array('title' => 'USER_CARBON_KEY')
       ));
       $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
-      $this->set('USER_CARBON_KEY', $USER_CARBON_KEY);
       $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
           'fields' => array('id', 'handlename'),
           'conditions' => array('and' => array(
@@ -198,12 +197,20 @@ class EventsController extends AppController {
                 'conditions' => array('title' => 'USER_CARBON_KEY')
             ));
             $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
-            $this->set('USER_CARBON_KEY', $USER_CARBON_KEY);
             $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
                 'fields' => 'user_id',
                 'conditions' => array('event_id' => $id),
                 'order' => array('user_id' => 'asc')
             ));
+              //checkedユーザが1人だった場合のバグを修正（追加済み参加者でid = array(x)となりエラー）
+              if (count($checked_lists) == 1) {
+                $checked_lists_only = $this->EventUser->find('first', array(
+                    'fields' => 'user_id',
+                    'conditions' => array('event_id' => $id),
+                ));
+                $checked_lists = $checked_lists_only['EventUser']['user_id'];
+              }
+              //バグ修正ここまで
             $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
                 'fields' => array('id', 'handlename'),
                 'conditions' => array('and' => array(
