@@ -9,10 +9,10 @@
       )
   ); ?><!-- form start -->
   <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
-  <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名', 'size' => 20)); ?><br>
-  <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?>
-  <?php echo $this->Form->input('place_id', array('type' => 'select', 'label' => '会場', 'options' => $place_lists)); ?><br>
-  <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?>
+  <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名', 'size' => 20)); ?><span class="txt-alt txt-b">*</span><br>
+  <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?><span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('place_id', array('type' => 'select', 'label' => '会場', 'options' => $place_lists)); ?><span class="txt-alt txt-b">*</span><br>
+  <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><span class="txt-alt txt-b">*</span>
   <?php if ($this->request->data['Event']['time_start'] == null) { ?>
     <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class' => 'js-input_time_start', 'disabled' => 'disabled')); ?>
       なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start" checked="checked">'; ?><br>
@@ -20,9 +20,9 @@
     <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class' => 'js-input_time_start')); ?>
       なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start">'; ?><br>
   <?php } ?>
-  <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額', 'size' => 5)); ?>円
-  <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数', 'size' => 3)); ?>枚
-  <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><br>
+  <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額', 'size' => 5)); ?>円<span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数', 'size' => 3)); ?>枚<span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><span class="txt-alt txt-b">*</span><br>
   <?php if ($this->request->data['Event']['entry_start'] == null) { ?>
     <?php echo $this->Form->input('entry_start', array('type' => 'date', 'label' => '申込開始日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_entry_start', 'disabled' => 'disabled')); ?>
       なし<?php echo '<input type="checkbox" name="entry_start" class="js-checkbox_entry_start" checked="checked">'; ?>
@@ -51,50 +51,49 @@
     <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'js-input_payment_end')); ?>
       なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
   <?php } ?>
-  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><br>
+  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('publish', array('type' => 'select', 'label' => '公開設定', 'options' => array(0 => '参加者のみ', 1 => '全てのユーザ'))); ?><span class="txt-alt txt-b">*</span><br>
   
   <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
-  <label>参加者</label><span class="txt-min">（参加者にもイベントは表示されるようになります）</span><br>
+  <label>参加者</label><span class="txt-min">（参加者にもイベントは公開されます）</span><br>
   <?php if ($this->Session->read('Auth.User.community_id') == 1) { ?>
     <div class="form-user_events">
     <?php if (count($user_lists) > 0) { ; ?>
       <?php $i = 0; ?>
       <?php foreach ($user_lists AS $user_list) { ?>
-        <span class="checkbox_user">
+        <span class="checkbox_user txt-min">
         <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
         <?php echo $user_list['User']['handlename']; ?>
-        </span>
+        </span><br>
         <?php $i++; ?>
       <?php } ?>
     <?php } else { ?>
-      未参加のユーザはいません。<br>
+      <span class="txt-min">追加できるユーザはいません。</span><br>
     <?php } ?>
     </div>
-    <?php } else { ?>
+  <?php } else { ?>
       <div class="alt_events">
         <p class="txt-min">参加者機能を利用するにはプロフィールから設定を変更してください。</p>
       </div>
-    <?php } ?>
+  <?php } ?>
   
-  <?php echo $this->Form->submit('修正する'); ?>
+  <?php echo $this->Form->submit('修正する', array('div' => false, 'class' => 'submit')); ?>　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span>
   <?php echo $this->Form->end(); ?><!-- form end -->
   
   <?php if ($this->Session->read('Auth.User.community_id') == 1) { ?>
-    <div class="label-checked_events">追加済み参加者</div>
-    <div class="form-user_events">
+    <div class="form-checked-user_events fr cf">
     <?php if (count($checked_user_lists) > 0) { ; ?>
+      <label>追加済み参加者</label><br>
       <?php $i = 0; ?>
       <?php foreach ($checked_user_lists AS $checked_user_list) { ?>
-        <span class="checkedbox_user">
+        <span class="checkedbox_user txt-min">
         <?php echo $checked_user_list['User']['handlename']; ?>
-        </span>
         <span class="icon-button-min">
         <?php echo $this->Form->postLink('削除', array('action' => 'checked_user_delete', $checked_lists_delete[$i]['EventUser']['id']), null, '本当に削除しますか'); ?>
         </span>
+        </span><br>
         <?php $i++; ?>
       <?php } ?><br>
-    <?php } else { ?>
-      参加済みのユーザはいません。<br>
     <?php } ?>
     </div>
   <?php } ?>

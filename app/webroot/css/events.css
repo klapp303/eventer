@@ -46,16 +46,16 @@
 }
 
 /* 参加者登録フォーム用 */
-.form-user_events {
-    width: 700px;
+.form-user_events,
+.form-checked-user_events {
+    width: 320px;
     margin-left: 40px;
-    max-height: 100px;
+    max-height: 120px;
     overflow: auto;
 }
 
-.checkedbox_user {
-    margin-left: 20px;
-    white-space: nowrap;
+.form-checked-user_events {
+    margin-top: -100px;
 }
 
 .checkbox_user {
@@ -63,9 +63,9 @@
     white-space: nowrap;
 }
 
-.label-checked_events {
-     margin-left: 40px;
-    margin-bottom: 10px;
+.checkedbox_user {
+    margin-left: 20px;
+    white-space: nowrap;
 }
 
 .alt_events {

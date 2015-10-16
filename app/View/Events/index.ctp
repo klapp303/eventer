@@ -10,15 +10,15 @@
   ); ?><!-- form start -->
   <?php $user_id = $this->Session->read('Auth.User.id'); ?>
   <?php echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $user_id)); ?>
-  <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名', 'size' => 20)); ?><br>
-  <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?>
-  <?php echo $this->Form->input('place_id', array('type' => 'select', 'label' => '会場', 'options' => $place_lists)); ?><br>
-  <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?>
+  <?php echo $this->Form->input('title', array('type' => 'text', 'label' => 'イベント名', 'size' => 20)); ?><span class="txt-alt txt-b">*</span><br>
+  <?php echo $this->Form->input('genre_id', array('type' => 'select', 'label' => '種類', 'options' => $event_genres)); ?><span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('place_id', array('type' => 'select', 'label' => '会場', 'options' => $place_lists)); ?><span class="txt-alt txt-b">*</span><br>
+  <?php echo $this->Form->input('date', array('type' => 'date', 'label' => '開催日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><span class="txt-alt txt-b">*</span>
   <?php echo $this->Form->input('time_start', array('type' => 'time', 'label' => '開催時刻', 'timeFormat' => '24', 'class'=>'js-input_time_start')); ?>
     なし<?php echo '<input type="checkbox" name="time_start" class="js-checkbox_time_start">'; ?><br>
-  <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額', 'size' => 5)); ?>円
-  <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数', 'size' => 3)); ?>枚
-  <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><br>
+  <?php echo $this->Form->input('amount', array('type' => 'text', 'label' => '金額', 'size' => 5)); ?>円<span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('number', array('type' => 'text', 'label' => '枚数', 'size' => 3)); ?>枚<span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('entry_id', array('type' => 'select', 'label' => '申込方法', 'options' => $entry_genres)); ?><span class="txt-alt txt-b">*</span><br>
   <?php echo $this->Form->input('entry_start', array('type' => 'date', 'label' => '申込開始日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_entry_start')); ?>
     なし<?php echo '<input type="checkbox" name="entry_start" class="js-checkbox_entry_start">'; ?>
   <?php echo $this->Form->input('entry_end', array('type' => 'date', 'label' => '申込終了日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_entry_end')); ?>
@@ -27,15 +27,16 @@
     なし<?php echo '<input type="checkbox" name="announcement_date" class="js-checkbox_announcement_date">'; ?>
   <?php echo $this->Form->input('payment_end', array('type' => 'date', 'label' => '入金締切日', 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class'=>'js-input_payment_end')); ?>
     なし<?php echo '<input type="checkbox" name="payment_end" class="js-checkbox_payment_end">'; ?><br>
-  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><br>
+  <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><span class="txt-alt txt-b">*</span>
+  <?php echo $this->Form->input('publish', array('type' => 'select', 'label' => '公開設定', 'options' => array(0 => '参加者のみ', 1 => '全てのユーザ'))); ?><span class="txt-alt txt-b">*</span><br>
    
   <!-- FormHelperで難しかったのでHTMLタグ打ち -->
-  <label>参加者</label><span class="txt-min">（参加者にもイベントは表示されるようになります）</span><br>
+  <label>参加者</label><span class="txt-min">（参加者にもイベントは公開されます）</span><br>
   <?php if ($this->Session->read('Auth.User.community_id') == 1) { ?>
     <?php $i = 0; ?>
     <div class="form-user_events">
     <?php foreach ($user_lists AS $user_list) { ?>
-      <span class="checkbox_user">
+      <span class="checkbox_user txt-min">
       <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
       <?php echo $user_list['User']['handlename']; ?>
       </span>
@@ -48,7 +49,7 @@
     </div>
   <?php } ?>
   
-  <?php echo $this->Form->submit('登録する'); ?>
+  <?php echo $this->Form->submit('登録する', array('div' => false, 'class' => 'submit')); ?>　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span>
   <?php echo $this->Form->end(); ?><!-- form end -->
 
 <h3>イベント一覧</h3>
