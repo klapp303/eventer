@@ -293,7 +293,7 @@ class EventsController extends AppController {
       }
       
       if ($this->request->is('post')) {
-        $this->EventUser->Behaviors->enable('SoftDelete');
+//        $this->EventUser->Behaviors->enable('SoftDelete');
         if ($this->EventUser->delete($id)) {
           $this->Session->setFlash('削除しました。', 'flashMessage');
         } else {

@@ -56,21 +56,6 @@
   <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
   <label>参加者</label><br>
   <div class="form-user_events">
-  <?php if (count($checked_user_lists) > 0) { ; ?>
-    <?php $i = 0; ?>
-    <?php foreach ($checked_user_lists AS $checked_user_list) { ?>
-      <span class="checkedbox_user">
-      <?php echo $checked_user_list['User']['handlename']; ?>
-      </span>
-      <span class="icon-button-min">
-      <?php echo $this->Form->postLink('削除', array('action' => 'checked_user_delete', $checked_lists_delete[$i]['EventUser']['id']), null, '本当に削除しますか'); ?>
-      </span>
-      <?php $i++; ?>
-    <?php } ?><br>
-  <?php } else { ?>
-    参加済みのユーザはいません。<br>
-  <?php } ?>
-  
   <?php if (count($user_lists) > 0) { ; ?>
     <?php $i = 0; ?>
     <?php foreach ($user_lists AS $user_list) { ?>
@@ -87,6 +72,24 @@
   
   <?php echo $this->Form->submit('修正する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->
+  
+  <div class="label-checked_events">追加済み参加者</div>
+  <div class="form-user_events">
+  <?php if (count($checked_user_lists) > 0) { ; ?>
+    <?php $i = 0; ?>
+    <?php foreach ($checked_user_lists AS $checked_user_list) { ?>
+      <span class="checkedbox_user">
+      <?php echo $checked_user_list['User']['handlename']; ?>
+      </span>
+      <span class="icon-button-min">
+      <?php echo $this->Form->postLink('削除', array('action' => 'checked_user_delete', $checked_lists_delete[$i]['EventUser']['id']), null, '本当に削除しますか'); ?>
+      </span>
+      <?php $i++; ?>
+    <?php } ?><br>
+  <?php } else { ?>
+    参加済みのユーザはいません。<br>
+  <?php } ?>
+  </div>
 
 <h3>イベント一覧</h3>
 
