@@ -27,6 +27,25 @@
     width: 110px;
 }
 
+/* イベント詳細用 */
+.detail-list_event {
+    margin-bottom: 40px!important;
+}
+
+.tbl-date-long {
+    width: 120px;
+}
+
+.tbl-ico-long {
+    text-align: center;
+    width: 150px;
+}
+
+.tbl-user_long {
+    margin-right: 20px;
+    white-space: nowrap;
+}
+
 /* イベント登録フォーム用 */
 #EventAddForm >label,
 #EventEditForm >label {

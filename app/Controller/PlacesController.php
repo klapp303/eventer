@@ -103,7 +103,8 @@ class PlacesController extends AppController {
                       'place_id' => $this->request->params['id'], //eventsページの一覧から会場で更に絞り込み
                       'or' => array(
                           array('Event.user_id' => $login_id),
-                          array('Event.id' => $join_lists)
+                          array('Event.id' => $join_lists),
+                          array('Event.publish' => 1) //公開ステータスを追加
                       )
                   )
               ),

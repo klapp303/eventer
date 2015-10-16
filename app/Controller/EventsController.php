@@ -72,7 +72,8 @@ class EventsController extends AppController {
                   'date >=' => date('Y-m-d'),
                   'or' => array(
                       array('Event.user_id' => $login_id),
-                      array('Event.id' => $join_lists)
+                      array('Event.id' => $join_lists),
+                      array('Event.publish' => 1) //公開ステータスを追加
                   )
               )
           ),
@@ -108,7 +109,8 @@ class EventsController extends AppController {
                     'Event.id' => $this->request->params['id'],
                     'or' => array( //作成者か参加者の場合のみ
                         array('Event.user_id' => $login_id),
-                        array('Event.id' => $join_lists)
+                        array('Event.id' => $join_lists),
+                        array('Event.publish' => 1) //公開ステータスを追加
                     )
                 )
             )
@@ -324,7 +326,8 @@ class EventsController extends AppController {
                   'date <' => date('Y-m-d'), //過去のイベントを取得
                   'or' => array(
                       array('Event.user_id' => $login_id),
-                      array('Event.id' => $join_lists)
+                      array('Event.id' => $join_lists),
+                      array('Event.publish' => 1) //公開ステータスを追加
                   )
               )
           ),
