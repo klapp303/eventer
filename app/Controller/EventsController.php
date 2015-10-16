@@ -200,8 +200,8 @@ class EventsController extends AppController {
             ));
             $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
             $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
-                'fields' => 'Eventuser.user_id',
-                'conditions' => array('Eventuser.event_id' => $id),
+                'fields' => 'EventUser.user_id',
+                'conditions' => array('EventUser.event_id' => $id),
                 'order' => array('EventUser.user_id' => 'asc')
             ));
               //checkedユーザが1人だった場合のバグを修正（追加済み参加者でid = array(x)となりエラー）
