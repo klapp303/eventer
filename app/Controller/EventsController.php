@@ -64,7 +64,7 @@ class EventsController extends AppController {
 //      ));
       $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('user_id' => $login_id),
-          'fields' => 'event_id'
+          'fields' => 'EventUser.event_id'
       ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
@@ -167,7 +167,7 @@ class EventsController extends AppController {
 //      ));
       $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('user_id' => $login_id),
-          'fields' => 'event_id'
+          'fields' => 'EventUser.event_id'
       ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
@@ -200,15 +200,15 @@ class EventsController extends AppController {
             ));
             $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
             $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
-                'fields' => 'user_id',
-                'conditions' => array('event_id' => $id),
-                'order' => array('user_id' => 'asc')
+                'fields' => 'Eventuser.user_id',
+                'conditions' => array('Eventuser.event_id' => $id),
+                'order' => array('EventUser.user_id' => 'asc')
             ));
               //checkedユーザが1人だった場合のバグを修正（追加済み参加者でid = array(x)となりエラー）
               if (count($checked_lists) == 1) {
                 $checked_lists_only = $this->EventUser->find('first', array(
                     'fields' => 'user_id',
-                    'conditions' => array('event_id' => $id),
+                    'conditions' => array('EventUser.event_id' => $id),
                 ));
                 $checked_lists = $checked_lists_only['EventUser']['user_id'];
               }
@@ -236,8 +236,8 @@ class EventsController extends AppController {
             $this->set('checked_user_lists', $checked_user_lists);
             $checked_lists_delete = $this->EventUser->find('all', array( //削除ボタンのために取得
                 'fields' => 'id',
-                'conditions' => array('event_id' => $id),
-                'order' => array('user_id' => 'asc')
+                'conditions' => array('EventUser.event_id' => $id),
+                'order' => array('EventUser.user_id' => 'asc')
             ));
             $this->set('checked_lists_delete', $checked_lists_delete);
           } else { //データの作成者とログインユーザが一致しない場合
@@ -317,8 +317,8 @@ class EventsController extends AppController {
   public function event_lists() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
       $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
-          'conditions' => array('user_id' => $login_id),
-          'fields' => 'event_id'
+          'conditions' => array('EventUser.user_id' => $login_id),
+          'fields' => 'EventUser.event_id'
       ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
