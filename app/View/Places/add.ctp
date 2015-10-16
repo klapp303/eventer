@@ -11,7 +11,7 @@
     <?php echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $this->Session->read('Auth.User.id'))); ?>
     <tr>
       <td><label>会場名</label></td>
-      <td><?php echo $this->Form->input('name', array('type' => 'text', 'label' => false, 'placeholder' => '通称で問題なし')); ?><span class="txt-alt txt-b">*</span></td>
+      <td><?php echo $this->Form->input('name', array('type' => 'text', 'label' => false, 'placeholder' => '通称で構いません')); ?><span class="txt-alt txt-b">*</span><span class="txt-min">（25文字以内）</span></td>
     </tr>
     <tr>
       <td><label>収容人数</label></td>

@@ -19,8 +19,14 @@ class Place extends AppModel {
 
   public $validate = array(
       'name' => array(
-          'rule' => 'notBlank',
-          'required' => 'true'
+          'rule_1' => array(
+              'rule' => 'notBlank',
+              'required' => 'true'
+          ),
+          'rule_2' => array(
+              'rule' => array('maxLength', 25),
+              'message' => '会場名は25文字以内です'
+          )
       ),
       'access' => array(
           'rule' => 'notBlank',
