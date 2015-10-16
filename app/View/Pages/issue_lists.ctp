@@ -1,3 +1,4 @@
+<!-- 未使用 -->
 <?php echo $this->Html->css('pages', array('inline' => FALSE)); ?>
 <div class="intro_pages">
   <p>
