@@ -57,7 +57,7 @@ class SamplesController extends AppController {
       //$this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
-  public function index() {
+  /*public function index() {
 //      $sample_lists = $this->Sample->find('all', array(
 //          'order' => array('date' => 'desc')
 //      ));
@@ -78,9 +78,9 @@ class SamplesController extends AppController {
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
         }
       }
-  }
+  }*/
 
-  public function add() {
+  /*public function add() {
       if ($this->request->is('post')) {
         $this->Sample->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Sample->validates()) { //validate成功の処理
@@ -96,9 +96,9 @@ class SamplesController extends AppController {
       }
 
       $this->redirect('/samples/');
-  }
+  }*/
 
-  public function edit($id = null) {
+  /*public function edit($id = null) {
 //      $sample_lists = $this->Sample->find('all', array(
 //          'order' => array('date' => 'desc')
 //      ));
@@ -130,9 +130,9 @@ class SamplesController extends AppController {
 //          $this->render('index'); //validate失敗でindexを表示
         }
       }
-  }
+  }*/
 
-  public function delete($id = null){
+  /*public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
@@ -146,5 +146,5 @@ class SamplesController extends AppController {
         }
         $this->redirect('/samples/');
       }
-  }
+  }*/
 }
