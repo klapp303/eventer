@@ -54,10 +54,25 @@
   <?php echo $this->Form->input('status', array('type' => 'select', 'label' => '状態', 'options' => array(0 => '未定', 1 => '申込中', 2 => '確定', 3 => '落選'))); ?><br>
   
   <!-- FormHelperで難しかったのでHTMLタグ打ち、ユニークidがないので引継なし -->
-  <label>参加者を追加</label><span class="txt-min">（既に選択されている参加者は選べません）</span><br>
+  <label>参加者</label><br>
+  <div class="form-user_events">
+  <?php if (count($checked_user_lists) > 0) { ; ?>
+    <?php $i = 0; ?>
+    <?php foreach ($checked_user_lists AS $checked_user_list) { ?>
+      <span class="checkedbox_user">
+      <?php echo $checked_user_list['User']['handlename']; ?>
+      </span>
+      <span class="icon-button-min">
+      <?php echo $this->Form->postLink('削除', array('action' => 'checked_user_delete', $checked_lists_delete[$i]['EventUser']['id']), null, '本当に削除しますか'); ?>
+      </span>
+      <?php $i++; ?>
+    <?php } ?><br>
+  <?php } else { ?>
+    参加済みのユーザはいません。<br>
+  <?php } ?>
+  
   <?php if (count($user_lists) > 0) { ; ?>
     <?php $i = 0; ?>
-    <div class="form-user_events">
     <?php foreach ($user_lists AS $user_list) { ?>
       <span class="checkbox_user">
       <input type="checkbox" name="data[UserList][<?php echo $i; ?>][user_id]" value="<?php echo $user_list['User']['id']; ?>">
@@ -65,10 +80,10 @@
       </span>
       <?php $i++; ?>
     <?php } ?>
-    </div>
   <?php } else { ?>
     未参加のユーザはいません。<br>
   <?php } ?>
+  </div>
   
   <?php echo $this->Form->submit('修正する'); ?>
   <?php echo $this->Form->end(); ?><!-- form end -->

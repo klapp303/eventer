@@ -47,9 +47,15 @@
 
 /* 参加者登録フォーム用 */
 .form-user_events {
-    width: 740px;
+    width: 700px;
+    margin-left: 40px;
     max-height: 100px;
     overflow: auto;
+}
+
+.checkedbox_user {
+    margin-left: 20px;
+    white-space: nowrap;
 }
 
 .checkbox_user {

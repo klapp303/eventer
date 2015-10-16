@@ -35,7 +35,7 @@ class EventsController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser', 'Place'); //使用するModel
+	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser', 'Place', 'Option'); //使用するModel
 
 /**
  * Displays a view
@@ -82,11 +82,16 @@ class EventsController extends AppController {
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $place_lists = $this->Place->find('list'); //プルダウン選択肢用
       $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
+      $USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('title' => 'USER_CARBON_KEY')
+      ));
+      $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
+      $this->set('USER_CARBON_KEY', $USER_CARBON_KEY);
       $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
           'fields' => array('id', 'handlename'),
           'conditions' => array('and' => array(
               array('id !=' => $login_id), //ログインユーザを除外
-              array('id !=' => 1) //管理者を除外
+              array('id >' => $USER_CARBON_KEY) //管理者及び閲覧用アカウントを除外
           ))
       ));
       $this->set('event_lists', $event_lists);
@@ -188,19 +193,42 @@ class EventsController extends AppController {
         if (!empty($this->request->data)) { //データが存在する場合
           if ($this->request->data['Event']['user_id'] == $login_id) { //データの作成者とログインユーザが一致する場合
             $this->set('id', $id); //viewに渡すために$idをセット
+            $USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
+                'conditions' => array('title' => 'USER_CARBON_KEY')
+            ));
+            $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
+            $this->set('USER_CARBON_KEY', $USER_CARBON_KEY);
             $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
                 'fields' => 'user_id',
-                'conditions' => array('event_id' => $id)
+                'conditions' => array('event_id' => $id),
+                'order' => array('user_id' => 'asc')
             ));
             $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
                 'fields' => array('id', 'handlename'),
                 'conditions' => array('and' => array(
                     array('id !=' => $login_id), //ログインユーザを除外
-                    array('id !=' => 1), //管理者を除外
+                    array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
                     array('id !=' =>  $checked_lists) //登録済参加者を除外
-                ))
+                )),
+                'order' => array('id' => 'asc')
+            ));
+            $checked_user_lists = $this->User->find('all', array( //チェックボックス選択肢用、checkedユーザ
+                'fields' => array('id', 'handlename'),
+                'conditions' => array('and' => array(
+                    array('id !=' => $login_id), //ログインユーザを除外
+                    array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
+                    array('id =' =>  $checked_lists) //登録済参加者
+                )),
+                'order' => array('id' => 'asc')
             ));
             $this->set('user_lists', $user_lists);
+            $this->set('checked_user_lists', $checked_user_lists);
+            $checked_lists_delete = $this->EventUser->find('all', array( //削除ボタンのために取得
+                'fields' => 'id',
+                'conditions' => array('event_id' => $id),
+                'order' => array('user_id' => 'asc')
+            ));
+            $this->set('checked_lists_delete', $checked_lists_delete);
           } else { //データの作成者とログインユーザが一致しない場合
             $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
           $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない
@@ -251,6 +279,22 @@ class EventsController extends AppController {
       if ($this->request->is('post')) {
         $this->Event->Behaviors->enable('SoftDelete');
         if ($this->Event->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/events/');
+      }
+  }
+
+  public function checked_user_delete($id = null) {
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->EventUser->Behaviors->enable('SoftDelete');
+        if ($this->EventUser->delete($id)) {
           $this->Session->setFlash('削除しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');

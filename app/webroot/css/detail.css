@@ -136,6 +136,27 @@
     color: #000000;
 }
 
+.icon-button-min {
+    font-size: 10px;
+    background: #D8D8D8;
+    border: solid 2px #000000;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    padding: 0 3px;
+}
+
+.icon-button-min a {
+    text-decoration: none;
+}
+
+.icon-button-min a:link,
+.icon-button-min a:visited,
+.icon-button-min a:hover,
+.icon-button-min a:active {
+    color: #000000;
+}
+
 /* アイコン */
 .icon-true {
     font-size: 12px;
