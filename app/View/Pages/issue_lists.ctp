@@ -20,11 +20,11 @@
         システム上はできるハズ。だが製作者はやった事ないので初の試みという…<br>
         個人的にも是非欲しいところだけど長い目で見てくだしあ＞＜<hr>
       </td><td><span class="icon-alt">major</span></td></tr>
-    <tr><td class="tbl-num">2</td><td>パスワード変更機能</td><td>
+    <tr><td class="tbl-num">2</td><td>パスワード変更機能<span class="txt-alt">←New</span></td><td>
         メール通知機能ができればできるハズ。<br>
         セキュリティの関係で元のパスワード呼び出すのが面倒だけど、<br>
-        とりあえず上書きってだけなら比較的すぐに対応できそう。<hr>
-        </td><td><span class="icon-alt">major</span></td></tr>
+        とりあえず上書きで対応したよっと。<hr>
+        </td><td><span class="icon-like">minor</span></td></tr>
     <tr><td class="tbl-num">3</td><td>ユーザ新規登録時のメール認証機能</td><td>
         直接URL叩いて（メアド認証ないか分からないから）捨てメールも作って<br>
         わざわざ登録する程の外部の暇人はいないだろうから後回しやなぁ。<hr>
@@ -33,7 +33,7 @@
         実装したったｗｗｗ別窓は動きがややこしいからパス。<br>
         とりあえずmax-height決めてあるから、人数増えてきたら埋め込みスクロールにはなるよっと。<br>
         誰がどれに参加しているかは一意じゃないので（userIDとeventIDの組み合わせ結果で一意とするのは無理）<br>
-        参加済みユーザ情報を呼び出してチェックを外す事は現状できないです。<hr>
+        参加済みユーザ情報を呼び出してチェックを外す事は現状できないです。これで限界＞＜<hr>
         </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">5</td><td>会場データの管理<span class="txt-alt">←New</span></td><td>
         実装したったｗｗｗ普段の「会場調べる→最寄り駅調べる→電車を調べる→駅からのルート調べる」が<br>
@@ -57,11 +57,12 @@
         昼の部、夜の部とかそういうの。<br>
         現状は別々に登録して別々に管理だけど、一緒にしてしまうとそれはそれで問題…うーん。<hr>
         </td><td><span class="icon-genre">undecided</span></td></tr>
-    <tr><td class="tbl-num">10</td><td>別ユーザの同イベントの処理</td><td>
+    <tr><td class="tbl-num">10</td><td>別ユーザの同イベントの処理<span class="txt-alt">←New</span></td><td>
         基本的に別々に登録して別々に管理扱い。<br>
         まあ日程順にソートしたら前後に来るし、そこで分かればいいんじゃね？<br>
-        やるとしたら登録時に似たイベントがあればアラート出すとか・・・まあ後回し。<hr>
-        </td><td><span class="icon-like">minor</span></td></tr>
+        <s>やるとしたら登録時に似たイベントがあればアラート出すとか・・・まあ後回し。</s><br>
+        よく考えたら別々にチケ取りとかもあるし今のままでいいじゃん。<hr>
+        </td><td><span class="icon-false">closed</span></td></tr>
     <tr><td class="tbl-num">11</td><td>出演者のデータ管理</td><td>
         ちょっとデータ数が読めないので保留。<br>
         やる事自体は会場のデータ管理と同じ。<br>
