@@ -92,24 +92,32 @@ class TopController extends AppController {
                               'and' => array(
                                   array('Event.date >' => date('Y-m-d')),
                                   array('Event.date <=' => date('Y-m-d', strtotime('+1 month'))),
-                              ),
+                              )
+                          ),
+                          array(
                               'and' => array(
                                   array('Event.entry_start >' => date('Y-m-d')),
                                   array('Event.entry_start <=' => date('Y-m-d', strtotime('+1 month'))),
-                              ),
+                              )
+                          ),
+                          array(
                               'and' => array(
                                   array('Event.entry_end >' => date('Y-m-d')),
                                   array('Event.entry_end <=' => date('Y-m-d', strtotime('+1 month'))),
-                              ),
+                              )
+                          ),
+                          array(
                               'and' => array(
                                   array('Event.announcement_date >' => date('Y-m-d')),
                                   array('Event.announcement_date <=' => date('Y-m-d', strtotime('+1 month'))),
-                              ),
+                              )
+                          ),
+                          array(
                               'and' => array(
                                   array('Event.payment_end >' => date('Y-m-d')),
                                   array('Event.payment_end <=' => date('Y-m-d', strtotime('+1 month'))),
                               )
-                          ),
+                          )
                       )
                   ),
                   array(
