@@ -25,11 +25,12 @@ class EventUser extends AppModel {
   /*public $validate = array(
       'title' => array(
           'rule' => 'notBlank',
-          'required' => 'true'
+          'required' => true
       ),
       'amount' => array(
           'rule' => 'numeric',
-          'required' => 'true',
+          'required' => false,
+          'allowEmpty' => true,
           'message' => '値段を正しく入力してください。'
       )
   );*/

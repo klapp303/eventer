@@ -16,7 +16,7 @@
     </tr>
     <tr>
       <td><label>収容人数</label></td>
-      <td><?php echo $this->Form->input('capacity', array('type' => 'text', 'label' => false, 'placeholder' => '例）2000')); ?>人<span class="txt-alt txt-b">*</span></td>
+      <td><?php echo $this->Form->input('capacity', array('type' => 'text', 'label' => false, 'placeholder' => '例）2000')); ?>人</td>
     </tr>
     <tr>
       <td><label>最寄り駅</label></td>

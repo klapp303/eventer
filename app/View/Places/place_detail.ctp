@@ -5,8 +5,8 @@
   <table class="detail-list">
     <tr><th>会場名</th><th class="tbl-num">収容人数</th><th>最寄り駅</th><th>公式サイト</th></tr>
     <tr><td><?php echo $place_detail['Place']['name']; ?></td>
-        <td class="tbl-num"><?php echo $place_detail['Place']['capacity']; ?>人</td>
-        <td><?php echo $place_detail['Place']['access']; ?>駅</td>
+        <td class="tbl-num"><?php echo $place_detail['Place']['capacity']; ?><?php if ($place_detail['Place']['capacity']) {echo '人';} ?></td>
+        <td><?php echo $place_detail['Place']['access']; ?><?php if ($place_detail['Place']['access']) {echo '駅';} ?></td>
         <td><?php if ($place_detail['Place']['url']) { ?>
             <?php echo $this->Html->link($place_detail['Place']['url'], $place_detail['Place']['url'], array('target' => '_blank')); ?>
             <?php } ?></td></tr>

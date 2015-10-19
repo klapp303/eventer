@@ -20,11 +20,12 @@ class Sample extends AppModel {
   /*public $validate = array(
       'title' => array(
           'rule' => 'notBlank',
-          'required' => 'true'
+          'required' => true
       ),
       'amount' => array(
           'rule' => 'numeric',
-          'required' => 'true',
+          'required' => false,
+          'allowEmpty' => true,
           'message' => '金額を正しく入力してください。'
       )
   );*/

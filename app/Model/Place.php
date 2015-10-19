@@ -21,7 +21,7 @@ class Place extends AppModel {
       'name' => array(
           'rule_1' => array(
               'rule' => 'notBlank',
-              'required' => 'true'
+              'required' => true
           ),
           'rule_2' => array(
               'rule' => array('maxLength', 25),
@@ -30,11 +30,12 @@ class Place extends AppModel {
       ),
       'access' => array(
           'rule' => 'notBlank',
-          'required' => 'true'
+          'required' => true
       ),
       'capacity' => array(
           'rule' => 'numeric',
-          'required' => 'true',
+          'required' => false,
+          'allowEmpty' => true,
           'message' => '人数を正しく入力してください。'
       )
   );
