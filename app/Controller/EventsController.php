@@ -384,7 +384,7 @@ class EventsController extends AppController {
                   )
               )
           ),
-          'order' => array('date' => 'desc')
+          'order' => array('date' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('Event');
       $this->set('event_lists', $event_lists);
