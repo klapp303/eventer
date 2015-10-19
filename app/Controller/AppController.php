@@ -47,7 +47,7 @@ class AppController extends Controller {
               'Form' => array('passwordHasher' => 'Blowfish')
           )
       ),
-      //'DebugKit.Toolbar' //ページ右上の開発用デバッグツール
+      'DebugKit.Toolbar' //ページ右上の開発用デバッグツール
   );
 
   /*public function beforeFilter() {
