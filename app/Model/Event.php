@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Event extends AppModel {
   public $useTable = 'Events';
-  public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
+  public $actsAs = array('SoftDelete', 'Search.Searchable');
 
   public $belongsTo = array(
       'EventGenre' => array(
@@ -56,5 +56,8 @@ class Event extends AppModel {
       )
   );
 
-//  public $filtetArgs = ['' => ['' => '', '' => '']];
+  public $filtetArgs = array(
+      'title' => array('type' => 'value'),
+      'status' => array('type' => 'value')
+  );
 }

@@ -29,5 +29,8 @@ class Sample extends AppModel {
       )
   );*/
 
-//  public $filtetArgs = ['' => ['' => '', '' => '']];
+  /*public $filtetArgs = array(
+      'id' => array('type' => 'value'),
+      'title' => array('type' => 'value')
+  );*/
 }

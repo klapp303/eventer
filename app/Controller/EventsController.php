@@ -45,7 +45,7 @@ class EventsController extends AppController {
  *	or MissingViewException in debug mode.
  */
 
-  public $components = array('Paginator');
+  public $components = array('Paginator', 'Search.Prg');
   public $paginate = array(
       'limit' => 20,
       'order' => array('id' => 'desc')
@@ -73,7 +73,7 @@ class EventsController extends AppController {
                   'or' => array(
                       array('Event.user_id' => $login_id),
                       array('Event.id' => $join_lists),
-                      array('Event.publish' => 1) //公開ステータスを追加
+                      //array('Event.publish' => 1) //公開ステータスを追加
                   )
               )
           ),
@@ -175,7 +175,8 @@ class EventsController extends AppController {
                   'date >=' => date('Y-m-d'),
                   'or' => array(
                       array('Event.user_id' => $login_id),
-                      array('Event.id' => $join_lists)
+                      array('Event.id' => $join_lists),
+                      //array('Event.publish' => 1) //公開ステータスを追加
                   )
               )
           ),
@@ -314,7 +315,7 @@ class EventsController extends AppController {
       }
   }
 
-  public function event_lists() {
+  public function past_lists() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
       $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('EventUser.user_id' => $login_id),
@@ -327,7 +328,7 @@ class EventsController extends AppController {
                   'or' => array(
                       array('Event.user_id' => $login_id),
                       array('Event.id' => $join_lists),
-                      array('Event.publish' => 1) //公開ステータスを追加
+                      //array('Event.publish' => 1) //公開ステータスを追加
                   )
               )
           ),
@@ -350,7 +351,7 @@ class EventsController extends AppController {
       $this->set('event_undecided_lists', $event_undecided_lists);
   }
 
-  public function event_lists_delete($id = null) {
+  public function past_lists_delete($id = null) {
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
@@ -362,7 +363,46 @@ class EventsController extends AppController {
         } else {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');
         }
-        $this->redirect('/events/event_lists/');
+        $this->redirect('/events/past_lists/');
+      }
+  }
+
+  public function all_lists() {
+      //$login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
+      /*$join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+          'conditions' => array('EventUser.user_id' => $login_id),
+          'fields' => 'EventUser.event_id'
+      ));*/
+      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
+          'conditions' => array(
+              'and' => array(
+                  'date >=' => date('Y-m-d'),
+                  'or' => array(
+                      //array('Event.user_id' => $login_id),
+                      //array('Event.id' => $join_lists),
+                      array('Event.publish' => 1) //公開ステータスを追加
+                  )
+              )
+          ),
+          'order' => array('date' => 'desc')
+      );
+      $event_lists = $this->Paginator->paginate('Event');
+      $this->set('event_lists', $event_lists);
+  }
+
+  public function all_lists_delete($id = null) {
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->Event->Behaviors->enable('SoftDelete');
+        if ($this->Event->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/events/all_lists/');
       }
   }
 }

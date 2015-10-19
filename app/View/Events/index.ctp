@@ -93,5 +93,6 @@
   </table>
 
 <div class="link-page_events">
-  <span class="link-page"><?php echo $this->Html->link('⇨ 過去のイベントはこちら', '/events/event_lists/'); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 公開されている全てのイベントはこちら', '/events/all_lists/'); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 過去のイベントはこちら', '/events/past_lists/'); ?></span>
 </div>

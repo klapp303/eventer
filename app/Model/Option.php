@@ -28,6 +28,4 @@ class Option extends AppModel {
           'message' => '金額を正しく入力してください。'
       )
   );*/
-
-//  public $filtetArgs = ['' => ['' => '', '' => '']];
 }

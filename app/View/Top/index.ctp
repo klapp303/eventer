@@ -75,7 +75,7 @@
   <?php } else { ?>
   <div class="intro_top">
     <p>
-      未対応のイベントが <?php echo $this->Html->link($event_undecided_count.'件', '/events/event_lists/'); ?> あります。
+      未対応のイベントが <?php echo $this->Html->link($event_undecided_count.'件', '/events/past_lists/'); ?> あります。
     </p>
     <p>
       未対応の収支が <?php echo $this->Html->link($budget_undecided_count.'件', '/budgets/in_lists/'); ?> あります。

@@ -33,4 +33,9 @@ class EventUser extends AppModel {
           'message' => '値段を正しく入力してください。'
       )
   );*/
+
+    /*public $filtetArgs = array(
+      'id' => array('type' => 'value'),
+      'title' => array('type' => 'value')
+  );*/
 }

@@ -76,5 +76,8 @@ class User extends AppModel {
       return true;
   }
 
-//  public $filtetArgs = ['' => ['' => '', '' => '']];
+  /*public $filtetArgs = array(
+      'id' => array('type' => 'value'),
+      'title' => array('type' => 'value')
+  );*/
 }

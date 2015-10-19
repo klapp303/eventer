@@ -50,7 +50,7 @@
 
       <?php echo $this->element('bourbon_house'); ?>
 
-			<?php echo $this->fetch('content'); ?>
+			<!--?php/* echo $this->fetch('content');*/ ?-->
 		</div>
 		<div id="footer">
       <?php echo $this->element('eventer_footer'); ?>

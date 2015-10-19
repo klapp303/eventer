@@ -4,7 +4,7 @@
 <button class="js-hide js-show-button fr cf">過去すべて</button>
 <h3>過去のイベント一覧</h3>
 
-  <div class="tbl-past_event_lists">
+  <div class="js-show">
   <?php echo $this->Paginator->numbers(array(
       'modulus' => 4, //現在ページから左右あわせてインクルードする個数
       'separator' => '|', //デフォルト値のセパレーター
@@ -12,7 +12,8 @@
       'last' => '＞' //最終ページへのリンク
   )); ?>
 
-  <table class="detail-list-min js-show">
+  <div class="tbl-event_lists">
+  <table class="detail-list-min">
     <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('date', '▼'); ?></th>
         <th>イベント名<?php echo $this->Paginator->sort('title', '▼'); ?></th>
         <th class="tbl-ico">種類<br>
@@ -30,14 +31,15 @@
         <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['Event']['id'], array('target' => '_blank')); ?></span>
             <?php if ($event_list['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
             <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?></span>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'event_lists_delete', $event_list['Event']['id']), null, '本当に削除しますか'); ?></span>
+            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'past_lists_delete', $event_list['Event']['id']), null, '本当に削除しますか'); ?></span>
             <?php } ?></td></tr>
     <?php } ?>
   </table>
   </div>
+  </div>
 
   <?php if (count($event_undecided_lists) > 0) { ?>
-  <div class="tbl-past_event_lists js-hide">
+  <div class="tbl-event_lists js-hide">
   <table class="detail-list-min">
     <tr><th class="tbl-date">開催日</th>
         <th>イベント名</th>
@@ -56,7 +58,7 @@
         <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_undecided_list['Event']['id'], array('target' => '_blank')); ?></span>
             <?php if ($event_undecided_list['Event']['user_id'] == $this->Session->read('Auth.User.id')) { ?>
             <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_undecided_list['Event']['id']); ?></span>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'event_lists_delete', $event_undecided_list['Event']['id']), null, '本当に削除しますか'); ?></span>
+            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'past_lists_delete', $event_undecided_list['Event']['id']), null, '本当に削除しますか'); ?></span>
             <?php } ?></td></tr>
     <?php } ?>
   </table>
