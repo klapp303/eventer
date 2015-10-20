@@ -21,7 +21,7 @@ class Place extends AppModel {
       'name' => array(
           'rule_1' => array(
               'rule' => 'notBlank',
-              'required' => true
+              'required' => 'create'
           ),
           'rule_2' => array(
               'rule' => array('maxLength', 25),
@@ -30,7 +30,7 @@ class Place extends AppModel {
       ),
       'access' => array(
           'rule' => 'notBlank',
-          'required' => true
+          'required' => 'create'
       ),
       'capacity' => array(
           'rule' => 'numeric',

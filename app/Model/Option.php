@@ -20,7 +20,7 @@ class Option extends AppModel {
   /*public $validate = array(
       'title' => array(
           'rule' => 'notBlank',
-          'required' => true
+          'required' => 'create'
       ),
       'amount' => array(
           'rule' => 'numeric',

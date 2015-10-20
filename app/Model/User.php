@@ -14,7 +14,7 @@ class User extends AppModel {
       'username' => array(
           'rule_1' => array(
               'rule' => 'notBlank',
-              'required' => true,
+              'required' => 'create',
               'message' => 'メールアドレスを正しく入力してください。'
           ),
           /*'rule_2' => array(
@@ -37,7 +37,7 @@ class User extends AppModel {
       'handlename' => array(
           'rule_1' => array(
               'rule' => 'notBlank',
-              'required' => true,
+              'required' => 'create',
               'message' => 'ハンドルネームを正しく入力してください。'
           ),
           'rule_2' => array(
@@ -48,7 +48,7 @@ class User extends AppModel {
       'password' => array(
           'rule_1' => array(
               'rule' => 'notBlank',
-              'required' => true,
+              'required' => 'create',
               'message' => 'パスワードを正しく入力してください。'
           ),
           'rule_2' => array(

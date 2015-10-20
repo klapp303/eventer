@@ -42,16 +42,16 @@ class Event extends AppModel {
   public $validate = array(
       'title' => array(
           'rule' => 'notBlank',
-          'required' => true
+          'required' => 'create'
       ),
       'amount' => array(
           'rule' => 'numeric',
-          'required' => true,
+          'required' => 'create',
           'message' => '値段を正しく入力してください。'
       ),
       'number' => array(
           'rule' => 'numeric',
-          'required' => true,
+          'required' => 'create',
           'message' => '枚数を正しく入力してください。'
       )
   );
