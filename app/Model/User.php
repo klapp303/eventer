@@ -33,6 +33,10 @@ class User extends AppModel {
               'rule' => array('email', true),
               'message' => 'メールアドレスを正しく入力してください。'
           ),
+          'rule_6' => array(
+              'rule' => 'isUnique',
+              'message' => '既に登録されているメールアドレスです。'
+          )
       ),
       'handlename' => array(
           'rule_1' => array(
