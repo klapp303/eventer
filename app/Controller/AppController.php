@@ -20,6 +20,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CakeEmail', 'Network/Email'); //CakeEmaiilの利用、分けて記述
 
 /**
  * Application Controller

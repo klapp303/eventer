@@ -6,7 +6,7 @@
   <table class="UserEditForm">
     <?php echo $this->Form->create('User', array( //使用するModel
         'type' => 'put', //変更はput送信
-        'action' => 'edit', //Controllerのactionを指定
+        'action' => 'pw_edit', //Controllerのactionを指定
         'inputDefaults' => array('div' => '')
         )
     ); ?><!-- form start -->

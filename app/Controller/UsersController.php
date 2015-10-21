@@ -125,6 +125,7 @@ class UsersController extends AppController {
 
   public function pw_edit($id = null) {
       $this->layout = 'eventer_fullwidth';
+      $login_data = $this->Session->read('Auth.User'); //予めセッション情報を取得
       if (empty($this->request->data)) {
         if (!$this->request->is('post')) { //post送信でない場合
           $this->redirect('/user/'.$id);
@@ -134,9 +135,20 @@ class UsersController extends AppController {
       } else {
         $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->User->validates()) { //validate成功の処理
-          $this->User->save($this->request->data); //validate成功でsave
+          $this->User->id = $id; //validate成功でsave
+          $this->User->saveField('password', $this->request->data['User']['password']);
           if ($this->User->save($id)) {
             $this->Session->setFlash('変更しました。', 'flashMessage');
+            //save成功でメール送信
+            $email = new CakeEmail('gmail');
+            $email->to($login_data['username'])
+                  ->subject('【イベ幸委員会】パスワード変更完了')
+                  ->template('pw_edit_thx', 'eventer_mail')
+                  ->viewVars(array(
+                      'name' => $login_data['handlename'],
+                      'password' => $this->request->data['User']['password']
+                  )); //mailに渡す変数
+            $email->send();
           } else {
             $this->Session->setFlash('変更できませんでした。', 'flashMessage');
           }
