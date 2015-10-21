@@ -176,17 +176,26 @@ class UsersController extends AppController {
             'conditions' => array('User.username' => $this->request->data['User']['username']) 
         ));
         if ($data) {
-          $this->Session->setFlash('メールアドレス宛にパスワードを送信しました。', 'flashMessage');
-          //daataが存在すればメール送信
-          $email = new CakeEmail('gmail');
-          $email->to($data['User']['username'])
-                ->subject('【イベ幸委員会】パスワードのお知らせ')
-                ->template('pw_renew_thx', 'eventer_mail')
-                ->viewVars(array(
-                    'name' => $data['User']['handlename'],
-                    'password' => $data['User']['password']
-                )); //mailに渡す変数
-          $email->send();
+          //新しくパスワードを発行してsave
+          $new_password = 'hoge'; //とりあえず新パスワードをhogeにする
+          $this->User->id = $data['User']['id'];
+          $this->User->saveField('password', $new_password);
+          if ($this->User->save($new_password)) {
+            //save成功でメール送信
+            $email = new CakeEmail('gmail');
+            $email->to($data['User']['username'])
+                  ->subject('【イベ幸委員会】パスワードのお知らせ')
+                  ->template('pw_renew_thx', 'eventer_mail')
+                  ->viewVars(array(
+                      'name' => $data['User']['handlename'],
+                      'password' => $new_password
+                  )); //mailに渡す変数
+            $email->send();
+            $this->Session->setFlash('メールアドレス宛に新しいパスワードを送信しました。', 'flashMessage');
+            $this->render('login');
+          } else {
+            $this->Session->setFlash('パスワードの発行に失敗しました。', 'flashMessage');
+          }
         } else {
           $this->Session->setFlash('登録されていないメールアドレスです。', 'flashMessage');
         }

@@ -1,7 +1,8 @@
 <?php echo $this->Html->css('users', array('inline' => FALSE)); ?>
-<h3>パスワードの確認</h3>
+<h3>パスワードのリセット</h3>
 
-<p>登録されているメールアドレスを入力してください。</p>
+<p>登録されているメールアドレスを入力してください。<br>
+   新しいパスワードを発行しメールでお知らせします。</p>
 
   <table class="UserEditForm">
     <?php echo $this->Form->create('User', array( //使用するModel
