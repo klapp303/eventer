@@ -177,7 +177,11 @@ class UsersController extends AppController {
         ));
         if ($data) {
           //新しくパスワードを発行してsave
-          $new_password = 'hoge'; //とりあえず新パスワードをhogeにする
+          $str = array_merge(range('a', 'z'), range('0', '9')/*, range('A', 'Z')*/);
+          $new_password = null;
+          for ($i = 0; $i < 8; $i++) { //桁数をここで指定
+            $new_password .=$str[rand(0, count($str))];
+          }
           $this->User->id = $data['User']['id'];
           $this->User->saveField('password', $new_password);
           if ($this->User->save($new_password)) {
