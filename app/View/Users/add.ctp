@@ -35,3 +35,6 @@
 <div class="link-page_users">
   <span class="link-page"><?php echo $this->Html->link('⇨ ログインはこちら', '/users/login/'); ?></span>
 </div>
+<div class="link-page_users">
+  <span class="link-page"><?php echo $this->Html->link('⇨ パスワードを忘れた場合はこちら', '/users/pw_renew/'); ?></span>
+</div>

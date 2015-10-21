@@ -49,7 +49,7 @@ class UsersController extends AppController {
       parent::beforeFilter();
       $this->layout = 'eventer_normal';
       // ユーザ自身による登録とログアウトを許可する
-      $this->Auth->allow('add', 'logout');
+      $this->Auth->allow('add', 'logout', 'pw_renew');
       //$this->User->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
@@ -167,6 +167,29 @@ class UsersController extends AppController {
           $this->Session->setFlash('変更内容が正しくありません。', 'flashMessage');
         }
         $this->redirect('/user/'.$id); //postデータがあればvalidate結果に関わらず元ページに戻る
+      }
+  }
+
+  public function pw_renew(){
+      if (!empty($this->request->data)) {
+        $data = $this->User->find('first', array(
+            'conditions' => array('User.username' => $this->request->data['User']['username']) 
+        ));
+        if ($data) {
+          $this->Session->setFlash('メールアドレス宛にパスワードを送信しました。', 'flashMessage');
+          //daataが存在すればメール送信
+          $email = new CakeEmail('gmail');
+          $email->to($data['User']['username'])
+                ->subject('【イベ幸委員会】パスワードのお知らせ')
+                ->template('pw_renew_thx', 'eventer_mail')
+                ->viewVars(array(
+                    'name' => $data['User']['handlename'],
+                    'password' => $data['User']['password']
+                )); //mailに渡す変数
+          $email->send();
+        } else {
+          $this->Session->setFlash('登録されていないメールアドレスです。', 'flashMessage');
+        }
       }
   }
 
