@@ -89,6 +89,17 @@ class UsersController extends AppController {
           $this->User->save($this->request->data); //validate成功でsave
           if ($this->User->save($this->request->data)) {
             $this->Session->setFlash('登録しました。', 'flashMessage');
+            //save成功でメール送信
+            $email = new CakeEmail('gmail');
+            $email->to($this->request->data['User']['username'])
+                  ->subject('【イベ幸委員会】会員登録完了')
+                  ->template('users_add_thx', 'eventer_mail')
+                  ->viewVars(array(
+                      'mailaddress' => $this->request->data['User']['username'],
+                      'name' => $this->request->data['User']['handlename'],
+                      'password' => $this->request->data['User']['password']
+                  )); //mailに渡す変数
+            $email->send();
           } else {
             $this->Session->setFlash('登録できませんでした。', 'flashMessage');
           }
