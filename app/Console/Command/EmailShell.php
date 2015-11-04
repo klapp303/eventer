@@ -17,14 +17,16 @@
 
 /**
  * shell の呼び出し
- * cd /home/アカウント名/www/プロジェクト名/app/ ; /usr/local/bin/php /home/アカウント名/www/プロジェクト名/app/Console/cake.php Sample
- * $ php /var/www/lib/Cake/Console/cake.php App main /var/www/app/
+ * windowsコマンドライン
+ * php [projectまでのpass]/app/console/cake.php Sample main(指定なしでmain実行) -app [projectまでのpass]
+ * さくらサーバ
+ * cd /home/[アカウント名]/www/[project名]; /usr/local/bin/php [実行ファイル名].php > /dev/null
  */
 
 App::uses('CakeEmail', 'Network/Email');
 
 /**
- * Application Shell
+ * EmailShell
  *
  * Add your application-wide methods in the class below, your shells
  * will inherit them.
@@ -34,17 +36,17 @@ App::uses('CakeEmail', 'Network/Email');
 class EmailShell extends AppShell {
   public $uses = array('Event', 'User', 'EventUser', 'Option'); //使用するModel
 
-  function mmain() {
-      $USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
+  public function mmain() {
+      /*$USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
           'conditions' => array('title' => 'USER_CARBON_KEY')
       ));
       $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
       $user_lists = $this->User->find('list', array( //ユーザ一覧を取得
           'conditions' => array('id >' => $USER_CARBON_KEY),
           'fields' => 'id'
-      ));
+      ));*/
       
-      foreach ($user_lists AS $user_list) {
+      /*foreach ($user_lists AS $user_list) {
         $join_lists = $this->EventUser->find('list', array(
             'conditions' => array('EventUser.user_id' => $user_list),
             'fields' => 'event_id'
@@ -82,7 +84,7 @@ class EmailShell extends AppShell {
           $email->send();
         }
         //メール送信ここまで
-      }
-      //$this->out('test.');
+      }*/
+      $this->out('test.');
   }
 }

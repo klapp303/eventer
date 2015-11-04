@@ -17,14 +17,18 @@
 
 /**
  * shell の呼び出し
- * [libまでのパス] /lib/Cake/Console/cake.php App(Shellコントローラ名、Shell除く) (アクション名、指定なしでmainアクション) [appまでのパス]
- * cd /home/アカウント名/www/プロジェクト名/app/ ; /usr/local/bin/php /home/アカウント名/www/プロジェクト名/app/Console/cake.php Sample
+ * windowsコマンドライン
+ * php [projectまでのpass]/app/console/cake.php Sample main(指定なしでmain実行) -app [projectまでのpass]
+ * さくらサーバ
+ * cd /home/[アカウント名]/www/[project名]; /usr/local/bin/php [実行ファイル名].php > /dev/null
  */
 
-App::uses('CakeEmail', 'Network/Email');
+App::uses('ComponentCollection', 'Controleer');
+App::uses('AuthComponent', 'Controller/Component');
+//App::uses('CakeEmail', 'Network/Email');
 
 /**
- * Application Shell
+ * SampleShell
  *
  * Add your application-wide methods in the class below, your shells
  * will inherit them.
@@ -32,8 +36,9 @@ App::uses('CakeEmail', 'Network/Email');
  * @package       app.Console.Command
  */
 class SampleShell extends AppShell {
-  public $uses = array(); //使用するModel
+  //public $uses = array(); //使用するModel
 
   public function mmain() {
+      $this->out('Hello, World');
   }
 }
