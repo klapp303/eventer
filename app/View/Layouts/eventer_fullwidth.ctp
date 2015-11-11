@@ -45,6 +45,8 @@
 	?>
 </head>
 <body>
+  <?php echo $this->element('gtm'); ?>
+
 	<div id="container">
 		<div id="header">
 			<?php echo $this->element('eventer_header'); ?>
