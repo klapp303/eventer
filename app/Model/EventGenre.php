@@ -2,10 +2,8 @@
 
 App::uses('AppModel', 'Model');
 
-/**
- * EventGenre Model.
- */
 class EventGenre extends AppModel {
+
   public $useTable = 'Event_genres';
   public $actsAs = array('SoftDelete');
 

@@ -6,11 +6,9 @@
     padding: 0 50px;
     text-shadow: 2px 2px 1px #999999;
 }
-
 .head-title a {
     text-decoration: none;
 }
-
 .head-title a:link,
 .head-title a:visited,
 .head-title a:hover,
@@ -22,21 +20,17 @@
     height: 38px;
     margin-right: 20px;
 }
-
 .head-welcome {
     font-weight: normal;
     font-size: 16px;
 }
-
 .head-handlename {
     font-weight: normal;
     font-size: 20px;
 }
-
 .head-handlename a {
     text-decoration: none;
 }
-
 .head-handlename a:link,
 .head-handlename a:visited,
 .head-handlename a:hover,
@@ -57,16 +51,13 @@
     list-style-type: none;
     padding-left: 0;
 }
-
 .menu-list li {
     margin: 10px 0 10px 0;
     text-align: center;
 }
-
 .menu-list a {
     text-decoration: none;
 }
-
 .menu-list a:link,
 .menu-list a:visited,
 .menu-list a:hover,
@@ -78,7 +69,6 @@
 .detail-list {
     width: 740px;
 }
-
 .detail-list-min {
     width: 540px;
 }
@@ -86,7 +76,6 @@
 .tbl-num {
     text-align: right;
 }
-
 .tbl-ico {
     text-align: center;
 }
@@ -102,11 +91,9 @@
     -ms-transition: 0.8s;
     transition: 0.8s;
 }
-
 .link-page a:hover {
     background: #A9BCF5;
 }
-
 .link-page a:link,
 .link-page a:visited,
 .link-page a:hover,
@@ -124,11 +111,9 @@
     -webkit-border-radius: 8px;
     padding: 0 10px;
 }
-
 .icon-button a {
     text-decoration: none;
 }
-
 .icon-button a:link,
 .icon-button a:visited,
 .icon-button a:hover,
@@ -145,11 +130,9 @@
     -webkit-border-radius: 8px;
     padding: 0 3px;
 }
-
 .icon-button-min a {
     text-decoration: none;
 }
-
 .icon-button-min a:link,
 .icon-button-min a:visited,
 .icon-button-min a:hover,
@@ -167,7 +150,6 @@
     -webkit-border-radius: 8px;
     padding: 0 10px;
 }
-
 .icon-false {
     font-size: 12px;
     background: #D8D8D8;
@@ -177,7 +159,6 @@
     -webkit-border-radius: 8px;
     padding: 0 10px;
 }
-
 .icon-like {
     font-size: 12px;
     background: #58ACFA;
@@ -187,7 +168,6 @@
     -webkit-border-radius: 8px;
     padding: 0 10px;
 }
-
 .icon-alt {
     font-size: 12px;
     background: #FE2E64;
@@ -211,18 +191,15 @@
 .col-event_1 { /* ライブ */
     background: #FE2E64;
 }
-
 .col-event_2 { /* リリイベ */
     background: #58D3F7;
 }
-
 .col-event_3 { /* 作品記念 */
     background: #819FF7;
 }
 .col-event_4 { /* 公開録音 */
     background: #FAAC58;
 }
-
 .col-event_5 { /* サイン会 */
     background: #FFFF00;
 }
@@ -230,27 +207,21 @@
 .col-entry_1 { /* FC先行 */
     background: #58ACFA;
 }
-
 .col-entry_2 { /* メディア先行 */
     background: #FE2E64;
 }
-
 .col-entry_3 { /* e+（イープラス） */
     background: #F5A9E1;
 }
-
 .col-entry_4 { /* Loppi（ローチケ） */
     background: #58D3F7;
 }
-
 .col-entry_5 { /* その他会員サイト */
     background: #FAAC58;
 }
-
 .col-entry_6 { /* その他チケットサイト */
     background: #FFFF00;
 }
-
 .col-entry_7 { /* 一般 */
     background: #FE2E9A;
 }
@@ -285,7 +256,6 @@
 .js-hide {
     display: none;
 }
-
 .js-show {
     display: inline;
 }

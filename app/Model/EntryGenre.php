@@ -2,10 +2,8 @@
 
 App::uses('AppModel', 'Model');
 
-/**
- * EntryGenre Model.
- */
 class EntryGenre extends AppModel {
+
   public $useTable = 'Entry_genres';
   public $actsAs = array('SoftDelete');
 

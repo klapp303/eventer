@@ -4,7 +4,6 @@
     height: 150px;
     margin-left: 20px;
 }
-
 .intro_events >p {
     margin-right: 20px;
     margin-bottom: 30px;
@@ -14,15 +13,12 @@
 .tbl-date {
     width: 70px;
 }
-
 .tbl-ico {
     width: 80px;
 }
-
 .tbl-num {
     width: 70px;
 }
-
 .tbl-action {
     width: 110px;
 }
@@ -35,12 +31,10 @@
 .tbl-date-long {
     width: 120px;
 }
-
 .tbl-ico-long {
     text-align: center;
     width: 150px;
 }
-
 .tbl-user_long {
     margin-right: 20px;
     white-space: nowrap;
@@ -53,12 +47,10 @@
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
 #EventAddForm >input, #EventAddForm >select,
 #EventEditForm >input, #EventEditForm >select {
     margin-bottom: 10px;
 }
-
 #EventAddForm >.submit,
 #EventEditForm >.submit {
     margin: 10px 20px;
@@ -72,7 +64,6 @@
     max-height: 120px;
     overflow: auto;
 }
-
 .form-checked-user_events {
     margin-top: -100px;
 }
@@ -81,7 +72,6 @@
     margin-right: 20px;
     white-space: nowrap;
 }
-
 .checkedbox_user {
     margin-left: 20px;
     white-space: nowrap;
@@ -97,7 +87,6 @@
     margin-right: 50px;
     margin-bottom: 20px;
 }
-
 .link-page {
     margin-left: 40px;
 }

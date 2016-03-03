@@ -1,49 +1,10 @@
 <?php
-/**
- * Static content controller.
- *
- * This file will render views from views/pages/
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
 
 App::uses('AppController', 'Controller');
 
-/**
- * Static content controller
- *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package       app.Controller
- * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
- */
 class PlacesController extends AppController {
 
-/**
- * This controller does not use a model
- *
- * @var array
- */
 	public $uses = array('Place', 'EventUser', 'Event', 'Option'); //使用するModel
-
-/**
- * Displays a view
- *
- * @return void
- * @throws NotFoundException When the view file could not be found
- *	or MissingViewException in debug mode.
- */
 
   public $components = array('Paginator');
   public $paginate = array(
@@ -68,7 +29,7 @@ class PlacesController extends AppController {
       ));
       $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
       $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
-
+  
 //      $place_lists = $this->Place->find('all', array(
 //          'order' => array('id' => 'asc')
 //      ));
@@ -81,7 +42,7 @@ class PlacesController extends AppController {
 
   public function place_detail() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
-
+  
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
         $place_detail = $this->Place->find('first', array(
             'conditions' => array('and' => array(
@@ -169,11 +130,11 @@ class PlacesController extends AppController {
           'conditions' => array('title' => 'PLACE_BLOCK_KEY')
       ));
       $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
-
+  
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
-    
+      
       if ($this->request->is('post') and $id > $PLACE_BLOCK_KEY) { //削除不可に設定したい会場データ
         $this->Place->Behaviors->enable('SoftDelete');
         if ($this->Place->delete($id)) {

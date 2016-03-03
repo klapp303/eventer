@@ -4,12 +4,10 @@
     height: 150px;
     margin-left: 20px;
 }
-
 .intro_places >p {
     margin-right: 20px;
     margin-bottom: 30px;
 }
-
 .intro_places >label {
     margin-right: 20px;
 }
@@ -18,11 +16,9 @@
 .tbl-ico {
     width: 80px;
 }
-
 .tbl-num {
     width: 70px;
 }
-
 .tbl-action_places {
     width: 110px;
 }
@@ -38,12 +34,10 @@
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
 .PlaceAddForm >tbody >tr >td >input,
 .PlaceEditForm >tbody >tr >td >input {
     margin-bottom: 10px;
 }
-
 .PlaceAddForm >tbody >tr >td >.submit,
 .PlaceEditForm >tbody >tr >td >.submit {
     margin-top: 10px;
@@ -54,7 +48,6 @@
 #event-list_place { /* floatによるレイアウト崩れを防ぐ */
     min-height: 400px;
 }
-
 .event-list_place {
     width: 390px;
 }
@@ -62,7 +55,6 @@
 .tbl-date {
     width: 70px;
 }
-
 .tbl-action_place {
     width: 55px;
 }
