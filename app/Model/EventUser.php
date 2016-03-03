@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
 
 class EventUser extends AppModel {
 
-  public $useTable = 'Event_users';
+  public $useTable = 'event_users';
   public $actsAs = array(/*'SoftDelete'*/); //関連テーブルのデータを取得されるので物理削除する
 
   public $belongsTo = array(

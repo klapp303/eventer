@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
 
 class Place extends AppModel {
 
-  public $useTable = 'Places';
+  public $useTable = 'places';
   public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
 
   /*public $belongsTo = array(
