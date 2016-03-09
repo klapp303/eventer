@@ -8,31 +8,31 @@ class Event extends AppModel {
   public $actsAs = array('SoftDelete', 'Search.Searchable');
 
   public $belongsTo = array(
-      'EventGenre' => array(
+      /*'EventGenre' => array(
           'className' => 'EventGenre', //関連付けるModel
           'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => 'title' //関連付け先Modelの使用field
-      ),
-      'EventPlace' => array(
+      ),*/
+      /*'EventPlace' => array(
           'className' => 'Place', //関連付けるModel
           'foreignKey' => 'place_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => array('name', 'access') //関連付け先Modelの使用field
-      ),
-      'EntryGenre' => array(
+      ),*/
+      /*'EntryGenre' => array(
           'className' => 'EntryGenre', //関連付けるModel
           'foreignKey' => 'entry_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => 'title' //関連付け先Modelの使用field
-      ),
-      'UserName' => array(
+      ),*/
+      'User' => array(
           'className' => 'User', //関連付けるModel
           'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => 'handlename' //関連付け先Modelの使用field
+          'fields' => array('username', 'handlename') //関連付け先Modelの使用field
       )
   );
 
   public $hasMany = array(
-      'UserList' => array(
-          'className' => 'EventUser', //関連付けるModel
+      'EventsDetail' => array(
+          'className' => 'EventsDetail', //関連付けるModel
           'foreignKey' => 'event_id' //関連付けるfield
       )
   );

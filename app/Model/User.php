@@ -8,6 +8,14 @@ class User extends AppModel {
   public $useTable = 'users';
   public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
 
+  /*public $belongsTo = array(
+      'Profile' => array(
+          'className' => 'Profile', //関連付けるModel
+          'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
+          'fields' => array('mailmaga', 'station') //関連付け先Modelの使用field
+      )
+  );*/
+
   public $validate = array(
       'username' => array(
           'rule_1' => array(
