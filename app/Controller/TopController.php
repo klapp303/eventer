@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class TopController extends AppController {
 
-	public $uses = array('Event', 'EventUser'); //使用するModel
+	public $uses = array('Event'/*, 'EventUser'*/); //使用するModel
 
   public function beforeFilter() {
       parent::beforeFilter();
@@ -13,13 +13,13 @@ class TopController extends AppController {
 
   public function index() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
-      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
+      /*$join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('user_id' => $login_id),
           'fields' => 'event_id'
-      ));
+      ));*/
   
       //本日の予定
-      $event_today_lists = $this->Event->find('all', array(
+      /*$event_today_lists = $this->Event->find('all', array(
           'conditions' => array(
               'and' => array(
                   array(
@@ -41,10 +41,10 @@ class TopController extends AppController {
           ),
           'order' => array('date' => 'asc')
       ));
-      $this->set('event_today_lists', $event_today_lists);
+      $this->set('event_today_lists', $event_today_lists);*/
   
       //直近の予定
-      $event_current_lists = $this->Event->find('all', array(
+      /*$event_current_lists = $this->Event->find('all', array(
           'conditions' => array(
               'and' => array(
                   array(
@@ -91,10 +91,10 @@ class TopController extends AppController {
           ),
           'order' => array('date' => 'asc')
       ));
-      $this->set('event_current_lists', $event_current_lists);
+      $this->set('event_current_lists', $event_current_lists);*/
   
       //未対応のイベント
-      $event_undecided_lists = $this->Event->find('all', array(
+      /*$event_undecided_lists = $this->Event->find('all', array(
           'conditions' => array(
               'and' => array(
                   'Event.date <' => date('Y-m-d'),
@@ -104,10 +104,10 @@ class TopController extends AppController {
           ),
           'order' => array('date' => 'asc')
       ));
-      $this->set('event_undecided_lists', $event_undecided_lists);
+      $this->set('event_undecided_lists', $event_undecided_lists);*/
       
       //未対応の収支
-      $budget_undecided_lists = $this->EventUser->find('all', array(
+      /*$budget_undecided_lists = $this->EventUser->find('all', array(
           'conditions' => array(
               'EventDetail.user_id' => $login_id,
               'EventUser.payment' => 0,
@@ -116,7 +116,7 @@ class TopController extends AppController {
           'order' => array('EventDetail.date' => 'asc')
       ));
       $budget_undecided_count = count($budget_undecided_lists);
-      $this->set('budget_undecided_count', $budget_undecided_count);
+      $this->set('budget_undecided_count', $budget_undecided_count);*/
   
 //      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
 //          'conditions' => array(
