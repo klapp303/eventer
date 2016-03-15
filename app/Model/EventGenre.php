@@ -7,14 +7,6 @@ class EventGenre extends AppModel {
   public $useTable = 'event_genres';
   public $actsAs = array('SoftDelete');
 
-  /*public $belongsTo = array(
-      'EventsGenre' => array(
-          'className' => 'EventsGenre', //関連付けるModel
-          'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => 'title' //関連付け先Modelの使用field
-      )
-  );*/
-
   /*public $validate = array(
       'title' => array(
           'rule' => 'notBlank',

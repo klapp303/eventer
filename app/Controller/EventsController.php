@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController {
 
-	public $uses = array('Event', 'EventGenre', 'EntryGenre', 'User', 'EventUser', 'Place', 'Option'); //使用するModel
+	public $uses = array('Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'User', 'Place'); //使用するModel
 
   public $components = array('Paginator', 'Search.Prg');
   public $paginate = array(
@@ -19,59 +19,33 @@ class EventsController extends AppController {
   }
 
   public function index() {
-      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
-//      $event_lists = $this->Event->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
-      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
-          'conditions' => array('user_id' => $login_id),
-          'fields' => 'EventUser.event_id'
-      ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
               'and' => array(
-                  'date >=' => date('Y-m-d'),
+                  'EventsDetail.date >=' => date('Y-m-d'),
                   'or' => array(
-                      array('Event.user_id' => $login_id),
-                      array('Event.id' => $join_lists),
-                      //array('Event.publish' => 1) //公開ステータスを追加
+                      array('EventsDetail.user_id' => $this->Auth->user('id')),
+                      //array('Event.id' => $join_lists),
+                      array('Event.publish' => 1)
                   )
               )
           ),
-          'order' => array('date' => 'asc')
+          'order' => array('EventsDetail.date' => 'asc')
       );
-      $event_lists = $this->Paginator->paginate('Event');
+      $event_lists = $this->Paginator->paginate('EventsDetail');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $place_lists = $this->Place->find('list'); //プルダウン選択肢用
-      $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-      $USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
-          'conditions' => array('title' => 'USER_CARBON_KEY')
-      ));
-      $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
-      $user_lists = $this->User->find('all', array( //チェックボックス選択肢用
-          'fields' => array('id', 'handlename'),
-          'conditions' => array('and' => array(
-              array('id !=' => $login_id), //ログインユーザを除外
-              array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
-              array('community_id' => 1) //参加者機能利用者のみ
-          ))
-      ));
-      $this->set('event_lists', $event_lists);
-      $this->set('event_genres', $event_genres);
-      $this->set('place_lists', $place_lists);
-      $this->set('entry_genres', $entry_genres);
-      $this->set('user_lists', $user_lists);
+      $this->set(compact('event_lists', 'event_genres', 'place_lists'));
   
       if (isset($this->request->params['id']) == TRUE) { //パラメータにidがあれば詳細ページを表示
-        $this->Event->recursive = 2; //Event→EventUser→Userの2階層下までassociate
-        $event_detail = $this->Event->find('first', array(
+        $event_detail = $this->EventsDetail->find('first', array(
             'conditions' => array(
                 'and' => array(
-                    'Event.id' => $this->request->params['id'],
+                    'EventsDetail.id' => $this->request->params['id'],
                     'or' => array( //作成者か参加者の場合のみ
-                        array('Event.user_id' => $login_id),
-                        array('Event.id' => $join_lists),
-                        array('Event.publish' => 1) //公開ステータスを追加
+                        array('EventsDetail.user_id' => $this->Auth->user('id')),
+                        //array('Event.id' => $join_lists),
+                        array('Event.publish' => 1)
                     )
                 )
             )
@@ -88,33 +62,51 @@ class EventsController extends AppController {
 
   public function add() {
       if ($this->request->is('post')) {
-        //viewでchekckedのfieldをnullに書き換える、JSが無効な場合を考えて残す
-        if (isset($this->request->data['time_start']) == TRUE) { //開催時刻
-          $this->request->data['Event']['time_start'] = null;
-        }
-        if (isset($this->request->data['entry_start']) == TRUE) { //申込開始日
-          $this->request->data['Event']['entry_start'] = null;
-        }
-        if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
-          $this->request->data['Event']['entry_end'] = null;
-        }
-        if (isset($this->request->data['announcement_date']) == TRUE) { //結果発表日
-          $this->request->data['Event']['announcement_date'] = null;
-        }
-        if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
-          $this->request->data['Event']['payment_end'] = null;
-        }
-        //書き換えここまで
-        $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
+        //eventsテーブルに保存
+        $dataEvent['Event'] = $this->request->data['Event'];
+        $this->Event->set($dataEvent); //postデータをModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
-          $this->Event->saveAssociated($this->request->data); //validate成功でsave
-          if ($this->Event->save($this->request->data)) {
-            $this->Session->setFlash('登録しました。', 'flashMessage');
+          if ($this->Event->save($dataEvent)) { //validate成功でsave
+            //$this->Session->setFlash('登録しました。', 'flashMessage');
           } else {
-            $this->Session->setFlash('登録できませんでした。', 'flashMessage');
+            $this->Session->setFlash($dataEvent['Event']['title'].' を登録できませんでした。', 'flashMessage');
+            $this->redirect('/events/');
           }
         } else { //validate失敗の処理
-          $this->render('index'); //validate失敗でindexを表示
+          $this->Session->setFlash($dataEvent['Event']['title'].' の入力に不備があります。', 'flashMessage');
+          $this->redirect('/events/');
+        }
+        
+        //events_detailsテーブルに保存
+        /* データをテーブルの構造に合わせて加工ここから */
+        $saveEvent = $this->Event->find('first', array('order' => array('Event.id' => 'desc')));
+        $dataDetails['EventsDetail'] = $this->request->data['EventsDetail'];
+        foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
+          $dataDetail['event_id'] = $saveEvent['Event']['id'];
+          $dataDetail['user_id'] = $saveEvent['Event']['user_id'];
+          if (!$dataDetail['title']) {
+            unset($dataDetails['EventsDetail'][$key]);
+          }
+        }
+        unset($dataDetail); //foreachの参照渡しでのデータ書き換えを回避
+        /* データをテーブルの構造に合わせて加工ここまで */
+        foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
+          //postデータが複数あるので1つずつvalidateする
+          $this->EventsDetail->set($dataDetail); //postデータをModelに渡してvalidate
+          if (!$this->EventsDetail->validates()) { //validate失敗の処理
+            $this->Session->setFlash($dataDetail['EventsDetail']['title'].' の入力に不備があります。', 'flashMessage');
+            $this->redirect('/events/');
+          }
+        }
+        if ($this->EventsDetail->saveMany($dataDetails['EventsDetail'])) { //validate成功でsave
+          $message = '';
+          foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
+            $message .= '<br>'.$dataDetail['title'];
+          }
+          //$message = ltrim($message, '<br>');
+          $this->Session->setFlash($dataEvent['Event']['title'].' の'.$message.' を登録しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash($dataEvent['Event']['title'].' を登録できませんでした。', 'flashMessage');
         }
       }
   
@@ -122,126 +114,88 @@ class EventsController extends AppController {
   }
 
   public function edit($id = null) {
-      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
-//      $event_lists = $this->Event->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
-      $join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
-          'conditions' => array('user_id' => $login_id),
-          'fields' => 'EventUser.event_id'
-      ));
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
               'and' => array(
-                  'date >=' => date('Y-m-d'),
+                  'EventsDetail.date >=' => date('Y-m-d'),
                   'or' => array(
-                      array('Event.user_id' => $login_id),
-                      array('Event.id' => $join_lists),
-                      //array('Event.publish' => 1) //公開ステータスを追加
+                      array('EventsDetail.user_id' => $this->Auth->user('id')),
+                      //array('Event.id' => $join_lists),
+                      array('Event.publish' => 1)
                   )
               )
           ),
-          'order' => array('date' => 'asc')
+          'order' => array('EventsDetail.date' => 'asc')
       );
-      $event_lists = $this->Paginator->paginate('Event');
+      $event_lists = $this->Paginator->paginate('EventsDetail');
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $place_lists = $this->Place->find('list'); //プルダウン選択肢用
-      $entry_genres = $this->EntryGenre->find('list'); //プルダウン選択肢用
-      $this->set('event_lists', $event_lists);
-      $this->set('event_genres', $event_genres);
-      $this->set('place_lists', $place_lists);
-      $this->set('entry_genres', $entry_genres);
+      $this->set(compact('event_lists', 'event_genres', 'place_lists'));
   
       if (empty($this->request->data)) {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
         if (!empty($this->request->data)) { //データが存在する場合
-          if ($this->request->data['Event']['user_id'] == $login_id) { //データの作成者とログインユーザが一致する場合
-            $this->set('id', $id); //viewに渡すために$idをセット
-            $USER_CARBON_OPTION = $this->Option->find('first', array( //オプション値を取得
-                'conditions' => array('title' => 'USER_CARBON_KEY')
-            ));
-            $USER_CARBON_KEY = $USER_CARBON_OPTION['Option']['key'];
-            $checked_lists = $this->EventUser->find('list', array( //checkedユーザを取得
-                'fields' => 'EventUser.user_id',
-                'conditions' => array('EventUser.event_id' => $id),
-                'order' => array('EventUser.user_id' => 'asc')
-            ));
-              //checkedユーザが1人だった場合のバグを修正（追加済み参加者でid = array(x)となりエラー）
-              if (count($checked_lists) == 1) {
-                $checked_lists_only = $this->EventUser->find('first', array(
-                    'fields' => 'user_id',
-                    'conditions' => array('EventUser.event_id' => $id),
-                ));
-                $checked_lists = $checked_lists_only['EventUser']['user_id'];
-              }
-              //バグ修正ここまで
-            $user_lists = $this->User->find('all', array( //チェックボックス選択肢用、値を無理やり引き継ぐ
-                'fields' => array('id', 'handlename'),
-                'conditions' => array('and' => array(
-                    array('id !=' => $login_id), //ログインユーザを除外
-                    array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
-                    array('id !=' =>  $checked_lists), //登録済参加者を除外
-                    array('community_id' => 1) //参加者機能利用者のみ
-                )),
-                'order' => array('id' => 'asc')
-            ));
-            $checked_user_lists = $this->User->find('all', array( //チェックボックス選択肢用、checkedユーザ
-                'fields' => array('id', 'handlename'),
-                'conditions' => array('and' => array(
-                    array('id !=' => $login_id), //ログインユーザを除外
-                    array('id >' => $USER_CARBON_KEY), //管理者及び閲覧用アカウントを除外
-                    array('id =' =>  $checked_lists) //登録済参加者
-                )),
-                'order' => array('id' => 'asc')
-            ));
-            $this->set('user_lists', $user_lists);
-            $this->set('checked_user_lists', $checked_user_lists);
-            $checked_lists_delete = $this->EventUser->find('all', array( //削除ボタンのために取得
-                'fields' => 'id',
-                'conditions' => array('EventUser.event_id' => $id),
-                'order' => array('EventUser.user_id' => 'asc')
-            ));
-            $this->set('checked_lists_delete', $checked_lists_delete);
+          if ($this->request->data['Event']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
+            
           } else { //データの作成者とログインユーザが一致しない場合
             $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
-          $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない
+            $this->redirect('/events/');
           }
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
-          $this->redirect('/events/'); //参加者の選択肢を引き継いで取得できないので、renderではない
-        }
-      } else {
-        //viewでchekckedのfieldをnullに書き換える、JSが無効な場合を考えて残す
-        if (isset($this->request->data['time_start']) == TRUE) { //開催時刻
-          $this->request->data['Event']['time_start'] = null;
-        }
-        if (isset($this->request->data['entry_start']) == TRUE) { //申込開始日
-          $this->request->data['Event']['entry_start'] = null;
-        }
-        if (isset($this->request->data['entry_end']) == TRUE) { //申込終了日
-          $this->request->data['Event']['entry_end'] = null;
-        }
-        if (isset($this->request->data['announcement_date']) == TRUE) { //結果発表日
-          $this->request->data['Event']['announcement_date'] = null;
-        }
-        if (isset($this->request->data['payment_end']) == TRUE) { //入金締切日
-          $this->request->data['Event']['payment_end'] = null;
-        }
-        //書き換えここまで
-        $this->Event->set($this->request->data); //postデータがあればModelに渡してvalidate
-        if ($this->Event->validates()) { //validate成功の処理
-          $this->Event->saveAssociated($this->request->data); //validate成功でsave
-          if ($this->Event->save($id)) {
-            $this->Session->setFlash('修正しました。', 'flashMessage');
-          } else {
-            $this->Session->setFlash('修正できませんでした。', 'flashMessage');
-          }
           $this->redirect('/events/');
+        }
+      
+      } else {
+        //eventsテーブルに保存
+        $dataEvent['Event'] = $this->request->data['Event'];
+        $this->Event->set($dataEvent); //postデータをModelに渡してvalidate
+        if ($this->Event->validates()) { //validate成功の処理
+          if ($this->Event->save($dataEvent)) { //validate成功でsave
+            //$this->Session->setFlash('登録しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash($dataEvent['Event']['title'].' を修正できませんでした。', 'flashMessage');
+            $this->redirect('/events/');
+          }
         } else { //validate失敗の処理
-          $this->set('id', $this->request->data['Event']['id']); //viewに渡すために$idをセット
-//          $this->render('index'); //validate失敗でindexを表示
+          $this->Session->setFlash($dataEvent['Event']['title'].' の入力に不備があります。', 'flashMessage');
+          $this->redirect('/events/');
+        }
+        
+        //events_detailsテーブルに保存
+        /* データをテーブルの構造に合わせて加工ここから */
+        $dataDetails['EventsDetail'] = $this->request->data['EventsDetail'];
+        foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
+          $dataDetail['event_id'] = $dataEvent['Event']['id'];
+          $dataDetail['user_id'] = $this->Auth->user('id');
+          if (!$dataDetail['title']) {
+            unset($dataDetails['EventsDetail'][$key]);
+          }
+        }
+        unset($dataDetail); //foreachの参照渡しでのデータ書き換えを回避
+        /* データをテーブルの構造に合わせて加工ここまで */
+        foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
+          //postデータが複数あるので1つずつvalidateする
+          $this->EventsDetail->set($dataDetail); //postデータをModelに渡してvalidate
+          if (!$this->EventsDetail->validates()) { //validate失敗の処理
+            $this->Session->setFlash($dataDetail['EventsDetail']['title'].' の入力に不備があります。', 'flashMessage');
+            $this->redirect('/events/');
+          }
+        }
+        if ($this->EventsDetail->saveMany($dataDetails['EventsDetail'])) { //validate成功でsave
+          $message = '';
+          foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
+            $message .= '<br>'.$dataDetail['title'];
+          }
+          //$message = ltrim($message, '<br>');
+          $this->Session->setFlash($dataEvent['Event']['title'].' の'.$message.' を登録、修正しました。', 'flashMessage');
+          $this->redirect('/events/');
+        } else {
+          $this->Session->setFlash($dataEvent['Event']['title'].' を登録、修正できませんでした。', 'flashMessage');
         }
       }
+  
+      $this->render('index');
   }
 
   public function delete($id = null) {
@@ -250,8 +204,8 @@ class EventsController extends AppController {
       }
       
       if ($this->request->is('post')) {
-        $this->Event->Behaviors->enable('SoftDelete');
-        if ($this->Event->delete($id)) {
+        $this->EventsDetail->Behaviors->enable('SoftDelete');
+        if ($this->EventsDetail->delete($id)) {
           $this->Session->setFlash('削除しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');

@@ -8,21 +8,6 @@ class Event extends AppModel {
   public $actsAs = array('SoftDelete', 'Search.Searchable');
 
   public $belongsTo = array(
-      /*'EventGenre' => array(
-          'className' => 'EventGenre', //関連付けるModel
-          'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => 'title' //関連付け先Modelの使用field
-      ),*/
-      /*'EventPlace' => array(
-          'className' => 'Place', //関連付けるModel
-          'foreignKey' => 'place_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => array('name', 'access') //関連付け先Modelの使用field
-      ),*/
-      /*'EntryGenre' => array(
-          'className' => 'EntryGenre', //関連付けるModel
-          'foreignKey' => 'entry_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          'fields' => 'title' //関連付け先Modelの使用field
-      ),*/
       'User' => array(
           'className' => 'User', //関連付けるModel
           'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
@@ -41,16 +26,6 @@ class Event extends AppModel {
       'title' => array(
           'rule' => 'notBlank',
           'required' => 'create'
-      ),
-      'amount' => array(
-          'rule' => 'numeric',
-          'required' => 'create',
-          'message' => '値段を正しく入力してください。'
-      ),
-      'number' => array(
-          'rule' => 'numeric',
-          'required' => 'create',
-          'message' => '枚数を正しく入力してください。'
       )
   );
 
