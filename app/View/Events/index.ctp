@@ -22,7 +22,7 @@
   <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
     <?php echo $this->Form->input('Event.id', array('type' => 'hidden')); ?>
   <?php } else { //登録用 ?>
-    <?php echo $this->Form->input('Event.user_id', array('type' => 'hidden', 'value' => $userData[('id')])); ?>
+    <?php echo $this->Form->input('Event.user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
   <?php } ?>
   
   <div>
@@ -50,9 +50,9 @@
     <tr><td>開催日</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>開場時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => '24')); ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?></td></tr>
     <tr><td>開演時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => '24')); ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?></td></tr>
   </table>
   <?php } ?>
   
@@ -90,10 +90,10 @@
                                   elseif ($event_list['Event']['publish'] == 1) {echo '<span class="icon-like">申込中</span>';}
                                   elseif ($event_list['Event']['publish'] == 2) {echo '<span class="icon-true">確定</span>';}
                                   elseif ($event_list['Event']['publish'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
-        <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
-            <?php if ($event_list['EventsDetail']['user_id'] == $userData['id']) { ?>
-            <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?></span>
-            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $event_list['EventsDetail']['id']), null, ($event_list['Event']['title'] != $event_list['EventsDetail']['title'])? $event_list['Event']['title'].' の
+        <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
+                            <?php if ($event_list['EventsDetail']['user_id'] == $userData['id']) { ?>
+                            <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?></span>
+                            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $event_list['EventsDetail']['id']), null, ($event_list['Event']['title'] != $event_list['EventsDetail']['title'])? $event_list['Event']['title'].' の
 '.$event_list['EventsDetail']['title'].' を本当に削除しますか': $event_list['EventsDetail']['title'].' を本当に削除しますか'); ?></span>
             <?php } ?></td></tr>
     <?php } ?>

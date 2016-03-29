@@ -23,11 +23,11 @@ class EventsEntry extends AppModel {
           'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => array('username', 'handlename') //関連付け先Modelの使用field
       ),
-      /*'EntryGenre' => array(
+      'EntryGenre' => array(
           'className' => 'EntryGenre', //関連付けるModel
-          'foreignKey' => 'entry_id', //関連付けるためのfield、関連付け先は上記Modelのid
+          'foreignKey' => 'entries_genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
           'fields' => 'title' //関連付け先Modelの使用field
-      )*/
+      )
   );
 
   public $validate = array(

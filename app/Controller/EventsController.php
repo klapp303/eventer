@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController {
 
-	public $uses = array('Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'User', 'Place'); //使用するModel
+	public $uses = array('Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
 
   public $components = array('Paginator', 'Search.Prg');
   public $paginate = array(
@@ -45,13 +45,19 @@ class EventsController extends AppController {
                     'or' => array( //作成者か参加者の場合のみ
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
                         //array('Event.id' => $join_lists),
-                        array('Event.publish' => 1)
+                        array('Event.publish' => 2)
                     )
                 )
             )
         ));
         if (!empty($event_detail)) { //データが存在する場合
-          $this->set('event_detail', $event_detail);
+          $entry_lists = $this->EventsEntry->find('all', array(
+              'conditions' => array(
+                  'EventsEntry.events_detail_id' => $event_detail['EventsDetail']['id']
+              ),
+              'order' => array('EventsEntry.date_start' => 'asc')
+          ));
+          $this->set(compact('event_detail', 'entry_lists'));
           $this->layout = 'eventer_normal';
           $this->render('event');
         } else { //データが存在しない場合
@@ -211,6 +217,86 @@ class EventsController extends AppController {
           $this->Session->setFlash('削除できませんでした。', 'flashMessage');
         }
         $this->redirect('/events/');
+      }
+  }
+
+  public function entry_add($id = null) {
+      if ($this->request->is('post')) {
+        $id = $this->request->data['EventsEntry']['events_detail_id'];
+      }
+      $this->set('events_detail', $this->EventsDetail->findById($id));
+      $this->set('entry_genres', $this->EntryGenre->find('list'));
+      $this->set('events_detail_id', $id);
+      
+      if ($this->request->is('post')) {
+        //events_entriesテーブルに保存
+        $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
+        if ($this->EventsEntry->validates()) { //validate成功の処理
+          if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave
+            $this->Session->setFlash($this->request->data['EventsEntry']['title'].' を登録しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash($this->request->data['EventsEntry']['title'].' を登録できませんでした。', 'flashMessage');
+          }
+        } else { //validate失敗の処理
+          $this->Session->setFlash($this->request->data['EventsEntry']['title'].' の入力に不備があります。', 'flashMessage');
+        }
+        $this->redirect('/event/'.$this->request->data['EventsEntry']['events_detail_id']);
+      }
+  
+      $this->render('entry');
+  }
+
+  public function entry_edit($id = null) {
+      //$this->set('events_detail', $this->EventsDetail->findById($id));
+      
+      if (empty($this->request->data)) {
+        $this->set('entry_genres', $this->EntryGenre->find('list'));
+        
+        $this->request->data = $this->EventsEntry->findById($id); //postデータがなければ$idからデータを取得
+        $this->set('events_detail_id', $this->request->data['EventsEntry']['events_detail_id']);
+        if (!empty($this->request->data)) { //データが存在する場合
+          if ($this->request->data['EventsEntry']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
+            
+          } else { //データの作成者とログインユーザが一致しない場合
+            $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+            $this->redirect('/events/');
+          }
+        } else { //データが存在しない場合
+          $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+          $this->redirect('/events/');
+        }
+      
+      } else {
+        //events_entriesテーブルに保存
+        $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
+        if ($this->EventsEntry->validates()) { //validate成功の処理
+          if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave
+            $this->Session->setFlash($this->request->data['EventsEntry']['title'].' を修正しました。', 'flashMessage');
+          } else {
+            $this->Session->setFlash($this->request->data['EventsEntry']['title'].' を修正できませんでした。', 'flashMessage');
+          }
+        } else { //validate失敗の処理
+          $this->Session->setFlash($this->request->data['EventsEntry']['title'].' の入力に不備があります。', 'flashMessage');
+        }
+        $this->redirect('/event/'.$this->request->data['EventsEntry']['events_detail_id']);
+      }
+  
+      $this->render('entry');
+  }
+
+  public function entry_delete($id = null, $events_detail_id = null) {
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->EventsEntry->Behaviors->enable('SoftDelete');
+        if ($this->EventsEntry->delete($id)) {
+          $this->Session->setFlash('削除しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
+        }
+        $this->redirect('/event/'.$events_detail_id);
       }
   }
 
