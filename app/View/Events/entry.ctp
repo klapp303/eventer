@@ -37,13 +37,13 @@
         <td><?php echo $this->Form->input('EventsEntry.price', array('type' => 'text', 'label' => false, 'size' => 18)); ?>円<span class="txt-alt txt-b">*</span></td></tr>
     <tr><td>枚数</td>
         <td><?php echo $this->Form->input('EventsEntry.number', array('type' => 'text', 'label' => false, 'size' => 18)); ?>枚</td></tr>
-    <tr><td>申込開始日</td>
+    <tr><td>申込開始</td>
         <td><?php echo $this->Form->input('EventsEntry.date_start', array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'timeFormat' => 24)); ?><span class="txt-alt txt-b">*</span></td></tr>
-    <tr><td>申込終了日</td>
+    <tr><td>申込終了</td>
         <td><?php echo $this->Form->input('EventsEntry.date_close', array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'timeFormat' => 24)); ?><span class="txt-alt txt-b">*</span></td></tr>
-    <tr><td>当落発表日</td>
+    <tr><td>当落発表</td>
         <td><?php echo $this->Form->input('EventsEntry.date_result', array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'timeFormat' => 24)); ?><span class="txt-alt txt-b">*</span></td></tr>
-    <tr><td>入金締切日</td>
+    <tr><td>入金締切</td>
         <td><?php echo $this->Form->input('EventsEntry.date_payment', array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'timeFormat' => 24)); ?><span class="txt-alt txt-b">*</span></td></tr>
     <tr><td>種類</td>
         <td><?php echo $this->Form->input('EventsEntry.status', array('type' => 'select', 'label' => false, 'options' => array(0 => '検討中', 1 => '申込中', 2 => '当選', 3 => '落選', 4 => '見送り'))); ?><span class="txt-alt txt-b">*</span></td></tr>
