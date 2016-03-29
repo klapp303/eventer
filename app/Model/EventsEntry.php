@@ -41,4 +41,36 @@ class EventsEntry extends AppModel {
       'id' => array('type' => 'value'),
       'title' => array('type' => 'value')
   );*/
+
+  public function getEventStatus($id = false, $status = 0) {
+      $entry_lists = $this->find('all', array(
+          'conditions' => array(
+              'EventsEntry.events_detail_id' => $id
+          )
+      ));
+      foreach ($entry_lists AS $entry_list) {
+        if ($entry_list['EventsEntry']['status'] == 2) { //当選がある場合
+          $status = 2;
+          break;
+        }
+        if ($entry_list['EventsEntry']['status'] == 1) { //申込中がある場合
+          $status = 1;
+          break;
+        }
+        if ($entry_list['EventsEntry']['status'] == 0) { //検討中がある場合
+          $status = 0;
+          break;
+        }
+        if ($entry_list['EventsEntry']['status'] == 3) { //落選がある場合
+          $status = 3;
+          break;
+        }
+        if ($entry_list['EventsEntry']['status'] == 4) { //見送りがある場合
+          $status = 4;
+          break;
+        }
+      }
+      
+      return $status;
+  }
 }
