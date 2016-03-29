@@ -1,4 +1,9 @@
 @charset "utf-8";
+.title-sub {
+    margin-left: 15px;
+    font-size: 15px;
+}
+
 /* コンテンツ説明文用 */
 .intro_events {
     height: 150px;
@@ -9,31 +14,17 @@
     margin-bottom: 30px;
 }
 
-/* イベント一覧用 */
-.tbl-date {
-    width: 70px;
-}
-.tbl-ico {
-    width: 80px;
-}
-.tbl-num {
-    width: 70px;
-}
-.tbl-act {
-    width: 110px;
-}
-
 /* イベント詳細用 */
 .detail-list_event {
     margin-bottom: 40px!important;
 }
 
-.tbl-date-long {
-    width: 120px;
-}
 .tbl-ico-long {
     text-align: center;
     width: 150px;
+}
+.tbl-date-min {
+    width: 70px;
 }
 .tbl-user_long {
     margin-right: 20px;

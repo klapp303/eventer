@@ -1,58 +1,75 @@
 <?php echo $this->Html->css('events', array('inline' => FALSE)); ?>
-<span class="fr cf"><?php echo $this->element('access_search', array('data' => $event_detail)); ?></span>
-
 <h3>イベント詳細</h3>
 
-  <table class="detail-list detail-list_event">
-    <tr><th>イベント名</th><th>会場</th><th class="tbl-date-long">開催日時</th></tr>
-    <tr><td><?php echo $event_detail['EventsDetail']['title']; ?></td>
+  <table class="detail-list-min detail-list_event">
+    <tr><th>イベント名</th>
+        <th>会場</th></tr>
+    <tr><td><?php echo $event_detail['Event']['title']; ?><br>
+            <span class="title-sub"><?php echo $event_detail['EventsDetail']['title']; ?></span></td>
         <td><?php if ($event_detail['EventsDetail']['place_id'] < 2) { ?>
               <?php echo 'その他'; ?>
             <?php } elseif ($event_detail['Place']['name']) { ?>
               <?php echo $this->Html->link($event_detail['Place']['name'], '/places/place_detail/'.$event_detail['EventsDetail']['place_id']); ?>
-            <?php } ?></td>
-        <td class="tbl-date-long"><?php echo $event_detail['EventsDetail']['date']; ?><br>
-                                  開場　<?php echo $event_detail['EventsDetail']['time_open']; ?><br>
-                                  開演　<?php echo $event_detail['EventsDetail']['time_start']; ?></td></tr>
+            <?php } ?></td></tr>
   </table>
-  
-  <table class="detail-list detail-list_event">
-    <tr><th class="tbl-ico">種類</th><th class="tbl-ico-long">公開設定</th><th>作成者</th></tr>
-    <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['EventsDetail']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span></td>
+
+  <span class="fr cf"><?php echo $this->element('access_search', array('data' => $event_detail)); ?></span>
+
+  <table class="detail-list-min detail-list_event">
+    <tr><th class="tbl-date">開催日時</th>
+        <th class="tbl-ico">種類</th>
+        <th class="tbl-ico-long">公開設定</th>
+        <th>作成者</th></tr>
+    <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_detail['EventsDetail']['date']))].')', strtotime($event_detail['EventsDetail']['date'])); ?><br>
+                             開場　<?php echo date('H:i', strtotime($event_detail['EventsDetail']['time_open'])); ?><br>
+                             開演　<?php echo date('H:i', strtotime($event_detail['EventsDetail']['time_start'])); ?></td>
+        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['EventsDetail']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span></td>
         <td class="tbl-ico-long"><?php if ($event_detail['Event']['publish'] == 0) {echo '<span class="icon-false">非公開</span>';}
                                    elseif ($event_detail['Event']['publish'] == 1) {echo '<span class="icon-true">参加者のみ</span>';}
                                    elseif ($event_detail['Event']['publish'] == 2) {echo '<span class="icon-true">全てのユーザ</span>';} ?></td>
-        <td class="tbl-date-long"><?php echo $event_detail['User']['handlename']; ?></td></tr>
+        <td><?php echo $event_detail['User']['handlename']; ?></td></tr>
   </table>
 
 <h3>エントリー一覧</h3>
 
   <table class="detail-list">
-    <tr><th class="tbl-date">申込開始日</th>
-        <th>エントリー名</th>
-        <th class="tbl-ico">種類<br>
-                            状態</th>
-        <th class="tbl-num">価格<br>
-                            枚数</th>
+    <tr><th colspan="5">エントリー名</th>
+        <th class="tbl-genre" rowspan="2">種類<br>
+                                          状態</th>
+        <th class="tbl-num" rowspan="2">価格<br>
+                                        枚数</th>
         <?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
-        <th class="tbl-action">action</th>
+        <th class="tbl-act" rowspan="2">action</th>
         <?php } ?></tr>
+    <tr><th></th>
+        <th class="tbl-date-min">申込開始</th>
+        <th class="tbl-date-min">申込終了</th>
+        <th class="tbl-date-min">当落発表</th>
+        <th class="tbl-date-min">入金締切</th></tr>
     
     <?php foreach ($entry_lists AS $entry_list) { ?>
-    <tr><td class="tbl-date"><?php echo $entry_list['EventsEntry']['date_start']; ?></td>
-        <td><?php echo $entry_list['EventsEntry']['title']; ?></td>
-        <td class="tbl-ico"><?php echo $entry_list['EntryGenre']['title']; ?><br>
-                            <?php if ($entry_list['EventsEntry']['status'] == 0) {echo '検討中';}
-                              elseif ($entry_list['EventsEntry']['status'] == 1) {echo '申込中';}
-                              elseif ($entry_list['EventsEntry']['status'] == 2) {echo '当選';}
-                              elseif ($entry_list['EventsEntry']['status'] == 3) {echo '落選';}
-                              elseif ($entry_list['EventsEntry']['status'] == 4) {echo '見送り';} ?></td>
-        <td class="tbl-num"><?php echo $entry_list['EventsEntry']['price']; ?>円<br>
-                            <?php echo $entry_list['EventsEntry']['number']; ?>枚</td>
+    <tr><td colspan="5"><?php echo $entry_list['EventsEntry']['title']; ?></td>
+        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-event_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
+                                          <?php if ($entry_list['EventsEntry']['status'] == 0) {echo '検討中';}
+                                            elseif ($entry_list['EventsEntry']['status'] == 1) {echo '申込中';}
+                                            elseif ($entry_list['EventsEntry']['status'] == 2) {echo '当選';}
+                                            elseif ($entry_list['EventsEntry']['status'] == 3) {echo '落選';}
+                                            elseif ($entry_list['EventsEntry']['status'] == 4) {echo '見送り';} ?></td>
+        <td class="tbl-num" rowspan="2"><?php echo $entry_list['EventsEntry']['price']; ?>円<br>
+                                        <?php echo $entry_list['EventsEntry']['number']; ?>枚</td>
         <?php if ($entry_list['EventsEntry']['user_id'] == $userData['id']) { ?>
-        <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('修正', '/events/entry_edit/'.$entry_list['EventsEntry']['id']); ?></span>
-                            <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'].' を本当に削除しますか'); ?></span>
+        <td class="tbl-act" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('修正', '/events/entry_edit/'.$entry_list['EventsEntry']['id']); ?></span>
+                                        <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'].' を本当に削除しますか'); ?></span>
         <?php } ?></td></tr>
+    <tr><td></td>
+        <td class="tbl-date-min"><?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_start']))].')', strtotime($entry_list['EventsEntry']['date_start'])); ?><br>
+                                 <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_start'])); ?></td>
+        <td class="tbl-date-min"><?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_close']))].')', strtotime($entry_list['EventsEntry']['date_close'])); ?><br>
+                                 <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_close'])); ?></td>
+        <td class="tbl-date-min"><?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_result']))].')', strtotime($entry_list['EventsEntry']['date_result'])); ?><br>
+                                 <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_result'])); ?></td>
+        <td class="tbl-date-min"><?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_payment']))].')', strtotime($entry_list['EventsEntry']['date_payment'])); ?><br>
+                                 <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_payment'])); ?></td></tr>
     <?php } ?>
   </table>
 

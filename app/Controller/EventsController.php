@@ -16,6 +16,8 @@ class EventsController extends AppController {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
       //$this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+      
+      $this->set('week_lists', array('日', '月', '火', '水', '木', '金', '土'));
   }
 
   public function index() {
@@ -58,7 +60,6 @@ class EventsController extends AppController {
               'order' => array('EventsEntry.date_start' => 'asc')
           ));
           $this->set(compact('event_detail', 'entry_lists'));
-          $this->layout = 'eventer_normal';
           $this->render('event');
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');

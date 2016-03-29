@@ -74,22 +74,22 @@
   <table class="detail-list">
     <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('EventsDetail.date', '▼'); ?></th>
         <th>イベント名<?php echo $this->Paginator->sort('EventsDetail.title', '▼'); ?></th>
-        <th class="tbl-ico">種類<br>
-                            状態</th>
-        <th class="tbl-action">action</th></tr>
+        <th class="tbl-genre">種類<br>
+                              状態</th>
+        <th class="tbl-act">action</th></tr>
     
     <?php foreach ($event_lists AS $event_list) { ?>
-    <tr><td class="tbl-date"><?php echo $event_list['EventsDetail']['date']; ?></td>
+    <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_list['EventsDetail']['date']))].')', strtotime($event_list['EventsDetail']['date'])); ?></td>
         <td><?php echo $event_list['Event']['title']; ?>
-            <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?>
-            <br>　<?php echo $event_list['EventsDetail']['title']; ?>
+            <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
+            <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
             <?php } ?>
         </td>
-        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_list['EventsDetail']['genre_id']; ?>"><?php echo $event_list['EventsDetail']['genre_id']; ?></span>
-                            <br><?php if ($event_list['Event']['publish'] == 0) {echo '<span class="icon-genre">未定</span>';}
-                                  elseif ($event_list['Event']['publish'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                  elseif ($event_list['Event']['publish'] == 2) {echo '<span class="icon-true">確定</span>';}
-                                  elseif ($event_list['Event']['publish'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
+        <td class="tbl-genre"><span class="icon-genre col-event_<?php echo $event_list['EventsDetail']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
+                              <?php if ($event_list['Event']['publish'] == 0) {echo '<span class="icon-genre">未定</span>';}
+                                elseif ($event_list['Event']['publish'] == 1) {echo '<span class="icon-like">申込中</span>';}
+                                elseif ($event_list['Event']['publish'] == 2) {echo '<span class="icon-true">確定</span>';}
+                                elseif ($event_list['Event']['publish'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
         <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
                             <?php if ($event_list['EventsDetail']['user_id'] == $userData['id']) { ?>
                             <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?></span>
