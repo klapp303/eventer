@@ -139,6 +139,10 @@ class EventsController extends AppController {
           'order' => array('EventsDetail.date' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('EventsDetail');
+      foreach ($event_lists AS &$event_list) {
+        $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+      }
+      unset($event_list);
       $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
       $place_lists = $this->Place->find('list'); //プルダウン選択肢用
       $this->set(compact('event_lists', 'event_genres', 'place_lists'));
