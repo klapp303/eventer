@@ -6,12 +6,12 @@
   </p>
 </div>
 
-<h3>申込方法一覧</h3>
+<h3>エントリー方法一覧</h3>
 
   <table class="detail-list">
-    <tr><th class="tbl-ico">申込方法名</th><th>説明</th></tr>
+    <tr><th class="tbl-genre">エントリー名</th><th>説明</th></tr>
     <?php foreach ($entry_genre_lists AS $entry_genre_list) { ?>
-    <tr><td class="tbl-ico"><span class="icon-genre col-entry_<?php echo $entry_genre_list['EntryGenre']['id']; ?>"><?php echo $entry_genre_list['EntryGenre']['title']; ?></span></td>
+    <tr><td class="tbl-genre"><span class="icon-genre col-entry_<?php echo $entry_genre_list['EntryGenre']['id']; ?>"><?php echo $entry_genre_list['EntryGenre']['title']; ?></span></td>
         <td><?php echo $entry_genre_list['EntryGenre']['description']; ?></td></tr>
     <?php } ?>
   </table>

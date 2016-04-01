@@ -205,18 +205,18 @@
 .col-event_2 { /* リリイベ */
     background: #58D3F7;
 }
-.col-event_3 { /* 作品記念 */
+.col-event_3 { /* トーク */
     background: #819FF7;
 }
-.col-event_4 { /* 公開録音 */
+.col-event_4 { /* 見本市 */
     background: #FAAC58;
 }
-.col-event_5 { /* サイン会 */
+.col-event_5 { /* 即売会 */
     background: #FFFF00;
 }
 
 .col-entry_1 { /* FC先行 */
-    background: #58ACFA;
+    background: #FE2E9A;
 }
 .col-entry_2 { /* メディア先行 */
     background: #FE2E64;
@@ -227,14 +227,14 @@
 .col-entry_4 { /* Loppi（ローチケ） */
     background: #58D3F7;
 }
-.col-entry_5 { /* その他会員サイト */
+.col-entry_5 { /* チケットぴあ */
+    background: #58ACFA;
+}
+.col-entry_6 { /* その他会員サイト */
     background: #FAAC58;
 }
-.col-entry_6 { /* その他チケットサイト */
+.col-entry_7 { /* その他サイト */
     background: #FFFF00;
-}
-.col-entry_7 { /* 一般 */
-    background: #FE2E9A;
 }
 
 .col-event_6,

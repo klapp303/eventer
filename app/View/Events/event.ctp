@@ -51,7 +51,7 @@
     
     <?php foreach ($entry_lists AS $entry_list) { ?>
     <tr><td colspan="5"><?php echo $entry_list['EventsEntry']['title']; ?></td>
-        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-event_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
+        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
                                           <?php if ($entry_list['EventsEntry']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
                                             elseif ($entry_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
                                             elseif ($entry_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
