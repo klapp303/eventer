@@ -1,4 +1,5 @@
 <?php echo $this->Html->css('events', array('inline' => FALSE)); ?>
+<?php echo $this->Html->script('jquery-name_insert', array('inline' => FALSE)); ?>
 <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
 <h3>イベントの編集</h3>
 
@@ -27,11 +28,11 @@
   
   <div>
     <label>イベント名（全体）</label>
-    <?php echo $this->Form->input('Event.title', array('type' => 'text', 'label' => false, 'size' => 25, 'placeholder' => '例）竹達彩奈 2ndALツアー')); ?><span class="txt-alt txt-b">*</span>
+    <?php echo $this->Form->input('Event.title', array('type' => 'text', 'label' => false, 'size' => 25, 'placeholder' => '例）竹達彩奈 2ndALツアー', 'class' => 'js-insert_data')); ?><span class="txt-alt txt-b">*</span>
     <label>公開設定</label>
     <?php echo $this->Form->input('Event.publish', array('type' => 'select', 'label' => false, 'options' => array(1 => '公開', 0 => '非公開'))); ?><span class="txt-alt txt-b">*</span><br>
     <span class="txt-min">登録が1つだけの場合は、イベント名（全体）と（各公演）は同じで構いません。</span>
-    <button type="button">イベント名をコピー</button>
+    <button type="button" class="js-insert">イベント名をコピー</button>
   </div>
   
   <?php for ($i = 0; $i < 4; $i++) { ?>
@@ -42,7 +43,7 @@
   
   <table class="fl">
     <tr><td>イベント名<br>（各公演）</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true: false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc')); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true: false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc', 'class' => ($i == 0)? 'js-insert_area': '')); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>種類</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.genre_id', array('type' => 'select', 'label' => false, 'options' => $event_genres)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>会場</td>
