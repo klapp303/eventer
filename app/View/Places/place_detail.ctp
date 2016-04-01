@@ -3,7 +3,10 @@
 <h3>会場詳細</h3>
 
   <table class="detail-list">
-    <tr><th>会場名</th><th class="tbl-num">収容人数</th><th>最寄り駅</th><th>公式サイト</th></tr>
+    <tr><th>会場名</th>
+        <th class="tbl-num">収容人数</th>
+        <th>最寄り駅</th>
+        <th>公式サイト</th></tr>
     <tr><td><?php echo $place_detail['Place']['name']; ?></td>
         <td class="tbl-num"><?php echo $place_detail['Place']['capacity']; ?><?php if ($place_detail['Place']['capacity']) {echo '人';} ?></td>
         <td><?php echo $place_detail['Place']['access']; ?><?php if ($place_detail['Place']['access']) {echo '駅';} ?></td>
@@ -27,20 +30,19 @@
 <div id="event-list_place">
 <h3>開催予定のイベント</h3>
 
-  <?php echo $this->Paginator->numbers(array(
-      'modulus' => 4, //現在ページから左右あわせてインクルードする個数
-      'separator' => '|', //デフォルト値のセパレーター
-      'first' => '＜', //先頭ページへのリンク
-      'last' => '＞' //最終ページへのリンク
-  )); ?>
-
   <table class="event-list_place">
-    <tr><th class="tbl-date">開催日</th><th>イベント名</th><th class="tbl-action_place">action</th></tr>
+    <tr><th class="tbl-date">開催日</th>
+        <th>イベント名</th>
+        <th class="tbl-act_place">action</th></tr>
     
     <?php foreach ($event_lists AS $event_list) { ?>
-    <tr><td class="tbl-date"><?php echo $event_list['Event']['date']; ?></td>
-        <td><?php echo $event_list['Event']['title']; ?></td>
-        <td class="tbl-action_place"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['Event']['id']); ?></span></td></tr>
+    <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_list['EventsDetail']['date']))].')', strtotime($event_list['EventsDetail']['date'])); ?></td>
+        <td><?php echo $event_list['Event']['title']; ?>
+            <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
+            <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
+            <?php } ?>
+        </td>
+        <td class="tbl-act_place"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
     <?php } ?>
   </table>
 </div>

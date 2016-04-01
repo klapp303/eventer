@@ -1,4 +1,9 @@
 @charset "utf-8";
+.title-sub {
+    margin-left: 15px;
+    font-size: 15px;
+}
+
 /* コンテンツ説明文用 */
 .intro_places {
     height: 150px;
@@ -13,14 +18,11 @@
 }
 
 /* 会場一覧用 */
-.tbl-ico {
-    width: 80px;
+.tbl-num_place {
+    width: 90px;
 }
-.tbl-num {
-    width: 70px;
-}
-.tbl-action_places {
-    width: 110px;
+.tbl-act_place {
+    width: 50px;
 }
 
 .delete_places {
