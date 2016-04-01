@@ -1,1 +1,1 @@
-<p class="foot-txt">copyright&#169 2015 イベ幸制作委員会</p>
+<p class="foot-txt">copyright&#169 2015-2016 イベ幸制作委員会</p>
