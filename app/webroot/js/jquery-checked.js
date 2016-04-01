@@ -1,3 +1,4 @@
+//未使用
 jQuery(function($) {
     $('.js-checkbox_time_start').change(function(){
 	if ($(this).is(':checked')) {
