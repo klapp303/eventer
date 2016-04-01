@@ -50,12 +50,34 @@
     <tr><td>開催日</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>開場時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?>
-            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_open_null', array('type' => 'checkbox', 'label' => false)); ?><span class="txt-min">なし</span></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24, 'class' => 'time_open_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_open_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'disabled': ''): 'disabled')); ?>
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_open_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_open_null_'.$i,
+            'checked' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_open_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'checked': ''): 'checked')); ?><span class="txt-min">なし</span></td></tr>
     <tr><td>開演時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?>
-            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_start_null', array('type' => 'checkbox', 'label' => false)); ?><span class="txt-min">なし</span></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24, 'class' => 'time_start_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_start_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'disabled': ''): 'disabled')); ?>
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_start_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_start_null_'.$i,
+            'checked' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_start_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'checked': ''): 'checked')); ?><span class="txt-min">なし</span></td></tr>
   </table>
+  <script>
+    jQuery(function($) {
+        $('.time_open_null_' + <?php echo $i; ?>).change(function(){
+          if ($(this).is(':checked')) {
+            $('.time_open_' + <?php echo $i; ?>).attr('disabled','disabled');
+          } else {
+            $('.time_open_' + <?php echo $i; ?>).removeAttr('disabled').focus();
+          }
+        });
+        $('.time_start_null_' + <?php echo $i; ?>).change(function(){
+          if ($(this).is(':checked')) {
+            $('.time_start_' + <?php echo $i; ?>).attr('disabled','disabled');
+          } else {
+            $('.time_start_' + <?php echo $i; ?>).removeAttr('disabled').focus();
+          }
+        });
+    });
+  </script>
   <?php } ?>
   
   <div class="cf" style="width: 800px;">

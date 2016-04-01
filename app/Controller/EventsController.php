@@ -166,6 +166,7 @@ class EventsController extends AppController {
               }
             }
             unset($events_detail);
+            $this->set('requestData', $this->request->data); //view側でnullかどうかを判定するため
           } else { //データの作成者とログインユーザが一致しない場合
             $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
             $this->redirect('/events/');
