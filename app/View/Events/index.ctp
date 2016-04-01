@@ -50,9 +50,11 @@
     <tr><td>開催日</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>開場時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?>
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_open_null', array('type' => 'checkbox', 'label' => false)); ?><span class="txt-min">なし</span></td></tr>
     <tr><td>開演時刻</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24)); ?>
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_start_null', array('type' => 'checkbox', 'label' => false)); ?><span class="txt-min">なし</span></td></tr>
   </table>
   <?php } ?>
   

@@ -95,6 +95,12 @@ class EventsController extends AppController {
         foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
           $dataDetail['event_id'] = $saveEvent['Event']['id'];
           $dataDetail['user_id'] = $saveEvent['Event']['user_id'];
+          if ($dataDetail['time_open_null'] == 1) {
+            $dataDetail['time_open'] = null;
+          }
+          if ($dataDetail['time_start_null'] == 1) {
+            $dataDetail['time_start'] = null;
+          }
           if (!$dataDetail['title']) {
             unset($dataDetails['EventsDetail'][$key]);
           }
@@ -151,7 +157,15 @@ class EventsController extends AppController {
         $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
         if (!empty($this->request->data)) { //データが存在する場合
           if ($this->request->data['Event']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
-            
+            foreach ($this->request->data['EventsDetail'] AS &$events_detail) {
+              if ($events_detail['time_open'] == null) {
+                $events_detail['time_open_null'] = 1;
+              }
+              if ($events_detail['time_start'] == null) {
+                $events_detail['time_start_null'] = 1;
+              }
+            }
+            unset($events_detail);
           } else { //データの作成者とログインユーザが一致しない場合
             $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
             $this->redirect('/events/');
@@ -183,6 +197,12 @@ class EventsController extends AppController {
         foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
           $dataDetail['event_id'] = $dataEvent['Event']['id'];
           $dataDetail['user_id'] = $this->Auth->user('id');
+          if ($dataDetail['time_open_null'] == 1) {
+            $dataDetail['time_open'] = null;
+          }
+          if ($dataDetail['time_start_null'] == 1) {
+            $dataDetail['time_start'] = null;
+          }
           if (!$dataDetail['title']) {
             unset($dataDetails['EventsDetail'][$key]);
           }
