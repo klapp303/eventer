@@ -23,10 +23,10 @@
       <td><label>最寄り駅（任意）</label></td>
       <td><?php echo $this->Form->input('station', array('type' => 'text', 'label' => false, 'placeholder' => '例）東京')); ?>駅</td>
     </tr>
-    <tr>
+    <!--tr>
       <td><label>参加者機能</label></td>
-      <td><?php echo $this->Form->input('community_id', array('type' => 'select', 'label' => false, 'options' => array(0 => '利用しない', 1 => '利用する'))); ?></td>
-    </tr>
+      <td><?php /*echo $this->Form->input('community_id', array('type' => 'select', 'label' => false, 'options' => array(0 => '利用しない', 1 => '利用する')));*/ ?></td>
+    </tr-->
     
     <tr>
       <td></td>
