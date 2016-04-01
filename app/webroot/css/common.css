@@ -98,3 +98,6 @@ body {
     padding-left: 5px;
     padding-right: 5px;
 }
+#content >table >tbody >tr >th, #content >table >tr >th {
+    padding-bottom: 5px;
+}

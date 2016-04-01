@@ -15,6 +15,14 @@
 }
 
 /* イベント詳細用 */
+.access_search {
+    float: right;
+    margin-top: 5px;
+    /*position: absolute;
+    top: 220px;
+    left: 640px;*/
+}
+
 .detail-list_event {
     margin-bottom: 40px!important;
 }
