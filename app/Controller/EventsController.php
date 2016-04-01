@@ -32,7 +32,7 @@ class EventsController extends AppController {
                   )
               )
           ),
-          'order' => array('EventsDetail.date' => 'asc')
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('EventsDetail');
       foreach ($event_lists AS &$event_list) {
@@ -136,7 +136,7 @@ class EventsController extends AppController {
                   )
               )
           ),
-          'order' => array('EventsDetail.date' => 'asc')
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('EventsDetail');
       foreach ($event_lists AS &$event_list) {
