@@ -251,6 +251,9 @@ class EventsController extends AppController {
   }
 
   public function entry_add($id = null) {
+      //エントリーの日付カラムを定義しておく
+      $entryDateColumn = $this->EventsEntry->getDateColumn();
+      
       if ($this->request->is('post')) {
         $id = $this->request->data['EventsEntry']['events_detail_id'];
       }
@@ -260,6 +263,13 @@ class EventsController extends AppController {
       
       if ($this->request->is('post')) {
         //events_entriesテーブルに保存
+        /* データをテーブルの構造に合わせて加工ここから */
+        foreach ($entryDateColumn AS $column) {
+          if ($this->request->data['EventsEntry'][$column.'_null'] == 1) {
+            $this->request->data['EventsEntry'][$column] = null;
+          }
+        }
+        /* データをテーブルの構造に合わせて加工ここまで */
         $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
         if ($this->EventsEntry->validates()) { //validate成功の処理
           if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave
@@ -277,7 +287,8 @@ class EventsController extends AppController {
   }
 
   public function entry_edit($id = null) {
-      //$this->set('events_detail', $this->EventsDetail->findById($id));
+      //エントリーの日付カラムを定義しておく
+      $entryDateColumn = $this->EventsEntry->getDateColumn();
       
       if (empty($this->request->data)) {
         $this->set('entry_genres', $this->EntryGenre->find('list'));
@@ -286,7 +297,12 @@ class EventsController extends AppController {
         $this->set('events_detail_id', $this->request->data['EventsEntry']['events_detail_id']);
         if (!empty($this->request->data)) { //データが存在する場合
           if ($this->request->data['EventsEntry']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
-            
+            foreach ($entryDateColumn AS $column) {
+              if ($this->request->data['EventsEntry'][$column] == null) {
+                $this->request->data['EventsEntry'][$column.'_null'] = 1;
+              }
+            }
+            $this->set('requestData', $this->request->data); //view側でnullかどうかを判定するため
           } else { //データの作成者とログインユーザが一致しない場合
             $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
             $this->redirect('/events/');
@@ -298,6 +314,13 @@ class EventsController extends AppController {
       
       } else {
         //events_entriesテーブルに保存
+        /* データをテーブルの構造に合わせて加工ここから */
+        foreach ($entryDateColumn AS $column) {
+          if ($this->request->data['EventsEntry'][$column.'_null'] == 1) {
+            $this->request->data['EventsEntry'][$column] = null;
+          }
+        }
+        /* データをテーブルの構造に合わせて加工ここまで */
         $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
         if ($this->EventsEntry->validates()) { //validate成功の処理
           if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave

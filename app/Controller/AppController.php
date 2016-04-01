@@ -5,7 +5,7 @@ App::uses('CakeEmail', 'Network/Email'); //CakeEmaiilの利用、分けて記述
 
 class AppController extends Controller {
 
-  public $uses = array(); //使用するModel
+  public $uses = array('EventsEntry'); //使用するModel
 
   public $components = array(
       'Session', //Paginateのため記述
@@ -30,5 +30,8 @@ class AppController extends Controller {
       //$this->Auth->allow('index'); //認証なしのページを設定
   
       $this->set('userData', $this->Auth->user());
+      
+      //エントリーの日付カラムを定義しておく
+      $this->set('entryDateColumn', $this->EventsEntry->getDateColumn());
   }
 }

@@ -73,4 +73,15 @@ class EventsEntry extends AppModel {
       
       return $status;
   }
+
+  public function getDateColumn() {
+      $data = array(
+          '申込開始' => 'date_start',
+          '申込終了' => 'date_close',
+          '当落発表' => 'date_result',
+          '入金締切' => 'date_payment'
+      );
+      
+      return $data;
+  }
 }
