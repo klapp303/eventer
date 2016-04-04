@@ -6,7 +6,7 @@
    
     <!--<tr><td class="tbl-date">2015-10-17</td>
         <td>更新内容本文になります。</td></tr>-->
-    <tr><td class="tbl-date">2016-04-01</td>
+    <tr><td class="tbl-date">2016-04-03</td>
         <td>イベ幸ver2.0リリース！<span class="txt-alt txt-b">⇐ New</span></td></tr>
     <tr><td class="tbl-date">2015-10-17</td>
         <td>イベ幸ver1.0リリース！</td></tr>
