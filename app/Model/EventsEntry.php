@@ -71,6 +71,17 @@ class EventsEntry extends AppModel {
         }
       }
       
+      //エントリーが無いまま終了したイベントはstatusを見送りにする
+      if (!$entry_lists) {
+        $this->loadModel('EventsDetail');
+        $event_data = $this->EventsDetail->find('first', array(
+            'conditions' => array('EventsDetail.id' => $id)
+        ));
+        if ($event_data['EventsDetail']['date'] < date('Y-m-d')) {
+          $status = 4;
+        }
+      }
+      
       return $status;
   }
 

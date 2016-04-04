@@ -24,4 +24,10 @@ class AppModel extends Model { //半角文字だけかを判定するcustom vali
       }
       return $result;
 	}
+
+  public function loadModel($Model) {
+      if (!isset($this->{$Model})) {
+        $this->{$Model} = ClassRegistry::init(array('class' => $Model, 'alias' => $Model, 'id' => null));
+      }
+  }
 }
