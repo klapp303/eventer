@@ -33,7 +33,7 @@
   <table class="event-list_place">
     <tr><th class="tbl-date">開催日</th>
         <th>イベント名</th>
-        <th class="tbl-act_place">action</th></tr>
+        <th class="tbl-act-min">action</th></tr>
     
     <?php foreach ($event_lists AS $event_list) { ?>
     <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_list['EventsDetail']['date']))].')', strtotime($event_list['EventsDetail']['date'])); ?></td>
@@ -42,7 +42,7 @@
             <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
             <?php } ?>
         </td>
-        <td class="tbl-act_place"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
+        <td class="tbl-act-min"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
     <?php } ?>
   </table>
 </div>

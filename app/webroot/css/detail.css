@@ -81,6 +81,9 @@
 .tbl-date {
     width: 110px;
 }
+.tbl-date-min {
+    width: 70px;
+}
 .tbl-num {
     text-align: right;
 }
@@ -94,6 +97,9 @@
 }
 .tbl-act {
     width: 105px;
+}
+.tbl-act-min {
+    width: 50px;
 }
 
 /* ページリンク */
