@@ -26,6 +26,7 @@
     <?php echo $this->Form->input('EventsEntry.event_id', array('type' => 'hidden', 'value' => $events_detail['EventsDetail']['event_id'])); ?>
     <?php echo $this->Form->input('EventsEntry.events_detail_id', array('type' => 'hidden', 'value' => $events_detail['EventsDetail']['id'])); ?>
     <?php echo $this->Form->input('EventsEntry.user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
+    <?php echo $this->Form->input('EventsEntry.date_event', array('type' => 'text', 'value' => ($events_detail['EventsDetail']['time_start'])? $events_detail['EventsDetail']['date'].' '.$events_detail['EventsDetail']['time_start']: $events_detail['EventsDetail']['date'])); ?>
   <?php } ?>
   
   <table>
@@ -34,7 +35,7 @@
     <tr><td>種類</td>
         <td><?php echo $this->Form->input('EventsEntry.entries_genre_id', array('type' => 'select', 'label' => false, 'options' => $entry_genres)); ?><span class="txt-alt txt-b">*</span></td></tr>
     <tr><td>価格</td>
-        <td><?php echo $this->Form->input('EventsEntry.price', array('type' => 'text', 'label' => false, 'size' => 18)); ?>円<span class="txt-alt txt-b">*</span></td></tr>
+        <td><?php echo $this->Form->input('EventsEntry.price', array('type' => 'text', 'label' => false, 'size' => 18)); ?>円</td></tr>
     <tr><td>枚数</td>
         <td><?php echo $this->Form->input('EventsEntry.number', array('type' => 'text', 'label' => false, 'size' => 18)); ?>枚</td></tr>
     

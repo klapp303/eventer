@@ -219,6 +219,25 @@ class EventsController extends AppController {
           }
         }
         if ($this->EventsDetail->saveMany($dataDetails['EventsDetail'])) { //validate成功でsave
+          //開演日時に変更があればevents_entriesテーブルを更新
+          foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
+            if ($dataDetail['date'] || $dataDetail['time_start']) {
+              $date_event = ($dataDetail['time_start'])? $dataDetail['date']['year'].'-'.$dataDetail['date']['month'].'-'.$dataDetail['date']['day'].' '.$dataDetail['time_start']['hour'].':'.$dataDetail['time_start']['min']: $dataDetail['date']['year'].'-'.$dataDetail['date']['month'].'-'.$dataDetail['date']['day'];
+            }
+            if ($dataDetail['time_start_null'] == 1) {
+              $date_event = $dataDetail['date']['year'].'-'.$dataDetail['date']['month'].'-'.$dataDetail['date']['day'];
+            }
+            if (@$date_event) {
+              $entryId = $this->EventsEntry->find('list', array(
+                  'conditions' => array('EventsEntry.events_detail_id' => $dataDetail['id']),
+                  'fields' => 'EventsEntry.id'
+              ));
+              foreach ($entryId AS $id) {
+                $this->EventsEntry->id = $id;
+                $this->EventsEntry->savefield('date_event', $date_event);
+              }
+            }
+          }
           $message = '';
           foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
             $message .= '<br>'.$dataDetail['title'];
