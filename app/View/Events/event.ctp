@@ -35,7 +35,7 @@
 <h3>エントリー一覧</h3>
 
   <table class="detail-list">
-    <tr><th colspan="5">エントリー名</th>
+    <tr><th colspan="<?php echo count($entryDateColumn)+1; ?>">エントリー名</th>
         <th class="tbl-genre" rowspan="2">種類<br>
                                           状態</th>
         <th class="tbl-num" rowspan="2">価格<br>
@@ -44,13 +44,12 @@
         <th class="tbl-act" rowspan="2">action</th>
         <?php } ?></tr>
     <tr><th></th>
-        <th class="tbl-date-min">申込開始</th>
-        <th class="tbl-date-min">申込終了</th>
-        <th class="tbl-date-min">当落発表</th>
-        <th class="tbl-date-min">入金締切</th></tr>
+        <?php foreach ($entryDateColumn AS $key => $column) { ?>
+        <th class="tbl-date-min"><?php echo $key; ?></th>
+        <?php } ?></tr>
     
     <?php foreach ($entry_lists AS $entry_list) { ?>
-    <tr><td colspan="5"><?php echo $entry_list['EventsEntry']['title']; ?></td>
+    <tr><td colspan="<?php echo count($entryDateColumn)+1; ?>"><?php echo $entry_list['EventsEntry']['title']; ?></td>
         <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
                                           <?php if ($entry_list['EventsEntry']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
                                             elseif ($entry_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
@@ -64,22 +63,12 @@
                                         <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'].' を本当に削除しますか'); ?></span>
         <?php } ?></td></tr>
     <tr><td></td>
-        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry']['date_start']) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_start']))].')', strtotime($entry_list['EventsEntry']['date_start'])); ?><br>
-                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_start'])); ?>
+        <?php foreach ($entryDateColumn AS $column) { ?>
+        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry'][$column]) { ?>
+                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry'][$column]))].')', strtotime($entry_list['EventsEntry'][$column])); ?><br>
+                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry'][$column])); ?>
                                  <?php } ?></td>
-        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry']['date_close']) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_close']))].')', strtotime($entry_list['EventsEntry']['date_close'])); ?><br>
-                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_close'])); ?>
-                                 <?php } ?></td>
-        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry']['date_result']) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_result']))].')', strtotime($entry_list['EventsEntry']['date_result'])); ?><br>
-                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_result'])); ?>
-                                 <?php } ?></td>
-        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry']['date_payment']) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_payment']))].')', strtotime($entry_list['EventsEntry']['date_payment'])); ?><br>
-                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_payment'])); ?>
-                                 <?php } ?></td></tr>
+        <?php } ?></tr>
     <?php } ?>
   </table>
 
