@@ -26,7 +26,7 @@
     <?php echo $this->Form->input('EventsEntry.event_id', array('type' => 'hidden', 'value' => $events_detail['EventsDetail']['event_id'])); ?>
     <?php echo $this->Form->input('EventsEntry.events_detail_id', array('type' => 'hidden', 'value' => $events_detail['EventsDetail']['id'])); ?>
     <?php echo $this->Form->input('EventsEntry.user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
-    <?php echo $this->Form->input('EventsEntry.date_event', array('type' => 'text', 'value' => ($events_detail['EventsDetail']['time_start'])? $events_detail['EventsDetail']['date'].' '.$events_detail['EventsDetail']['time_start']: $events_detail['EventsDetail']['date'])); ?>
+    <?php echo $this->Form->input('EventsEntry.date_event', array('type' => 'hidden', 'value' => ($events_detail['EventsDetail']['time_start'])? $events_detail['EventsDetail']['date'].' '.$events_detail['EventsDetail']['time_start']: $events_detail['EventsDetail']['date'])); ?>
   <?php } ?>
   
   <table>
