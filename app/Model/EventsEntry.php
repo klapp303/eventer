@@ -42,6 +42,27 @@ class EventsEntry extends AppModel {
       'title' => array('type' => 'value')
   );*/
 
+  public function afterFind($results, $primary = false) {
+      //エントリーの各日付がどこまで過去のものかを判定
+      $entryDateColumn = $this->getDateColumn();
+      foreach ($results AS $key => &$entry) {
+        $status = 0;
+        $entry['EventsEntry']['date_closed'] = $status;
+        foreach ($entryDateColumn AS $column) {
+          $status++;
+          if ($entry['EventsEntry'][$column] != null && $entry['EventsEntry'][$column] < date('Y-m-d')) {
+            $entry['EventsEntry']['date_closed'] = $status;
+          }
+        }
+        if ($entry['EventsEntry']['date_event'] != null && $entry['EventsEntry']['date_event'] < date('Y-m-d')) {
+          $entry['EventsEntry']['date_closed'] = count($entryDateColumn)+1;
+        }
+      }
+      unset($entry);
+      
+      return $results;
+  }
+
   public function getEventStatus($id = false, $status = 0) {
       $entry_lists = $this->find('all', array(
           'conditions' => array(

@@ -63,11 +63,15 @@
                                         <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'].' を本当に削除しますか'); ?></span>
         <?php } ?></td></tr>
     <tr><td></td>
+        <?php $status = 0; ?>
         <?php foreach ($entryDateColumn AS $column) { ?>
-        <td class="tbl-date-min"><?php if ($entry_list['EventsEntry'][$column]) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry'][$column]))].')', strtotime($entry_list['EventsEntry'][$column])); ?><br>
-                                   <?php echo date('H:i', strtotime($entry_list['EventsEntry'][$column])); ?>
-                                 <?php } ?></td>
+        <?php $status++; ?>
+        <td class="tbl-date-min <?php echo ($entry_list['EventsEntry']['date_closed'] >= $status)? 'date-closed': ''; ?>">
+          <?php if ($entry_list['EventsEntry'][$column]) { ?>
+            <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry'][$column]))].')', strtotime($entry_list['EventsEntry'][$column])); ?><br>
+            <?php echo date('H:i', strtotime($entry_list['EventsEntry'][$column])); ?>
+          <?php } ?>
+        </td>
         <?php } ?></tr>
     <?php } ?>
   </table>

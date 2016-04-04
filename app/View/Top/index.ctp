@@ -81,11 +81,15 @@
                                      <?php echo date('H:i', strtotime($event_list['EventsDetail']['time_start'])); ?>
                                    <?php } ?>
                                  <?php } ?></td>
+        <?php $status = 0; ?>
         <?php foreach ($entryDateColumn AS $column) { ?>
-        <td class="tbl-date-min"><?php if ($event_list['EventsEntry'][$column]) { ?>
-                                   <?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry'][$column]))].')', strtotime($event_list['EventsEntry'][$column])); ?><br>
-                                   <?php echo date('H:i', strtotime($event_list['EventsEntry'][$column])); ?>
-                                 <?php } ?></td>
+        <?php $status++; ?>
+        <td class="tbl-date-min <?php echo ($event_list['EventsEntry']['date_closed'] >= $status)? 'date-closed': ''; ?>">
+          <?php if ($event_list['EventsEntry'][$column]) { ?>
+            <?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry'][$column]))].')', strtotime($event_list['EventsEntry'][$column])); ?><br>
+            <?php echo date('H:i', strtotime($event_list['EventsEntry'][$column])); ?>
+          <?php } ?>
+        </td>
         <?php } ?></tr>
     <?php } ?>
   </table>

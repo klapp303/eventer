@@ -102,6 +102,10 @@
     width: 50px;
 }
 
+.date-closed {
+    background-color: #D8D8D8;
+}
+
 /* ページリンク */
 .link-page a {
     font-size: 15px;
