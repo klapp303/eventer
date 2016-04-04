@@ -16,8 +16,6 @@ class EventsController extends AppController {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
       //$this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
-      
-      $this->set('week_lists', array('日', '月', '火', '水', '木', '金', '土'));
   }
 
   public function index() {
