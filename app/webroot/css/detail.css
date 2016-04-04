@@ -73,6 +73,11 @@
     width: 540px;
 }
 
+.title-sub {
+    margin-left: 15px;
+    font-size: 15px;
+}
+
 .tbl-date {
     width: 110px;
 }
