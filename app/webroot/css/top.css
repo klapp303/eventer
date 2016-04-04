@@ -8,23 +8,3 @@
     margin-right: 20px;
     margin-bottom: 30px;
 }
-
-/* イベント一覧用 */
-.tbl-date {
-    width: 70px;
-}
-.tbl-ico {
-    width: 80px;
-}
-.tbl-num {
-    width: 70px;
-}
-.tbl-today {
-    width: 80px;
-}
-.tbl-current {
-    width: 110px;
-}
-.tbl-action {
-    width: 55px;
-}

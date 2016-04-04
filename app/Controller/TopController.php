@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class TopController extends AppController {
 
-	public $uses = array('Event'/*, 'EventUser'*/); //使用するModel
+	public $uses = array('Event', 'EventsDetail', 'EventsEntry'/*, 'EventUser'*/); //使用するModel
 
   public function beforeFilter() {
       parent::beforeFilter();
@@ -12,99 +12,39 @@ class TopController extends AppController {
   }
 
   public function index() {
-      $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
       /*$join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
           'conditions' => array('user_id' => $login_id),
           'fields' => 'event_id'
       ));*/
   
       //本日の予定
-      /*$event_today_lists = $this->Event->find('all', array(
-          'conditions' => array(
-              'and' => array(
-                  array(
-                      'or' => array(
-                          array('Event.date' => date('Y-m-d')),
-                          array('Event.entry_start' => date('Y-m-d')),
-                          array('Event.entry_end' => date('Y-m-d')),
-                          array('Event.announcement_date' => date('Y-m-d')),
-                          array('Event.payment_end' => date('Y-m-d'))
-                      ),
-                  ),
-                  array(
-                      'or' => array(
-                          array('Event.user_id' => $login_id),
-                          array('Event.id' => $join_lists)
-                      )
-                  )
-              )
-          ),
-          'order' => array('date' => 'asc')
-      ));
-      $this->set('event_today_lists', $event_today_lists);*/
+      $event_today_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'));
+      foreach ($event_today_lists AS $key => &$event) {
+        if ($event['EventsEntry']['status'] == 3 || $event['EventsEntry']['status'] == 4) { //落選 or 見送りならば表示しない
+          unset($event_today_lists[$key]);
+        }
+        $event['EventsEntry']['date_status'] = null;
+        $entryDateColumn = $this->EventsEntry->getDateColumn();
+        foreach ($entryDateColumn AS $key => $column) {
+          if (date('Y-m-d', strtotime($event['EventsEntry'][$column])) == date('Y-m-d')) {
+            $event['EventsEntry']['date_status'] = $key;
+          }
+        }
+        if (date('Y-m-d', strtotime($event['EventsEntry']['date_event'])) == date('Y-m-d')) {
+          $event['EventsEntry']['date_status'] = '本日開演';
+        }
+      }
+      unset($event);
+      $this->set('event_today_lists', $event_today_lists);
   
       //直近の予定
-      /*$event_current_lists = $this->Event->find('all', array(
-          'conditions' => array(
-              'and' => array(
-                  array(
-                      'or' => array(
-                          array(
-                              'and' => array(
-                                  array('Event.date >' => date('Y-m-d')),
-                                  array('Event.date <=' => date('Y-m-d', strtotime('+1 month'))),
-                              )
-                          ),
-                          array(
-                              'and' => array(
-                                  array('Event.entry_start >' => date('Y-m-d')),
-                                  array('Event.entry_start <=' => date('Y-m-d', strtotime('+1 month'))),
-                              )
-                          ),
-                          array(
-                              'and' => array(
-                                  array('Event.entry_end >' => date('Y-m-d')),
-                                  array('Event.entry_end <=' => date('Y-m-d', strtotime('+1 month'))),
-                              )
-                          ),
-                          array(
-                              'and' => array(
-                                  array('Event.announcement_date >' => date('Y-m-d')),
-                                  array('Event.announcement_date <=' => date('Y-m-d', strtotime('+1 month'))),
-                              )
-                          ),
-                          array(
-                              'and' => array(
-                                  array('Event.payment_end >' => date('Y-m-d')),
-                                  array('Event.payment_end <=' => date('Y-m-d', strtotime('+1 month'))),
-                              )
-                          )
-                      )
-                  ),
-                  array(
-                      'or' => array(
-                          array('Event.user_id' => $login_id),
-                          array('Event.id' => $join_lists)
-                      )
-                  )
-              )
-          ),
-          'order' => array('date' => 'asc')
-      ));
-      $this->set('event_current_lists', $event_current_lists);*/
-  
-      //未対応のイベント
-      /*$event_undecided_lists = $this->Event->find('all', array(
-          'conditions' => array(
-              'and' => array(
-                  'Event.date <' => date('Y-m-d'),
-                  'Event.status <' => 2,
-                  'Event.user_id' => $login_id
-              )
-          ),
-          'order' => array('date' => 'asc')
-      ));
-      $this->set('event_undecided_lists', $event_undecided_lists);*/
+      $event_current_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'), date('Y-m-d', strtotime('1 day')), date('Y-m-d', strtotime('1 month')));
+      foreach ($event_current_lists AS $key => $event) {
+        if ($event['EventsEntry']['status'] == 3 || $event['EventsEntry']['status'] == 4) { //落選 or 見送りならば表示しない
+          unset($event_current_lists[$key]);
+        }
+      }
+      $this->set('event_current_lists', $event_current_lists);
       
       //未対応の収支
       /*$budget_undecided_lists = $this->EventUser->find('all', array(

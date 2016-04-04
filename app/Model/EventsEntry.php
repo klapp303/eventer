@@ -74,6 +74,67 @@ class EventsEntry extends AppModel {
       return $status;
   }
 
+  public function searchEntryDate($user_id = false, $s_date = false, $e_date = false) {
+      if ($s_date) {
+        $s_date = date('Y-m-d 00:00:00', strtotime($s_date));
+      } else {
+        $s_date = date('Y-m-d 00:00:00');
+      }
+      if ($e_date) {
+        $e_date = date('Y-m-d 23:59:59', strtotime($e_date));
+      } else {
+        $e_date = date('Y-m-d 23:59:59');
+      }
+      
+      $entry_lists = $this->find('all', array(
+          'conditions' => array(
+              ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+              'or' => array(
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_start >=' => $s_date,
+                          'EventsEntry.date_start <=' => $e_date
+                      )
+                  ),
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_close >=' => $s_date,
+                          'EventsEntry.date_close <=' => $e_date
+                      )
+                  ),
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_result >=' => $s_date,
+                          'EventsEntry.date_result <=' => $e_date
+                      )
+                  ),
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_payment >=' => $s_date,
+                          'EventsEntry.date_payment <=' => $e_date
+                      )
+                  ),
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_sale >=' => $s_date,
+                          'EventsEntry.date_sale <=' => $e_date
+                      )
+                  ),
+                  array(
+                      'and' => array(
+                          'EventsEntry.date_event >=' => $s_date,
+                          'EventsEntry.date_event <=' => $e_date
+                      )
+                  )
+              ),
+              'EventsDetail.deleted !=' => 1
+          ),
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+      ));
+      
+      return $entry_lists;
+  }
+
   public function getDateColumn() {
       $data = array(
           '申込開始' => 'date_start',
