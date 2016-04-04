@@ -6,6 +6,7 @@ class Place extends AppModel {
 
   public $useTable = 'places';
   public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
+  public $order = array('Place.sequence' => 'asc', 'Place.id' => 'asc');
 
   /*public $belongsTo = array(
       'SamplesGenre' => array(

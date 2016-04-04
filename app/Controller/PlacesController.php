@@ -9,7 +9,7 @@ class PlacesController extends AppController {
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      'order' => array('id' => 'asc'),
+      //'order' => array('id' => 'asc'),
       'conditions' => array('id !=' => 1) //id=1は'その他'なので除外する
   );
 
