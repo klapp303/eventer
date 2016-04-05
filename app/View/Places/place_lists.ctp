@@ -5,6 +5,7 @@
   </P>
   
   <span class="link-page"><?php echo $this->Html->link('⇨ 会場の新規登録はこちら', '/places/add/'); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 会場の並び替えはこちら', '/places/sort/'); ?></span>
 </div>
 
 <h3>会場一覧</h3>

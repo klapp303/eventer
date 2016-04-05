@@ -6,7 +6,7 @@ class Place extends AppModel {
 
   public $useTable = 'places';
   public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
-  public $order = array('Place.sequence' => 'asc', 'Place.id' => 'asc');
+  public $order = array('Place.sort' => 'asc', 'Place.id' => 'asc');
 
   /*public $belongsTo = array(
       'SamplesGenre' => array(
@@ -36,6 +36,12 @@ class Place extends AppModel {
           'required' => false,
           'allowEmpty' => true,
           'message' => '人数を正しく入力してください。'
+      ),
+      'sort' => array(
+          'rule' => 'numeric',
+          'required' => false,
+          'allowEmpty' => true,
+          'message' => 'ソートキーは数値で入力してください。'
       )
   );
 

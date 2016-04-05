@@ -140,4 +140,37 @@ class PlacesController extends AppController {
         $this->redirect('/places/place_lists/');
       }
   }
+
+  public function sort() {
+      if (!$this->request->is('post')) {
+        $place_lists = $this->Place->find('all', array(
+            'conditions' => array('Place.id !=' => 1), //id=1は'その他'なので除外する
+            'fields' => array('Place.id', 'Place.sort', 'Place.name')
+        ));
+        $this->set('place_lists', $place_lists);
+      } else {
+        foreach ($this->request->data['Place'] AS &$place) {
+          if ($place['sort'] < 1 || $place['sort'] > count($this->request->data['Place'])) {
+            $this->Session->setFlash('1 から '.count($this->request->data['Place']).' までの数値で入力してください。', 'flashMessage');
+            $this->redirect('/places/sort');
+          }
+          $place['sort']++;
+          //postデータが複数あるので1つずつvalidateする
+          $this->Place->set($place); //postデータをModelに渡してvalidate
+          if (!$this->Place->validates()) { //validate失敗の処理
+            $this->Session->setFlash('入力内容に不備があります。', 'flashMessage');
+            $this->redirect('/places/sort');
+          }
+        }
+        unset($place);
+        if ($this->Place->saveMany($this->request->data['Place'])) {
+          $this->Session->setFlash('並び順を変更しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('並び順を変更できませんでした。', 'flashMessage');
+          $this->redirect('/places/sort/');
+        }
+        
+        $this->redirect('/places/place_lists/');
+      }
+  }
 }
