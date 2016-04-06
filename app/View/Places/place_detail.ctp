@@ -15,6 +15,7 @@
             <?php } ?></td></tr>
   </table>
 
+<?php if ($place_detail['Place']['latitude'] && $place_detail['Place']['longitude']) { ?>
 <div id="map" class="fr cf">
 <?php //GoogleMapオプション
   $map_options = array(
@@ -22,14 +23,14 @@
       'longitude' => $place_detail['Place']['longitude'],
       'windowText' => $place_detail['Place']['name']
   ); ?>
-  <?php if ($place_detail['Place']['latitude']) { ?>
-    <?php echo $this->GoogleMap->map($map_options); ?>
-  <?php } ?>
+  <?php echo $this->GoogleMap->map($map_options); ?>
 </div>
+<?php } ?>
 
-<div id="event-list_place">
+<div id="<?php echo (@$map_options)? 'event-list_place': ''; ?>">
 <h3>開催予定のイベント</h3>
 
+<?php if ($event_lists) { ?>
   <table class="event-list_place">
     <tr><th class="tbl-date">開催日</th>
         <th>イベント名</th>
@@ -46,3 +47,11 @@
     <?php } ?>
   </table>
 </div>
+<?php } else { ?>
+  <div class="intro_places">
+    <p>
+      開催予定のイベントはありません。
+    </p>
+  </div>
+</div>
+<?php } ?>
