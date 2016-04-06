@@ -23,8 +23,8 @@
         <th class="tbl-ico-long">公開設定</th>
         <th>作成者</th></tr>
     <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_detail['EventsDetail']['date']))].')', strtotime($event_detail['EventsDetail']['date'])); ?><br>
-                             開場　<?php echo date('H:i', strtotime($event_detail['EventsDetail']['time_open'])); ?><br>
-                             開演　<?php echo date('H:i', strtotime($event_detail['EventsDetail']['time_start'])); ?></td>
+                             開場　<?php echo ($event_detail['EventsDetail']['time_open'])? date('H:i', strtotime($event_detail['EventsDetail']['time_open'])): ''; ?><br>
+                             開演　<?php echo ($event_detail['EventsDetail']['time_start'])? date('H:i', strtotime($event_detail['EventsDetail']['time_start'])): ''; ?></td>
         <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['EventsDetail']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span></td>
         <td class="tbl-ico-long"><?php if ($event_detail['Event']['publish'] == 0) {echo '<span class="icon-false">非公開</span>';}
                                    elseif ($event_detail['Event']['publish'] == 1) {echo '<span class="icon-true">全体に公開</span>';}
