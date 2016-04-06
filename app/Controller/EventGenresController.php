@@ -18,9 +18,6 @@ class EventGenresController extends AppController {
   }
 
   public function index() {
-//      $event_genre_lists = $this->EventGenre->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
       $this->Paginator->settings = $this->paginate;
       $sample_lists = $this->Paginator->paginate('Sample');
       $sample_counts = count($sample_lists);
@@ -47,9 +44,6 @@ class EventGenresController extends AppController {
   }*/
 
   /*public function edit($id = null) {
-//      $sample_lists = $this->Sample->find('all', array(
-//          'order' => array('date' => 'desc')
-//      ));
       $this->Paginator->settings = $this->paginate;
       $sample_lists = $this->Paginator->paginate('Sample');
       $sample_counts = count($sample_lists);

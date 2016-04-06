@@ -14,14 +14,6 @@ class PagesController extends AppController {
   public function index() {
   }
 
-  /*public function user_lists() {
-      $user_lists = $this->User->find('all', array(
-          'order' => array('id' => 'asc'),
-          'conditions' => array('id !=' => 1) //管理者データは非表示
-      ));
-      $this->set('user_lists', $user_lists);
-  }*/
-
   public function event_genres() {
       $event_genre_lists = $this->EventGenre->find('all', array(
           'order' => array('id' => 'asc')
