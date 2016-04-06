@@ -76,6 +76,12 @@ class PlacesController extends AppController {
 
   public function add() {
       if ($this->request->is('post')) {
+        //sort値を追加する
+        $place_count = $this->Place->find('count', array(
+            'conditions' => array('Place.id !=' => 1)
+        ));
+        $this->request->data['Place']['sort'] = $place_count + 2;
+        
         $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Place->validates()) { //validate成功の処理
           $this->Place->save($this->request->data); //validate成功でsave
