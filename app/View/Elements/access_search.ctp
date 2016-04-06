@@ -1,11 +1,11 @@
 <?php if ($data['Place']['access']) { //会場データに最寄り駅がある場合 ?>
   <?php if ($this->Session->read('Auth.User.station')) { //ユーザデータに最寄り駅がある場合 ?>
-    <?php if ($data['EventsDetail']['time_open']) { //イベントデータに開場時刻がある場合 ?>
+    <?php if ($data['EventsDetail']['time_open'] || $data['EventsDetail']['time_start']) { //イベントデータに開催時刻がある場合 ?>
       <?php
         $dateFormat = new DateTime($data['EventsDetail']['date']);
         $s_month = $dateFormat->format('Ym');
         $s_day = $dateFormat->format('d');
-        $timeFormat = new DateTime($data['EventsDetail']['time_open']);
+        $timeFormat = new DateTime(($data['EventsDetail']['time_open'])? $data['EventsDetail']['time_open']: $data['EventsDetail']['time_start']);
         $s_hour = $timeFormat->format('H');
         $s_min = $timeFormat->format('i');
       ?>
