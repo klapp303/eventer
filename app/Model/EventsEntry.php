@@ -50,11 +50,11 @@ class EventsEntry extends AppModel {
         $entry['EventsEntry']['date_closed'] = $status;
         foreach ($entryDateColumn AS $column) {
           $status++;
-          if ($entry['EventsEntry'][$column] != null && $entry['EventsEntry'][$column] < date('Y-m-d')) {
+          if (@$entry['EventsEntry'][$column] != null && $entry['EventsEntry'][$column] < date('Y-m-d')) {
             $entry['EventsEntry']['date_closed'] = $status;
           }
         }
-        if ($entry['EventsEntry']['date_event'] != null && $entry['EventsEntry']['date_event'] < date('Y-m-d')) {
+        if (@$entry['EventsEntry']['date_event'] != null && $entry['EventsEntry']['date_event'] < date('Y-m-d')) {
           $entry['EventsEntry']['date_closed'] = count($entryDateColumn)+1;
         }
       }
