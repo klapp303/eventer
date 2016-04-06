@@ -151,12 +151,6 @@ class EventsEntry extends AppModel {
                   ),
                   array(
                       'and' => array(
-                          'EventsEntry.date_sale >=' => $s_date,
-                          'EventsEntry.date_sale <=' => $e_date
-                      )
-                  ),
-                  array(
-                      'and' => array(
                           'EventsEntry.date_event >=' => $s_date,
                           'EventsEntry.date_event <=' => $e_date
                       )
