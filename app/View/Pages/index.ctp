@@ -6,5 +6,5 @@
     <li><span class="link-page"><?php echo $this->Html->link('⇨ エントリー方法の一覧を確認する', '/pages/entry_genres/'); ?></span></li>
     <li></li>
     <li><span class="link-page"><?php echo $this->Html->link('⇨ お知らせ、更新履歴を確認する', '/pages/history/'); ?></span></li>
-    <li><span class="link-page"><?php echo $this->Html->link('⇨ 不具合、要望を問い合わせる', '#'); ?></span></li>
+    <li><span class="link-page"><?php echo $this->Html->link('⇨ 問い合わせ、制作者について', '/pages/author/'); ?></span></li>
   </ul>
