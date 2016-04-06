@@ -54,8 +54,11 @@ class EventsEntry extends AppModel {
             $entry['EventsEntry']['date_closed'] = $status;
           }
         }
+        //イベントが終了している場合
         if (@$entry['EventsEntry']['date_event'] != null && $entry['EventsEntry']['date_event'] < date('Y-m-d')) {
-          $entry['EventsEntry']['date_closed'] = count($entryDateColumn)+1;
+          if ($entry['EventsEntry']['date_closed'] > 0) { //終了したエントリーの日付が登録されている場合のみ
+            $entry['EventsEntry']['date_closed'] = count($entryDateColumn);
+          }
         }
       }
       unset($entry);
