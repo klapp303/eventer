@@ -89,7 +89,9 @@ class PlacesController extends AppController {
           $this->redirect('/places/place_lists/'); //validate失敗で元ページを表示
         }
       $this->redirect('/places/place_lists/');
-      } //postデータがなければaddページを表示
+      }
+      
+      $this->render('place');
   }
 
   public function edit($id = null) {
@@ -115,6 +117,8 @@ class PlacesController extends AppController {
 //          $this->render('index'); //validate失敗でindexを表示
         }
       }
+      
+      $this->render('place');
   }
 
   public function delete($id = null){
