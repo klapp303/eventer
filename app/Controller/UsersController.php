@@ -49,7 +49,7 @@ class UsersController extends AppController {
         if ($this->User->validates()) { //validate成功の処理
           $this->User->save($this->request->data); //validate成功でsave
           if ($this->User->save($this->request->data)) {
-            $this->Session->setFlash('登録しました。', 'flashMessage');
+            $this->Session->setFlash('登録完了です。登録されたメールアドレスに登録情報を送りました。', 'flashMessage');
             //save成功でメール送信
             $email = new CakeEmail('gmail');
             $email->to($this->request->data['User']['username'])
@@ -61,6 +61,7 @@ class UsersController extends AppController {
                       'password' => $this->request->data['User']['password']
                   )); //mailに渡す変数
             $email->send();
+            $this->redirect('/users/login/');
           } else {
             $this->Session->setFlash('登録できませんでした。', 'flashMessage');
           }
@@ -156,7 +157,7 @@ class UsersController extends AppController {
                       'password' => $new_password
                   )); //mailに渡す変数
             $email->send();
-            $this->Session->setFlash('メールアドレス宛に新しいパスワードを送信しました。', 'flashMessage');
+            $this->Session->setFlash('登録されているメールアドレスに新しいパスワードを送りました。', 'flashMessage');
             $this->render('login');
           } else {
             $this->Session->setFlash('パスワードの発行に失敗しました。', 'flashMessage');
