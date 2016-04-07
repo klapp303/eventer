@@ -66,7 +66,7 @@ class EventsEntry extends AppModel {
       return $results;
   }
 
-  public function getEventStatus($id = false, $status = 0) {
+  public function getEventStatus($id = false, $status = -1) {
       $entry_lists = $this->find('all', array(
           'conditions' => array(
               'EventsEntry.events_detail_id' => $id
@@ -79,30 +79,28 @@ class EventsEntry extends AppModel {
         }
         if ($entry_list['EventsEntry']['status'] == 1) { //申込中がある場合
           $status = 1;
-          break;
         }
-        if ($entry_list['EventsEntry']['status'] == 0) { //検討中がある場合
+        if ($entry_list['EventsEntry']['status'] == 0 && $status != 1) { //検討中がある場合
           $status = 0;
-          break;
         }
-        if ($entry_list['EventsEntry']['status'] == 3) { //落選がある場合
+        if ($entry_list['EventsEntry']['status'] == 3 && $status != 1 && $status != 0) { //落選がある場合
           $status = 3;
-          break;
         }
-        if ($entry_list['EventsEntry']['status'] == 4) { //見送りがある場合
+        if ($entry_list['EventsEntry']['status'] == 4 && $status != 1 && $status != 0 && $status != 3) { //見送りがある場合
           $status = 4;
-          break;
         }
       }
       
-      //エントリーが無いまま終了したイベントはstatusを見送りにする
+      //エントリーが無い場合
       if (!$entry_lists) {
         $this->loadModel('EventsDetail');
         $event_data = $this->EventsDetail->find('first', array(
             'conditions' => array('EventsDetail.id' => $id)
         ));
-        if ($event_data['EventsDetail']['date'] < date('Y-m-d')) {
+        if ($event_data['EventsDetail']['date'] < date('Y-m-d')) { //過去のイベントは見送り
           $status = 4;
+        } else { //未来のイベントは検討中
+          $status = 0;
         }
       }
       
