@@ -22,11 +22,38 @@ class BudgetsController extends AppController {
   }
 
   public function unfixed_entry() {
-      $this->set('unfixed_entry_lists', $this->EventsEntry->getUnfixedEntry($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedEntry($this->Auth->user('id')));
+      
+      $this->render('unfixed_lists');
   }
 
   public function unfixed_ticket() {
-      $this->set('unfixed_ticket_lists', $this->EventsEntry->getUnfixedTicket($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedTicket($this->Auth->user('id')));
+      
+      $this->render('unfixed_lists');
+  }
+
+  public function fixed($id = false, $column = false) {
+      if (empty($id) || empty($column)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->EventsEntry->id = $id;
+        if ($this->EventsEntry->savefield($column, 1)) {
+          $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+        }
+        
+        if ($column == 'payment_status') {
+          $this->redirect('/budgets/unfixed_entry/');
+        } elseif ($column == 'sales_status') {
+          $this->redirect('/budgets/unfixed_ticket/');
+        } else { //未使用
+          $this->redirect('/budgets/');
+        }
+      }
   }
 
   /*public function in_lists() {
