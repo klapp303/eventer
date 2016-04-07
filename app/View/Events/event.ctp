@@ -61,7 +61,12 @@
                                             elseif ($entry_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
                                             elseif ($entry_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
         <td class="tbl-num" rowspan="2"><?php echo $entry_list['EventsEntry']['price']; ?>円<br>
-                                        <?php echo $entry_list['EventsEntry']['number']; ?>枚</td>
+                                        <?php echo $entry_list['EventsEntry']['number']; ?>枚<br>
+                                        <?php if ($entry_list['EventsEntry']['payment'] == 'credit') {echo '<span class="txt-min">クレジットカード</span>';}
+                                          elseif ($entry_list['EventsEntry']['payment'] == 'conveni') {echo '<span class="txt-min">コンビニ支払</span>';}
+                                          elseif ($entry_list['EventsEntry']['payment'] == 'delivery') {echo '<span class="txt-min">代金引換</span>';}
+                                          elseif ($entry_list['EventsEntry']['payment'] == 'buy') {echo '<span class="txt-min">買取</span>';}
+                                          elseif ($entry_list['EventsEntry']['payment'] == 'other') {echo '<span class="txt-min">その他</span>';} ?></td>
         <?php if ($entry_list['EventsEntry']['user_id'] == $userData['id']) { ?>
         <td class="tbl-act" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('修正', '/events/entry_edit/'.$entry_list['EventsEntry']['id']); ?></span>
                                         <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'].' を本当に削除しますか'); ?></span>
