@@ -54,13 +54,29 @@ class EventsController extends AppController {
             )
         ));
         if (!empty($event_detail)) { //データが存在する場合
+          //エントリー一覧
           $entry_lists = $this->EventsEntry->find('all', array(
               'conditions' => array(
                   'EventsEntry.events_detail_id' => $event_detail['EventsDetail']['id']
               ),
               'order' => array('EventsEntry.date_start' => 'asc')
           ));
-          $this->set(compact('event_detail', 'entry_lists'));
+          //別日程
+          $other_lists = $this->EventsDetail->find('all', array(
+              'conditions' => array(
+                  'and' => array(
+                      'EventsDetail.id !=' => $event_detail['EventsDetail']['id'],
+                      'EventsDetail.event_id' => $event_detail['EventsDetail']['event_id'],
+                      'or' => array( //作成者か参加者の場合のみ
+                          array('EventsDetail.user_id' => $this->Auth->user('id')),
+                          //array('Event.id' => $join_lists),
+                          array('Event.publish' => 1)
+                      )
+                  )
+              ),
+              'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+          ));
+          $this->set(compact('event_detail', 'entry_lists', 'other_lists'));
           $this->render('event');
         } else { //データが存在しない場合
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');

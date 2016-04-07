@@ -17,11 +17,12 @@
             <?php } ?></td></tr>
   </table>
 
-  <table class="detail-list-min detail-list_event">
+  <table class="detail-list detail-list_event">
     <tr><th class="tbl-date">開催日時</th>
         <th class="tbl-ico">種類</th>
         <th class="tbl-ico-long">公開設定</th>
-        <th>作成者</th></tr>
+        <th>作成者</th>
+        <th>別日程</th></tr>
     <tr><td class="tbl-date"><?php echo date('Y/m/d('.$week_lists[date('w', strtotime($event_detail['EventsDetail']['date']))].')', strtotime($event_detail['EventsDetail']['date'])); ?><br>
                              開場　<?php echo ($event_detail['EventsDetail']['time_open'])? date('H:i', strtotime($event_detail['EventsDetail']['time_open'])): ''; ?><br>
                              開演　<?php echo ($event_detail['EventsDetail']['time_start'])? date('H:i', strtotime($event_detail['EventsDetail']['time_start'])): ''; ?></td>
@@ -29,7 +30,10 @@
         <td class="tbl-ico-long"><?php if ($event_detail['Event']['publish'] == 0) {echo '<span class="icon-false">非公開</span>';}
                                    elseif ($event_detail['Event']['publish'] == 1) {echo '<span class="icon-true">全体に公開</span>';}
                                    elseif ($event_detail['Event']['publish'] == 2) {echo '<span class="icon-true">参加者のみに公開</span>';} ?></td>
-        <td><?php echo $event_detail['User']['handlename']; ?></td></tr>
+        <td><?php echo $event_detail['User']['handlename']; ?></td>
+        <td><?php foreach ($other_lists AS $other_list) { ?>
+            <?php echo $this->Html->link($other_list['EventsDetail']['title'], '/event/'.$other_list['EventsDetail']['id']); ?><br>
+            <?php } ?></td></tr>
   </table>
 
 <h3>エントリー一覧</h3>
