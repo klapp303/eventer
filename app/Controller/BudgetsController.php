@@ -4,12 +4,12 @@ App::uses('AppController', 'Controller');
 
 class BudgetsController extends AppController {
 
-	public $uses = array('EventUser'); //使用するModel
+	public $uses = array('EventsEntry'/*, 'EventUser'*/); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      'order' => array('date' => 'desc')
+      'order' => array('id' => 'desc')
   );
 
   public function beforeFilter() {
@@ -21,7 +21,15 @@ class BudgetsController extends AppController {
   public function index() {
   }
 
-  public function in_lists() {
+  public function unfixed_entry() {
+      $this->set('unfixed_entry_lists', $this->EventsEntry->getUnfixedEntry($this->Auth->user('id')));
+  }
+
+  public function unfixed_ticket() {
+      $this->set('unfixed_ticket_lists', $this->EventsEntry->getUnfixedTicket($this->Auth->user('id')));
+  }
+
+  /*public function in_lists() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
       $this->EventUser->recursive = 2; //EventUser→Event→EventGenreの2階層下までassociate
 //      $sample_lists = $this->Sample->find('all', array(
@@ -49,9 +57,9 @@ class BudgetsController extends AppController {
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
         }
       }
-  }
+  }*/
 
-  public function out_lists() {
+  /*public function out_lists() {
       $login_id = $this->Session->read('Auth.User.id'); //何度も使用するので予め取得しておく
       $this->EventUser->recursive = 2; //EventUser→Event→EventGenreの2階層下までassociate
 //      $sample_lists = $this->Sample->find('all', array(
@@ -79,9 +87,9 @@ class BudgetsController extends AppController {
           $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
         }
       }
-  }
+  }*/
 
-  public function edit($id = null) {
+  /*public function edit($id = null) {
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
@@ -91,9 +99,9 @@ class BudgetsController extends AppController {
         $this->EventUser->saveField('payment', 1);
         $this->redirect('/budgets/in_lists/');
       }
-  }
+  }*/
 
-  public function delete($id = null){
+  /*public function delete($id = null){
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
@@ -107,5 +115,5 @@ class BudgetsController extends AppController {
         }
         $this->redirect('/budgets/in_lists/');
       }
-  }
+  }*/
 }

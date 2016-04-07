@@ -1,4 +1,11 @@
 <?php echo $this->Html->css('top', array('inline' => FALSE)); ?>
+<div class="intro_top">
+  <table class="detail-list-min">
+    <tr><td class="tbl-intro_top">未対応の支払いが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_entry_lists['count'].'件', '/budgets/unfixed_entry/'); ?></td><td>あります。</td></tr>
+    <tr><td class="tbl-intro_top">未対応のチケット余りが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_ticket_lists['count'].'件', '/budgets/unfixed_ticket/'); ?></td><td>あります。</td></tr>
+  </table>
+</div>
+
 <h3>本日の予定</h3>
 
   <?php if (count($event_today_lists) > 0) { ?>
@@ -100,15 +107,3 @@
     </p>
   </div>
   <?php } ?>
-
-<!--h3>管理未対応のイベント、収支</h3>
-
-  </*?php $event_undecided_count = count($event_undecided_lists);*/ ?>
-  <div class="intro_top">
-    <p>
-      未対応のイベントが <?php /*echo $this->Html->link($event_undecided_count.'件', '/events/past_lists/');*/ ?> あります。
-    </p>
-    <p>
-      未対応の収支が <?php /*echo $this->Html->link($budget_undecided_count.'件', '/budgets/in_lists/');*/ ?> あります。
-    </p>
-  </div-->

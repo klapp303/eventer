@@ -17,6 +17,11 @@ class TopController extends AppController {
           'fields' => 'event_id'
       ));*/
   
+      //未対応の件数
+      $unfixed_entry_lists = $this->EventsEntry->getUnfixedEntry($this->Auth->user('id'));
+      $unfixed_ticket_lists = $this->EventsEntry->getUnfixedTicket($this->Auth->user('id'));
+      $this->set(compact('unfixed_entry_lists', 'unfixed_ticket_lists'));
+      
       //本日の予定
       $event_today_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'));
       foreach ($event_today_lists AS $key => &$event) {
@@ -49,31 +54,5 @@ class TopController extends AppController {
         }
       }
       $this->set('event_current_lists', $event_current_lists);
-      
-      //未対応の収支
-      /*$budget_undecided_lists = $this->EventUser->find('all', array(
-          'conditions' => array(
-              'EventDetail.user_id' => $login_id,
-              'EventUser.payment' => 0,
-              'EventDetail.deleted !=' => 1 //紐付くテーブルのSoftDeleteは無視されるので記述
-          ),
-          'order' => array('EventDetail.date' => 'asc')
-      ));
-      $budget_undecided_count = count($budget_undecided_lists);
-      $this->set('budget_undecided_count', $budget_undecided_count);*/
-  
-//      $this->Paginator->settings = array( //eventsページのイベント一覧を設定
-//          'conditions' => array(
-//              'and' => array(
-//                  'date <' => date('Y-m-d'), //過去のイベントを取得
-//                  'or' => array(
-//                      array('Event.user_id' => $login_id),
-//                      array('Event.id' => $join_lists)
-//                  )
-//              )
-//          ),
-//          'order' => array('date' => 'desc')
-//      );
-//      $event_lists = $this->Paginator->paginate('Event');
   }
 }
