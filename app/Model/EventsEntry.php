@@ -177,13 +177,21 @@ class EventsEntry extends AppModel {
       $entry_lists = $this->find('all', array(
           'conditions' => array(
               ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
-              'or' => array(
-                  'EventsEntry.payment !=' => 'credit',
-                  'EventsEntry.payment' => null,
+              'EventsEntry.price >' => 0,
+              array(
+                  'or' => array(
+                      'EventsEntry.payment !=' => 'credit',
+                      'EventsEntry.payment' => null,
+                  )
               ),
               'EventsEntry.payment_status !=' => 1,
               'EventsEntry.status' => 2,
-              'EventsDetail.date >=' => date('Y-m-d'),
+              array(
+                  'or' => array(
+                      'EventsDetail.date >=' => date('Y-m-d'),
+                      'EventsEntry.payment' => 'buy'
+                  ),
+              ),
               'EventsDetail.deleted !=' => 1
           ),
           'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
