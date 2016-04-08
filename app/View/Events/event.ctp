@@ -85,9 +85,11 @@
     <?php } ?>
   </table>
 
+<?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
 <div class="link-page_events">
   <span class="link-page"><?php echo $this->Html->link('⇨ 新しいエントリーの登録はこちら', '/events/entry_add/'.$event_detail['EventsDetail']['id']); ?></span>
 </div>
+<?php } ?>
 
 <!--h3>参加者</h3>
 

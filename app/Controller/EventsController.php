@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController {
 
-	public $uses = array('Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
+	public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
 
   public $components = array('Paginator', 'Search.Prg');
   public $paginate = array(
@@ -19,13 +19,16 @@ class EventsController extends AppController {
   }
 
   public function index() {
+      //参加済のイベント一覧を取得しておく
+      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+      
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
               'and' => array(
                   'EventsDetail.date >=' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      //array('Event.id' => $join_lists)
+                      array('EventsDetail.id' => $join_lists['id'])
                   )
               )
           ),
@@ -45,9 +48,9 @@ class EventsController extends AppController {
             'conditions' => array(
                 'and' => array(
                     'EventsDetail.id' => $this->request->params['id'],
-                    'or' => array( //作成者か参加者の場合のみ
+                    'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        //array('Event.id' => $join_lists),
+                        array('EventsDetail.id' => $join_lists['id']),
                         array('Event.publish' => 1)
                     )
                 )
@@ -67,9 +70,9 @@ class EventsController extends AppController {
                   'and' => array(
                       'EventsDetail.id !=' => $event_detail['EventsDetail']['id'],
                       'EventsDetail.event_id' => $event_detail['EventsDetail']['event_id'],
-                      'or' => array( //作成者か参加者の場合のみ
+                      'or' => array(
                           array('EventsDetail.user_id' => $this->Auth->user('id')),
-                          //array('Event.id' => $join_lists),
+                          array('EventsDetail.id' => $join_lists['id']),
                           array('Event.publish' => 1)
                       )
                   )
@@ -144,13 +147,16 @@ class EventsController extends AppController {
   }
 
   public function edit($id = null) {
+      //参加済のイベント一覧を取得しておく
+      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+      
       $this->Paginator->settings = array( //eventsページのイベント一覧を設定
           'conditions' => array(
               'and' => array(
                   'EventsDetail.date >=' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      //array('Event.id' => $join_lists),
+                      array('EventsDetail.id' => $join_lists['id']),
                       array('Event.publish' => 1)
                   )
               )
@@ -287,7 +293,14 @@ class EventsController extends AppController {
       if ($this->request->is('post')) {
         $id = $this->request->data['EventsEntry']['events_detail_id'];
       }
-      $this->set('events_detail', $this->EventsDetail->findById($id));
+      $events_detail = $this->EventsDetail->findById($id);
+      if (empty($id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      if ($events_detail['EventsDetail']['id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しな場合
+        $this->redirect('/event/'.$id);
+      }
+      $this->set('events_detail', $events_detail);
       $this->set('entry_genres', $this->EntryGenre->find('list'));
       $this->set('events_detail_id', $id);
       
@@ -383,30 +396,17 @@ class EventsController extends AppController {
       }
   }
 
-  /*public function checked_user_delete($id = null) {
-      if (empty($id)) {
-        throw new NotFoundException(__('存在しないデータです。'));
-      }
-      
-      if ($this->request->is('post')) {
-//        $this->EventUser->Behaviors->enable('SoftDelete');
-        if ($this->EventUser->delete($id)) {
-          $this->Session->setFlash('削除しました。', 'flashMessage');
-        } else {
-          $this->Session->setFlash('削除できませんでした。', 'flashMessage');
-        }
-        $this->redirect('/events/');
-      }
-  }*/
-
   public function past_lists() {
+      //参加済のイベント一覧を取得しておく
+      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+      
       $this->Paginator->settings = array(
           'conditions' => array(
               'and' => array(
                   'EventsDetail.date <' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      //array('Event.id' => $join_lists)
+                      array('EventsDetail.id' => $join_lists['id'])
                   )
               )
           ),
@@ -426,8 +426,7 @@ class EventsController extends AppController {
                   'EventsDetail.date <' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      //array('Event.id' => $join_lists),
-                      array('Event.publish' => 1)
+                      //array('EventsDetail.id' => $join_lists['id'])
                   )
               )
           ),

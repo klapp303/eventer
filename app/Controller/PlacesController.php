@@ -46,10 +46,8 @@ class PlacesController extends AppController {
         if (!empty($place_detail)) { //データが存在する場合
           $this->set('place_detail', $place_detail);
           /* 会場に紐付くイベント一覧を取得ここから */
-          /*$join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
-              'conditions' => array('user_id' => $this->Auth->user('id')),
-              'fields' => 'event_id'
-          ));*/
+          //参加済のイベント一覧を取得しておく
+          $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
           $event_lists = $this->EventsDetail->find('all', array( //place_detailページのイベント一覧を設定
               'conditions' => array(
                   'and' => array(
@@ -57,7 +55,7 @@ class PlacesController extends AppController {
                       'EventsDetail.place_id' => $this->request->params['id'], //eventsページの一覧から会場で更に絞り込み
                       'or' => array(
                           array('EventsDetail.user_id' => $this->Auth->user('id')),
-                          //array('EventsDetail..id' => $join_lists),
+                          array('EventsDetail.id' => $join_lists['id']),
                           array('Event.publish' => 1) //公開ステータスを追加
                       )
                   )
