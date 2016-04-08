@@ -6,8 +6,12 @@
    
     <!--<tr><td class="tbl-date">2015-10-17</td>
         <td>更新内容本文になります。</td></tr>-->
-    <tr><td class="tbl-date">2016-04-03</td>
-        <td>イベ幸ver2.0リリース！<span class="txt-alt txt-b">⇐ New</span></td></tr>
+    <tr><td class="tbl-date">2016-04-08</td>
+        <td>イベ幸ver2.0リリース！<span class="txt-alt txt-b">⇐ New</span><br>
+            　　<span class="txt-min">別日程のイベントをまとめて管理できる（ツアーや1部2部など）</span><br>
+            　　<span class="txt-min">複数のエントリーをまとめて管理できる（FC先行と一般など）</span><br>
+            　　<span class="txt-min">会場データを大幅に追加</span><br>
+            　　<span class="txt-min">参加者機能から収支管理機能へ変更（参加者に関係なく管理が可能）</span></td></tr>
     <tr><td class="tbl-date">2015-10-17</td>
         <td>イベ幸ver1.0リリース！</td></tr>
   </table>
