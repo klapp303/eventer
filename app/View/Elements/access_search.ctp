@@ -4,7 +4,7 @@
       <?php
         $dateFormat = new DateTime($data['EventsDetail']['date']);
         $s_month = $dateFormat->format('Ym');
-        $s_day = $dateFormat->format('d');
+        $s_day = $dateFormat->format('j');
         $timeFormat = new DateTime(($data['EventsDetail']['time_open'])? $data['EventsDetail']['time_open']: $data['EventsDetail']['time_start']);
         $s_hour = $timeFormat->format('H');
         $s_min = $timeFormat->format('i');
@@ -18,7 +18,7 @@
       <?php
         $dateFormat = new DateTime($data['EventsDetail']['date']);
         $s_month = $dateFormat->format('Ym');
-        $s_day = $dateFormat->format('d');
+        $s_day = $dateFormat->format('j');
         $s_hour = 12;
         $s_min = 00;
       ?>
