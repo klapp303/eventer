@@ -293,11 +293,11 @@ class EventsController extends AppController {
       if ($this->request->is('post')) {
         $id = $this->request->data['EventsEntry']['events_detail_id'];
       }
-      $events_detail = $this->EventsDetail->findById($id);
       if (empty($id)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
-      if ($events_detail['EventsDetail']['id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しな場合
+      $events_detail = $this->EventsDetail->findById($id);
+      if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
         $this->redirect('/event/'.$id);
       }
       $this->set('events_detail', $events_detail);
