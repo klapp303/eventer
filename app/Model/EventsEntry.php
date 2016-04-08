@@ -107,7 +107,20 @@ class EventsEntry extends AppModel {
       return $status;
   }
 
-  public function searchEntryDate($user_id = false, $s_date = false, $e_date = false) {
+  public function searchEntryDate($user_id = false, $s_date = false, $e_date = false, $join_lists = []) {
+      if ($user_id == 1) {
+        $user_id = false;
+      }
+      //参加済のイベントを取得しておく
+      if ($user_id) {
+        $this->loadModel('EventUser');
+        $join_events = $this->EventUser->getJoinEvents($user_id);
+        $join_lists = $this->find('list', array(
+            'conditions' => array('EventsEntry.events_detail_id' => $join_events['id']),
+            'fields' => 'EventsEntry.id'
+        ));
+      }
+      
       if ($s_date) {
         $s_date = date('Y-m-d 00:00:00', strtotime($s_date));
       } else {
@@ -121,38 +134,54 @@ class EventsEntry extends AppModel {
       
       $entry_lists = $this->find('all', array(
           'conditions' => array(
-              ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
               'or' => array(
+                  //参加済のイベントの場合は開催日時のみ
                   array(
-                      'and' => array(
-                          'EventsEntry.date_start >=' => $s_date,
-                          'EventsEntry.date_start <=' => $e_date
-                      )
+                      ($user_id == false)? : 'EventsEntry.id' => $join_lists,
+                      'or' => array(
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_event >=' => $s_date,
+                                  'EventsEntry.date_event <=' => $e_date
+                              )
+                          )
+                      ),
                   ),
                   array(
-                      'and' => array(
-                          'EventsEntry.date_close >=' => $s_date,
-                          'EventsEntry.date_close <=' => $e_date
+                      ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+                      'or' => array(
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_start >=' => $s_date,
+                                  'EventsEntry.date_start <=' => $e_date
+                              )
+                          ),
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_close >=' => $s_date,
+                                  'EventsEntry.date_close <=' => $e_date
+                              )
+                          ),
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_result >=' => $s_date,
+                                  'EventsEntry.date_result <=' => $e_date
+                              )
+                          ),
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_payment >=' => $s_date,
+                                  'EventsEntry.date_payment <=' => $e_date
+                              )
+                          ),
+                          array(
+                              'and' => array(
+                                  'EventsEntry.date_event >=' => $s_date,
+                                  'EventsEntry.date_event <=' => $e_date
+                              )
+                          )
                       )
                   ),
-                  array(
-                      'and' => array(
-                          'EventsEntry.date_result >=' => $s_date,
-                          'EventsEntry.date_result <=' => $e_date
-                      )
-                  ),
-                  array(
-                      'and' => array(
-                          'EventsEntry.date_payment >=' => $s_date,
-                          'EventsEntry.date_payment <=' => $e_date
-                      )
-                  ),
-                  array(
-                      'and' => array(
-                          'EventsEntry.date_event >=' => $s_date,
-                          'EventsEntry.date_event <=' => $e_date
-                      )
-                  )
               ),
               'EventsDetail.deleted !=' => 1
           ),
