@@ -53,3 +53,17 @@
 .tbl-action_place {
     width: 55px;
 }
+
+/* 会場ソート一覧用 */
+.sort-list_palce {
+    margin-top: -30px;
+    width: 400px;
+    list-style-type: none;
+}
+.sort-list_palce >li {
+    padding: 5px;
+    cursor: pointer;
+}
+.sort-btn_place {
+    margin-left: 350px;
+}
