@@ -157,12 +157,10 @@ class PlacesController extends AppController {
         ));
         $this->set('place_lists', $place_lists);
       } else {
+        $i = 2;
         foreach ($this->request->data['Place'] AS &$place) {
-          if ($place['sort'] < 1 || $place['sort'] > count($this->request->data['Place'])) {
-            $this->Session->setFlash('1 から '.count($this->request->data['Place']).' までの数値で入力してください。', 'flashMessage');
-            $this->redirect('/places/sort');
-          }
-          $place['sort']++;
+          $place['sort'] = $i;
+          $i++;
           //postデータが複数あるので1つずつvalidateする
           $this->Place->set($place); //postデータをModelに渡してvalidate
           if (!$this->Place->validates()) { //validate失敗の処理
