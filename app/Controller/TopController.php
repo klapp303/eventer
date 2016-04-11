@@ -20,7 +20,8 @@ class TopController extends AppController {
       //未対応の件数
       $unfixed_entry_lists = $this->EventsEntry->getUnfixedEntry($this->Auth->user('id'));
       $unfixed_ticket_lists = $this->EventsEntry->getUnfixedTicket($this->Auth->user('id'));
-      $this->set(compact('unfixed_entry_lists', 'unfixed_ticket_lists'));
+      $unfixed_collect_lists = $this->EventsEntry->getUnfixedCollect($this->Auth->user('id'));
+      $this->set(compact('unfixed_entry_lists', 'unfixed_ticket_lists', 'unfixed_collect_lists'));
       
       //本日の予定
       $event_today_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'));

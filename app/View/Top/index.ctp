@@ -3,6 +3,7 @@
   <table class="detail-list-min">
     <tr><td class="tbl-intro_top">未対応の支払いが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_entry_lists['count'].'件', '/budgets/unfixed_entry/'); ?></td><td>あります。</td></tr>
     <tr><td class="tbl-intro_top">未対応のチケット余りが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_ticket_lists['count'].'件', '/budgets/unfixed_ticket/'); ?></td><td>あります。</td></tr>
+    <tr><td class="tbl-intro_top">未対応の集金が</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_collect_lists['count'].'件', '/budgets/unfixed_collect/'); ?></td><td>あります。</td></tr>
   </table>
 </div>
 
