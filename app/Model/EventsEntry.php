@@ -250,4 +250,22 @@ class EventsEntry extends AppModel {
       
       return $data;
   }
+
+  public function getUnfixedCollect($user_id = false, $data = ['list' => [], 'count' => 0]) {
+      $entry_lists = $this->find('all', array(
+          'conditions' => array(
+              ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+              'EventsEntry.number >' => 1,
+              'EventsEntry.sales_status' => 1,
+              'EventsEntry.collect_status !=' => 1,
+              'EventsEntry.status' => 2,
+              'EventsDetail.deleted !=' => 1
+          ),
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+      ));
+      $data['list'] = $entry_lists;
+      $data['count'] = count($entry_lists);
+      
+      return $data;
+  }
 }

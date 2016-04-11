@@ -1,5 +1,13 @@
 <?php echo $this->Html->css('budgets', array('inline' => FALSE)); ?>
-<h3><?php echo (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI']))? '未対応の支払い一覧': 'チケット余り一覧'; ?></h3>
+<h3><?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
+      echo '未対応の支払い一覧';
+    } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
+      echo 'チケット余り一覧';
+    } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
+      echo '未対応の集金一覧';
+    } else {
+      echo '未対応の一覧';
+    } ?></h3>
 
 <?php if ($unfixed_lists['count'] > 0) { ?>
   <table class="detail-list-min">
@@ -25,7 +33,14 @@
                                           elseif ($entry_list['EventsEntry']['payment'] == 'buy') {echo '<span class="txt-min">買取</span>';}
                                           elseif ($entry_list['EventsEntry']['payment'] == 'other') {echo '<span class="txt-min">その他</span>';} ?></td>
         <td class="tbl-act" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$entry_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
-                                        <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['EventsEntry']['id'], (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI']))? 'payment_status': 'sales_status'), null, '対応済みに変更しますか'); ?></span></td></tr>
+                                        <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
+                                          $update_column = 'payment_status';
+                                        } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
+                                          $update_column = 'sales_status';
+                                        } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
+                                          $update_column = 'collect_status';
+                                        } ?>
+                                        <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['EventsEntry']['id'], $update_column), null, '対応済みに変更しますか'); ?></span></td></tr>
     <tr><td><?php echo $entry_list['EventsEntry']['title']; ?></td>
         <td class="tbl-date-min"><?php if ($entry_list['EventsDetail']['date']) { ?>
                                    <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsDetail']['date']))].')', strtotime($entry_list['EventsDetail']['date'])); ?>
@@ -44,7 +59,15 @@
 <?php } else { ?>
 <div class="intro_budgets">
   <p>
-    現在、<?php echo (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI']))? '未対応の支払い': 'チケット余り'; ?>はありません。
+    現在、
+    <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
+      echo '未対応の支払い';
+    } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
+      echo 'チケット余り';
+    } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
+      echo '未対応の集金';
+    } ?>
+    はありません。
   </p>
 </div>
 <?php } ?>

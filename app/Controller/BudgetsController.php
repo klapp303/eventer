@@ -33,6 +33,12 @@ class BudgetsController extends AppController {
       $this->render('unfixed_lists');
   }
 
+  public function unfixed_collect() {
+      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedCollect($this->Auth->user('id')));
+      
+      $this->render('unfixed_lists');
+  }
+
   public function fixed($id = false, $column = false) {
       if (empty($id) || empty($column)) {
         throw new NotFoundException(__('存在しないデータです。'));
@@ -50,6 +56,8 @@ class BudgetsController extends AppController {
           $this->redirect('/budgets/unfixed_entry/');
         } elseif ($column == 'sales_status') {
           $this->redirect('/budgets/unfixed_ticket/');
+        } elseif ($column == 'collect_status') {
+          $this->redirect('/budgets/unfixed_collect/');
         } else { //未使用
           $this->redirect('/budgets/');
         }
