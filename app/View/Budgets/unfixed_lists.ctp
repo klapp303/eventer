@@ -35,7 +35,7 @@
                                  <?php } ?></td>
         <td class="tbl-date-min">
           <?php if ($entry_list['EventsEntry']['date_payment']) { ?>
-            <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry'][$column]))].')', strtotime($entry_list['EventsEntry']['date_payment'])); ?><br>
+            <?php echo date('m/d('.$week_lists[date('w', strtotime($entry_list['EventsEntry']['date_payment']))].')', strtotime($entry_list['EventsEntry']['date_payment'])); ?><br>
             <?php echo date('H:i', strtotime($entry_list['EventsEntry']['date_payment'])); ?>
           <?php } ?>
         </td></tr>

@@ -159,7 +159,8 @@ class EventsEntry extends AppModel {
                           array(
                               'and' => array(
                                   'EventsEntry.date_close >=' => $s_date,
-                                  'EventsEntry.date_close <=' => $e_date
+                                  'EventsEntry.date_close <=' => $e_date,
+                                  'EventsEntry.status' => array(0, 4)
                               )
                           ),
                           array(
@@ -171,7 +172,8 @@ class EventsEntry extends AppModel {
                           array(
                               'and' => array(
                                   'EventsEntry.date_payment >=' => $s_date,
-                                  'EventsEntry.date_payment <=' => $e_date
+                                  'EventsEntry.date_payment <=' => $e_date,
+                                  'EventsEntry.payment !=' => 'credit'
                               )
                           ),
                           array(
