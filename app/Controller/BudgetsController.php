@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class BudgetsController extends AppController {
 
-	public $uses = array('EventsEntry'/*, 'EventUser'*/); //使用するModel
+	public $uses = array('EventsDetail', 'EventsEntry'/*, 'EventUser'*/); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(
@@ -22,19 +22,19 @@ class BudgetsController extends AppController {
   }
 
   public function unfixed_entry() {
-      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedEntry($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedEntry($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_ticket() {
-      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedTicket($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedTicket($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_collect() {
-      $this->set('unfixed_lists', $this->EventsEntry->getUnfixedCollect($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
