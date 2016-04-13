@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class BudgetsController extends AppController {
 
-	public $uses = array('EventsDetail', 'EventsEntry'/*, 'EventUser'*/); //使用するModel
+  public $uses = array('EventsDetail', 'EventsEntry'/*, 'EventUser'*/); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(

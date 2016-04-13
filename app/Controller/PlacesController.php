@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class PlacesController extends AppController {
 
-	public $uses = array('Place', 'EventUser', 'Event', 'EventsDetail', 'Option'); //使用するModel
+  public $uses = array('Place', 'EventUser', 'Event', 'EventsDetail', 'Option'); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(

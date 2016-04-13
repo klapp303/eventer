@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class TopController extends AppController {
 
-	public $uses = array('Event', 'EventsDetail', 'EventsEntry'/*, 'EventUser'*/, 'Option'); //使用するModel
+  public $uses = array('Event', 'EventsDetail', 'EventsEntry'/*, 'EventUser'*/, 'Option'); //使用するModel
 
   public function beforeFilter() {
       parent::beforeFilter();

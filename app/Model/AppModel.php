@@ -15,15 +15,15 @@ class AppModel extends Model { //半角文字だけかを判定するcustom vali
       } else {
         return parent::exists($id);
       }
-	}
+  }
 
-	public function delete($id = null, $cascade = true) { //SoftDelete用の記述
+  public function delete($id = null, $cascade = true) { //SoftDelete用の記述
       $result = parent::delete($id, $cascade);
       if ($result === false && $this->Behaviors->enabled('SoftDelete')) {
         return $this->field('deleted', array('deleted' => 1));
       }
       return $result;
-	}
+  }
 
   public function loadModel($Model) {
       if (!isset($this->{$Model})) {

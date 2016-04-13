@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController {
 
-	public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
+  public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
 
   public $components = array('Paginator', 'Search.Prg');
   public $paginate = array(

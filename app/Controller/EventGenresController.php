@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventGenresController extends AppController {
 
-	public $uses = array('EventGenre'); //使用するModel
+  public $uses = array('EventGenre'); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(

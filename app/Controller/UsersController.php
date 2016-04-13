@@ -6,7 +6,7 @@ App::uses('Folder', 'Utility'); //フォルダAPI用
 
 class UsersController extends AppController {
 
-	public $uses = array(
+  public $uses = array(
       'User',
       'EntryGenre', 'Event', 'EventGenre', 'EventUser', 'EventsDetail', 'EventsEntry',
       'Option', 'Place'
