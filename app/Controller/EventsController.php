@@ -498,15 +498,15 @@ class EventsController extends AppController {
       $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
       
       if ($this->request->query) {
-        $search_title = $this->request->query['title'];
+        $search_word = $this->request->query['word'];
       }
       
       $this->Paginator->settings = array(
           'conditions' => array(
               array(
                   'or' => array(
-                      'Event.title LIKE' => '%'.$search_title.'%',
-                      'EventsDetail.title LIKE' => '%'.$search_title.'%'
+                      'Event.title LIKE' => '%'.$search_word.'%',
+                      'EventsDetail.title LIKE' => '%'.$search_word.'%'
                   )
               ),
               array(

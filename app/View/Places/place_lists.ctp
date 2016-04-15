@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('places', array('inline' => FALSE)); ?>
-<?php echo $this->element('searchbox', array('mode' => 'place')); ?>
+<?php echo $this->element('searchbox', array('ctrl' => 'places')); ?>
 
 <div class="intro_places">
   <P>

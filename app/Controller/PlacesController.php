@@ -179,4 +179,26 @@ class PlacesController extends AppController {
         $this->redirect('/places/place_lists/');
       }
   }
+
+  public function search() {
+      $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+      ));
+      $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
+      $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
+  
+      if ($this->request->query) {
+        $search_word = $this->request->query['word'];
+      }
+      
+      $this->Paginator->settings = array(
+          'conditions' => array(
+              'Place.name LIKE' => '%'.$search_word.'%'
+          )
+      );
+      $place_lists = $this->Paginator->paginate('Place');
+      $this->set('place_lists', $place_lists);
+      
+      $this->render('place_lists');
+  }
 }
