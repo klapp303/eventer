@@ -501,7 +501,7 @@ class EventsController extends AppController {
         $search_title = $this->request->query['title'];
       }
       
-      $event_lists = $this->EventsDetail->find('all', array(
+      $this->Paginator->settings = array(
           'conditions' => array(
               array(
                   'or' => array(
@@ -516,8 +516,9 @@ class EventsController extends AppController {
                   )
               )
           ),
-          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
-      ));
+          'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
+      );
+      $event_lists = $this->Paginator->Paginate('EventsDetail');
       foreach ($event_lists AS &$event_list) {
         $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
       }
