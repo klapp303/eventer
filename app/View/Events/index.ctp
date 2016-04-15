@@ -1,5 +1,7 @@
 <?php echo $this->Html->css('events', array('inline' => FALSE)); ?>
 <?php echo $this->Html->script('jquery-name_insert', array('inline' => FALSE)); ?>
+<?php echo $this->element('searchbox', array('mode' => 'event')); ?>
+
 <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
 <h3>イベントの編集</h3>
 
@@ -86,8 +88,6 @@
   </div>
   
   <?php echo $this->Form->end(); ?><!-- form end -->
-
-<?php echo $this->element('event_search'); ?>
 
 <h3>イベント一覧</h3>
 

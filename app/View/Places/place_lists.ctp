@@ -1,4 +1,6 @@
 <?php echo $this->Html->css('places', array('inline' => FALSE)); ?>
+<?php echo $this->element('searchbox', array('mode' => 'place')); ?>
+
 <div class="intro_places">
   <P>
     追加する際は、既に会場が登録されていないか確認してください。<br>
