@@ -9,6 +9,13 @@
     margin-bottom: 30px;
 }
 
+/* 検索box用 */
+.searchbox_event {
+    float: right;
+    margin-top: -50px;
+    text-align: center;
+}
+
 /* イベント詳細用 */
 .access_search {
     float: right;

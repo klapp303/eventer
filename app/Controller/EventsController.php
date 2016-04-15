@@ -156,8 +156,7 @@ class EventsController extends AppController {
                   'EventsDetail.date >=' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      array('EventsDetail.id' => $join_lists['id']),
-                      array('Event.publish' => 1)
+                      array('EventsDetail.id' => $join_lists['id'])
                   )
               )
           ),
@@ -492,5 +491,41 @@ class EventsController extends AppController {
         }
         $this->redirect('/events/all_lists/');
       }
+  }
+
+  public function search() {
+      //参加済のイベント一覧を取得しておく
+      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+      
+      if ($this->request->query) {
+        $search_title = $this->request->query['title'];
+      }
+      
+      $event_lists = $this->EventsDetail->find('all', array(
+          'conditions' => array(
+              array(
+                  'or' => array(
+                      'Event.title LIKE' => '%'.$search_title.'%',
+                      'EventsDetail.title LIKE' => '%'.$search_title.'%'
+                  )
+              ),
+              array(
+                  'or' => array(
+                      array('Event.publish' => 1),
+                      array('EventsDetail.id' => $join_lists['id'])
+                  )
+              )
+          ),
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+      ));
+      foreach ($event_lists AS &$event_list) {
+        $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+      }
+      unset($event_list);
+      $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
+      $place_lists = $this->Place->find('list'); //プルダウン選択肢用
+      $this->set(compact('event_lists', 'event_genres', 'place_lists'));
+      
+      $this->render('index');
   }
 }
