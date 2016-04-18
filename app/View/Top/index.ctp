@@ -55,6 +55,10 @@
   </div>
   <?php } ?>
 
+<div class="fr">
+  <span class="link-page"><?php echo $this->Form->postLink('⇨ 予定をメールに送る', array('controller' => 'email', 'action' => 'schedule_send', $userData['id']), null, '本日の予定を登録されているメールアドレスに送りますか'); ?></span>
+</div>
+
 <h3>直近の予定</h3>
 
   <?php if (count($event_current_lists) > 0) { ?>
