@@ -1,6 +1,8 @@
 <?php
 
-class EmailShell extends Shell {
+App::uses('CakeEmail', 'Network/Email'); //CakeEmaiilの利用、分けて記述
+
+class EmailShell extends AppShell {
   public $uses = array('User', 'EventsEntry'); //使用するModel
   
   public function startup() {
@@ -8,7 +10,7 @@ class EmailShell extends Shell {
   }
 
   public function main() {
-      $this->out('メール送信処理を開始します');
+      $this->out('function starts');
       
       $user_lists = $this->User->find('all', array(
           'conditions' => array('User.id !=' => 1)
@@ -50,15 +52,15 @@ class EmailShell extends Shell {
                     'entryDateColumn' => $entryDateColumn
                 )); //mailに渡す変数
           if ($email->send()) {
-            //$this->out('メールに予定を送信しました');
+            //$this->out('send email');
           } else {
-            $this->out('メールを送信できませんでした');
+            $this->out('function not complete #user_id = '.$user['User']['id']);
           }
         } else {
-          $this->out('現在は予定がありません');
+          //$this->out('no objects');
         }
       }
       
-      $this->out('メール送信処理は成功しました');
+      $this->out('function completed');
   }
 }
