@@ -9,9 +9,13 @@
     <tr><th>メールアドレス<span class="txt-min txt-n">（ログインに使用）</span></th><td><?php echo $user_detail['User']['username']; ?></td></tr>
     <tr><th>パスワード<span class="txt-min txt-n">（ログインに使用）</span></th><td>表示しないよ！！</td></tr>
     <tr><th>最寄り駅</th><td><?php echo $user_detail['User']['station']; ?><?php if ($user_detail['User']['station']) {echo '駅';} ?></td></tr>
-    <!--tr><th>参加者機能</th><?php /*if ($user_detail['User']['community_id'] == 0) { ?><td>利用しない</td>
-                   <?php } elseif ($user_detail['User']['community_id'] == 1) { ?><td>利用する</td>
-                   <?php }*/ ?></tr-->
+    <tr><th>お知らせメール</th>
+      <?php if ($user_detail['User']['mail'] == 0) { ?>
+      <td><span class="txt-min">現在は</span> 配信しない <span class="txt-min">です</span></td>
+      <?php } elseif ($user_detail['User']['mail'] == 1) { ?>
+      <td><span class="txt-min">現在は</span> 配信する <span class="txt-min">です</span></td>
+      <?php } ?>
+    </tr>
     <tr><th>action</th><td class="tbl-ico"><span class="icon-button"><?php echo $this->Form->postLink('変更する', array('action' => 'edit', $user_detail['User']['id'])); ?></span></td></tr>
   </table>
 

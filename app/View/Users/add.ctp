@@ -24,6 +24,10 @@
       <td><label>最寄り駅（任意）</label></td>
       <td><?php echo $this->Form->input('station', array('type' => 'text', 'label' => false, 'placeholder' => '例）東京')); ?>駅</td>
     </tr>
+    <tr>
+      <td><label>お知らせメール（任意）</label></td>
+      <td><?php echo $this->Form->input('mail', array('type' => 'select', 'label' => false, 'options' => array(0 => '配信しない', 1 => '配信する'))); ?></td>
+    </tr>
     
     <tr>
       <td></td>

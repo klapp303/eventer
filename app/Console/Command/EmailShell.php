@@ -14,7 +14,10 @@ class EmailShell extends AppShell {
       $this->out('function starts');
       
       $user_lists = $this->User->find('all', array(
-          'conditions' => array('User.id !=' => 1)
+          'conditions' => array(
+              'User.id !=' => 1,
+              'User.mail' => 1
+          )
       ));
       
       foreach ($user_lists AS $user) {

@@ -21,6 +21,11 @@ class UsersController extends AppController {
   }
 
   public function login() {
+      //ログイン中の場合はredirect
+      if ($this->Auth->user('id')) {
+        $this->redirect('/');
+      }
+      
       if ($this->request->is('post')) {
         if ($this->Auth->login()) {
           /* ログイン時に定期バックアップを判定して作成ここから */
@@ -107,6 +112,11 @@ class UsersController extends AppController {
   }
 
   public function add() {
+      //ログイン中の場合はredirect
+      if ($this->Auth->user('id')) {
+        $this->redirect('/user/'.$this->Auth->user('id'));
+      }
+      
       if ($this->request->is('post')) {
         $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->User->validates()) { //validate成功の処理
@@ -149,6 +159,10 @@ class UsersController extends AppController {
           $this->User->save($this->request->data); //validate成功でsave
           if ($this->User->save($id)) {
             $this->Session->setFlash('変更しました。', 'flashMessage');
+            //セッションのuser情報を更新する
+            $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
+            unset($user['User']['password']);
+            $this->Session->write('Auth', $user);
           } else {
             $this->Session->setFlash('変更できませんでした。', 'flashMessage');
           }
