@@ -15,7 +15,7 @@
 エントリー名：<?php echo $event_list['EventsEntry']['title']; ?>
 
 <?php $week_lists = ['日', '月', '火', '水', '木', '金', '土']; ?>
-<?php if ($event_list['EventsEntry']['date_status'] != '本日開演' && $event_list['EventsEntry']['date_status'] != '近日開演') { ?>
+<?php if ($event_list['EventsEntry']['date_status'] != '本日開演' && $event_list['EventsEntry']['date_status'] != '近日開催') { ?>
 <?php echo $event_list['EventsEntry']['date_status']; ?>：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]]))].')H:i', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]])); ?>
 
 開演日時：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry']['date_event']))].')H:i', strtotime($event_list['EventsEntry']['date_event'])); ?>
