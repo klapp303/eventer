@@ -31,7 +31,7 @@
 <h3>開催予定のイベント</h3>
 
 <?php if ($event_lists) { ?>
-  <table class="event-list_place">
+  <table class="event-list event-list_place">
     <tr><th class="tbl-date">開催日</th>
         <th>イベント名</th>
         <th class="tbl-act-min">action</th></tr>

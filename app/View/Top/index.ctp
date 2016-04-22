@@ -10,7 +10,7 @@
 <h3>本日の予定</h3>
 
   <?php if (count($event_today_lists) > 0) { ?>
-  <table class="detail-list-min">
+  <table class="detail-list-min event-list-v2">
     <tr><th>イベント名</th>
         <th class="tbl-date-min">開演日時</th>
         <th>予定</th>
@@ -20,7 +20,7 @@
         <th class="tbl-act-min">action</th></tr>
     
     <?php foreach ($event_today_lists AS $event_list) { ?>
-    <tr><td colspan="4">
+    <tr><td class="title-main" colspan="4">
           <?php echo $event_list['Event']['title']; ?>
           <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
           <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
@@ -33,14 +33,14 @@
                                             elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
         <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id']); ?></span></td></tr>
-    <tr><td><?php echo $event_list['EventsEntry']['title']; ?></td>
+    <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
         <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>
                                    <?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsDetail']['date']))].')', strtotime($event_list['EventsDetail']['date'])); ?>
                                    <?php if ($event_list['EventsDetail']['time_start']) { ?><br>
                                      <?php echo date('H:i', strtotime($event_list['EventsDetail']['time_start'])); ?>
                                    <?php } ?>
                                  <?php } ?></td>
-        <td><?php echo $event_list['EventsEntry']['date_status']; ?></td>
+        <td class="tbl-title-min"><span class="txt-min"><?php echo $event_list['EventsEntry']['date_status']; ?></span></td>
         <td class="tbl-date-min"><?php if ($event_list['EventsEntry']['date_status'] != '本日開演') { ?>
                                    <?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]]))].')', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]])); ?><br>
                                    <?php echo date('H:i', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]])); ?>
@@ -62,7 +62,7 @@
 <h3>直近の予定</h3>
 
   <?php if (count($event_current_lists) > 0) { ?>
-  <table class="detail-list">
+  <table class="detail-list event-list-v2">
     <tr><th>イベント名</th>
         <th class="tbl-date-min">開演日時</th>
         <?php foreach ($entryDateColumn AS $key => $column) { ?>
@@ -73,7 +73,7 @@
         <th class="tbl-act-min">action</th></tr>
     
     <?php foreach ($event_current_lists AS $event_list) { ?>
-    <tr><td colspan="<?php echo count($entryDateColumn)+2; ?>">
+    <tr><td class="title-main" colspan="<?php echo count($entryDateColumn)+2; ?>">
           <?php echo $event_list['Event']['title']; ?>
           <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
           <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
@@ -86,7 +86,7 @@
                                             elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
         <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id']); ?></span></td></tr>
-    <tr><td><?php echo $event_list['EventsEntry']['title']; ?></td>
+    <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
         <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>
                                    <?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsDetail']['date']))].')', strtotime($event_list['EventsDetail']['date'])); ?>
                                    <?php if ($event_list['EventsDetail']['time_start']) { ?><br>

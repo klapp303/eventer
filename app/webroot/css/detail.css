@@ -73,6 +73,53 @@
     width: 540px;
 }
 
+/* イベント一覧用ここから */
+.event-list {
+    /*border-collapse: collapse;*/
+    border-spacing: 0 5px;
+}
+.event-list td {
+    border-style: solid;
+    border-width: 1px 0;
+    border-color: #CEECF5;
+    padding: 5px 0;
+    background-color: #E0F8F7;
+    box-shadow: 0 2px #D8D8D8;
+}
+.event-list tr >td.tbl-date {
+    border-left-width: 1px;
+    /*box-shadow: -2px 2px #D8D8D8;*/
+}
+.event-list tr >td.tbl-act {
+    border-right-width: 1px;
+    box-shadow: 2px 2px #D8D8D8;
+}
+/* イベント一覧用ここまで */
+
+/* イベント一覧TOP型ここから */
+.event-list-v2 {
+    /*border-collapse: collapse;*/
+    border-spacing: 0;
+}
+.event-list-v2 td {
+    border-style: solid;
+    border-width: 1px 0 2px 0; /* box-shadowの代わりにここだけ変更 */
+    border-color: #CEECF5;
+    padding: 5px 0;
+    background-color: #E0F8F7;
+    box-shadow: 0 2px #D8D8D8;
+}
+.event-list-v2 td.title-main {
+    border-width: 1px 0 0 0;
+}
+.event-list-v2 td.tbl-title-min, .event-list-v2 td.tbl-date-min {
+    border-width: 0 0 2px 0;
+}
+.event-list-v2 td.tbl-act-min {
+    border-width: 1px 2px 2px 0;
+}
+/* イベント一覧TOP型ここまで */
+
 .title-sub {
     margin-left: 15px;
     font-size: 15px;
@@ -103,7 +150,7 @@
 }
 
 .date-closed {
-    background-color: #D8D8D8;
+    background-color: #D8D8D8!important;
 }
 
 /* 検索box */

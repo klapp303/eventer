@@ -99,7 +99,7 @@
       'paramType' => 'querystring'
   )); ?>
 
-  <table class="detail-list">
+  <table class="detail-list event-list">
     <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('EventsDetail.date', '▼'); ?></th>
         <th>イベント名<?php echo $this->Paginator->sort('Event.title', '▼'); ?></th>
         <th class="tbl-genre">種類<br>
