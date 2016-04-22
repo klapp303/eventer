@@ -115,7 +115,7 @@
 .event-list-v2 td.tbl-title-min, .event-list-v2 td.tbl-date-min {
     border-width: 0 0 2px 0;
 }
-.event-list-v2 td.tbl-act-min {
+.event-list-v2 td.tbl-act, .event-list-v2 td.tbl-act-min {
     border-width: 1px 2px 2px 0;
 }
 /* イベント一覧TOP型ここまで */
