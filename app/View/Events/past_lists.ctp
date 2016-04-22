@@ -1,8 +1,17 @@
 <?php echo $this->Html->script('jquery-hide', array('inline' => FALSE)); ?>
 <?php echo $this->Html->css('events', array('inline' => FALSE)); ?>
-<button class="js-show js-hide-button fr cf">未対応のみ</button>
-<button class="js-hide js-show-button fr cf">過去すべて</button>
+<button class="js-show js-hide-button fr cf">未対応のみを表示する</button>
+<button class="js-hide js-show-button fr cf">過去すべてを表示する</button>
 <h3>過去のイベント一覧</h3>
+
+<div class="intro_events">
+  <P>
+    過去に行われたイベントの一覧になります。<br>
+    <br>
+    右上のボタンから当落見送りの結果が登録されていないイベントのみを<br>
+    表示する事ができます。
+  </P>
+</div>
 
   <div class="tbl-event_lists js-show">
   <?php echo $this->Paginator->numbers(array(

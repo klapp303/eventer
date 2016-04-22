@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_events {
-    height: 150px;
+    height: 100px;
     margin-left: 20px;
 }
 .intro_events >p {

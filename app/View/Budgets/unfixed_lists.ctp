@@ -9,6 +9,33 @@
       echo '未対応の一覧';
     } ?></h3>
 
+<div class="intro_budgets">
+  <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) { ?>
+  <p>
+    当選しているイベントでクレジットカード決済ではないエントリー一覧になります。<br>
+    金額が 0円 のもの、開催日が過ぎたものは基本的に表示されません。<br>
+    開催日を過ぎたイベントは決裁方法が買取のエントリーのみ表示されます。<br>
+    <br>
+    確定ボタンを押す事で支払済みとして扱われ一覧には表示されなくなります。
+  </p>
+  <?php } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) { ?>
+  <p>
+    イベント全体で複数枚の当選がある場合に表示されます。<br>
+    開催日を過ぎたイベントは表示されません。<br>
+    <br>
+    確定ボタンを押す事で引取先が確定したと扱われ、<br>
+    イベント全体の当選枚数が 1枚 以下になれば一覧には表示されなくなります。
+  </p>
+  <?php } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) { ?>
+  <p>
+    チケット余りのあるイベントで引取先が確定している場合に表示されます。<br>
+    金額が 0円 のものは表示されません。<br>
+    <br>
+    確定ボタンを押す事で集金済みとして扱われ一覧には表示されなくなります。
+  </p>
+  <?php } ?>
+</div>
+
 <?php if ($unfixed_lists['count'] > 0) { ?>
   <table class="detail-list-min event-list-v2">
     <tr><th>イベント名</th>

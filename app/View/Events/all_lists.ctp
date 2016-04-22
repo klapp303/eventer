@@ -1,6 +1,12 @@
 <?php echo $this->Html->css('events', array('inline' => FALSE)); ?>
 <h3>公開されているイベント一覧</h3>
 
+<div class="intro_events">
+  <P>
+    全体公開されているイベントの一覧になります。
+  </P>
+</div>
+
   <?php if (count($event_lists) > 0) { ?>
   <?php echo $this->Paginator->numbers(array(
       'modulus' => 4, //現在ページから左右あわせてインクルードする個数
