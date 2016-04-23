@@ -210,6 +210,11 @@ class UsersController extends AppController {
   }
 
   public function pw_renew(){
+      //ログイン中の場合はredirect
+      if ($this->Auth->user('id')) {
+        $this->redirect('/');
+      }
+      
       if (!empty($this->request->data)) {
         $data = $this->User->find('first', array(
             'conditions' => array('User.username' => $this->request->data['User']['username']) 
