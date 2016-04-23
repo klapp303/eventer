@@ -1,12 +1,4 @@
 @charset "utf-8";
-/* オプション一覧用 */
-.list_option {
-    list-style-type: none;
-}
-.list_option >li {
-    height: 40px;
-}
-
 /* コンテンツ説明文用 */
 .intro_pages {
     height: 80px;
@@ -15,4 +7,31 @@
 .intro_pages >p {
     margin-right: 20px;
     margin-bottom: 30px;
+}
+
+/* ページリンク用 */
+.link-page_pages {
+    margin: 20px 50px 50px 40px;
+}
+
+/* オプション一覧用 */
+.list_option {
+    list-style-type: none;
+}
+.list_option >li {
+    height: 40px;
+}
+
+/* aboutページ用 */
+.body_about {
+    position: relative;
+}
+.img_about {
+    margin-bottom: 40px;
+    width: 300px;
+}
+.txt_about {
+    position: absolute;
+    left: 310px;
+    bottom: 30px;
 }

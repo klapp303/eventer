@@ -14,6 +14,9 @@ class PagesController extends AppController {
   public function index() {
   }
 
+  public function about() {
+  }
+
   public function event_genres() {
       $event_genre_lists = $this->EventGenre->find('all', array(
           'order' => array('id' => 'asc')

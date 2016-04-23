@@ -72,6 +72,8 @@ body {
 
 /* menu_side */
 #menu_side {
+    position: relative;
+    z-index: 10;
     background-color: #000033;
     color: #ffffff;
     width: 200px;
