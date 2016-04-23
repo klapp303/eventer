@@ -1,0 +1,1 @@
+<p class="move_top_button"><span class="txt-min">▲上に戻る</span></p>

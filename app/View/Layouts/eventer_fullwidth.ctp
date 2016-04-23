@@ -36,7 +36,8 @@
 
     echo $this->Html->script(array(
         'jquery-1.11.3.min',
-        'jquery-migrate-1.2.1.min'
+        'jquery-migrate-1.2.1.min',
+        'jquery-move_top'
     ));
 
 		echo $this->fetch('meta');
@@ -54,6 +55,9 @@
 		<div id="menu_side">
 			<?php echo $this->element('eventer_menu'); ?>
 		</div>
+    <div id="move_top">
+      <?php echo $this->element('move_top'); ?>
+    </div>
 		<div id="content">
 
 			<?php echo $this->Flash->render(); ?>
