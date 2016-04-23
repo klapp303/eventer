@@ -18,9 +18,17 @@
 <?php if ($event_list['EventsEntry']['date_status'] != '本日開演' && $event_list['EventsEntry']['date_status'] != '近日開催') { ?>
 <?php echo $event_list['EventsEntry']['date_status']; ?>：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]]))].')H:i', strtotime($event_list['EventsEntry'][$entryDateColumn[$event_list['EventsEntry']['date_status']]])); ?>
 
+<?php if ($event_list['EventsDetail']['time_start']) { ?>
 開演日時：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry']['date_event']))].')H:i', strtotime($event_list['EventsEntry']['date_event'])); ?>
 <?php } else { ?>
+開演日時：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry']['date_event']))].')', strtotime($event_list['EventsEntry']['date_event'])); ?>
+<?php } ?>
+<?php } else { ?>
+<?php if ($event_list['EventsDetail']['time_start']) { ?>
 <?php echo $event_list['EventsEntry']['date_status']; ?>：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry']['date_event']))].')H:i', strtotime($event_list['EventsEntry']['date_event'])); ?>
+<?php } else { ?>
+<?php echo $event_list['EventsEntry']['date_status']; ?>：<?php echo date('m/d('.$week_lists[date('w', strtotime($event_list['EventsEntry']['date_event']))].')', strtotime($event_list['EventsEntry']['date_event'])); ?>
+<?php } ?>
 <?php } ?>
 
 
