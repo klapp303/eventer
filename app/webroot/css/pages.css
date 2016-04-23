@@ -35,3 +35,9 @@
     left: 310px;
     bottom: 30px;
 }
+
+/* お知らせ、更新履歴ページ用 */
+.sub_history {
+    font-size: 12px;
+    margin-left: 20px;
+}
