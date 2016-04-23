@@ -12,3 +12,5 @@
   <tr><td>Twitter</td>
       <td><?php echo $this->Html->image('../atmark.png', array('alt' => 'atmark')) ?>klapp_kamp</td></tr>
 </table>
+
+<br><br>

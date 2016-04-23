@@ -38,6 +38,6 @@
   });
 </script>
 
-<div class="intro_places">
+<div class="link-page_places">
   <span class="link-page"><?php echo $this->Html->link('⇨ 会場一覧に戻る', '/places/place_lists/'); ?></span>
 </div>

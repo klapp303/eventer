@@ -4,10 +4,13 @@
   <table class="detail-list-min">
     <tr><th class="tbl-date">日付</th><th>更新内容</th></tr>
    
-    <!--<tr><td class="tbl-date">2015-10-17</td>
-        <td>更新内容本文になります。</td></tr>-->
+    <!--tr><td class="tbl-date">2015-10-17</td>
+        <td>更新内容本文になります。</td></tr-->
+    <tr><td class="tbl-date">2016-04-21</td>
+        <td>ver2.1にアップデート！<span class="txt-alt txt-b">⇐ New</span><br>
+            　　<span class="txt-min">お知らせメール機能を追加</span></td></tr>
     <tr><td class="tbl-date">2016-04-08</td>
-        <td>イベ幸ver2.0リリース！<span class="txt-alt txt-b">⇐ New</span><br>
+        <td>イベ幸ver2.0リリース！<br>
             　　<span class="txt-min">別日程のイベントをまとめて管理できる（ツアーや1部2部など）</span><br>
             　　<span class="txt-min">複数のエントリーをまとめて管理できる（FC先行と一般など）</span><br>
             　　<span class="txt-min">会場データを大幅に追加</span><br>
