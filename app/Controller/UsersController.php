@@ -17,7 +17,7 @@ class UsersController extends AppController {
       $this->layout = 'eventer_normal';
       // ユーザ自身による登録とログアウトを許可する
       $this->Auth->allow('add', 'logout', 'pw_renew');
-      //$this->User->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+//      $this->User->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function login() {

@@ -15,7 +15,7 @@ class BudgetsController extends AppController {
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
-      //$this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+//      $this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function index() {

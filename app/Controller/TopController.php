@@ -12,10 +12,8 @@ class TopController extends AppController {
   }
 
   public function index() {
-      /*$join_lists = $this->EventUser->find('list', array( //参加済みイベントのidを取得
-          'conditions' => array('user_id' => $login_id),
-          'fields' => 'event_id'
-      ));*/
+      //参加済のイベント一覧を取得しておく
+//      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
   
       //未対応の件数
       $unfixed_entry_lists = $this->EventsDetail->getUnfixedEntry($this->Auth->user('id'));
@@ -45,7 +43,8 @@ class TopController extends AppController {
   
       //直近の予定
       $CURRENT_EVENT_OPTION = $this->Option->find('first', array( //オプション値を取得
-          'conditions' => array('Option.title' => 'CURRENT_EVENT_KEY')
+          'conditions' => array('Option.title' => 'CURRENT_EVENT_KEY'),
+          'fields' => 'Option.key'
       ));
       $CURRENT_EVENT_KEY = $CURRENT_EVENT_OPTION['Option']['key'];
       $event_current_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'), date('Y-m-d', strtotime('1 day')), date('Y-m-d', strtotime($CURRENT_EVENT_KEY.' day')));

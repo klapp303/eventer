@@ -4,11 +4,11 @@ App::uses('AppController', 'Controller');
 
 class EmailController extends AppController {
 
-  public $uses = array('User', 'EventsEntry'); //使用するModel
+  public $uses = array('User', 'EventsEntry', 'Option'); //使用するModel
 
   public function beforeFilter() {
       parent::beforeFilter();
-      //$this->layout = 'eventer_fullwidth';
+//      $this->layout = 'eventer_fullwidth';
   }
 
   /*public function index() {
@@ -16,8 +16,18 @@ class EmailController extends AppController {
 
   public function schedule_send($id = null) {
       if ($this->request->is('post')) {
-        //3日分の予定を取得
-        $event_lists = $this->EventsEntry->searchEntryDate($id, date('Y-m-d'), date('Y-m-d', strtotime('2 day')));
+        $USER_CURBON_OPTION = $this->Option->find('first', array(
+            'conditions' => array('Option.title' => 'USER_CARBON_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $USER_CURBON_KEY = $USER_CURBON_OPTION['Option']['key'];
+        if ($id <= $USER_CURBON_KEY) {
+          $this->Session->setFlash('メール送信のできないユーザです。', 'flashMessage');
+          $this->redirect('/');
+        }
+        
+        //本日の予定を取得
+        $event_lists = $this->EventsEntry->searchEntryDate($id, date('Y-m-d'), date('Y-m-d'));
         foreach ($event_lists AS $key => &$event) {
           if ($event['EventsEntry']['status'] == 3 || $event['EventsEntry']['status'] == 4) { //落選 or 見送りならば除外する
             unset($event_lists[$key]);

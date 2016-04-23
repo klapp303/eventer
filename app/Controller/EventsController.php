@@ -15,7 +15,7 @@ class EventsController extends AppController {
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
-      //$this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+//      $this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function index() {
@@ -94,7 +94,7 @@ class EventsController extends AppController {
         $this->Event->set($dataEvent); //postデータをModelに渡してvalidate
         if ($this->Event->validates()) { //validate成功の処理
           if ($this->Event->save($dataEvent)) { //validate成功でsave
-            //$this->Session->setFlash('登録しました。', 'flashMessage');
+//            $this->Session->setFlash('登録しました。', 'flashMessage');
           } else {
             $this->Session->setFlash($dataEvent['Event']['title'].' を登録できませんでした。', 'flashMessage');
             $this->redirect('/events/');
@@ -258,7 +258,7 @@ class EventsController extends AppController {
           foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
             $message .= '<br>'.$dataDetail['title'];
           }
-          //$message = ltrim($message, '<br>');
+//          $message = ltrim($message, '<br>');
           $this->Session->setFlash($dataEvent['Event']['title'].' の'.$message.' を登録、修正しました。', 'flashMessage');
           $this->redirect('/events/');
         } else {
@@ -425,7 +425,7 @@ class EventsController extends AppController {
                   'EventsDetail.date <' => date('Y-m-d'),
                   'or' => array(
                       array('EventsDetail.user_id' => $this->Auth->user('id')),
-                      //array('EventsDetail.id' => $join_lists['id'])
+//                      array('EventsDetail.id' => $join_lists['id'])
                   )
               )
           ),

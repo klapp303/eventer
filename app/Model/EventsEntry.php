@@ -11,12 +11,12 @@ class EventsEntry extends AppModel {
       'Event' => array(
           'className' => 'Event', //関連付けるModel
           'foreignKey' => 'event_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          //'fields' => '' //関連付け先Modelの使用field
+//          'fields' => '' //関連付け先Modelの使用field
       ),
       'EventsDetail' => array(
           'className' => 'EventsDetail', //関連付けるModel
           'foreignKey' => 'events_detail_id', //関連付けるためのfield、関連付け先は上記Modelのid
-          //'fields' => '' //関連付け先Modelの使用field
+//          'fields' => '' //関連付け先Modelの使用field
       ),
       'User' => array(
           'className' => 'User', //関連付けるModel
@@ -108,9 +108,6 @@ class EventsEntry extends AppModel {
   }
 
   public function searchEntryDate($user_id = false, $s_date = false, $e_date = false, $join_lists = []) {
-      if ($user_id == 1) {
-        $user_id = false;
-      }
       //参加済のイベントを取得しておく
       if ($user_id) {
         $this->loadModel('EventUser');
@@ -137,7 +134,7 @@ class EventsEntry extends AppModel {
               'or' => array(
                   //参加済のイベントの場合は開催日時のみ
                   array(
-                      ($user_id == false)? : 'EventsEntry.id' => $join_lists,
+                      'EventsEntry.id' => $join_lists,
                       'or' => array(
                           array(
                               'and' => array(
@@ -148,7 +145,7 @@ class EventsEntry extends AppModel {
                       ),
                   ),
                   array(
-                      ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+                      'EventsEntry.user_id' => $user_id,
                       'or' => array(
                           array(
                               'and' => array(

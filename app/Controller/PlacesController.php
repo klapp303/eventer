@@ -9,14 +9,14 @@ class PlacesController extends AppController {
   public $components = array('Paginator');
   public $paginate = array(
       'limit' => 20,
-      //'order' => array('id' => 'asc'),
+//      'order' => array('id' => 'asc'),
       'conditions' => array('id !=' => 1) //id=1は'その他'なので除外する
   );
 
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
-      //$this->Place->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+//      $this->Place->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
   public function index() {
@@ -25,7 +25,8 @@ class PlacesController extends AppController {
 
   public function place_lists() {
       $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
-          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+          'conditions' => array('Option.title' => 'PLACE_BLOCK_KEY'),
+          'fields' => 'Option.key'
       ));
       $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
       $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
@@ -127,7 +128,8 @@ class PlacesController extends AppController {
 
   public function delete($id = null){
       $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
-          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+          'conditions' => array('Option.title' => 'PLACE_BLOCK_KEY'),
+          'fields' => 'Option.key'
       ));
       $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
   
@@ -182,7 +184,8 @@ class PlacesController extends AppController {
 
   public function search() {
       $PLACE_BLOCK_OPTION = $this->Option->find('first', array( //オプション値を取得
-          'conditions' => array('title' => 'PLACE_BLOCK_KEY')
+          'conditions' => array('Option.title' => 'PLACE_BLOCK_KEY'),
+          'fields' => 'Option.key'
       ));
       $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
       $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);

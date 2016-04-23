@@ -5,7 +5,7 @@ App::uses('AppModel', 'Model');
 class Option extends AppModel {
 
   public $useTable = 'options';
-  //public $actsAs = array('SoftDelete');
+//  public $actsAs = array('SoftDelete');
 
   /*public $belongsTo = array(
       'SamplesGenre' => array(

@@ -52,7 +52,7 @@ class EventsDetail extends AppModel {
   public function getUnfixedEntry($user_id = false, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
-              ($user_id == false)? : 'EventsDetail.user_id' => $user_id,
+              'EventsDetail.user_id' => $user_id,
               'EventsDetail.deleted !=' => 1
           ),
           'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
@@ -63,7 +63,7 @@ class EventsDetail extends AppModel {
         $entry_lists = $this->EventsEntry->find('all', array(
             'conditions' => array(
                 'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
-                ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+                'EventsEntry.user_id' => $user_id,
                 'EventsEntry.price >' => 0,
                 array(
                     'or' => array(
@@ -102,7 +102,7 @@ class EventsDetail extends AppModel {
   public function getUnfixedTicket($user_id = false, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
-              ($user_id == false)? : 'EventsDetail.user_id' => $user_id,
+              'EventsDetail.user_id' => $user_id,
               'EventsDetail.date >=' => date('Y-m-d'),
               'EventsDetail.deleted !=' => 1
           ),
@@ -114,7 +114,7 @@ class EventsDetail extends AppModel {
         $entry_lists = $this->EventsEntry->find('all', array(
             'conditions' => array(
                 'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
-                ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+                'EventsEntry.user_id' => $user_id,
                 'EventsEntry.sales_status !=' => 1,
                 'EventsEntry.status' => 2
             )
@@ -146,7 +146,7 @@ class EventsDetail extends AppModel {
   public function getUnfixedCollect($user_id = false, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
-              ($user_id == false)? : 'EventsDetail.user_id' => $user_id,
+              'EventsDetail.user_id' => $user_id,
               'EventsDetail.deleted !=' => 1
           ),
           'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
@@ -157,7 +157,7 @@ class EventsDetail extends AppModel {
         $entry_lists = $this->EventsEntry->find('all', array(
             'conditions' => array(
                 'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
-                ($user_id == false)? : 'EventsEntry.user_id' => $user_id,
+                'EventsEntry.user_id' => $user_id,
                 'EventsEntry.sales_status' => 1,
                 'EventsEntry.collect_status !=' => 1,
                 'EventsEntry.status' => 2

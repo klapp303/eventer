@@ -27,7 +27,7 @@ class AppController extends Controller {
   );
 
   public function beforeFilter() {
-      //$this->Auth->allow('index'); //認証なしのページを設定
+//      $this->Auth->allow('index'); //認証なしのページを設定
   
       $this->set('userData', $this->Auth->user());
       
