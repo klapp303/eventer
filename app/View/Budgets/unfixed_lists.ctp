@@ -87,9 +87,9 @@
         <td class="tbl-act <?php echo ($i == count($event_list['EventsEntry']))? '': 'border-non-act'; ?>">
           <span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
           <?php if (@$column) { ?>
-            <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['id'], $column.'_status'), null, '対応済みに変更しますか'); ?></span>
+            <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['id'], $column), null, '対応済みに変更しますか'); ?></span>
           <?php } elseif (@$reset_column) { ?>
-            <span class="icon-button"><?php echo $this->Form->postLink('戻す', array('action' => 'reset', $entry_list['id'], $reset_column.'_status'), null, '対応済みを元に戻しますか'); ?></span>
+            <span class="icon-button"><?php echo $this->Form->postLink('戻す', array('action' => 'reset', $entry_list['id'], $reset_column), null, '対応済みを元に戻しますか'); ?></span>
           <?php } ?>
         </td></tr>
     <?php $i++; ?>

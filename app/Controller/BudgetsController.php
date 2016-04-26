@@ -42,28 +42,20 @@ class BudgetsController extends AppController {
       $this->render('unfixed_lists');
   }
 
-  public function fixed($id = false, $update_column = false) {
-      if (empty($id) || empty($update_column)) {
+  public function fixed($id = false, $column = false) {
+      if (empty($id) || empty($column)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
       
       if ($this->request->is('post')) {
         $this->EventsEntry->id = $id;
-        if ($this->EventsEntry->savefield($update_column, 1)) {
+        if ($this->EventsEntry->savefield($column.'_status', 1)) {
           $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('変更できませんでした。', 'flashMessage');
         }
         
-        if ($update_column == 'payment_status') {
-          $this->redirect('/budgets/unfixed_entry/');
-        } elseif ($update_column == 'sales_status') {
-          $this->redirect('/budgets/unfixed_ticket/');
-        } elseif ($update_column == 'collect_status') {
-          $this->redirect('/budgets/unfixed_collect/');
-        } else { //未使用
-          $this->redirect('/budgets/');
-        }
+        $this->redirect('/budgets/unfixed_'.$column);
       }
   }
 
@@ -92,6 +84,17 @@ class BudgetsController extends AppController {
                 'EventsEntry.'.$column.'_status' => 1
             )
         ));
+        
+        /* チケット余りが対応済みで集金も対応済みならばチケット余りのresetには表示しないここから */
+        if ($column == 'sales') {
+          foreach ($entry_lists AS $key2 => $entry) {
+            if ($entry['EventsEntry']['sales_status'] == 1 && $entry['EventsEntry']['collect_status'] == 1) {
+              unset($entry_lists[$key2]);
+            }
+          }
+        }
+        /* チケット余りが対応済みで集金も対応済みならばチケット余りのresetには表示しないここまで */
+        
         //statusリセットできるエントリーがなければリストから削除
         if (!$entry_lists) {
           unset($event_lists[$key]);
@@ -114,21 +117,13 @@ class BudgetsController extends AppController {
       
       if ($this->request->is('post')) {
         $this->EventsEntry->id = $id;
-        if ($this->EventsEntry->savefield($reset_column, 0)) {
+        if ($this->EventsEntry->savefield($reset_column.'_status', 0)) {
           $this->Session->setFlash('対応済みを元に戻しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
         }
         
-        if ($reset_column == 'payment_status') {
-          $this->redirect('/budgets/reset_status/payment/');
-        } elseif ($reset_column == 'sales_status') {
-          $this->redirect('/budgets/reset_status/sales/');
-        } elseif ($reset_column == 'collect_status') {
-          $this->redirect('/budgets/reset_status/collect/');
-        } else { //未使用
-          $this->redirect('/budgets/');
-        }
+        $this->redirect('/budgets/reset_status/'.$reset_column);
       }
   }
 
