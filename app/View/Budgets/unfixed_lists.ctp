@@ -1,16 +1,16 @@
 <?php echo $this->Html->css('budgets', array('inline' => FALSE)); ?>
-<h3><?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
+<h3><?php if (@$column == 'paymnet') {
       echo '未対応の支払い一覧';
-    } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
+    } elseif (@$column == 'sales') {
       echo 'チケット余り一覧';
-    } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
+    } elseif (@$column == 'collect') {
       echo '未対応の集金一覧';
     } else {
-      echo '未対応の一覧';
+      echo '対応済みに確定したエントリー一覧';
     } ?></h3>
 
 <div class="intro_budgets">
-  <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) { ?>
+  <?php if (@$column == 'payment') { ?>
   <p>
     当選しているイベントでクレジットカード決済ではないエントリー一覧になります。<br>
     金額が 0円 のもの、開催日が過ぎたものは基本的に表示されません。<br>
@@ -18,7 +18,7 @@
     <br>
     確定ボタンを押す事で支払済みとして扱われ一覧には表示されなくなります。
   </p>
-  <?php } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) { ?>
+  <?php } elseif (@$column == 'sales') { ?>
   <p>
     イベント全体で複数枚の当選がある場合に表示されます。<br>
     開催日を過ぎたイベントは表示されません。<br>
@@ -26,12 +26,16 @@
     確定ボタンを押す事で引取先が確定したと扱われ、<br>
     イベント全体の当選枚数が 1枚 以下になれば一覧には表示されなくなります。
   </p>
-  <?php } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) { ?>
+  <?php } elseif (@$column == 'collect') { ?>
   <p>
     チケット余りのあるイベントで引取先が確定している場合に表示されます。<br>
     金額が 0円 のものは表示されません。<br>
     <br>
     確定ボタンを押す事で集金済みとして扱われ一覧には表示されなくなります。
+  </p>
+  <?php } else { ?>
+  <p>
+    対応済みに確定したエントリー一覧になります。
   </p>
   <?php } ?>
 </div>
@@ -82,14 +86,11 @@
         </td>
         <td class="tbl-act <?php echo ($i == count($event_list['EventsEntry']))? '': 'border-non-act'; ?>">
           <span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
-          <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
-            $update_column = 'payment_status';
-          } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
-            $update_column = 'sales_status';
-          } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
-            $update_column = 'collect_status';
-          } ?>
-          <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['id'], $update_column), null, '対応済みに変更しますか'); ?></span>
+          <?php if (@$column) { ?>
+            <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['id'], $column.'_status'), null, '対応済みに変更しますか'); ?></span>
+          <?php } elseif (@$reset_column) { ?>
+            <span class="icon-button"><?php echo $this->Form->postLink('戻す', array('action' => 'reset', $entry_list['id'], $reset_column.'_status'), null, '対応済みを元に戻しますか'); ?></span>
+          <?php } ?>
         </td></tr>
     <?php $i++; ?>
     <?php } ?>
@@ -99,14 +100,24 @@
 <div class="intro_budgets">
   <p>
     現在、
-    <?php if (preg_match('#/budgets/unfixed_entry#', $_SERVER['REQUEST_URI'])) {
+    <?php if (@$column == 'payment') {
       echo '未対応の支払い';
-    } elseif (preg_match('#/budgets/unfixed_ticket#', $_SERVER['REQUEST_URI'])) {
+    } elseif (@$column == 'sales') {
       echo 'チケット余り';
-    } elseif (preg_match('#/budgets/unfixed_collect#', $_SERVER['REQUEST_URI'])) {
+    } elseif (@$column == 'collect') {
       echo '未対応の集金';
+    } else {
+      echo '対応済み確定を元に戻せるエントリー';
     } ?>
     はありません。
   </p>
 </div>
 <?php } ?>
+
+<div class="link-page_budgets">
+  <?php if (@$column) { ?>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 対応済みに確定したイベントを戻す', '/budgets/reset_status/'.$column); ?></span>
+  <?php } elseif (@$reset_column) { ?>
+  <span class="link-page"><?php echo $this->Html->link('⇨ 未対応の一覧に戻る', '/budgets/unfixed_'.$reset_column); ?></span>
+  <?php } ?>
+</div>

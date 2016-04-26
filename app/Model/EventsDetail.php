@@ -49,7 +49,7 @@ class EventsDetail extends AppModel {
       'title' => array('type' => 'value')
   );*/
 
-  public function getUnfixedEntry($user_id = false, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedPayment($user_id = false, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
@@ -99,7 +99,7 @@ class EventsDetail extends AppModel {
       return $data;
   }
 
-  public function getUnfixedTicket($user_id = false, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedSales($user_id = false, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,

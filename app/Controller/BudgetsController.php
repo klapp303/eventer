@@ -21,43 +21,111 @@ class BudgetsController extends AppController {
   public function index() {
   }
 
-  public function unfixed_entry() {
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedEntry($this->Auth->user('id')));
+  public function unfixed_payment() {
+      $this->set('column', 'payment');
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
 
-  public function unfixed_ticket() {
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedTicket($this->Auth->user('id')));
+  public function unfixed_sales() {
+      $this->set('column', 'sales');
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_collect() {
+      $this->set('column', 'collect');
       $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id')));
       
       $this->render('unfixed_lists');
   }
 
-  public function fixed($id = false, $column = false) {
-      if (empty($id) || empty($column)) {
+  public function fixed($id = false, $update_column = false) {
+      if (empty($id) || empty($update_column)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
       
       if ($this->request->is('post')) {
         $this->EventsEntry->id = $id;
-        if ($this->EventsEntry->savefield($column, 1)) {
+        if ($this->EventsEntry->savefield($update_column, 1)) {
           $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
         } else {
           $this->Session->setFlash('変更できませんでした。', 'flashMessage');
         }
         
-        if ($column == 'payment_status') {
+        if ($update_column == 'payment_status') {
           $this->redirect('/budgets/unfixed_entry/');
-        } elseif ($column == 'sales_status') {
+        } elseif ($update_column == 'sales_status') {
           $this->redirect('/budgets/unfixed_ticket/');
-        } elseif ($column == 'collect_status') {
+        } elseif ($update_column == 'collect_status') {
           $this->redirect('/budgets/unfixed_collect/');
+        } else { //未使用
+          $this->redirect('/budgets/');
+        }
+      }
+  }
+
+  public function reset_status($column = false) {
+      if (empty($column)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      if ($column != 'payment' && $column != 'sales' && $column != 'collect') {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      $this->set('reset_column', $column);
+      
+      $event_lists = $this->EventsDetail->find('all', array(
+          'conditions' => array(
+              'EventsDetail.user_id' => $this->Auth->User('id'),
+              'EventsDetail.date >=' => date('Y-m-d'),
+              'EventsDetail.deleted !=' => 1
+          ),
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+      ));
+      foreach ($event_lists AS $key => $event) {
+        $entry_lists = $this->EventsEntry->find('all', array(
+            'conditions' => array(
+                'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
+                'EventsEntry.user_id' => $this->Auth->User('id'),
+                'EventsEntry.'.$column.'_status' => 1
+            )
+        ));
+        //statusリセットできるエントリーがなければリストから削除
+        if (!$entry_lists) {
+          unset($event_lists[$key]);
+        //statusリセットできるエントリーがあれば該当エントリーのみリストに残す
+        } else {
+          unset($event_lists[$key]['EventsEntry']);
+          foreach ($entry_lists AS $entry) {
+            $event_lists[$key]['EventsEntry'][] = $entry['EventsEntry'];
+          }
+        }
+      }
+      $this->set('unfixed_lists', array('list' => $event_lists, 'count' => count($event_lists)));
+      $this->render('unfixed_lists');
+  }
+
+  public function reset($id = false, $reset_column = false) {
+      if (empty($id) || empty($reset_column)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      if ($this->request->is('post')) {
+        $this->EventsEntry->id = $id;
+        if ($this->EventsEntry->savefield($reset_column, 0)) {
+          $this->Session->setFlash('対応済みを元に戻しました。', 'flashMessage');
+        } else {
+          $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
+        }
+        
+        if ($reset_column == 'payment_status') {
+          $this->redirect('/budgets/reset_status/payment/');
+        } elseif ($reset_column == 'sales_status') {
+          $this->redirect('/budgets/reset_status/sales/');
+        } elseif ($reset_column == 'collect_status') {
+          $this->redirect('/budgets/reset_status/collect/');
         } else { //未使用
           $this->redirect('/budgets/');
         }
