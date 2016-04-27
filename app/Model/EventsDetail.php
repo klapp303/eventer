@@ -49,7 +49,7 @@ class EventsDetail extends AppModel {
       'title' => array('type' => 'value')
   );*/
 
-  public function getUnfixedPayment($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedPayment($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
@@ -94,12 +94,18 @@ class EventsDetail extends AppModel {
         }
       }
       
+      //keyを振り直して整形
+      $event_lists = array_merge($event_lists);
+      //paginatorを使用しないので表示できる件数を現実的な値にしておく
+      if ($data['count'] > $limit) {
+        array_splice($event_lists, $limit);
+      }
       $data['list'] = $event_lists;
       
       return $data;
   }
 
-  public function getUnfixedSales($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedSales($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
@@ -136,14 +142,20 @@ class EventsDetail extends AppModel {
         }
       }
       unset($event);
-      
-      $data['list'] = $event_lists;
       $data['count'] = count($event_lists);
+      
+      //keyを振り直して整形
+      $event_lists = array_merge($event_lists);
+      //paginatorを使用しないので表示できる件数を現実的な値にしておく
+      if ($data['count'] > $limit) {
+        array_splice($event_lists, $limit);
+      }
+      $data['list'] = $event_lists;
       
       return $data;
   }
 
-  public function getUnfixedCollect($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedCollect($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
@@ -176,6 +188,12 @@ class EventsDetail extends AppModel {
         }
       }
       
+      //keyを振り直して整形
+      $event_lists = array_merge($event_lists);
+      //paginatorを使用しないので表示できる件数を現実的な値にしておく
+      if ($data['count'] > $limit) {
+        array_splice($event_lists, $limit);
+      }
       $data['list'] = $event_lists;
       
       return $data;
