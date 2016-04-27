@@ -571,7 +571,7 @@ class EventsController extends AppController {
       $json_data['schedule'] = array_merge($json_data['schedule']); //キーの振り直し
 //      echo'<pre>';print_r($json_data);echo'</pre>';exit;
       
-      $this->viewClass = 'json';
+      $this->viewClass = 'Json';
       $this->set('json_data', $json_data);
       $this->set('_serialize', 'json_data');
   }
