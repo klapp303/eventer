@@ -49,13 +49,13 @@ class EventsDetail extends AppModel {
       'title' => array('type' => 'value')
   );*/
 
-  public function getUnfixedPayment($user_id = false, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedPayment($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
               'EventsDetail.deleted !=' => 1
           ),
-          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+          'order' => array('EventsDetail.date' => ($status == 0)? 'asc': 'desc', 'EventsDetail.time_start' => 'asc')
       ));
       
       $this->loadModel('EventsEntry');
@@ -71,7 +71,7 @@ class EventsDetail extends AppModel {
                         'EventsEntry.payment' => null,
                     )
                 ),
-                'EventsEntry.payment_status !=' => 1,
+                'EventsEntry.payment_status' => $status,
                 'EventsEntry.status' => 2,
                 array(
                     'or' => array(
@@ -99,14 +99,14 @@ class EventsDetail extends AppModel {
       return $data;
   }
 
-  public function getUnfixedSales($user_id = false, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedSales($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
               'EventsDetail.date >=' => date('Y-m-d'),
               'EventsDetail.deleted !=' => 1
           ),
-          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+          'order' => array('EventsDetail.date' => ($status == 0)? 'asc': 'desc', 'EventsDetail.time_start' => 'asc')
       ));
       
       $this->loadModel('EventsEntry');
@@ -115,7 +115,7 @@ class EventsDetail extends AppModel {
             'conditions' => array(
                 'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
                 'EventsEntry.user_id' => $user_id,
-                'EventsEntry.sales_status !=' => 1,
+                'EventsEntry.sales_status' => $status,
                 'EventsEntry.status' => 2
             )
         ));
@@ -143,13 +143,13 @@ class EventsDetail extends AppModel {
       return $data;
   }
 
-  public function getUnfixedCollect($user_id = false, $data = ['list' => [], 'count' => 0]) {
+  public function getUnfixedCollect($user_id = false, $status = 0, $data = ['list' => [], 'count' => 0]) {
       $event_lists = $this->find('all', array(
           'conditions' => array(
               'EventsDetail.user_id' => $user_id,
               'EventsDetail.deleted !=' => 1
           ),
-          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+          'order' => array('EventsDetail.date' => ($status == 0)? 'asc': 'desc', 'EventsDetail.time_start' => 'asc')
       ));
       
       $this->loadModel('EventsEntry');
@@ -159,7 +159,7 @@ class EventsDetail extends AppModel {
                 'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
                 'EventsEntry.user_id' => $user_id,
                 'EventsEntry.sales_status' => 1,
-                'EventsEntry.collect_status !=' => 1,
+                'EventsEntry.collect_status' => $status,
                 'EventsEntry.status' => 2
             )
         ));

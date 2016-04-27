@@ -16,9 +16,9 @@ class TopController extends AppController {
 //      $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
   
       //未対応の件数
-      $unfixed_payment_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'));
-      $unfixed_sales_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'));
-      $unfixed_collect_lists = $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'));
+      $unfixed_payment_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0);
+      $unfixed_sales_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0);
+      $unfixed_collect_lists = $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 0);
       $this->set(compact('unfixed_payment_lists', 'unfixed_sales_lists', 'unfixed_collect_lists'));
       
       //本日の予定

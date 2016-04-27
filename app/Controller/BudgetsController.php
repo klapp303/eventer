@@ -23,21 +23,21 @@ class BudgetsController extends AppController {
 
   public function unfixed_payment() {
       $this->set('column', 'payment');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_sales() {
       $this->set('column', 'sales');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_collect() {
       $this->set('column', 'collect');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id')));
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 0));
       
       $this->render('unfixed_lists');
   }
@@ -63,50 +63,19 @@ class BudgetsController extends AppController {
       if (empty($column)) {
         throw new NotFoundException(__('存在しないデータです。'));
       }
-      if ($column != 'payment' && $column != 'sales' && $column != 'collect') {
+  
+      $this->set('reset_column', $column);
+      if ($column == 'payment') {
+        $reset_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 1);
+      } elseif ($column == 'sales') {
+        $reset_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 1);
+      } elseif ($column == 'collect') {
+        $reset_lists = $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 1);
+      } else {
         throw new NotFoundException(__('存在しないデータです。'));
       }
-      $this->set('reset_column', $column);
+      $this->set('unfixed_lists', $reset_lists);
       
-      $event_lists = $this->EventsDetail->find('all', array(
-          'conditions' => array(
-              'EventsDetail.user_id' => $this->Auth->User('id'),
-              'EventsDetail.date >=' => date('Y-m-d'),
-              'EventsDetail.deleted !=' => 1
-          ),
-          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
-      ));
-      foreach ($event_lists AS $key => $event) {
-        $entry_lists = $this->EventsEntry->find('all', array(
-            'conditions' => array(
-                'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
-                'EventsEntry.user_id' => $this->Auth->User('id'),
-                'EventsEntry.'.$column.'_status' => 1
-            )
-        ));
-        
-        /* チケット余りが対応済みで集金も対応済みならばチケット余りのresetには表示しないここから */
-        if ($column == 'sales') {
-          foreach ($entry_lists AS $key2 => $entry) {
-            if ($entry['EventsEntry']['sales_status'] == 1 && $entry['EventsEntry']['collect_status'] == 1) {
-              unset($entry_lists[$key2]);
-            }
-          }
-        }
-        /* チケット余りが対応済みで集金も対応済みならばチケット余りのresetには表示しないここまで */
-        
-        //statusリセットできるエントリーがなければリストから削除
-        if (!$entry_lists) {
-          unset($event_lists[$key]);
-        //statusリセットできるエントリーがあれば該当エントリーのみリストに残す
-        } else {
-          unset($event_lists[$key]['EventsEntry']);
-          foreach ($entry_lists AS $entry) {
-            $event_lists[$key]['EventsEntry'][] = $entry['EventsEntry'];
-          }
-        }
-      }
-      $this->set('unfixed_lists', array('list' => $event_lists, 'count' => count($event_lists)));
       $this->render('unfixed_lists');
   }
 
