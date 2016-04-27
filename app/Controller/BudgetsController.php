@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class BudgetsController extends AppController {
 
-  public $uses = array('EventsDetail', 'EventsEntry'/*, 'EventUser'*/); //使用するModel
+  public $uses = array('EventsDetail', 'EventsEntry'/*, 'EventUser'*/, 'Option'); //使用するModel
 
   public $components = array('Paginator');
   public $paginate = array(
@@ -16,6 +16,12 @@ class BudgetsController extends AppController {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
 //      $this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
+      
+      $BUDGET_LIMIT_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('Option.title' => 'BUDGET_LIMIT_KEY'),
+          'fields' => 'Option.key'
+      ));
+      $this->set('BUDGET_LIMIT_KEY', $BUDGET_LIMIT_OPTION['Option']['key']);
   }
 
   public function index() {
@@ -23,21 +29,36 @@ class BudgetsController extends AppController {
 
   public function unfixed_payment() {
       $this->set('column', 'payment');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0));
+      $BUDGET_LIMIT_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('Option.title' => 'BUDGET_LIMIT_KEY'),
+          'fields' => 'Option.key'
+      ));
+      $BUDGET_LIMIT_KEY = $BUDGET_LIMIT_OPTION['Option']['key'];
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_sales() {
       $this->set('column', 'sales');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0));
+      $BUDGET_LIMIT_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('Option.title' => 'BUDGET_LIMIT_KEY'),
+          'fields' => 'Option.key'
+      ));
+      $BUDGET_LIMIT_KEY = $BUDGET_LIMIT_OPTION['Option']['key'];
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
       
       $this->render('unfixed_lists');
   }
 
   public function unfixed_collect() {
       $this->set('column', 'collect');
-      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 0));
+      $BUDGET_LIMIT_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('Option.title' => 'BUDGET_LIMIT_KEY'),
+          'fields' => 'Option.key'
+      ));
+      $BUDGET_LIMIT_KEY = $BUDGET_LIMIT_OPTION['Option']['key'];
+      $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
       
       $this->render('unfixed_lists');
   }
@@ -65,12 +86,17 @@ class BudgetsController extends AppController {
       }
   
       $this->set('reset_column', $column);
+      $BUDGET_LIMIT_OPTION = $this->Option->find('first', array( //オプション値を取得
+          'conditions' => array('Option.title' => 'BUDGET_LIMIT_KEY'),
+          'fields' => 'Option.key'
+      ));
+      $BUDGET_LIMIT_KEY = $BUDGET_LIMIT_OPTION['Option']['key'];
       if ($column == 'payment') {
-        $reset_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 1);
+        $reset_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 1, $BUDGET_LIMIT_KEY);
       } elseif ($column == 'sales') {
-        $reset_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 1);
+        $reset_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 1, $BUDGET_LIMIT_KEY);
       } elseif ($column == 'collect') {
-        $reset_lists = $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 1);
+        $reset_lists = $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 1, $BUDGET_LIMIT_KEY);
       } else {
         throw new NotFoundException(__('存在しないデータです。'));
       }

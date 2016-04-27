@@ -117,8 +117,8 @@
 </div>
 <?php } ?>
 
-<?php if ($unfixed_lists['count'] > 20) { ?>
-<span class="txt-sub_budgets txt-min">※最大20件まで表示されます。</span>
+<?php if ($unfixed_lists['count'] > $BUDGET_LIMIT_KEY) { ?>
+<span class="txt-sub_budgets txt-min">※最大<?php echo $BUDGET_LIMIT_KEY; ?>件まで表示されます。</span>
 <?php } ?>
 
 <div class="link-page_budgets">
