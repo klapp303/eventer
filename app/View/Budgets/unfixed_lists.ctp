@@ -117,6 +117,10 @@
 </div>
 <?php } ?>
 
+<?php if ($unfixed_lists['count'] > 20) { ?>
+<span class="txt-sub_budgets txt-min">※最大20件まで表示されます。</span>
+<?php } ?>
+
 <div class="link-page_budgets">
   <?php if (@$column) { ?>
   <span class="link-page"><?php echo $this->Html->link('⇨ 対応済みに確定したイベントを戻す', '/budgets/reset_status/'.$column); ?></span>
