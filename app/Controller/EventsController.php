@@ -15,6 +15,7 @@ class EventsController extends AppController {
   public function beforeFilter() {
       parent::beforeFilter();
       $this->layout = 'eventer_fullwidth';
+      $this->Auth->allow('schedule');
 //      $this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
   }
 
@@ -528,5 +529,50 @@ class EventsController extends AppController {
       $this->set(compact('event_lists', 'event_genres', 'place_lists'));
       
       $this->render('index');
+  }
+
+  public function schedule($user_id = false) {
+      if (empty($user_id)) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      $user = $this->User->find('first', array(
+          'conditions' => array('User.id' => $user_id)
+      ));
+      if (!$user || @$user['User']['json_data'] != 1) {
+        throw new NotFoundException(__('存在しないデータです。'));
+      }
+      
+      $event_lists = $this->EventsDetail->find('all', array(
+          'conditions' => array(
+              'EventsDetail.user_id' => $user_id,
+              'EventsDetail.date >=' => date('Y-m-d'),
+              'EventsDetail.deleted !=' => 1
+          ),
+          'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
+          'contain' => array('Event', 'Place')
+      ));
+      $json_data = [];
+      foreach ($event_lists AS $key => $event) {
+        $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id']);
+        if ($status != 2) { //当選status以外は除く
+          unset($event_lists[$key]);
+        } else {
+          //データの整形
+          $json_data['schedule'][$key]['event_id'] = $event['Event']['id'];
+          $json_data['schedule'][$key]['detail_id'] = $event['EventsDetail']['id'];
+          $json_data['schedule'][$key]['event_title'] = $event['Event']['title'];
+          $json_data['schedule'][$key]['detail_title'] = $event['EventsDetail']['title'];
+          $json_data['schedule'][$key]['date'] = $event['EventsDetail']['date'];
+          $json_data['schedule'][$key]['time_open'] = $event['EventsDetail']['time_open'];
+          $json_data['schedule'][$key]['time_start'] = $event['EventsDetail']['time_start'];
+          $json_data['schedule'][$key]['place'] = $event['Place']['name'];
+        }
+      }
+      $json_data['schedule'] = array_merge($json_data['schedule']); //キーの振り直し
+//      echo'<pre>';print_r($json_data);echo'</pre>';exit;
+      
+      $this->viewClass = 'json';
+      $this->set('json_data', $json_data);
+      $this->set('_serialize', 'json_data');
   }
 }

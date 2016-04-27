@@ -5,7 +5,7 @@ App::uses('AppModel', 'Model');
 class EventsDetail extends AppModel {
 
   public $useTable = 'events_details';
-  public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
+  public $actsAs = array('SoftDelete', 'Containable'/*, 'Search.Searchable'*/);
 
   public $belongsTo = array(
       'Event' => array(
