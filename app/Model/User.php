@@ -50,9 +50,9 @@ class User extends AppModel {
               'required' => 'create',
               'message' => 'ハンドルネームを正しく入力してください。'
           ),
-          'rule_2' => array(
-              'rule' => array('maxLength', 16),
-              'message' => 'ハンドルネームは16文字以内です'
+          'rule_2' => array( //1行表示は12文字、2行までなら一応崩れない
+              'rule' => array('maxLength', 12),
+              'message' => 'ハンドルネームは12文字以内です'
           )
       ),
       'password' => array(
