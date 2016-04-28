@@ -22,7 +22,7 @@ jQuery(function($) {
       //var img_name = $(this).attr('data');
       var title_name = $('.js-insert_data').val();
       if (!title_name) {
-        alert('イベント名を入力してください');
+        alert('イベント名（全体）を入力してください');
         return false;
       }
       $('.js-insert_area').insertAtCaret(title_name);
