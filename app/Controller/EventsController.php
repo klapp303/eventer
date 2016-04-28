@@ -471,10 +471,10 @@ class EventsController extends AppController {
           'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
       );
       $event_lists = $this->Paginator->paginate('EventsDetail');
-      foreach ($event_lists AS &$event_list) {
-        $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
-      }
-      unset($event_list);
+//      foreach ($event_lists AS &$event_list) {
+//        $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+//      }
+//      unset($event_list);
       $this->set(compact('event_lists'));
   }
 

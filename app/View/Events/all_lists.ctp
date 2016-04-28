@@ -19,7 +19,7 @@
     <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('EventsDetail.date', '▼'); ?></th>
         <th>イベント名<?php echo $this->Paginator->sort('Event.title', '▼'); ?></th>
         <th class="tbl-genre">種類<br>
-                              状態</th>
+                              作成者</th>
         <th class="tbl-act">action</th></tr>
     
     <?php foreach ($event_lists AS $event_list) { ?>
@@ -30,11 +30,7 @@
             <?php } ?>
         </td>
         <td class="tbl-genre"><span class="icon-genre col-event_<?php echo $event_list['EventsDetail']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
-                              <?php if ($event_list['EventsDetail']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
-                                elseif ($event_list['EventsDetail']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                elseif ($event_list['EventsDetail']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
-                                elseif ($event_list['EventsDetail']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
-                                elseif ($event_list['EventsDetail']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
+                              <span class="name-min_events"><?php echo $event_list['User']['handlename']; ?></span></td>
         <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
                             <?php if ($event_list['EventsDetail']['user_id'] == $userData['id']) { ?>
                             <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/'.$event_list['Event']['id']); ?></span>
