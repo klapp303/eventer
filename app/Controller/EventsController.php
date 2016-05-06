@@ -564,7 +564,7 @@ class EventsController extends AppController {
       $json_data = [];
       foreach ($event_lists AS $key => $event) {
         $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id']);
-        if ($status != 2) { //当選status以外は除く
+        if ($status == 3 || $status == 4) { //落選、見送りの場合は除く
           unset($event_lists[$key]);
         } else {
           //データの整形
@@ -576,6 +576,7 @@ class EventsController extends AppController {
           $json_data['schedule'][$key]['time_open'] = $event['EventsDetail']['time_open'];
           $json_data['schedule'][$key]['time_start'] = $event['EventsDetail']['time_start'];
           $json_data['schedule'][$key]['place'] = $event['Place']['name'];
+          $json_data['schedule'][$key]['status'] = $status;
         }
       }
       $json_data['schedule'] = array_merge($json_data['schedule']); //キーの振り直し
