@@ -112,10 +112,10 @@ class EventsController extends AppController {
         foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
           $dataDetail['event_id'] = $saveEvent['Event']['id'];
           $dataDetail['user_id'] = $saveEvent['Event']['user_id'];
-          if ($dataDetail['time_open_null'] == 1) {
+          if (@$dataDetail['time_open_null'] == 1) {
             $dataDetail['time_open'] = null;
           }
-          if ($dataDetail['time_start_null'] == 1) {
+          if (@$dataDetail['time_start_null'] == 1) {
             $dataDetail['time_start'] = null;
           }
           if (!$dataDetail['title']) {
@@ -217,10 +217,10 @@ class EventsController extends AppController {
         foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
           $dataDetail['event_id'] = $dataEvent['Event']['id'];
           $dataDetail['user_id'] = $this->Auth->user('id');
-          if ($dataDetail['time_open_null'] == 1) {
+          if (@$dataDetail['time_open_null'] == 1) {
             $dataDetail['time_open'] = null;
           }
-          if ($dataDetail['time_start_null'] == 1) {
+          if (@$dataDetail['time_start_null'] == 1) {
             $dataDetail['time_start'] = null;
           }
           if (!$dataDetail['title']) {

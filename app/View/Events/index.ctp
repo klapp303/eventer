@@ -45,37 +45,64 @@
   
   <table class="fl">
     <tr><td>イベント名<br>（各公演）</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true: false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc', 'class' => ($i == 0)? 'js-insert_area': '')); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true: false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc', 'class' => ($i == 0)? 'js-insert_area': 'main_area_'.$i)); ?>
+            <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>種類</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.genre_id', array('type' => 'select', 'label' => false, 'options' => $event_genres)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.genre_id', array('type' => 'select', 'label' => false, 'options' => $event_genres, 'class' => 'sub_area_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '': (($i == 0)? '': 'disabled'))); ?>
+            <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>会場</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.place_id', array('type' => 'select', 'label' => false, 'options' => $place_lists)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.place_id', array('type' => 'select', 'label' => false, 'options' => $place_lists, 'class' => 'sub_area_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '': (($i == 0)? '': 'disabled'))); ?>
+            <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>開催日</td>
-        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015)); ?><?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
+        <td><?php echo $this->Form->input('EventsDetail.'.$i.'.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y')+1, 'minYear' => 2015, 'class' => 'sub_area_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '': (($i == 0)? '': 'disabled'))); ?>
+            <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>': ''; ?></td></tr>
     <tr><td>開場時刻</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_open', array('type' => 'time', 'label' => false, 'timeFormat' => 24, 'class' => 'time_open_'.$i,
             'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_open_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'disabled': ''): 'disabled')); ?>
-            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_open_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_open_null_'.$i,
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_open_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_open_null_'.$i.' sub_area_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '': (($i == 0)? '': 'disabled'),
             'checked' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_open_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'checked': ''): 'checked')); ?><span class="txt-min">なし</span></td></tr>
     <tr><td>開演時刻</td>
         <td><?php echo $this->Form->input('EventsDetail.'.$i.'.time_start', array('type' => 'time', 'label' => false, 'timeFormat' => 24, 'class' => 'time_start_'.$i,
             'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_start_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'disabled': ''): 'disabled')); ?>
-            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_start_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_start_null_'.$i,
+            <?php echo $this->Form->input('EventsDetail.'.$i.'.time_start_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_start_null_'.$i.' sub_area_'.$i,
+            'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '': (($i == 0)? '': 'disabled'),
             'checked' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_start_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'checked': ''): 'checked')); ?><span class="txt-min">なし</span></td></tr>
   </table>
   <script>
     jQuery(function($) {
+        //イベント名（各公演）がなければdisabled
+        $('input:text.main_area_' + <?php echo $i; ?>).blur(function() {
+          if (!$('.main_area_' + <?php echo $i; ?>).val()) { //公演名がない場合
+            $('.sub_area_' + <?php echo $i; ?>).attr('disabled', 'disabled');
+            $('.time_open_' + <?php echo $i; ?>).attr('disabled', 'disabled');
+            $('.time_start_' + <?php echo $i; ?>).attr('disabled', 'disabled');
+          } else { //公演名がある場合
+            $('.sub_area_' + <?php echo $i; ?>).removeAttr('disabled').focus();
+            if (!$('.time_open_null_' + <?php echo $i; ?>).is(':checked')) {
+              $('.time_open_' + <?php echo $i; ?>).removeAttr('disabled').focus();
+            }
+            if (!$('.time_start_null_' + <?php echo $i; ?>).is(':checked')) {
+              $('.time_start_' + <?php echo $i; ?>).removeAttr('disabled').focus();
+            }
+          }
+        });
+        
+        //開催、開演時刻がなければdisabled
         $('.time_open_null_' + <?php echo $i; ?>).change(function(){
-          if ($(this).is(':checked')) {
-            $('.time_open_' + <?php echo $i; ?>).attr('disabled','disabled');
-          } else {
+          if ($(this).is(':checked')) { //なしにチェックがある場合
+            $('.time_open_' + <?php echo $i; ?>).attr('disabled', 'disabled');
+          } else { //なしにチェックがない場合
             $('.time_open_' + <?php echo $i; ?>).removeAttr('disabled').focus();
           }
         });
         $('.time_start_null_' + <?php echo $i; ?>).change(function(){
-          if ($(this).is(':checked')) {
-            $('.time_start_' + <?php echo $i; ?>).attr('disabled','disabled');
-          } else {
+          if ($(this).is(':checked')) { //なしにチェックがある場合
+            $('.time_start_' + <?php echo $i; ?>).attr('disabled', 'disabled');
+          } else { //なしにチェックがない場合
             $('.time_start_' + <?php echo $i; ?>).removeAttr('disabled').focus();
           }
         });
