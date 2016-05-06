@@ -214,6 +214,7 @@ class EventsController extends AppController {
         //events_detailsテーブルに保存
         /* データをテーブルの構造に合わせて加工ここから */
         $dataDetails['EventsDetail'] = $this->request->data['EventsDetail'];
+        $delEventsDetailId = [];
         foreach ($dataDetails['EventsDetail'] AS $key => &$dataDetail) {
           $dataDetail['event_id'] = $dataEvent['Event']['id'];
           $dataDetail['user_id'] = $this->Auth->user('id');
@@ -224,6 +225,9 @@ class EventsController extends AppController {
             $dataDetail['time_start'] = null;
           }
           if (!$dataDetail['title']) {
+            if (@$dataDetail['id']) { //元々データがあってタイトルが削除された場合は後で削除するため
+              $delEventsDetailId = array_merge($delEventsDetailId, array($dataDetail['id']));
+            }
             unset($dataDetails['EventsDetail'][$key]);
           }
         }
@@ -255,6 +259,12 @@ class EventsController extends AppController {
               $this->EventsEntry->savefield('date_event', $date_event);
             }
           }
+          //タイトルが削除されていればデータを削除
+          foreach ($delEventsDetailId AS $id) {
+            $this->EventsDetail->Behaviors->enable('SoftDelete');
+            $this->EventsDetail->delete($id);
+          }
+          
           $message = '';
           foreach ($dataDetails['EventsDetail'] AS $dataDetail) {
             $message .= '<br>'.$dataDetail['title'];
