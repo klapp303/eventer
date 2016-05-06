@@ -10,7 +10,7 @@ class PlacesController extends AppController {
   public $paginate = array(
       'limit' => 20,
 //      'order' => array('id' => 'asc'),
-      'conditions' => array('id !=' => 1) //id=1は'その他'なので除外する
+      'conditions' => array('id >' => 5) //id=5までは'その他'なので除外する
   );
 
   public function beforeFilter() {
@@ -41,7 +41,7 @@ class PlacesController extends AppController {
         $place_detail = $this->Place->find('first', array(
             'conditions' => array('and' => array(
                 'Place.id' => $this->request->params['id'],
-                'Place.id !=' => 1 //id=1は'その他'なので除外する
+                'Place.id >' => 5 //id=5までは'その他'なので除外する
             ))
         ));
         if (!empty($place_detail)) { //データが存在する場合
@@ -77,9 +77,9 @@ class PlacesController extends AppController {
       if ($this->request->is('post')) {
         //sort値を追加する
         $place_count = $this->Place->find('count', array(
-            'conditions' => array('Place.id !=' => 1)
+            'conditions' => array('Place.id >' => 5)
         ));
-        $this->request->data['Place']['sort'] = $place_count + 2;
+        $this->request->data['Place']['sort'] = $place_count + 6;
         
         $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
         if ($this->Place->validates()) { //validate成功の処理
@@ -154,12 +154,12 @@ class PlacesController extends AppController {
   public function sort() {
       if (!$this->request->is('post')) {
         $place_lists = $this->Place->find('all', array(
-            'conditions' => array('Place.id !=' => 1), //id=1は'その他'なので除外する
+            'conditions' => array('Place.id >' => 5), //id=5までは'その他'なので除外する
             'fields' => array('Place.id', 'Place.sort', 'Place.name')
         ));
         $this->set('place_lists', $place_lists);
       } else {
-        $i = 2;
+        $i = 6;
         foreach ($this->request->data['Place'] AS &$place) {
           $place['sort'] = $i;
           $i++;
@@ -196,7 +196,8 @@ class PlacesController extends AppController {
       
       $this->Paginator->settings = array(
           'conditions' => array(
-              'Place.name LIKE' => '%'.$search_word.'%'
+              'Place.name LIKE' => '%'.$search_word.'%',
+              'Place.id >' => 5 //id=5までは'その他'なので除外する
           )
       );
       $place_lists = $this->Paginator->paginate('Place');
