@@ -81,18 +81,18 @@
 .event-list td {
     border-style: solid;
     border-width: 1px 0;
-    border-color: #CEECF5;
+    border-color: #ceecf5;
     padding: 5px 0;
-    background-color: #E0F8F7;
-    box-shadow: 0 2px #D8D8D8;
+    background-color: #e0f8f7;
+    box-shadow: 0 2px #d8d8d8;
 }
 .event-list tr >td.tbl-date {
     border-left-width: 1px;
-    /*box-shadow: -2px 2px #D8D8D8;*/
+    /*box-shadow: -2px 2px #d8d8d8;*/
 }
 .event-list tr >td.tbl-act {
     border-right-width: 1px;
-    box-shadow: 2px 2px #D8D8D8;
+    box-shadow: 2px 2px #d8d8d8;
 }
 /* イベント一覧用ここまで */
 
@@ -104,10 +104,10 @@
 .event-list-v2 td {
     border-style: solid;
     border-width: 1px 0 2px 0; /* box-shadowの代わりにここだけ変更 */
-    border-color: #CEECF5;
+    border-color: #ceecf5;
     padding: 5px 0;
-    background-color: #E0F8F7;
-    box-shadow: 0 2px #D8D8D8;
+    background-color: #e0f8f7;
+    box-shadow: 0 2px #d8d8d8;
 }
 .event-list-v2 td.title-main {
     border-width: 1px 0 0 0;
@@ -150,7 +150,7 @@
 }
 
 .date-closed {
-    background-color: #D8D8D8!important;
+    background-color: #d8d8d8!important;
 }
 
 /* 検索box */
@@ -193,7 +193,7 @@
     transition: 0.8s;
 }
 .link-page a:hover {
-    background: #A9BCF5;
+    background: #a9bcf5;
 }
 .link-page a:link,
 .link-page a:visited,
@@ -205,7 +205,7 @@
 /* ボタンアイコン */
 .icon-button {
     font-size: 12px;
-    background: #D8D8D8;
+    background: #d8d8d8;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -224,7 +224,7 @@
 
 .icon-button-min {
     font-size: 10px;
-    background: #D8D8D8;
+    background: #d8d8d8;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -244,7 +244,7 @@
 /* アイコン */
 .icon-true {
     font-size: 12px;
-    background: #01DFA5;
+    background: #01dfa5;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -253,7 +253,7 @@
 }
 .icon-false {
     font-size: 12px;
-    background: #D8D8D8;
+    background: #d8d8d8;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -262,7 +262,7 @@
 }
 .icon-like {
     font-size: 12px;
-    background: #58ACFA;
+    background: #58acfa;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -271,7 +271,7 @@
 }
 .icon-safe {
     font-size: 12px;
-    background: #CCFFFF;
+    background: #ccffff;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -280,7 +280,7 @@
 }
 .icon-alt {
     font-size: 12px;
-    background: #FE2E64;
+    background: #fe2e64;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -299,52 +299,52 @@
 
 /* アイコンカラー */
 .col-event_1 { /* ライブ */
-    background: #FE2E64;
+    background: #fe2e64;
 }
 .col-event_2 { /* リリイベ */
-    background: #58D3F7;
+    background: #58d3f7;
 }
 .col-event_3 { /* トーク */
-    background: #819FF7;
+    background: #819ff7;
 }
 .col-event_4 { /* 見本市 */
-    background: #FAAC58;
+    background: #faac58;
 }
 .col-event_5 { /* 即売会 */
-    background: #FFFF00;
+    background: #ffff00;
 }
 
 .col-entry_1 { /* FC先行 */
-    background: #FE2E9A;
+    background: #fe2e9a;
 }
 .col-entry_2 { /* メディア先行 */
-    background: #FE2E64;
+    background: #fe2e64;
 }
 .col-entry_3 { /* e+（イープラス） */
-    background: #F5A9E1;
+    background: #f5a9e1;
 }
 .col-entry_4 { /* Loppi（ローチケ） */
-    background: #58D3F7;
+    background: #58d3f7;
 }
 .col-entry_5 { /* チケットぴあ */
-    background: #58ACFA;
+    background: #58acfa;
 }
 .col-entry_6 { /* その他会員サイト */
-    background: #FAAC58;
+    background: #faac58;
 }
 .col-entry_7 { /* その他サイト */
-    background: #FFFF00;
+    background: #ffff00;
 }
 
 .col-event_6,
 .col-entry_8 { /* その他 */
-    background: #D8D8D8;
+    background: #d8d8d8;
 }
 
 /* 枠付きアラート文 */
 .txt-block {
     text-align: center;
-    background: #CEF6F5;
+    background: #cef6f5;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -355,7 +355,7 @@
 .flash-msg {
     margin-right: 200px;
     padding: 10px 20px;
-    background: #CEF6F5;
+    background: #cef6f5;
     border: solid 2px #000000;
     border-radius: 8px;
     -moz-border-radius: 8px;
