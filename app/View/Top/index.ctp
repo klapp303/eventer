@@ -27,7 +27,7 @@
           <?php } ?>
         </td>
         <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
-                                          <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
+                                          <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
@@ -80,7 +80,7 @@
           <?php } ?>
         </td>
         <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
-                                          <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
+                                          <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
                                             elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}

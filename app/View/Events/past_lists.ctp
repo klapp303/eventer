@@ -36,7 +36,7 @@
             <?php } ?>
         </td>
         <td class="tbl-genre"><span class="icon-genre col-event_<?php echo $event_list['EventsDetail']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
-                              <?php if ($event_list['EventsDetail']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
+                              <?php if ($event_list['EventsDetail']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
                                 elseif ($event_list['EventsDetail']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
                                 elseif ($event_list['EventsDetail']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
                                 elseif ($event_list['EventsDetail']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
