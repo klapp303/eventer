@@ -43,11 +43,13 @@
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+
+    if (env('SERVER_ADDR') !== '127.0.0.1') {
+      echo $this->element('google_analytics');
+    }
 	?>
 </head>
 <body>
-  <?php echo $this->element('gtm'); ?>
-
 	<div id="container">
 		<div id="header">
 			<?php echo $this->element('eventer_header'); ?>
