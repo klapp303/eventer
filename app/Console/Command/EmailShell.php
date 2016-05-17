@@ -28,7 +28,7 @@ class EmailShell extends AppShell {
             unset($event_lists[$key]);
           }
           $event['EventsEntry']['date_status'] = null;
-          $entryDateColumn = $this->EventsEntry->getDateColumn();
+          $entryDateColumn = $this->EventsEntry->getDateColumn($sort = 'reverse');
           foreach ($entryDateColumn AS $key => $column) {
             if ($event['EventsEntry'][$column] >= date('Y-m-d 00:00:00') && $event['EventsEntry'][$column] <= date('Y-m-d 23:59:59', strtotime('2 day'))) {
               $event['EventsEntry']['date_status'] = $key;

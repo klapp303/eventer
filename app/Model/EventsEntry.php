@@ -190,7 +190,7 @@ class EventsEntry extends AppModel {
       return $entry_lists;
   }
 
-  public function getDateColumn() {
+  public function getDateColumn($sort = null) {
       $data = array(
           '申込開始' => 'date_start',
           '申込終了' => 'date_close',
@@ -198,6 +198,11 @@ class EventsEntry extends AppModel {
           '入金締切' => 'date_payment'
       );
       
-      return $data;
+      if ($sort == 'reverse') {
+        $data = array_reverse($data);
+        return $data;
+      } else {
+        return $data;
+      }
   }
 }
