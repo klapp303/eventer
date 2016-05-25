@@ -74,8 +74,9 @@ class UsersController extends AppController {
               }
             } else { //バックアップ失敗時の処理
               $file->close();
+              $admin_mail = Configure::read('admin_mail');
               $email = new CakeEmail('gmail');
-              $email->to('klapp303@gmail.com')
+              $email->to($admin_mail)
                     ->subject('【イベ幸システム通知】バックアップエラー通知')
                     ->template('backup_error', 'eventer_mail')
                     ->viewVars(array(
