@@ -70,7 +70,7 @@ class GoogleMapHelper extends AppHelper {
   // Default marker title (HTML title tag)
   var $defaultMarkerTitle   = '';
   // Default icon of the marker
-  var $defaultMarkerIcon    = 'http://maps.google.co.jp/mapfiles/ms/icons/red-dot.png';
+  var $defaultMarkerIcon    = 'red-dot.png';
   // Default shadow for the marker icon
   var $defaultMarkerShadow  = '';
   // Boolean to show an information window when you click the marker or not
