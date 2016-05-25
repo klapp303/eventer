@@ -17,12 +17,7 @@
 
 <h3>収入一覧</h3>
 
-  <?php echo $this->Paginator->numbers(array(
-      'modulus' => 4, //現在ページから左右あわせてインクルードする個数
-      'separator' => '|', //デフォルト値のセパレーター
-      'first' => '＜', //先頭ページへのリンク
-      'last' => '＞' //最終ページへのリンク
-  )); ?>
+  <?php echo $this->Paginator->numbers($paginator_option); ?>
 
   <table class="detail-list">
     <tr><th>日付<?php echo $this->Paginator->sort('date', '▼'); ?></th><th>タイトル</th><th class="tbl-num">数値</th><th class="tbl-ico">状態</th><th>action</th></tr>

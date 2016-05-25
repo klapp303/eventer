@@ -118,13 +118,7 @@
 
 <h3>イベント一覧</h3>
 
-  <?php echo $this->Paginator->numbers(array(
-      'modulus' => 4, //現在ページから左右あわせてインクルードする個数
-      'separator' => '|', //デフォルト値のセパレーター
-      'first' => '＜', //先頭ページへのリンク
-      'last' => '＞', //最終ページへのリンク
-      'paramType' => 'querystring'
-  )); ?>
+  <?php echo $this->Paginator->numbers($paginator_option + array('paramType' => 'querystring')); ?>
 
   <table class="detail-list event-list">
     <tr><th class="tbl-date">開催日<?php echo $this->Paginator->sort('EventsDetail.date', '▼'); ?></th>
