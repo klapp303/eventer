@@ -34,6 +34,9 @@ class PagesController extends AppController {
   public function history() {
   }
 
+  public function faq() {
+  }
+
   public function author() {
   }
 }

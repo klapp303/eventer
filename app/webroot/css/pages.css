@@ -14,7 +14,7 @@
     margin: 20px 50px 50px 40px;
 }
 
-/* オプション一覧用 */
+/* その他メニュー一覧用 */
 .list_option {
     list-style-type: none;
 }
@@ -40,4 +40,9 @@
 .sub_history {
     font-size: 12px;
     margin-left: 20px;
+}
+
+/* よくある質問ページ用 */
+.body_faq {
+    width: 540px;
 }
