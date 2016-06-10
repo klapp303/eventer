@@ -43,10 +43,10 @@ class PagesController extends AppController
         
     }
     
-    public function faq()
-    {
-        
-    }
+//    public function faq()
+//    {
+//        
+//    }
     
     public function author()
     {
