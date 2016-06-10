@@ -1,16 +1,16 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_top {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 .intro_top >p {
-    margin-right: 20px;
-    margin-bottom: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 .tbl-intro_top {
-    width: 170px;
+  width: 170px;
 }
 .tbl-num_top {
-    text-align: right;
-    width: 50px;
+  text-align: right;
+  width: 50px;
 }

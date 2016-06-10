@@ -1,51 +1,51 @@
 @charset "utf-8";
 /* 収支管理メニュー用 */
 .list_budget {
-    list-style-type: none;
-    margin-bottom: 80px;
+  list-style-type: none;
+  margin-bottom: 80px;
 }
 .list_budget >li {
-    height: 40px;
+  height: 40px;
 }
 
 /* コンテンツ説明文用 */
 .intro_budgets {
-    height: 100px;
-    margin-left: 20px;
+  height: 100px;
+  margin-left: 20px;
 }
 .intro_budgets >p {
-    margin-right: 20px;
-    margin-bottom: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 .txt-sub_budgets {
-    float: left;
-    margin-left: 40px;
+  float: left;
+  margin-left: 40px;
 }
 
 /* イベント一覧用 */
 .tbl-num_budgets {
-    text-align: right;
-    width: 85px;
+  text-align: right;
+  width: 85px;
 }
 .event-list-v2 td.title-main {
-    border-width: 1px 2px 0 0;
+  border-width: 1px 2px 0 0;
 }
 .event-list-v2 td.tbl-num_budgets {
-    border-width: 0 0 2px 0;
+  border-width: 0 0 2px 0;
 }
 .event-list-v2 td.tbl-act {
-    border-width: 0 2px 2px 0;
+  border-width: 0 2px 2px 0;
 }
 .event-list-v2 td.border-non {
-    border-width: 0;
+  border-width: 0;
 }
 .event-list-v2 .border-non-act {
-    border-width: 0 2px 0 0!important;
+  border-width: 0 2px 0 0 !important;
 }
 
 /* ページリンク用 */
 .link-page_budgets {
-    text-align: right;
-    margin-right: 50px;
-    margin-bottom: 20px;
+  text-align: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
 }

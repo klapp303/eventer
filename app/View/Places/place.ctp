@@ -1,33 +1,33 @@
-<?php echo $this->Html->css('places', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('places', array('inline' => false)); ?>
 <?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
-<h3>会場の修正</h3>
-
-  <table class="PlaceAddForm">
-    <?php echo $this->Form->create('Place', array( //使用するModel
-        'type' => 'put', //変更はput
-        'action' => 'edit', //Controllerのactionを指定
-        'inputDefaults' => array('div' => '')
-        )
-    ); ?>
+  <h3>会場の修正</h3>
+  
+    <table class="PlaceAddForm">
+      <?php echo $this->Form->create('Place', array( //使用するModel
+          'type' => 'put', //変更はput
+          'action' => 'edit', //Controllerのactionを指定
+          'inputDefaults' => array('div' => '')
+      )); ?>
 <?php } else { //登録用 ?>
-<h3>会場の登録</h3>
-
-  <table class="PlaceAddForm">
-    <?php echo $this->Form->create('Place', array( //使用するModel
-        'type' => 'post', //デフォルトはpost送信
-        'action' => 'add', //Controllerのactionを指定
-        'inputDefaults' => array('div' => '')
-        )
-    ); ?>
+  <h3>会場の登録</h3>
+  
+    <table class="PlaceAddForm">
+      <?php echo $this->Form->create('Place', array( //使用するModel
+          'type' => 'post', //デフォルトはpost送信
+          'action' => 'add', //Controllerのactionを指定
+          'inputDefaults' => array('div' => '')
+      )); ?>
 <?php } ?><!-- form start -->
-<?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
+
+  <?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
     <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
-<?php } else { //登録用 ?>
+  <?php } else { //登録用 ?>
     <?php echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
-<?php } ?>
+  <?php } ?>
+
     <tr>
       <td><label>会場名</label></td>
-      <td><?php echo $this->Form->input('name', array('type' => 'text', 'label' => false, 'placeholder' => '通称で問題なし', 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled': '')); ?><span class="txt-alt txt-b">*</span></td>
+      <td><?php echo $this->Form->input('name', array('type' => 'text', 'label' => false, 'placeholder' => '通称で問題なし', 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled' : '')); ?><span class="txt-alt txt-b">*</span></td>
     </tr>
     <tr>
       <td><label>収容人数</label></td>
@@ -35,7 +35,7 @@
     </tr>
     <tr>
       <td><label>最寄り駅</label></td>
-      <td><?php echo $this->Form->input('access', array('type' => 'text', 'label' => false, 'placeholder' => '例）東京', 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled': '')); ?>駅<span class="txt-alt txt-b">*</span></td>
+      <td><?php echo $this->Form->input('access', array('type' => 'text', 'label' => false, 'placeholder' => '例）東京', 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled' : '')); ?>駅<span class="txt-alt txt-b">*</span></td>
     </tr>
     <tr>
       <td><label>公式サイト</label></td>

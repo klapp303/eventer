@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('pages', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <div class="intro_pages">
   <p>
     このWebサービスは個人によって制作、管理されています。<br>

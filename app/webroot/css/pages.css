@@ -1,48 +1,48 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_pages {
-    height: 80px;
-    margin-left: 20px;
+  height: 80px;
+  margin-left: 20px;
 }
 .intro_pages >p {
-    margin-right: 20px;
-    margin-bottom: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 
 /* ページリンク用 */
 .link-page_pages {
-    margin: 20px 50px 50px 40px;
+  margin: 20px 50px 50px 40px;
 }
 
 /* その他メニュー一覧用 */
 .list_option {
-    list-style-type: none;
+  list-style-type: none;
 }
 .list_option >li {
-    height: 40px;
+  height: 40px;
 }
 
 /* aboutページ用 */
 .body_about {
-    position: relative;
+  position: relative;
 }
 .img_about {
-    margin-bottom: 40px;
-    width: 300px;
+  margin-bottom: 40px;
+  width: 300px;
 }
 .txt_about {
-    position: absolute;
-    left: 310px;
-    bottom: 30px;
+  position: absolute;
+  left: 310px;
+  bottom: 30px;
 }
 
 /* お知らせ、更新履歴ページ用 */
 .sub_history {
-    font-size: 12px;
-    margin-left: 20px;
+  font-size: 12px;
+  margin-left: 20px;
 }
 
 /* よくある質問ページ用 */
 .body_faq {
-    width: 540px;
+  width: 540px;
 }

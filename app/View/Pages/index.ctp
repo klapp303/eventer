@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('pages', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <h3>イベ幸って？</h3>
 
 <div class="intro_pages">

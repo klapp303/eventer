@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('pages', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <h3>詳しい機能と使い方</h3>
 
 <h4>1. イベントを登録する</h4>

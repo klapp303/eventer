@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('users', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('users', array('inline' => false)); ?>
 <h3>ユーザ登録</h3>
 
   <table class="UserAddForm">
@@ -6,8 +6,8 @@
         'type' => 'post', //デフォルトはpost送信
         'action' => 'add', //Controllerのactionを指定
         'inputDefaults' => array('div' => '')
-        )
-    ); ?><!-- form start -->
+    )); ?><!-- form start -->
+    
     <tr>
       <td><label>メールアドレス</label></td>
       <td><?php echo $this->Form->input('username', array('type' => 'text', 'label' => false, 'placeholder' => 'ログイン時に使用します')); ?><span class="txt-alt txt-b">*</span></td>

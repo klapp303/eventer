@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('pages', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <div class="intro_pages">
   <p>
     イベントのジャンル説明一覧です。<br>
@@ -12,8 +12,9 @@
 
   <table class="detail-list">
     <tr><th class="tbl-ico">ジャンル名</th><th>説明</th></tr>
-    <?php foreach ($event_genre_lists AS $event_genre_list) { ?>
-    <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_genre_list['EventGenre']['id']; ?>"><?php echo $event_genre_list['EventGenre']['title']; ?></span></td>
-        <td><?php echo $event_genre_list['EventGenre']['description']; ?></td></tr>
+    
+    <?php foreach ($event_genre_lists as $event_genre_list) { ?>
+      <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_genre_list['EventGenre']['id']; ?>"><?php echo $event_genre_list['EventGenre']['title']; ?></span></td>
+          <td><?php echo $event_genre_list['EventGenre']['description']; ?></td></tr>
     <?php } ?>
   </table>

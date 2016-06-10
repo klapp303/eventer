@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('users', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('users', array('inline' => false)); ?>
 <h3>パスワードの変更</h3>
 
 <p class="txt-min">（次回ログイン時から変更が反映されます）</p>
@@ -8,9 +8,10 @@
         'type' => 'put', //変更はput送信
         'action' => 'pw_edit', //Controllerのactionを指定
         'inputDefaults' => array('div' => '')
-        )
-    ); ?><!-- form start -->
+    )); ?><!-- form start -->
+    
     <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
+    
     <tr>
       <td><label>新しいパスワード</label></td>
       <td><?php echo $this->Form->input('password', array('type' => 'text', 'label' => false, 'value' => '')); ?><span class="txt-alt txt-b">*</span><span class="txt-min">（半角英数のみ）</span></td>

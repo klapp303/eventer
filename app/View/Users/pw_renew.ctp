@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('users', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('users', array('inline' => false)); ?>
 <h3>パスワードのリセット</h3>
 
 <p>登録されているメールアドレスを入力してください。<br>
@@ -9,8 +9,8 @@
         'type' => 'put', //変更はput送信
         'action' => 'pw_renew', //Controllerのactionを指定
         'inputDefaults' => array('div' => '')
-        )
-    ); ?><!-- form start -->
+    )); ?><!-- form start -->
+    
     <tr>
       <td><label>メールアドレス</label></td>
       <td><?php echo $this->Form->input('username', array('type' => 'text', 'label' => false, 'value' => '')); ?><span class="txt-alt txt-b">*</span></td>

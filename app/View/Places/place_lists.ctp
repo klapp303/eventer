@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('places', array('inline' => FALSE)); ?>
+<?php echo $this->Html->css('places', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array('ctrl' => 'places')); ?>
 
 <div class="intro_places">
@@ -21,14 +21,14 @@
         <th>最寄り駅</th>
         <th class="tbl-act">action</th></tr>
     
-    <?php foreach ($place_lists AS $place_list) { ?>
-    <tr><td><?php echo $place_list['Place']['name']; ?></td>
-        <td class="tbl-num_place"><?php echo $place_list['Place']['capacity']; ?><?php if ($place_list['Place']['capacity']) {echo '人';} ?></td>
-        <td><?php echo $place_list['Place']['access']; ?><?php if ($place_list['Place']['access']) {echo '駅';} ?></td>
-        <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/'.$place_list['Place']['id'], array('target' => '_blank')); ?></span>
-          <span class="icon-button"><?php echo $this->Html->link('修正', '/places/edit/'.$place_list['Place']['id']); ?></span>
-          <?php if ($place_list['Place']['id'] > $PLACE_BLOCK_KEY) { ?>
-            <div class="delete_places"><span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, $place_list['Place']['name'].' を本当に削除しますか'); ?></span></div>
-        <?php } ?></td></tr>
+    <?php foreach ($place_lists as $place_list) { ?>
+      <tr><td><?php echo $place_list['Place']['name']; ?></td>
+          <td class="tbl-num_place"><?php echo $place_list['Place']['capacity']; ?><?php echo ($place_list['Place']['capacity'])? '人' : ''; ?></td>
+          <td><?php echo $place_list['Place']['access']; ?><?php echo ($place_list['Place']['access'])? '駅' : ''; ?></td>
+          <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/' . $place_list['Place']['id'], array('target' => '_blank')); ?></span>
+            <span class="icon-button"><?php echo $this->Html->link('修正', '/places/edit/' . $place_list['Place']['id']); ?></span>
+            <?php if ($place_list['Place']['id'] > $PLACE_BLOCK_KEY) { ?>
+              <div class="delete_places"><span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $place_list['Place']['id']), null, $place_list['Place']['name'] . ' を本当に削除しますか'); ?></span></div>
+            <?php } ?></td></tr>
     <?php } ?>
   </table>

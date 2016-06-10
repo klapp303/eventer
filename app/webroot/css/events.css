@@ -1,101 +1,101 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_events {
-    height: 100px;
-    margin-left: 20px;
+  height: 100px;
+  margin-left: 20px;
 }
 .intro_events >p {
-    margin-right: 20px;
-    margin-bottom: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 
 /* イベント詳細用 */
 .access_search {
-    float: right;
-    margin-top: 5px;
-    /*position: absolute;
-    top: 220px;
-    left: 640px;*/
+  float: right;
+  margin-top: 5px;
+  /*position: absolute;
+  top: 220px;
+  left: 640px;*/
 }
 
 .detail-list_event {
-    margin-bottom: 40px!important;
+  margin-bottom: 40px!important;
 }
 
 .tbl-ico-long {
-    text-align: center;
-    width: 150px;
+  text-align: center;
+  width: 150px;
 }
 .tbl-user_long {
-    margin-right: 20px;
-    white-space: nowrap;
+  margin-right: 20px;
+  white-space: nowrap;
 }
 
 /* イベント登録フォーム用 */
 #EventAddForm >label,
 #EventEditForm >label {
-    margin-left: 20px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 #EventAddForm >input, #EventAddForm >select,
 #EventEditForm >input, #EventEditForm >select {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 #EventAddForm >.submit,
 #EventEditForm >.submit {
-    margin: 10px 20px;
+  margin: 10px 20px;
 }
 
 /* 参加者登録フォーム用 */
 .form-user_events,
 .form-checked-user_events {
-    width: 320px;
-    margin-left: 40px;
-    max-height: 120px;
-    overflow: auto;
+  width: 320px;
+  margin-left: 40px;
+  max-height: 120px;
+  overflow: auto;
 }
 .form-checked-user_events {
-    margin-top: -100px;
+  margin-top: -100px;
 }
 
 .checkbox_user {
-    margin-right: 20px;
-    white-space: nowrap;
+  margin-right: 20px;
+  white-space: nowrap;
 }
 .checkedbox_user {
-    margin-left: 20px;
-    white-space: nowrap;
+  margin-left: 20px;
+  white-space: nowrap;
 }
 
 .alt_events {
-    margin-left: 40px;
+  margin-left: 40px;
 }
 
 /* ページリンク用 */
 .link-page_events {
-    text-align: right;
-    margin-right: 50px;
-    margin-bottom: 20px;
+  text-align: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
 }
 .link-page {
-    margin-left: 40px;
+  margin-left: 40px;
 }
 
 /* 公開されているイベント一覧ページ用 */
 .name-min_events {
-    display: block;
-    margin: 5px 0 -5px 0;
-    font-size: 12px;
+  display: block;
+  margin: 5px 0 -5px 0;
+  font-size: 12px;
 }
 
 /* 過去のイベント一覧ページ用 */
 .tbl-event_lists {
-    margin-left: 20px;
-    margin-bottom: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .js-hide-button,
 .js-show-button {
-    margin-right: 50px;
+  margin-right: 50px;
 }

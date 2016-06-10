@@ -1,76 +1,76 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_places {
-    height: 150px;
-    margin-left: 20px;
+  height: 150px;
+  margin-left: 20px;
 }
 .intro_places >p {
-    margin-right: 20px;
-    margin-bottom: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 .intro_places >label {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 /* 会場一覧用 */
 .tbl-num_place {
-    width: 90px;
+  width: 90px;
 }
 
 .delete_places {
-    margin-left: 53px;
+  margin-left: 53px;
 }
 
 /* 会場登録フォーム用 */
 .PlaceAddForm >tbody >tr >td >label,
 .PlaceEditForm >tbody >tr >td >label {
-    margin-left: 20px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 .PlaceAddForm >tbody >tr >td >input,
 .PlaceEditForm >tbody >tr >td >input {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .PlaceAddForm >tbody >tr >td >.submit,
 .PlaceEditForm >tbody >tr >td >.submit {
-    margin-top: 10px;
-    margin-left: 108px;
+  margin-top: 10px;
+  margin-left: 108px;
 }
 
 /* イベント一覧用 */
 #event-list_place { /* floatによるレイアウト崩れを防ぐ */
-    min-height: 400px;
+  min-height: 400px;
 }
 .event-list_place {
-    width: 390px;
-    margin-bottom: 20px;
+  width: 390px;
+  margin-bottom: 20px;
 }
 
 .tbl-date {
-    width: 70px;
+  width: 70px;
 }
 .tbl-action_place {
-    width: 55px;
+  width: 55px;
 }
 
 /* 会場ソート一覧用 */
 .sort-list_palce {
-    margin-top: -70px;
-    width: 400px;
-    list-style-type: none;
+  margin-top: -70px;
+  width: 400px;
+  list-style-type: none;
 }
 .sort-list_palce >li {
-    padding: 5px;
-    cursor: pointer;
+  padding: 5px;
+  cursor: pointer;
 }
 .sort-btn_place {
-    margin-left: 350px;
+  margin-left: 350px;
 }
 
 /* ページリンク用 */
 .link-page_places {
-    text-align: right;
-    margin-right: 50px;
-    margin-bottom: 20px;
+  text-align: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
 }
