@@ -9,8 +9,8 @@
               <span class="title-sub"><?php echo $event_detail['EventsDetail']['title']; ?></span>
             <?php } ?>
         </td>
-        <td><?php if ($event_detail['EventsDetail']['place_id'] < 2) { ?>
-              <?php echo 'その他'; ?>
+        <td><?php if ($event_detail['EventsDetail']['place_id'] <= $PLACE_OTHER_KEY) { ?>
+              <?php echo $event_detail['Place']['name']; ?>
             <?php } elseif ($event_detail['Place']['name']) { ?>
               <?php echo $this->Html->link($event_detail['Place']['name'], '/places/place_detail/' . $event_detail['EventsDetail']['place_id']); ?><br>
               <span class="access_search"><?php echo $this->element('access_search', array('data' => $event_detail)); ?></span>

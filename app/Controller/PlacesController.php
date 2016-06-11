@@ -11,7 +11,7 @@ class PlacesController extends AppController
     public $paginate = array(
         'limit' => 20,
 //        'order' => array('id' => 'asc'),
-        'conditions' => array('id >' => 5) //id=5までは'その他'なので除外する
+//        'conditions' => array('id >' => 5) //id=5までは'その他'なので除外する
     );
     
     public function beforeFilter()
@@ -35,18 +35,33 @@ class PlacesController extends AppController
         $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
         $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
         
-        $this->Paginator->settings = $this->paginate;
+        $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
+        
+        $this->Paginator->settings = array(
+            'limit' => 20,
+            'conditions' => array('Place.id >' => $PLACE_OTHER_KEY) //その他の会場は除外する
+        );
         $place_lists = $this->Paginator->paginate('Place');
         $this->set('place_lists', $place_lists);
     }
     
     public function place_detail()
     {
+        $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
+        
         if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
             $place_detail = $this->Place->find('first', array(
                 'conditions' => array('and' => array(
                         'Place.id' => $this->request->params['id'],
-                        'Place.id >' => 5 //id=5までは'その他'なので除外する
+                        'Place.id >' => $PLACE_OTHER_KEY //その他の会場は除外する
                     ))
             ));
             if (!empty($place_detail)) { //データが存在する場合
@@ -83,12 +98,18 @@ class PlacesController extends AppController
     
     public function add()
     {
+        $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
+        
         if ($this->request->is('post')) {
             //sort値を追加する
             $place_count = $this->Place->find('count', array(
-                'conditions' => array('Place.id >' => 5)
+                'conditions' => array('Place.id >' => $PLACE_OTHER_KEY)
             ));
-            $this->request->data['Place']['sort'] = $place_count + 6;
+            $this->request->data['Place']['sort'] = $place_count + $PLACE_OTHER_KEY +1;
             
             $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Place->validates()) { //validate成功の処理
@@ -173,17 +194,23 @@ class PlacesController extends AppController
     
     public function sort()
     {
+        $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
+        
         if (!$this->request->is('post')) {
             $place_lists = $this->Place->find('all', array(
-                'conditions' => array('Place.id >' => 5), //id=5までは'その他'なので除外する
+                'conditions' => array('Place.id >' => $PLACE_OTHER_KEY), //その他の会場は除外する
                 'fields' => array('Place.id', 'Place.sort', 'Place.name')
             ));
             $this->set('place_lists', $place_lists);
         } else {
-            $i = 6;
+            $i = $PLACE_OTHER_KEY;
             foreach ($this->request->data['Place'] as &$place) {
-                $place['sort'] = $i;
                 $i++;
+                $place['sort'] = $i;
                 //postデータが複数あるので1つずつvalidateする
                 $this->Place->set($place); //postデータをModelに渡してvalidate
                 if (!$this->Place->validates()) { //validate失敗の処理
@@ -214,6 +241,12 @@ class PlacesController extends AppController
         $PLACE_BLOCK_KEY = $PLACE_BLOCK_OPTION['Option']['key'];
         $this->set('PLACE_BLOCK_KEY', $PLACE_BLOCK_KEY);
         
+        $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
+            'fields' => 'Option.key'
+        ));
+        $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
+        
         if ($this->request->query) {
             $search_word = $this->request->query['word'];
         }
@@ -221,7 +254,7 @@ class PlacesController extends AppController
         $this->Paginator->settings = array(
             'conditions' => array(
                 'Place.name LIKE' => '%' . $search_word . '%',
-                'Place.id >' => 5 //id=5までは'その他'なので除外する
+                'Place.id >' => $PLACE_OTHER_KEY //その他の会場は除外する
             )
         );
         $place_lists = $this->Paginator->paginate('Place');
