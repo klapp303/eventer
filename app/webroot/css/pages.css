@@ -14,7 +14,7 @@
   margin: 20px 50px 50px 40px;
 }
 
-/* その他メニュー一覧用 */
+/* メニュー一覧用 */
 .list_option {
   list-style-type: none;
 }
@@ -42,7 +42,37 @@
   margin-left: 20px;
 }
 
-/* よくある質問ページ用 */
+/* よくあるご質問ページ用 */
+.list_faq_link {
+  list-style-type: none;
+  margin-bottom: 50px;
+  padding-left: 20px;
+}
+.list_faq_link >li {
+  padding: 8px;
+}
+.list_faq_link >li >a {
+  padding: 5px 10px;
+  text-decoration: none;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -o-transition: 0.8s;
+  -ms-transition: 0.8s;
+  transition: 0.8s;
+}
+.list_faq_link >li >a:hover {
+  background: #a9bcf5;
+}
+.list_faq_link >li >a:link,
+.list_faq_link >li >a:visited,
+.list_faq_link >li >a:hover,
+.list_faq_link >li >a:active {
+  color: #000000;
+}
 .body_faq {
   width: 540px;
+  margin-bottom: 50px;
+}
+.body_question {
+  cursor: pointer;
 }

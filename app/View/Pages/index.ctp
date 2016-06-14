@@ -15,12 +15,12 @@
   <span class="link-page"><?php echo $this->Html->link('⇨ 詳しい機能と使い方を確認する', '/pages/about/'); ?></span>
 </div>
 
-<h3>その他メニュー</h3>
+<h3>メニュー</h3>
 
   <ul class="list_option">
     <li><span class="link-page"><?php echo $this->Html->link('⇨ イベント種類の一覧を確認する', '/pages/event_genres/'); ?></span></li>
     <li><span class="link-page"><?php echo $this->Html->link('⇨ エントリー方法の一覧を確認する', '/pages/entry_genres/'); ?></span></li>
     <li><span class="link-page"><?php echo $this->Html->link('⇨ お知らせ、更新履歴', '/pages/history/'); ?></span></li>
-    <!--li><span class="link-page"><?php // echo $this->Html->link('⇨ よくある質問（FAQ）', '/pages/faq/'); ?></span></li-->
-    <li><span class="link-page"><?php echo $this->Html->link('⇨ 問い合わせ、制作者について', '/pages/author/'); ?></span></li>
+    <li><span class="link-page"><?php echo $this->Html->link('⇨ よくあるご質問（FAQ）', '/pages/faq/'); ?></span></li>
+    <li><span class="link-page"><?php echo $this->Html->link('⇨ お問い合わせ、制作者について', '/pages/author/'); ?></span></li>
   </ul>
