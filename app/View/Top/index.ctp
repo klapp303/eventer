@@ -27,11 +27,12 @@
               <?php } ?>
             </td>
             <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
-                                              <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
+                                              <?php foreach ($eventEntryStatus as $entry_status) {
+                                                  if ($entry_status['status'] == $event_list['EventsEntry']['status']) {
+                                                      echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                                      break;
+                                                  }
+                                              } ?></td>
             <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id']); ?></span></td></tr>
         <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
             <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>
@@ -80,11 +81,12 @@
               <?php } ?>
             </td>
             <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
-                                              <?php if ($event_list['EventsEntry']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
-                                                elseif ($event_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
+                                              <?php foreach ($eventEntryStatus as $entry_status) {
+                                                  if ($entry_status['status'] == $event_list['EventsEntry']['status']) {
+                                                      echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                                      break;
+                                                  }
+                                              } ?></td>
             <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id']); ?></span></td></tr>
         <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
             <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>

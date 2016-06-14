@@ -24,11 +24,13 @@
     <?php foreach ($out_lists as $out_list) { ?>
       <tr><td class="tbl-date"><?php echo $out_list['EventDetail']['date']; ?></td>
           <td><?php echo $out_list['EventDetail']['title']; ?></td>
-          <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $out_list['EventDetail']['genre_id']; ?>"><?php echo $out_list['EventDetail']['EventGenre']['title']; ?></span>
-                              <br><?php if ($out_list['EventDetail']['status'] == 0) {echo '<span class="icon-genre">未定</span>';}
-                                    elseif ($out_list['EventDetail']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                    elseif ($out_list['EventDetail']['status'] == 2) {echo '<span class="icon-true">確定</span>';}
-                                    elseif ($out_list['EventDetail']['status'] == 3) {echo '<span class="icon-false">落選</span>';} ?></td>
+          <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $out_list['EventDetail']['genre_id']; ?>"><?php echo $out_list['EventDetail']['EventGenre']['title']; ?></span><br>
+                              <?php foreach ($eventEntryStatus as $entry_status) {
+                                  if ($entry_status['status'] == $out_list['EventDetail']['status']) {
+                                      echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                      break;
+                                  }
+                              } ?></td>
           <td><?php echo $out_list['EventDetail']['UserName']['handlename']; ?></td>
           <td class="tbl-num"><?php echo $out_list['EventDetail']['amount']; ?>円</td>
           <td class="tbl-date"><?php echo $out_list['EventDetail']['payment_end']; ?></td>

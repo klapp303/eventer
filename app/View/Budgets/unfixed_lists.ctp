@@ -90,17 +90,12 @@ if (@$column == 'payment') {
             <td class="tbl-num_budgets <?php echo ($i == count($event_list['EventsEntry']))? '' : 'border-non'; ?>">
               <?php echo $entry_list['price']; ?>円<br>
               <?php echo $entry_list['number']; ?>枚<br>
-              <?php if ($entry_list['payment'] == 'credit') { ?>
-                <span class="txt-min">クレジットカード</span>
-              <?php } elseif ($entry_list['payment'] == 'conveni') { ?>
-                <span class="txt-min">コンビニ支払</span>
-              <?php } elseif ($entry_list['payment'] == 'delivery') { ?>
-                <span class="txt-min">代金引換</span>
-              <?php } elseif ($entry_list['payment'] == 'buy') { ?>
-                <span class="txt-min">買取</span>
-              <?php } elseif ($entry_list['payment'] == 'other') { ?>
-                <span class="txt-min">その他</span> ?>
-              <?php } ?>
+              <?php foreach ($eventPaymentStatus as $payment_status) {
+                  if ($payment_status['status'] == $entry_list['payment']) {
+                      echo '<span class="txt-min">' . $payment_status['name'] . '</span>';
+                      break;
+                  }
+              } ?>
             </td>
             <td class="tbl-act <?php echo ($i == count($event_list['EventsEntry']))? '' : 'border-non-act'; ?>">
               <span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>

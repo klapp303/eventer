@@ -56,10 +56,23 @@
     </script>
     <?php } ?>
     
+    <?php
+    $payment_lists = [];
+    foreach ($eventPaymentStatus as $key => $value) {
+        $payment_lists[$value['status']] = $value['name'];
+    }
+    $payment_lists = array('' => '') + $payment_lists;
+    ?>
     <tr><td>支払方法</td>
-        <td><?php echo $this->Form->input('EventsEntry.payment', array('type' => 'select', 'label' => false, 'options' => array('' => '', 'credit' => 'クレジットカード', 'conveni' => 'コンビニ支払', 'delivery' => '代金引換', 'buy' => '買取', 'other' => 'その他'))); ?></td></tr>
+        <td><?php echo $this->Form->input('EventsEntry.payment', array('type' => 'select', 'label' => false, 'options' => $payment_lists)); ?></td></tr>
+    <?php
+    $status_lists = [];
+    foreach ($eventEntryStatus as $key => $value) {
+        $status_lists[$value['status']] = $value['name'];
+    }
+    ?>
     <tr><td>種類</td>
-        <td><?php echo $this->Form->input('EventsEntry.status', array('type' => 'select', 'label' => false, 'options' => array(0 => '検討中', 1 => '申込中', 2 => '当選', 3 => '落選', 4 => '見送り'))); ?><span class="txt-alt txt-b">*</span></td></tr>
+        <td><?php echo $this->Form->input('EventsEntry.status', array('type' => 'select', 'label' => false, 'options' => $status_lists)); ?><span class="txt-alt txt-b">*</span></td></tr>
   </table>
   
   <div class="cf" style="width: 800px;">

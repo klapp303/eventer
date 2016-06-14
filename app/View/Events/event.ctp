@@ -59,18 +59,20 @@
     <?php foreach ($entry_lists as $entry_list) { ?>
       <tr><td colspan="<?php echo count($entryDateColumn)+1; ?>"><?php echo $entry_list['EventsEntry']['title']; ?></td>
           <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
-                                            <?php if ($entry_list['EventsEntry']['status'] == 0) {echo '<span class="icon-safe">検討中</span>';}
-                                              elseif ($entry_list['EventsEntry']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                              elseif ($entry_list['EventsEntry']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
-                                              elseif ($entry_list['EventsEntry']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
-                                              elseif ($entry_list['EventsEntry']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
+                                            <?php foreach ($eventEntryStatus as $entry_status) {
+                                                if ($entry_status['status'] == $entry_list['EventsEntry']['status']) {
+                                                    echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                                    break;
+                                                }
+                                            } ?></td>
           <td class="tbl-num" rowspan="2"><?php echo $entry_list['EventsEntry']['price']; ?>円<br>
                                           <?php echo $entry_list['EventsEntry']['number']; ?>枚<br>
-                                          <?php if ($entry_list['EventsEntry']['payment'] == 'credit') {echo '<span class="txt-min">クレジットカード</span>';}
-                                            elseif ($entry_list['EventsEntry']['payment'] == 'conveni') {echo '<span class="txt-min">コンビニ支払</span>';}
-                                            elseif ($entry_list['EventsEntry']['payment'] == 'delivery') {echo '<span class="txt-min">代金引換</span>';}
-                                            elseif ($entry_list['EventsEntry']['payment'] == 'buy') {echo '<span class="txt-min">買取</span>';}
-                                            elseif ($entry_list['EventsEntry']['payment'] == 'other') {echo '<span class="txt-min">その他</span>';} ?></td>
+                                          <?php foreach ($eventPaymentStatus as $payment_status) {
+                                              if ($payment_status['status'] == $entry_list['EventsEntry']['payment']) {
+                                                  echo '<span class="txt-min">' . $payment_status['name'] . '</span>';
+                                                  break;
+                                              }
+                                          } ?></td>
           <?php if ($entry_list['EventsEntry']['user_id'] == $userData['id']) { ?>
             <td class="tbl-act" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('修正', '/events/entry_edit/' . $entry_list['EventsEntry']['id']); ?></span>
                                             <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'] . ' を本当に削除しますか'); ?></span>

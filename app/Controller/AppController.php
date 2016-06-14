@@ -35,6 +35,10 @@ class AppController extends Controller
         $this->set('week_lists', array('日', '月', '火', '水', '木', '金', '土'));
         //エントリーの日付カラムを定義しておく
         $this->set('entryDateColumn', $this->EventsEntry->getDateColumn());
+        //イベントのstatusを定義しておく
+        $this->set('eventEntryStatus', $this->EventsEntry->getEntryStatus());
+        //イベントのpaymentを定義しておく
+        $this->set('eventPaymentStatus', $this->EventsEntry->getPaymentStatus());
         
         //paginatorのオプションを定義しておく
         $paginator_option = array(

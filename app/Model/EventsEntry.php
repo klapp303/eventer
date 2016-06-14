@@ -68,6 +68,40 @@ class EventsEntry extends AppModel
         return $results;
     }
     
+    public function getEntryStatus($data = false)
+    {
+        //エントリーのstatusを定義
+        $data = array(
+            1 => array(
+                'status' => 0,
+                'name' => '検討中',
+                'class' => 'safe'
+            ),
+            2 => array(
+                'status' => 1,
+                'name' => '申込中',
+                'class' => 'like'
+            ),
+            3 => array(
+                'status' => 2,
+                'name' => '当選',
+                'class' => 'true'
+            ),
+            4 => array(
+                'status' => 3,
+                'name' => '落選',
+                'class' => 'false'
+            ),
+            5 => array(
+                'status' => 4,
+                'name' => '見送り',
+                'class' => 'false'
+            )
+        );
+        
+        return $data;
+    }
+    
     public function getEventStatus($id = false, $status = -1)
     {
         $entry_lists = $this->find('all', array(
@@ -108,6 +142,40 @@ class EventsEntry extends AppModel
         }
         
         return $status;
+    }
+
+    public function getPaymentStatus($data = false)
+    {
+        //エントリーのstatusを定義
+        $data = array(
+            1 => array(
+                'status' => 'credit',
+                'name' => 'クレジットカード',
+                'class' => ''
+            ),
+            2 => array(
+                'status' => 'conveni',
+                'name' => 'コンビニ支払',
+                'class' => ''
+            ),
+            3 => array(
+                'status' => 'delivery',
+                'name' => '代金引換',
+                'class' => ''
+            ),
+            4 => array(
+                'status' => 'buy',
+                'name' => '買取',
+                'class' => ''
+            ),
+            5 => array(
+                'status' => 'other',
+                'name' => 'その他',
+                'class' => ''
+            )
+        );
+        
+        return $data;
     }
     
     public function searchEntryDate($user_id = false, $s_date = false, $e_date = false, $join_lists = [])
