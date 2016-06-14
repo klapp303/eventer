@@ -89,7 +89,7 @@ class EventsDetail extends AppModel
                 //未払いのエントリーがあれば未払いのみリストに残す
             } else {
                 unset($event_lists[$key]['EventsEntry']);
-                foreach ($entry_lists AS $entry) {
+                foreach ($entry_lists as $entry) {
                     $event_lists[$key]['EventsEntry'][] = $entry['EventsEntry'];
                 }
                 $data['count'] += count($entry_lists);
