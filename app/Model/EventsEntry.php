@@ -109,23 +109,36 @@ class EventsEntry extends AppModel
                 'EventsEntry.events_detail_id' => $id
             )
         ));
-        foreach ($entry_lists as $entry_list) {
+        foreach ($entry_lists as $key => $entry_list) {
             if ($entry_list['EventsEntry']['status'] == 2) { //当選がある場合
-                $status = 2;
-                break;
+                //当選枚数が1枚で売却している場合
+                if ($entry_list['EventsEntry']['number'] == 1 && $entry_list['EventsEntry']['sales_status'] == 1) {
+                    if ($status != 1) {
+                        $status = -2; //申込中がなければstatusを上書き（下で書き換える）
+                    }
+                //売却していない当選がある場合
+                } else {
+                    $status = 2; //当選statusを確定させてループを抜ける
+                    break;
+                }
             }
             if ($entry_list['EventsEntry']['status'] == 1) { //申込中がある場合
                 $status = 1;
             }
-            if ($entry_list['EventsEntry']['status'] == 0 && $status != 1) { //検討中がある場合
+            if ($entry_list['EventsEntry']['status'] == 0 && $status != -2 && $status != 1) { //検討中がある場合
                 $status = 0;
             }
-            if ($entry_list['EventsEntry']['status'] == 3 && $status != 1 && $status != 0) { //落選がある場合
+            if ($entry_list['EventsEntry']['status'] == 3 && $status != -2 && $status != 1 && $status != 0) { //落選がある場合
                 $status = 3;
             }
-            if ($entry_list['EventsEntry']['status'] == 4 && $status != 1 && $status != 0 && $status != 3) { //見送りがある場合
+            if ($entry_list['EventsEntry']['status'] == 4 && $status != -2 && $status != 1 && $status != 0 && $status != 3) { //見送りがある場合
                 $status = 4;
             }
+        }
+        
+        //当選枚数が1枚で売却している場合はstatusを書き換える
+        if ($status == -2) {
+            $status = 4;
         }
         
         //エントリーが無い場合
@@ -143,7 +156,7 @@ class EventsEntry extends AppModel
         
         return $status;
     }
-
+    
     public function getPaymentStatus($data = false)
     {
         //エントリーのstatusを定義
