@@ -1,27 +1,7 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <h3>よくあるご質問（FAQ）</h3>
 
-<?php //よくある質問を配列で渡しておく
-$array_faq = [
-    0 => [
-        'date' => '2016-06-01',
-        'question' => 'ダミー質問ダミー質問',
-        'answer' => 'ダミー回答<br>ダミー回答',
-        'category' => 'イベント管理'
-    ],
-    1 => [
-        'date' => '2016-06-05',
-        'question' => 'ダミー質問ダミー質問',
-        'answer' => 'ダミー回答<br>ダミー回答',
-        'category' => '収支管理'
-    ],
-    2 => [
-        'date' => '2016-06-11',
-        'question' => 'ダミー質問ダミー質問',
-        'answer' => 'ダミー回答<br>ダミー回答',
-        'category' => 'イベント管理'
-    ]
-];
+<?php
 //日付順にソート
 //foreach ($array_faq as $key => $val) {
 //    $sort[$key] = $val['date'];

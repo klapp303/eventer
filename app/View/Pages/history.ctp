@@ -1,40 +1,9 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <h3>お知らせ、更新履歴</h3>
 
-<?php //お知らせ、更新履歴を配列で渡しておく
-$array_history = [
-    0 => [
-        'date' => '2015-10-17',
-        'title' => 'イベ幸ver1.0リリース！',
-        'sub' => []
-    ],
-    1 => [
-        'date' => '2016-04-08',
-        'title' => 'イベ幸ver2.0リリース！',
-        'sub' => [
-            '別日程のイベントをまとめて管理できる（ツアーや1部2部など）',
-            '複数のエントリーをまとめて管理できる（FC先行と一般など）',
-            '会場データを大幅に追加',
-            '参加者機能から収支管理機能へ変更（参加者に関係なく管理が可能）'
-        ]
-    ],
-    2 => [
-        'date' => '2016-04-21',
-        'title' => 'ver2.1にアップデート！',
-        'sub' => [
-            'お知らせメール機能を追加'
-        ]
-    ],
-    3 => [
-        'date' => '2016-06-01',
-        'title' => 'ver2.2にアップデート！',
-        'sub' => [
-            '当選したイベントが被る場合にチケット余りに反映'
-        ]
-    ]
-];
+<?php
 //日付順にソート
-foreach ($array_history AS $key => $val) {
+foreach ($array_history as $key => $val) {
     $sort[$key] = $val['date'];
 }
 array_multisort($sort, SORT_DESC, $array_history);

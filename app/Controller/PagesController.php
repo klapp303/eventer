@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class PagesController extends AppController
 {
-    public $uses = array('User', 'EventGenre', 'EntryGenre'); //使用するModel
+    public $uses = array('User', 'EventGenre', 'EntryGenre', 'Page'); //使用するModel
     
     public function beforeFilter()
     {
@@ -40,12 +40,12 @@ class PagesController extends AppController
     
     public function history()
     {
-        
+        $this->set('array_history', $this->Page->getArrayHistory());
     }
     
     public function faq()
     {
-        
+        $this->set('array_faq', $this->Page->getArrayFaq());
     }
     
     public function author()
