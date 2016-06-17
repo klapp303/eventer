@@ -46,6 +46,10 @@ class PlacesController extends AppController
             'conditions' => array('Place.id >' => $PLACE_OTHER_KEY) //その他の会場は除外する
         );
         $place_lists = $this->Paginator->paginate('Place');
+        //座席数を取得する
+        foreach ($place_lists as $key => $val) {
+            $place_lists[$key]['Place']['seats'] = $this->Place->getNumberSeats($val['Place']['id']);
+        }
         $this->set('place_lists', $place_lists);
     }
     
@@ -65,6 +69,8 @@ class PlacesController extends AppController
                     ))
             ));
             if (!empty($place_detail)) { //データが存在する場合
+                //座席数を取得する
+                $place_detail['Place']['seats'] = $this->Place->getNumberSeats($this->request->params['id']);
                 $this->set('place_detail', $place_detail);
                 /* 会場に紐付くイベント一覧を取得ここから */
                 //参加済のイベント一覧を取得しておく

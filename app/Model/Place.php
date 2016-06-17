@@ -18,6 +18,11 @@ class Place extends AppModel
 //        )
 //    );
     
+//    public $virtualFields = array(
+//        //キャパから座席数を計算
+//        'seats' => 'ROUND(capacity *0.75)'
+//    );
+    
     public $validate = array(
         'name' => array(
             'rule_1' => array(
@@ -51,4 +56,43 @@ class Place extends AppModel
 //        'id' => array('type' => 'value'),
 //        'title' => array('type' => 'value')
 //    );
+    
+    public function getNumberSeats($id = false) {
+        //キャパから座席数を計算
+        $place_data = $this->find('first', array(
+            'conditions' => array('Place.id' => $id)
+        ));
+        if (@!$place_data['Place']['capacity']) {
+            return false;
+        } else {
+            $capacity = $place_data['Place']['capacity'];
+        }
+        
+        //キャパが～1000の場合（ライブハウス、イベントスペース等）
+        //参考：渋谷duo 700人、品川ステラボール 900人
+        if ($capacity <= 1000) {
+            $data = $capacity;
+            
+        } else {
+            //キャパが～5000の場合（主にライブホール）
+            //参考：渋谷O-EAST 1300人、舞浜アンフィシアター 2100人、東京国際フォーラム 5000人
+            if ($capacity <= 5000) {
+                $data = $capacity *0.9;
+                
+            //キャパが～20000の場合（主に競技場）
+            //参考：有明コロシアム 10000人、武道館 14000人、横浜アリーナ 17000人
+            } elseif ($capacity < 20000) {
+                $data = $capacity *0.8;
+                
+            //キャパが20000～の場合（主にドーム、球場）
+            //参考：西京極球場 20000人、さいたまスーパーアリーナ 27000人、東京ドーム 55000人
+            } else {
+                $data = $capacity *0.7;
+            }
+            
+            $data = round($data, -2);
+        }
+        
+        return $data;
+    }
 }
