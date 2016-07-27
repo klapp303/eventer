@@ -26,6 +26,9 @@ class EventsController extends AppController
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
         
+        //フォームの初期表示数
+        $this->set('form_min', 2);
+        
         $this->Paginator->settings = array( //eventsページのイベント一覧を設定
             'conditions' => array(
                 'and' => array(
@@ -167,6 +170,9 @@ class EventsController extends AppController
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
         
+        //フォームの初期表示数
+        $this->set('form_min', 2);
+        
         $this->Paginator->settings = array( //eventsページのイベント一覧を設定
             'conditions' => array(
                 'and' => array(
@@ -202,6 +208,12 @@ class EventsController extends AppController
                     }
                     unset($events_detail);
                     $this->set('requestData', $this->request->data); //view側でnullかどうかを判定するため
+                    //フォームの初期表示数を書き換え
+                    $form_min = count($this->request->data['EventsDetail']);
+                    if ($form_min %2 != 0) {
+                        $form_min++;
+                    }
+                    $this->set('form_min', $form_min);
                 } else { //データの作成者とログインユーザが一致しない場合
                     $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
                     
@@ -547,6 +559,9 @@ class EventsController extends AppController
     {
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+        
+        //フォームの初期表示数
+        $this->set('form_min', 2);
         
         if ($this->request->query) {
             $search_word = $this->request->query['word'];

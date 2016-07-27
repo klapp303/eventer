@@ -41,7 +41,7 @@
       <?php echo $this->Form->input('EventsDetail.' . $i . '.id', array('type' => 'hidden')); ?>
     <?php } ?>
     
-    <table id="event-add-form_<?php echo $i; ?>" class="fl" style="display: <?php echo ($i < 2)? 'block' : 'none'; ?>;">
+    <table id="event-add-form_<?php echo $i; ?>" class="fl" style="display: <?php echo ($i < $form_min)? 'block' : 'none'; ?>;">
       <tr><td>イベント名<br>（各公演）</td>
           <td><?php echo $this->Form->input('EventsDetail.' . $i . '.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true : false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc', 'class' => ($i == 0)? 'js-insert_area' : 'main_area_' . $i)); ?>
               <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>' : ''; ?></td></tr>
