@@ -13,7 +13,7 @@
   </P>
 </div>
 
-  <div class="tbl-event_lists js-show">
+  <div class="js-show">
   <?php echo $this->Paginator->numbers($paginator_option); ?>
 
   <table class="detail-list event-list">
@@ -45,6 +45,8 @@
                               <?php } ?></td></tr>
     <?php } ?>
   </table>
+  
+  <?php echo $this->Paginator->numbers($paginator_option); ?>
   </div>
 
   <?php if (count($event_undecided_lists) > 0) { ?>

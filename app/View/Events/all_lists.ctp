@@ -34,6 +34,8 @@
                                 <?php } ?></td></tr>
       <?php } ?>
     </table>
+    
+    <?php echo $this->Paginator->numbers($paginator_option); ?>
   <?php } else { ?>
     <div class="intro_events">
       <P>

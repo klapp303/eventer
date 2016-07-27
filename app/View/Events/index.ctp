@@ -146,6 +146,8 @@
                               <?php } ?></td></tr>
     <?php } ?>
   </table>
+  
+  <?php echo $this->Paginator->numbers($paginator_option + array('paramType' => 'querystring')); ?>
 
 <div class="link-page_events">
   <span class="link-page"><?php echo $this->Html->link('⇨ 公開されている全てのイベントはこちら', '/events/all_lists/'); ?></span>
