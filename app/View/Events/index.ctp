@@ -35,12 +35,13 @@
     <button type="button" class="js-insert">イベント名をコピー</button>
   </div>
   
-  <?php for ($i = 0; $i < 4; $i++) { ?>
+  <?php $form_max = 10;//フォーム数の最大を設定 ?>
+  <?php for ($i = 0; $i < $form_max; $i++) { ?>
     <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
       <?php echo $this->Form->input('EventsDetail.' . $i . '.id', array('type' => 'hidden')); ?>
     <?php } ?>
     
-    <table class="fl">
+    <table id="event-add-form_<?php echo $i; ?>" class="fl" style="display: <?php echo ($i < 2)? 'block' : 'none'; ?>;">
       <tr><td>イベント名<br>（各公演）</td>
           <td><?php echo $this->Form->input('EventsDetail.' . $i . '.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true : false, 'size' => 20, 'placeholder' => '例）東京2日目、昼の部etc', 'class' => ($i == 0)? 'js-insert_area' : 'main_area_' . $i)); ?>
               <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>' : ''; ?></td></tr>
@@ -68,6 +69,17 @@
               <?php echo $this->Form->input('EventsDetail.' . $i . '.time_start_null', array('type' => 'checkbox', 'label' => false, 'class' => 'time_start_null_' . $i . ' sub_area_' . $i,
               'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '' : (($i == 0)? '' : 'disabled'),
               'checked' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsDetail'][$i]['time_start_null'] == 1 || @!$requestData['EventsDetail'][$i]['title'])? 'checked' : '') : 'checked')); ?><span class="txt-min">なし</span></td></tr>
+      <?php if ($i %2 != 0) { ?>
+      <tr><td></td>
+          <td>
+            <?php if ($i < $form_max -1) { ?>
+              <button type="button" id="event-add-button_<?php echo $i; ?>" class="fr">＋</button>
+            <?php } ?>
+            <?php if ($i > 2) { ?>
+              <button type="button" id="event-remove-button_<?php echo $i; ?>" class="fr">ー</button>
+            <?php } ?>
+          </td></tr>
+      <?php } ?>
     </table>
   <script>
       jQuery(function($) {
@@ -103,11 +115,29 @@
                   $('.time_start_' + <?php echo $i; ?>).removeAttr('disabled').focus();
               }
           });
+          
+          //フォーム追加用
+          <?php if ($i %2 != 0) { ?>
+          $('#event-add-button_' + <?php echo $i; ?>).click(function() {
+              $('#event-add-form_' + <?php echo $i +1; ?>).show();
+              $('#event-add-form_' + <?php echo $i +2; ?>).show();
+              
+              $('#event-add-button_' + <?php echo $i; ?>).hide();
+              $('#event-remove-button_' + <?php echo $i; ?>).hide();
+          });
+          $('#event-remove-button_' + <?php echo $i +2; ?>).click(function() {
+              $('#event-add-form_' + <?Php echo $i +1; ?>).hide();
+              $('#event-add-form_' + <?php echo $i +2; ?>).hide();
+              
+              $('#event-add-button_' + <?php echo $i; ?>).show();
+              $('#event-remove-button_' + <?php echo $i; ?>).show();
+          });
+          <?php } ?>
       });
   </script>
   <?php } ?>
   
-  <div class="cf" style="width: 800px;">
+  <div class="cf" style="width: 740px;">
     <?php echo $this->Form->submit((preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? '編集する' : '登録する', array('div' => false, 'class' => 'submit')); ?>　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span>
   </div>
   
