@@ -138,9 +138,30 @@
   <?php } ?>
   
   <div class="cf" style="width: 740px;">
-    <?php echo $this->Form->submit((preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? '編集する' : '登録する', array('div' => false, 'class' => 'submit')); ?>　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span>
+    <?php echo $this->Form->submit((preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']))? '編集する' : '登録する', array('div' => false, 'id' => 'event-post-button', 'class' => 'submit')); ?>　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span>
   </div>
-  
+  <script>
+      jQuery(function($) {
+          //postする時にフォームがどこまで追加されていたかを取得しておく
+          $('#event-post-button').click(function() {
+              for (var i = 0; i < 10; i++) {
+                  var display = $('#event-add-form_' + i).css('display');
+                  if (display == 'none') {
+                      $('<input>').attr({
+                          type: 'hidden', name: 'form_count', value: i
+                      }).appendTo('#event-add-form_0');
+                      break;
+                  }
+                  if (i == <?php echo $form_max -1; ?>) {
+                      $('<input>').attr({
+                          type: 'hidden', name: 'form_count', value: i + 1
+                      }).appendTo('#event-add-form_0');
+                      break;
+                  }
+              }
+          });
+      });
+  </script>
   <?php echo $this->Form->end(); ?><!-- form end -->
 
 <h3>イベント一覧</h3>

@@ -135,7 +135,10 @@ class EventsController extends AppController
                 if (@$dataDetail['time_start_null'] == 1) {
                     $dataDetail['time_start'] = null;
                 }
-                if (!$dataDetail['title']) {
+                if (!$dataDetail['title']) { //タイトルが無いデータは削除
+                    unset($dataDetails['EventsDetail'][$key]);
+                }
+                if ($key >= $this->request->data['form_count']) { //表示フォーム数を超えるデータは削除
                     unset($dataDetails['EventsDetail'][$key]);
                 }
             }
@@ -255,10 +258,14 @@ class EventsController extends AppController
                 if (@$dataDetail['time_start_null'] == 1) {
                     $dataDetail['time_start'] = null;
                 }
-                if (!$dataDetail['title']) {
-                    if (@$dataDetail['id']) { //元々データがあってタイトルが削除された場合は後で削除するため
+                if (!$dataDetail['title']) { //タイトルが無いデータは削除
+                    //元々データがあってタイトルが削除された場合は後で削除するため
+                    if (@$dataDetail['id']) {
                         $delEventsDetailId = array_merge($delEventsDetailId, array($dataDetail['id']));
                     }
+                    unset($dataDetails['EventsDetail'][$key]);
+                }
+                if ($key >= $this->request->data['form_count']) { //表示フォーム数を超えるデータは更新しない
                     unset($dataDetails['EventsDetail'][$key]);
                 }
             }
