@@ -10,13 +10,13 @@ class Place extends AppModel
     
     public $order = array('Place.sort' => 'asc', 'Place.id' => 'asc');
     
-//    public $belongsTo = array(
-//        'SamplesGenre' => array(
-//            'className' => 'SamplesGenre', //関連付けるModel
-//            'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
-//            'fields' => 'title' //関連付け先Modelの使用field
-//        )
-//    );
+    public $belongsTo = array(
+        'Prefecture' => array(
+            'className' => 'Prefecture', //関連付けるModel
+            'foreignKey' => 'prefecture_id', //関連付けるためのfield、関連付け先は上記Modelのid
+            'fields' => 'name' //関連付け先Modelの使用field
+        )
+    );
     
 //    public $virtualFields = array(
 //        //キャパから座席数を計算

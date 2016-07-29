@@ -61,7 +61,8 @@ class EventsController extends AppController
                             array('Event.publish' => 1)
                         )
                     )
-                )
+                ),
+                'recursive' => 2
             ));
             if (!empty($event_detail)) { //データが存在する場合
                 $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得

@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class PlacesController extends AppController
 {
-    public $uses = array('Place', 'EventUser', 'Event', 'EventsDetail', 'Option'); //使用するModel
+    public $uses = array('Place', 'Prefecture', 'EventUser', 'Event', 'EventsDetail', 'Option'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -110,6 +110,9 @@ class PlacesController extends AppController
         ));
         $PLACE_OTHER_KEY = $PLACE_OTHER_OPTION['Option']['key'];
         
+        //都道府県の選択肢用
+        $this->set('prefecture_lists', $this->Prefecture->find('list'));
+        
         if ($this->request->is('post')) {
             //sort値を追加する
             $place_count = $this->Place->find('count', array(
@@ -139,6 +142,9 @@ class PlacesController extends AppController
     
     public function edit($id = null)
     {
+        //都道府県の選択肢用
+        $this->set('prefecture_lists', $this->Prefecture->find('list'));
+        
         if (empty($this->request->data)) {
             $this->request->data = $this->Place->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合

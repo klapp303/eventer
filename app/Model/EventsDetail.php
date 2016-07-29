@@ -27,7 +27,7 @@ class EventsDetail extends AppModel
         'Place' => array(
             'className' => 'Place', //関連付けるModel
             'foreignKey' => 'place_id', //関連付けるためのfield、関連付け先は上記Modelのid
-            'fields' => array('name', 'access') //関連付け先Modelの使用field
+            'fields' => array('name', 'access', 'prefecture_id') //関連付け先Modelの使用field
         )
     );
     

@@ -7,7 +7,7 @@
         <th class="tbl-num">収容人数</th>
         <th>最寄り駅</th>
         <th>公式サイト</th></tr>
-    <tr><td><?php echo $place_detail['Place']['name']; ?></td>
+    <tr><td><?php echo $place_detail['Place']['name']; ?>　<span class="txt-min">（<?php echo $place_detail['Prefecture']['name']; ?>）</span></td>
         <td class="tbl-num"><?php echo $place_detail['Place']['capacity']; ?><?php echo ($place_detail['Place']['capacity'])? '人' : ''; ?></td>
         <td><?php echo $place_detail['Place']['access']; ?><?php echo ($place_detail['Place']['access'])? '駅' : ''; ?></td>
         <td><?php if ($place_detail['Place']['url']) { ?>

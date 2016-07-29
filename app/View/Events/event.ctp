@@ -12,7 +12,8 @@
         <td><?php if ($event_detail['EventsDetail']['place_id'] <= $PLACE_OTHER_KEY) { ?>
               <?php echo $event_detail['Place']['name']; ?>
             <?php } elseif ($event_detail['Place']['name']) { ?>
-              <?php echo $this->Html->link($event_detail['Place']['name'], '/places/place_detail/' . $event_detail['EventsDetail']['place_id']); ?><br>
+              <?php echo $this->Html->link($event_detail['Place']['name'], '/places/place_detail/' . $event_detail['EventsDetail']['place_id']); ?>
+              　<span class="txt-min">（<?php echo $event_detail['Place']['Prefecture']['name']; ?>）</span><br>
               <span class="access_search"><?php echo $this->element('access_search', array('data' => $event_detail)); ?></span>
             <?php } ?></td></tr>
   </table>

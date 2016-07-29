@@ -22,7 +22,7 @@
         <th class="tbl-act">action</th></tr>
     
     <?php foreach ($place_lists as $place_list) { ?>
-      <tr><td><?php echo $place_list['Place']['name']; ?></td>
+      <tr><td><?php echo $place_list['Place']['name']; ?><span class="txt-min">　（<?php echo $place_list['Prefecture']['name']; ?>）</span></td>
           <td class="tbl-num_place"><?php echo $place_list['Place']['capacity']; ?><?php echo ($place_list['Place']['capacity'])? '人' : ''; ?></td>
           <td><?php echo $place_list['Place']['access']; ?><?php echo ($place_list['Place']['access'])? '駅' : ''; ?></td>
           <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/places/place_detail/' . $place_list['Place']['id'], array('target' => '_blank')); ?></span>

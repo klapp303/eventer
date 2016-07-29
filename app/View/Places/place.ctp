@@ -30,6 +30,10 @@
       <td><?php echo $this->Form->input('name', array('type' => 'text', 'label' => false, 'placeholder' => '通称で問題なし', 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled' : '')); ?><span class="txt-alt txt-b">*</span></td>
     </tr>
     <tr>
+      <td><label>都道府県</label></td>
+      <td><?php echo $this->Form->input('prefecture_id', array('type' => 'select', 'options' => $prefecture_lists, ((preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? '' : 'selected') => 13 , 'label' => false, 'disabled' => (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? 'disabled' : '')); ?><span class="txt-alt txt-b">*</span></td>
+    </tr>
+    <tr>
       <td><label>収容人数</label></td>
       <td><?php echo $this->Form->input('capacity', array('type' => 'text', 'label' => false, 'placeholder' => '例）2000')); ?>人</td>
     </tr>
