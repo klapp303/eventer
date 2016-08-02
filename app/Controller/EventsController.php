@@ -49,7 +49,7 @@ class EventsController extends AppController
         }
         unset($event_list);
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
-        $place_lists = $this->Place->find('list'); //プルダウン選択肢用
+        $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
         
         if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
@@ -202,7 +202,7 @@ class EventsController extends AppController
         }
         unset($event_list);
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
-        $place_lists = $this->Place->find('list'); //プルダウン選択肢用
+        $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
         
         if (empty($this->request->data)) {
@@ -630,7 +630,7 @@ class EventsController extends AppController
         }
         
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
-        $place_lists = $this->Place->find('list'); //プルダウン選択肢用
+        $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
         
         $this->render('index');
