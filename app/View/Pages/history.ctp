@@ -9,7 +9,7 @@ foreach ($array_history as $key => $val) {
 array_multisort($sort, SORT_DESC, $array_history);
 ?>
 
-  <table class="detail-list-min">
+  <table class="detail-list-min list_history">
     <tr><th class="tbl-date">日付</th><th>更新内容</th></tr>
    
     <?php foreach ($array_history as $key => $history) { ?>

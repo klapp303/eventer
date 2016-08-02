@@ -37,6 +37,10 @@
 }
 
 /* お知らせ、更新履歴ページ用 */
+.list_history {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
 .sub_history {
   font-size: 12px;
   margin-left: 20px;
