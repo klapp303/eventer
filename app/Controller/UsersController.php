@@ -180,7 +180,19 @@ class UsersController extends AppController
             }
             $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
             $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
+            
+            //ゲストユーザの場合
+            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+                $this->Session->setFlash('ゲストユーザの情報は変更できません。', 'flashMessage');
+            }
+            
         } else {
+            //ゲストユーザの場合
+            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+                $this->Session->setFlash('ゲストユーザの情報は変更できません。', 'flashMessage');
+                $this->redirect('/user/' . $id);
+            }
+            
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
                 $this->User->save($this->request->data); //validate成功でsave
@@ -213,7 +225,18 @@ class UsersController extends AppController
             }
             $this->request->data = $this->User->findById($id); //postデータがなければ$idからデータを取得
             $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
+            
+            //ゲストユーザの場合
+            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+                $this->Session->setFlash('ゲストユーザのパスワードは変更できません。', 'flashMessage');
+            }
+            
         } else {
+            //ゲストユーザの場合
+            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+                $this->Session->setFlash('ゲストユーザのパスワードは変更できません。', 'flashMessage');
+                $this->redirect('/user/' . $id);
+            }
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
                 $this->User->id = $id; //validate成功でsave
@@ -250,7 +273,10 @@ class UsersController extends AppController
         
         if (!empty($this->request->data)) {
             $data = $this->User->find('first', array(
-                'conditions' => array('User.username' => $this->request->data['User']['username'])
+                'conditions' => array(
+                    'User.username' => $this->request->data['User']['username'],
+                    'User.id >' => $this->getOptionKey('USER_CARBON_KEY')
+                )
             ));
             if ($data) {
                 //新しくパスワードを発行してsave
