@@ -23,6 +23,8 @@ class EventsController extends AppController
     
     public function index()
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
         
@@ -59,12 +61,21 @@ class EventsController extends AppController
                             array('EventsDetail.user_id' => $this->Auth->user('id')),
                             array('EventsDetail.id' => $join_lists['id']),
                             array('Event.publish' => 1)
-                        )
+                        ),
+                        'EventsDetail.user_id !=' => $GUEST_USER_KEY
                     )
                 ),
                 'recursive' => 2
             ));
             if (!empty($event_detail)) { //データが存在する場合
+                //ゲストユーザの場合は自身のイベントのみ
+                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                    if ($event_detail['EventsDetail']['user_id'] != $GUEST_USER_KEY) {
+                        $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+                        return;
+                    }
+                }
+                
                 $this->set('PLACE_OTHER_KEY', $this->getOptionKey('PLACE_OTHER_KEY'));
                 
                 //エントリー一覧
@@ -526,10 +537,18 @@ class EventsController extends AppController
     
     public function all_lists()
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        //ゲストユーザの場合
+        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
+            $this->redirect('/events/');
+        }
+        
         $this->Paginator->settings = array(
             'conditions' => array(
                 'EventsDetail.date >=' => date('Y-m-d'),
-                'Event.publish' => 1
+                'Event.publish' => 1,
+                'EventsDetail.user_id !=' => $GUEST_USER_KEY
             ),
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
@@ -561,14 +580,23 @@ class EventsController extends AppController
     
     public function search()
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        //ゲストユーザの場合
+        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
+            $this->redirect('/events/');
+        }
+        
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
         
-        if ($this->request->query) {
+        if ($this->request->query && $this->request->query['word']) {
             $search_word = $this->request->query['word'];
+        } else {
+            $this->redirect('/events/');
         }
         
         $this->Paginator->settings = array(
@@ -581,10 +609,12 @@ class EventsController extends AppController
                 ),
                 array(
                     'or' => array(
-                        array('Event.publish' => 1),
-                        array('EventsDetail.id' => $join_lists['id'])
+                        array('EventsDetail.user_id' => $this->Auth->user('id')),
+                        array('EventsDetail.id' => $join_lists['id']),
+                        array('Event.publish' => 1)
                     )
-                )
+                ),
+                'EventsDetail.user_id !=' => $GUEST_USER_KEY
             ),
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
         );
