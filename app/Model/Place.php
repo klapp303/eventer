@@ -14,7 +14,7 @@ class Place extends AppModel
         'Prefecture' => array(
             'className' => 'Prefecture', //関連付けるModel
             'foreignKey' => 'prefecture_id', //関連付けるためのfield、関連付け先は上記Modelのid
-            'fields' => 'name' //関連付け先Modelの使用field
+            'fields' => array('name', 'state') //関連付け先Modelの使用field
         )
     );
     

@@ -115,6 +115,7 @@ class EventsDetail extends AppModel
                 'EventsDetail.date >=' => date('Y-m-d'),
                 'EventsDetail.deleted !=' => 1
             ),
+            'recursive' => 2,
             'order' => array('EventsDetail.date' => ($status == 0)? 'asc' : 'desc', 'EventsDetail.time_start' => 'asc')
         ));
         
@@ -250,21 +251,9 @@ class EventsDetail extends AppModel
         //終演時刻
         $a_end = date('H:i', strtotime($a_start . ' +' . $a_time . ' minute'));
         $b_end = date('H:i', strtotime($b_start . ' +' . $b_time . ' minute'));
-        //会場
-        if ($event['EventsDetail']['place_id'] == 2) {
-            $a_place = 2; //その他（関西圏）は関西圏
-        } elseif ($event['EventsDetail']['place_id'] == 3) {
-            $a_place = 3; //その他（地方）は地方
-        } else {
-            $a_place = 1; //それ以外は首都圏
-        }
-        if ($other_event['EventsDetail']['place_id'] == 2) {
-            $b_place = 2; //その他（関西圏）は関西圏
-        } elseif ($other_event['EventsDetail']['place_id'] == 3) {
-            $b_place = 3; //その他（地方）は地方
-        } else {
-            $b_place = 1; //それ以外は首都圏
-        }
+        //会場の地域
+        $a_place = $event['Place']['Prefecture']['state'];
+        $b_place = $other_event['Place']['Prefecture']['state'];
         
         //開催日が違う場合は被りなし
         if ($event['EventsDetail']['date'] != $other_event['EventsDetail']['date']) {
