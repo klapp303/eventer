@@ -87,12 +87,23 @@ class PlacesController extends AppController
     
     public function add()
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        //ゲストユーザの場合
+        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+            $this->Session->setFlash('ゲストユーザは登録できません。', 'flashMessage');
+        }
+        
         //都道府県の選択肢用
         $this->set('prefecture_lists', $this->Prefecture->find('list'));
         
         $PLACE_OTHER_KEY = $this->getOptionKey('PLACE_OTHER_KEY');
         
         if ($this->request->is('post')) {
+            //ゲストユーザの場合
+            if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                $this->Session->setFlash('ゲストユーザは登録できません。', 'flashMessage');
+                $this->redirect('/places/place_lists/');
+            }
             //sort値を追加する
             $place_count = $this->Place->find('count', array(
                 'conditions' => array('Place.id >' => $PLACE_OTHER_KEY)
@@ -121,6 +132,8 @@ class PlacesController extends AppController
     
     public function edit($id = null)
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
         //都道府県の選択肢用
         $this->set('prefecture_lists', $this->Prefecture->find('list'));
         
@@ -128,10 +141,20 @@ class PlacesController extends AppController
             $this->request->data = $this->Place->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
                 $this->set('id', $id); //viewに渡すために$idをセット
+                //ゲストユーザの場合
+                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                    $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
+                }
             } else { //データが存在しない場合
                 $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
             }
+            
         } else {
+            //ゲストユーザの場合
+            if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
+                $this->redirect('/places/place_lists/');
+            }
             $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Place->validates()) { //validate成功の処理
                 $this->Place->save($this->request->data); //validate成功でsave
@@ -157,6 +180,12 @@ class PlacesController extends AppController
     {
         if (empty($id)) {
             throw new NotFoundException(__('存在しないデータです。'));
+        }
+        
+        //ゲストユーザの場合
+        if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+            $this->Session->setFlash('ゲストユーザは削除できません。', 'flashMessage');
+            $this->redirect('/places/place_lists/');
         }
         
         if ($this->request->is('post') and $id > $this->getOptionKey('PLACE_BLOCK_KEY')) { //削除不可に設定したい会場データ
