@@ -580,12 +580,12 @@ class EventsController extends AppController
     
     public function search()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+//        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
-        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
-            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
-            $this->redirect('/events/');
-        }
+//        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+//            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
+//            $this->redirect('/events/');
+//        }
         
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
@@ -595,6 +595,7 @@ class EventsController extends AppController
         
         if ($this->request->query && $this->request->query['word']) {
             $search_word = $this->request->query['word'];
+            $this->set(compact('search_word'));
         } else {
             $this->redirect('/events/');
         }
@@ -611,10 +612,10 @@ class EventsController extends AppController
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
                         array('EventsDetail.id' => $join_lists['id']),
-                        array('Event.publish' => 1)
+//                        array('Event.publish' => 1)
                     )
                 ),
-                'EventsDetail.user_id !=' => $GUEST_USER_KEY
+//                'EventsDetail.user_id !=' => $GUEST_USER_KEY
             ),
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
         );
@@ -623,6 +624,11 @@ class EventsController extends AppController
             $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
         }
         unset($event_list);
+        
+        if (!$event_lists) {
+            $this->Session->setFlash('検索に一致するイベントはありません。', 'flashMessage');
+        }
+        
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
         $place_lists = $this->Place->find('list'); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));

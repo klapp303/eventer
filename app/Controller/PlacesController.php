@@ -236,6 +236,11 @@ class PlacesController extends AppController
             )
         );
         $place_lists = $this->Paginator->paginate('Place');
+        
+        if (!$place_lists) {
+            $this->Session->setFlash('検索に一致する会場はありません。', 'flashMessage');
+        }
+        
         $this->set('place_lists', $place_lists);
         
         $this->render('place_lists');

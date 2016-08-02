@@ -1,6 +1,8 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
 <?php echo $this->Html->script('jquery-name_insert', array('inline' => false)); ?>
-<?php echo $this->element('searchbox', array('ctrl' => 'events')); ?>
+<?php echo $this->element('searchbox', array(
+    'placeholder' => 'イベント名 を入力'
+)); ?>
 
 <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
   <h3>イベントの編集</h3>

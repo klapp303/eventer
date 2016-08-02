@@ -1,8 +1,8 @@
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array(
-    'ctrl' => 'places',
+    'controller' => 'places',
     'value' => @$search_word,
-    'placeholder' => '会場名 or 最寄り駅'
+    'placeholder' => '会場名 or 最寄り駅 を入力'
 )); ?>
 
 <div class="intro_places">
