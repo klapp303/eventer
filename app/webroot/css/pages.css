@@ -35,6 +35,12 @@
   left: 310px;
   bottom: 30px;
 }
+.link-users-add {
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 /* お知らせ、更新履歴ページ用 */
 .list_history {

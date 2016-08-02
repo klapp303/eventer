@@ -10,6 +10,7 @@ class PagesController extends AppController
     {
         parent::beforeFilter();
         $this->layout = 'eventer_fullwidth';
+        $this->Auth->allow('about');
     }
     
     public function index()
@@ -19,7 +20,16 @@ class PagesController extends AppController
     
     public function about()
     {
-        
+        if (!$this->Auth->user()) {
+            $this->layout = 'eventer_normal';
+            
+            //ゲストアカウント情報を取得
+            $guest_user = $this->User->find('first', array(
+                'conditions' => array('User.id' => 2)
+            ));
+            $this->set('guest_name', $guest_user['User']['username']);
+            $this->set('guest_password', 'password');
+        }
     }
     
     public function event_genres()

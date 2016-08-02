@@ -23,6 +23,13 @@
   margin-left: 113px;
 }
 
+/* ログインページ用 */
+.intro_login {
+  float: right;
+  width: 300px;
+  margin: -20px 20px 50px 10px;
+}
+
 /* プロフィールページ用 */
 .tbl-prof_user >tbody >tr {
   height: 36px;

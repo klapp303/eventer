@@ -28,6 +28,12 @@ class UsersController extends AppController
             $this->redirect('/');
         }
         
+        //（ゲスト）アカウント情報があればログインフォームに渡す
+        if (@$this->request->query['user'] && @$this->request->query['pass']) {
+            $this->set('guest_name', $this->request->query['user']);
+            $this->set('guest_password', $this->request->query['pass']);
+        }
+        
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 /* ログイン時に定期バックアップを判定して作成ここから */
@@ -88,7 +94,19 @@ class UsersController extends AppController
                 }
                 /* ログイン時に定期バックアップを判定して作成ここまで */
                 
-                $this->redirect($this->Auth->redirect());
+                //ゲストユーザはTOPページにリダイレクト
+                $GUEST_USER_OPTION = $this->Option->find('first', array(//オプション値を取得
+                    'conditions' => array('Option.title' => 'GUEST_USER_KEY'),
+                    'fields' => 'Option.key'
+                ));
+                $GUEST_USER_KEY = $GUEST_USER_OPTION['Option']['key'];
+                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                    $this->redirect('/');
+                    
+                //それ以外は最後のページにリダイレクト
+                } else {
+                    $this->redirect($this->Auth->redirect());
+                }
                 
             } else {
                 $this->Flash->error(__('ユーザ名かパスワードが間違っています。'));

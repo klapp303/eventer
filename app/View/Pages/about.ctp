@@ -1,4 +1,10 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
+<?php if (!$userData) { ?>
+  <div class="fr">
+    <span class="link-page"><?php echo $this->Html->link('⇨ ログインはこちら', '/users/login/'); ?></span>
+  </div>
+<?php } ?>
+
 <h3>詳しい機能と使い方</h3>
 
 <h4>1. イベントを登録する</h4>
@@ -60,3 +66,12 @@
     右上のユーザ名からユーザ設定でお知らせメールを「配信する」に設定する事で、毎日 AM 9:00 に当日から3日間分の予定をメールでお知らせします。
   </p>
 </div>
+
+<?php if (!$userData) { ?>
+  <div class="link-users-add">
+    <span class="link-page"><?php echo $this->Html->link('⇨ 実際に登録して使ってみる', '/users/add/'); ?></span>
+  </div>
+  <div class="link-users-add">
+    <span class="link-page"><?php echo $this->Html->link('⇨ ゲストアカウントでログインしてみる', '/users/login/?user=' . urlencode($guest_name) . '&pass=' . urlencode($guest_password)); ?></span>
+  </div>
+<?php } ?>
