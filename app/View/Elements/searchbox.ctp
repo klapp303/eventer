@@ -6,7 +6,7 @@
         'inputDefaults' => array('div' => '')
     )); ?>
     
-    <?php echo $this->Form->input('word', array('type' => 'text', 'label' => false)); ?><br>
+    <?php echo $this->Form->input('word', array('type' => 'text', 'label' => false, 'value' => @$value, 'placeholder' => @$placeholder)); ?><br>
     <?php echo $this->Form->submit('検索する'); ?>
     
     <?php echo $this->Form->end(); ?>

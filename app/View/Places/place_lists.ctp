@@ -1,5 +1,9 @@
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
-<?php echo $this->element('searchbox', array('ctrl' => 'places')); ?>
+<?php echo $this->element('searchbox', array(
+    'ctrl' => 'places',
+    'value' => @$search_word,
+    'placeholder' => '会場名 or 最寄り駅'
+)); ?>
 
 <div class="intro_places">
   <P>
