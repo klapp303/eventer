@@ -50,6 +50,29 @@ class EventsDetail extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
+    public function afterFind($results, $primary = false)
+    {
+        //place_idからplaceデータを取得できない場合（placeデータが削除されている）
+        $this->loadModel('Place');
+        $place_default_data = $this->Place->find('first', array(
+            'conditions' => array(
+                'Place.id' => 5
+            )
+        ));
+        if (@$results['Place'] && @!$results['Place']['name']) {
+            $results['Place'] = $place_default_data['Place'];
+            $results['Place']['Prefecture'] = $place_default_data['Prefecture'];
+        }
+        foreach ($results as $key => $result) {
+            if (@$result['Place'] && @!$result['Place']['name']) {
+                $results[$key]['Place'] = $place_default_data['Place'];
+                $results[$key]['Place']['Prefecture'] = $place_default_data['Prefecture'];
+            }
+        }
+        
+        return $results;
+    }
+    
     public function getUnfixedPayment($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
     {
         $event_lists = $this->find('all', array(
