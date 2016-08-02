@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController
 {
-    public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Option'); //使用するModel
+    public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
     
     public $components = array('Paginator', 'Search.Prg');
     
@@ -65,11 +65,7 @@ class EventsController extends AppController
                 'recursive' => 2
             ));
             if (!empty($event_detail)) { //データが存在する場合
-                $PLACE_OTHER_OPTION = $this->Option->find('first', array( //オプション値を取得
-                    'conditions' => array('Option.title' => 'PLACE_OTHER_KEY'),
-                    'fields' => 'Option.key'
-                ));
-                $this->set('PLACE_OTHER_KEY', $PLACE_OTHER_OPTION['Option']['key']);
+                $this->set('PLACE_OTHER_KEY', $this->getOptionKey('PLACE_OTHER_KEY'));
                 
                 //エントリー一覧
                 $entry_lists = $this->EventsEntry->find('all', array(

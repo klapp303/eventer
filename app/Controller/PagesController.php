@@ -25,7 +25,7 @@ class PagesController extends AppController
             
             //ゲストアカウント情報を取得
             $guest_user = $this->User->find('first', array(
-                'conditions' => array('User.id' => 2)
+                'conditions' => array('User.id' => $this->getOptionKey('GUEST_USER_KEY'))
             ));
             $this->set('guest_name', $guest_user['User']['username']);
             $this->set('guest_password', 'password');

@@ -95,12 +95,7 @@ class UsersController extends AppController
                 /* ログイン時に定期バックアップを判定して作成ここまで */
                 
                 //ゲストユーザはTOPページにリダイレクト
-                $GUEST_USER_OPTION = $this->Option->find('first', array(//オプション値を取得
-                    'conditions' => array('Option.title' => 'GUEST_USER_KEY'),
-                    'fields' => 'Option.key'
-                ));
-                $GUEST_USER_KEY = $GUEST_USER_OPTION['Option']['key'];
-                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
                     $this->redirect('/');
                     
                 //それ以外は最後のページにリダイレクト

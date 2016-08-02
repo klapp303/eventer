@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EmailController extends AppController
 {
-    public $uses = array('User', 'EventsEntry', 'Option'); //使用するModel
+    public $uses = array('User', 'EventsEntry'); //使用するModel
     
     public function beforeFilter()
     {
@@ -20,12 +20,7 @@ class EmailController extends AppController
     public function schedule_send($id = null)
     {
         if ($this->request->is('post')) {
-            $USER_CURBON_OPTION = $this->Option->find('first', array(
-                'conditions' => array('Option.title' => 'USER_CARBON_KEY'),
-                'fields' => 'Option.key'
-            ));
-            $USER_CURBON_KEY = $USER_CURBON_OPTION['Option']['key'];
-            if ($id <= $USER_CURBON_KEY) {
+            if ($id <= $this->getOptionKey('USER_CARBON_KEY')) {
                 $this->Session->setFlash('メール送信のできないユーザです。', 'flashMessage');
                 
                 $this->redirect('/');

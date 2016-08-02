@@ -5,7 +5,7 @@ App::uses('CakeEmail', 'Network/Email'); //CakeEmaiilの利用、分けて記述
 
 class AppController extends Controller
 {
-    public $uses = array('EventsEntry'); //使用するModel
+    public $uses = array('EventsEntry', 'Option'); //使用するModel
     
     public $components = array(
         'Session', //Paginateのため記述
@@ -48,5 +48,18 @@ class AppController extends Controller
             'last' => '＞' //最終ページへのリンク
         );
         $this->set('paginator_option', $paginator_option);
+    }
+    
+    public function getOptionKey($key_title = false, $key = 0)
+    {
+        $option = $this->Option->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => $key_title),
+            'fields' => 'Option.key'
+        ));
+        if ($option) {
+            $key = $option['Option']['key'];
+        }
+        
+        return $key;
     }
 }
