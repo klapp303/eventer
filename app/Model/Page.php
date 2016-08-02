@@ -34,7 +34,8 @@ class Page extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function getArrayHistory($data = false) {
+    public function getArrayHistory($data = false)
+    {
         //お知らせ、更新履歴を定義しておく
         $data = [
             0 => [
@@ -79,7 +80,8 @@ class Page extends AppModel
         return $data;
     }
     
-    public function getArrayFaq($data = false) {
+    public function getArrayFaq($data = false)
+    {
         //よくある質問を定義しておく
         /* カテゴリーの定義ここから */
         $array_category = [

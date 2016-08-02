@@ -44,7 +44,8 @@ class EventUser extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function getJoinEvents($user_id = false, $data = ['id' => [], 'list' => []]) {
+    public function getJoinEvents($user_id = false, $data = ['id' => [], 'list' => []])
+    {
         //参加済のデータからevent_idを取得
         $event_lists = $this->find('list', array(
             'conditions' => array('EventUser.user_id' => $user_id),
