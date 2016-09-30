@@ -8,11 +8,12 @@
 <div class="intro_places">
   <P>
     追加する際は、既に会場が登録されていないか確認してください。<br>
-    並び替えは全ユーザに適用されます。
   </P>
   
   <span class="link-page"><?php echo $this->Html->link('⇨ 会場の新規登録はこちら', '/places/add/'); ?></span>
-  <span class="link-page"><?php echo $this->Html->link('⇨ 会場の並び替えはこちら', '/places/sort/'); ?></span>
+  <?php if ($userData['id'] == 1) { ?>
+    <span class="link-page"><?php echo $this->Html->link('⇨ 会場の並び替えはこちら', '/places/sort/'); ?></span>
+  <?php } ?>
 </div>
 
 <h3>会場一覧</h3>

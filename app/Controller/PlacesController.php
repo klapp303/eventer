@@ -208,6 +208,10 @@ class PlacesController extends AppController
     
     public function sort()
     {
+        if ($this->Auth->user('id') != 1) {
+            $this->redirect('/places/place_lists/');
+        }
+        
         $PLACE_OTHER_KEY = $this->getOptionKey('PLACE_OTHER_KEY');
         
         if (!$this->request->is('post')) {
