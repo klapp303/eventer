@@ -98,10 +98,23 @@
   </div>
 <?php } ?>
 
+<h3>出演者</h3>
+
+  <table class="detail-list detail-list_event">
+    <tr><td><?php foreach ($cast_lists as $cast_list) { ?>
+              <span class="tbl-user_long"><?php echo $cast_list['ArtistProfile']['name']; ?></span>
+            <?php } ?></td></tr>
+  </table>
+
+<?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
+  <div class="link-page_events">
+    <span class="link-page"><?php echo $this->Html->link('⇨ 出演者の管理はこちら', '/events/cast/' . $event_detail['EventsDetail']['id']); ?></span>
+  </div>
+<?php } ?>
+
 <!--h3>参加者</h3>
 
   <table class="detail-list detail-list_event">
-    <tr><th>参加者</th></tr>
     <tr><td><?php // $user_lists = $event_detail['UserList']; ?>
             <?php // foreach ($user_lists as $user_list) { ?>
               <span class="tbl-user_long"><?php // echo $user_list['UserProfile']['handlename']; ?></span>

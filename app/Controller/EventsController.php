@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController
 {
-    public $uses = array('EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place'); //使用するModel
+    public $uses = array('EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Artist'); //使用するModel
     
     public $components = array('Paginator', 'Search.Prg');
     
@@ -100,7 +100,18 @@ class EventsController extends AppController
                     ),
                     'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
                 ));
-                $this->set(compact('event_detail', 'entry_lists', 'other_lists'));
+                //出演者一覧
+                $cast_lists = $this->EventArtist->find('all', array(
+                    'conditions' => array(
+                        'EventArtist.events_detail_id' => $event_detail['EventsDetail']['id']
+                    ),
+                    'order' => array('ArtistProfile.kana' => 'asc')
+                ));
+                foreach ($cast_lists as $key => $val) {
+                    unset($cast_lists[$key]['Event']);
+                    unset($cast_lists[$key]['EventsDetail']);
+                }
+                $this->set(compact('event_detail', 'entry_lists', 'other_lists', 'cast_lists'));
                 
                 $this->render('event');
                 
@@ -464,6 +475,52 @@ class EventsController extends AppController
             
             $this->redirect('/event/' . $events_detail_id);
         }
+    }
+    
+    public function cast($id = null)
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->data['EventsArtist']['events_detail_id'];
+        }
+        if (empty($id)) {
+            throw new NotFoundException(__('存在しないデータです。'));
+        }
+        $events_detail = $this->EventsDetail->findById($id);
+        
+        if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
+            $this->redirect('/event/' . $id);
+        }
+        
+        $this->set('events_detail', $events_detail);
+        $this->set('events_detail_id', $id);
+        
+        //出演者一覧の取得
+        $cast_lists = $this->EventArtist->find('all', array(
+            'conditions' => array(
+                'EventArtist.events_detail_id' => $id
+            ),
+            'order' => array('ArtistProfile.kana' => 'asc')
+        ));
+        $array_cast = [];
+        foreach ($cast_lists as $key => $val) {
+            unset($cast_lists[$key]['Event']);
+            unset($cast_lists[$key]['EventsDetail']);
+            $array_cast[] = $val['EventArtist']['artist_id']; //登録済み出演者のIDを種痘しておく
+        }
+        //アーティスト一覧の取得
+        $artist_lists = $this->Artist->find('all', array(
+            'conditions' => array(
+                'Artist.id !=' => $array_cast
+            ),
+            'order' => array('Artist.kana' => 'asc')
+        ));
+        $this->set(compact('cast_lists', 'artist_lists'));
+        
+        if ($this->request->is('post')) {
+            
+        }
+        
+        $this->render('artist');
     }
     
     public function past_lists()
