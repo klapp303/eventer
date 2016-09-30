@@ -11,7 +11,7 @@
   </P>
   
   <span class="link-page"><?php echo $this->Html->link('⇨ 会場の新規登録はこちら', '/places/add/'); ?></span>
-  <?php if ($userData['id'] == 1) { ?>
+  <?php if ($userData['role'] <= 3) { ?>
     <span class="link-page"><?php echo $this->Html->link('⇨ 会場の並び替えはこちら', '/places/sort/'); ?></span>
   <?php } ?>
 </div>

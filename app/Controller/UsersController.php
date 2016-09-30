@@ -140,6 +140,12 @@ class UsersController extends AppController
         }
         
         if ($this->request->is('post')) {
+            /* 新規登録時の初期値を設定ここから */
+            $this->request->data['User']['role'] = 2;
+//            $this->request->data['User']['mail'] = 0;
+//            $this->request->data['User']['json_data'] = 0;
+            /* 新規登録時の初期値を設定ここまで */
+            echo'<pre>';print_r($this->request->data);echo'</pre>';exit;
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
                 $this->User->save($this->request->data); //validate成功でsave

@@ -208,7 +208,7 @@ class PlacesController extends AppController
     
     public function sort()
     {
-        if ($this->Auth->user('id') != 1) {
+        if ($this->Auth->user('role') < 3) {
             $this->redirect('/places/place_lists/');
         }
         
