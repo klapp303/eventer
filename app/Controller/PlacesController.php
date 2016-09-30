@@ -132,6 +132,10 @@ class PlacesController extends AppController
     
     public function edit($id = null)
     {
+        if ($this->Auth->user('role') < 3) {
+            $this->redirect('/places/place_lists/');
+        }
+        
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         
         //都道府県の選択肢用
