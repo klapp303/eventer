@@ -12,6 +12,14 @@ class AppModel extends Model
         return preg_match('/^[\x21-\x7E]*$/', $str);
     }
     
+    //全角カナだけかを判定するcustom validation
+    public function isKanaLetter($data)
+    {
+        $str = current($data);
+        
+        return preg_match('/^[ァ-ヶー゛゜]*$/u', $str);
+    }
+    
     public function exists($id = null)
     {
         //SoftDelete用の記述

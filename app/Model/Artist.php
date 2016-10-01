@@ -9,10 +9,10 @@ class Artist extends AppModel
     public $actsAs = array('SoftDelete'/* , 'Search.Searchable' */);
     
 //    public $belongsTo = array(
-//        'Profile' => array(
-//            'className' => 'Profile', //関連付けるModel
-//            'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
-//            'fields' => array('mailmaga', 'station') //関連付け先Modelの使用field
+//        'SamplesGenre' => array(
+//            'className' => 'SamplesGenre', //関連付けるModel
+//            'foreignKey' => 'genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
+//            'fields' => 'title' //関連付け先Modelの使用field
 //        )
 //    );
     
@@ -26,6 +26,20 @@ class Artist extends AppModel
 //                'rule' => array('maxLength', 25),
 //                'message' => '名前は25文字以内です'
 //            )
+        ),
+        'kana' => array(
+            'rule_1' => array(
+                'rule' => 'notBlank',
+                'required' => 'create'
+            ),
+//            'rule_2' => array(
+//                'rule' => array('maxLength', 25),
+//                'message' => 'カナは25文字以内です'
+//            ),
+            'rule_3' => array(
+                'rule' => 'isKanaLetter',
+                'message' => '全角カナのみで入力してください'
+            )
         ),
     );
     

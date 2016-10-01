@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* 出演者タグ登録フォーム用 */
+.ArtistAddForm >tbody >tr >td >label,
+.ArtistEditForm >tbody >tr >td >label {
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.ArtistAddForm >tbody >tr >td >input,
+.ArtistEditForm >tbody >tr >td >input {
+  margin-bottom: 10px;
+}
+.ArtistAddForm >tbody >tr >td >.submit,
+.ArtistEditForm >tbody >tr >td >.submit {
+  margin-top: 10px;
+  margin-left: 108px;
+}
+.tbl-txt_artists {
+  margin-left: 10px;
+  margin-bottom: 15px;
+}
+
+/*.tbl-date {
+  width: 70px;
+}
+.tbl-action_place {
+  width: 55px;
+}*/
+
+/* ページリンク用 */
+/*.link-page_artists {
+  text-align: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}*/
