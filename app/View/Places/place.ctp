@@ -57,7 +57,7 @@
     
     <tr>
       <td></td>
-      <td><?php echo $this->Form->submit((preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? '修正する': '登録する', array('div' => false, 'class' => 'submit')); ?>　　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span></td>
+      <td><?php echo $this->Form->submit((preg_match('#/places/edit/#', $_SERVER['REQUEST_URI']))? '修正する' : '登録する', array('div' => false, 'class' => 'submit')); ?>　　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span></td>
     </tr>
     <?php echo $this->Form->end(); ?><!-- form end -->
   </table>
