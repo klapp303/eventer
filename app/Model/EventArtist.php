@@ -43,4 +43,25 @@ class EventArtist extends AppModel
 //        'id' => array('type' => 'value'),
 //        'title' => array('type' => 'value')
 //    );
+    
+    public function checkExistData($events_detail_id = null, $artist_id = null)
+    {
+        if (!$events_detail_id || !$artist_id) {
+            return 'error';
+        }
+        
+        //登録済みのキャスト一覧を取得
+        $cast_lists = $this->find('list', array(
+            'conditions' => array('EventArtist.events_detail_id' => $events_detail_id),
+            'fields' => array('EventArtist.artist_id')
+        ));
+        
+        //キャスト一覧にアーティストIDがあるかを判定
+        if (in_array($artist_id, $cast_lists)) {
+            return true;
+            
+        } else {
+            return false;
+        }
+    }
 }

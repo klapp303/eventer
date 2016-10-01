@@ -505,7 +505,7 @@ class EventsController extends AppController
         foreach ($cast_lists as $key => $val) {
             unset($cast_lists[$key]['Event']);
             unset($cast_lists[$key]['EventsDetail']);
-            $array_cast[] = $val['EventArtist']['artist_id']; //登録済み出演者のIDを種痘しておく
+            $array_cast[$val['EventArtist']['id']] = $val['EventArtist']['artist_id']; //登録済み出演者のIDを取得しておく
         }
         //アーティスト一覧の取得
         $artist_lists = $this->Artist->find('all', array(
@@ -516,8 +516,51 @@ class EventsController extends AppController
         ));
         $this->set(compact('cast_lists', 'artist_lists'));
         
+        //event_artistsテーブルに保存
         if ($this->request->is('post')) {
+            $save_data = [];
+            $check_artist = [];
+            foreach ($this->request->data['Artist'] as $artist) {
+                //既にテーブルに登録されているかを判定
+                $check_data = $this->EventArtist->checkExistData($id, $artist['artist_id']);
+                if ($check_data == true) {
+                    //登録されている場合は処理済みフラグ
+                    $check_artist[] = $artist['artist_id'];
+                    
+                } elseif ($check_data == false) {
+                    //登録されていない場合は新規登録
+                    $save_data[] = array(
+                        'event_id' => $this->request->data['EventsArtist']['event_id'],
+                        'events_detail_id' => $id,
+                        'artist_id' => $artist['artist_id']
+                    );
+                }
+            }
+            if ($this->EventArtist->saveMany($save_data)) {
+                $error_flg = 0;
+            } else {
+                $this->Session->setFlash('データを登録できませんでした。', 'flashMessage');
+                $error_flg = 1;
+            }
             
+            //登録されているデータで未処理のキャストは削除
+            foreach ($array_cast as $key => $cast) {
+                if (!in_array($cast, $check_artist)) {
+                    $this->EventArtist->Behaviors->enable('SoftDelete');
+                    if ($this->EventArtist->delete($key)) {
+//                        $this->Session->setFlash('削除しました。', 'flashMessage');
+                    } else {
+                        $this->Session->setFlash('一部のデータを削除できませんでした。', 'flashMessage');
+                        $error_flg = 1;
+                    }
+                }
+            }
+            
+            if ($error_flg == 0) {
+                $this->Session->setFlash('出演者を登録しました。', 'flashMessage');
+            }
+            
+            $this->redirect('/event/' . $id);
         }
         
         $this->render('artist');
