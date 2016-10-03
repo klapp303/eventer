@@ -130,19 +130,16 @@ class ArtistsController extends AppController
         }
     }
     
-    /*public function edit($id = null)
+    public function edit($id = null)
     {
         if ($this->Auth->user('role') < 3) {
-            $this->redirect('/places/place_lists/');
+            $this->redirect('/artists/artist_lists/');
         }
         
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         
-        //都道府県の選択肢用
-        $this->set('prefecture_lists', $this->Prefecture->find('list'));
-        
         if (empty($this->request->data)) {
-            $this->request->data = $this->Place->findById($id); //postデータがなければ$idからデータを取得
+            $this->request->data = $this->Artist->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
                 $this->set('id', $id); //viewに渡すために$idをセット
                 //ゲストユーザの場合
@@ -157,28 +154,29 @@ class ArtistsController extends AppController
             //ゲストユーザの場合
             if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                 $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
-                $this->redirect('/places/place_lists/');
+                $this->redirect('/artists/artist_lists/');
             }
-            $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
-            if ($this->Place->validates()) { //validate成功の処理
-                $this->Place->save($this->request->data); //validate成功でsave
-                if ($this->Place->save($id)) {
-                    $this->Session->setFlash('修正しました。', 'flashMessage');
+            $this->Artist->set($this->request->data); //postデータがあればModelに渡してvalidate
+            if ($this->Artist->validates()) { //validate成功の処理
+                $this->Artist->save($this->request->data); //validate成功でsave
+                if ($this->Artist->save($id)) {
+                    $this->Session->setFlash($this->request->data['Artist']['name'] . ' を修正しました。', 'flashMessage');
+                    
+                    $this->redirect('/artists/artist_detail/' . $id);
+                    
                 } else {
                     $this->Session->setFlash('修正できませんでした。', 'flashMessage');
                 }
                 
-                $this->redirect('/places/place_lists/');
+                $this->redirect('/artists/artist_lists/');
                 
             } else { //validate失敗の処理
-                $this->set('id', $this->request->data['Place']['id']); //viewに渡すために$idをセット
+                $this->set('id', $this->request->data['Artist']['id']); //viewに渡すために$idをセット
                 
 //                $this->render('index'); //validate失敗でindexを表示
             }
         }
-        
-        $this->render('place');
-    }*/
+    }
     
     /*public function delete($id = null)
     {

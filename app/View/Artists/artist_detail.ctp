@@ -25,9 +25,11 @@
             <?php } ?></td></tr>
   </table>
 
-<div class="link-page_artists">
-  <span class="link-page"><?php echo $this->Html->link('⇨ アーティスト情報を編集する', '/artists/edit/' . $artist_detail['Artist']['id']); ?></span>
-</div>
+<?php if ($userData['role'] >= 3) { ?>
+  <div class="link-page_artists">
+    <span class="link-page"><?php echo $this->Html->link('⇨ アーティスト情報を追加、修正する', '/artists/edit/' . $artist_detail['Artist']['id']); ?></span>
+  </div>
+<?php } ?>
 
 <h3>開催予定のイベント</h3>
 
