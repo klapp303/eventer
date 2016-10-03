@@ -26,10 +26,6 @@
   text-align: center;
   width: 150px;
 }
-.tbl-user_long {
-  margin-right: 20px;
-  white-space: nowrap;
-}
 
 /* イベント登録フォーム用 */
 #EventAddForm >label,

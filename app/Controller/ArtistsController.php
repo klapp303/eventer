@@ -46,7 +46,7 @@ class ArtistsController extends AppController
                 ),
                 'order' => array('Artist.kana' => 'asc')
             ));
-            $this->set(compact(${'artist_lists_' . $key}));
+            $this->set(compact('artist_lists_' . $key));
         }
         $this->set('array_kana', $array_kana);
     }

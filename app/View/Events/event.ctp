@@ -101,9 +101,11 @@
 <h3>出演者</h3>
 
   <table class="detail-list detail-list_event">
-    <tr><td><?php foreach ($cast_lists as $cast_list) { ?>
-              <span class="tbl-user_long"><?php echo $cast_list['ArtistProfile']['name']; ?></span>
-            <?php } ?></td></tr>
+    <tr><td><div class="list-name-tag">
+              <?php foreach ($cast_lists as $cast_list) { ?>
+                <span class="name-tag-long"><?php echo $cast_list['ArtistProfile']['name']; ?></span>
+              <?php } ?>
+            </div></td></tr>
   </table>
 
 <?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
