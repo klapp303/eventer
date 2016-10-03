@@ -67,11 +67,19 @@ class ArtistsController extends AppController
             
             redirect('/artists/artist_lists/');
         }
-        $this->set('artist_detail', $artist_detail);
-        
+        //画像
+        if ($artist_detail['Artist']['image_name']) {
+            $artist_detail['Artist']['alt_name'] = $artist_detail['Artist']['name'];
+        } else {
+            $artist_detail['Artist']['image_name'] = '../no_image.jpg';
+            $artist_detail['Artist']['alt_name'] = '';
+        }
+        //公式サイト
+        $artist_detail['Artist']['link_urls'] = $this->Artist->getArrayLinkUrls($artist_detail['Artist']['link_urls']);
         //関連アーティスト
-        $related_artist_lists = [];
-        $this->set('related_artist_lists', $related_artist_lists);
+        $artist_detail['Artist']['related_artists'] = $this->Artist->getArrayRelatedArtists($artist_detail['Artist']['related_artists_id']);
+        unset($artist_detail['Artist']['related_artists_id']);
+        $this->set('artist_detail', $artist_detail);
         
         //開催予定のイベント
         $event_artists_lists = $this->EventArtist->find('list', array(

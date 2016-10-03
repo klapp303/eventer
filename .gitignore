@@ -9,6 +9,8 @@
 /app/tmp
 /app/backup
 
+/app/webroot/files/artist
+
 /lib/Cake/Console/Templates/skel/tmp/
 
 /plugins

@@ -7,22 +7,19 @@
     <tr><td><?php echo $artist_detail['Artist']['name']; ?>
             <span class="txt-min">（<?php echo $artist_detail['Artist']['kana']; ?>）</span>
         </td>
-        <td><?php echo $artist_detail['Artist']['url']; ?></td></tr>
-  </table>
-  
-  <table class="detail-list-min">
-    <tr><th>状態</th>
-        <th>説明</th>
-        <th>関連アーティスト</th></tr>
-    <tr><td><?php if ($artist_detail['Artist']['publish'] == 0) { ?>
-              <span class="icon-false">非表示</span>
-            <?php } elseif ($artist_detail['Artist']['publish'] == 1) { ?>
-              <span class="icon-true">表示</span>
-            <?php } ?></td>
-        <td><?php echo $artist_detail['Artist']['description']; ?></td>
-        <td><?php foreach ($related_artist_lists as $artist) { ?>
-              <a href="/artists/artist_detail/<?php ?>"><?php ?></a><br>
+        <td><?php foreach ($artist_detail['Artist']['link_urls'] as $val) { ?>
+              <a href="<?php echo $val['link_url']; ?>" target="_blank"><?php echo $val['link_url']; ?></a><br>
             <?php } ?></td></tr>
+    
+    <tr><td rowspan="2"><?php echo $this->Html->image('../files/artist/' . $artist_detail['Artist']['image_name'], array('alt' => $artist_detail['Artist']['alt_name'], 'class' => 'img_artist')); ?></td>
+        <th>関連アーティスト</th></tr>
+    <tr><td class="tbl-name-tag_artists"><div class="list-name-tag">
+              <?php foreach ($artist_detail['Artist']['related_artists'] as $val) { ?>
+                <span class="name-tag-long">
+                  <a href="/artists/artist_detail/<?php echo $val['artist_id']; ?>"><?php echo $val['name']; ?></a>
+                </span>
+              <?php } ?>
+            </div></td></tr>
   </table>
 
 <?php if ($userData['role'] >= 3) { ?>
@@ -35,7 +32,7 @@
 <h3>開催予定のイベント</h3>
 
   <?php if ($event_lists) { ?>
-    <table class="event-list event-list_place">
+    <table class="event-list event-list_artist">
       <tr><th class="tbl-date">開催日</th>
           <th>イベント名</th>
           <th class="tbl-act-min">action</th></tr>

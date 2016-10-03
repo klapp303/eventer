@@ -56,16 +56,24 @@
   width: 720px;
 }
 
-/*.tbl-date {
-  width: 70px;
-}
-.tbl-action_place {
-  width: 55px;
-}*/
-
 /* ページリンク用 */
 .link-page_artists {
   text-align: right;
+  margin-top: 40px;
   margin-right: 50px;
   margin-bottom: 20px;
+}
+
+/* アーティスト詳細ページ用 */
+.img_artist {
+  width: 150px;
+  margin-top: 20px;
+}
+.tbl-name-tag_artists {
+  vertical-align: top;
+}
+
+/* 開催予定のイベント用 */
+.event-list_artist {
+  margin-bottom: -20px !important;
 }
