@@ -103,7 +103,11 @@
   <table class="detail-list detail-list_event">
     <tr><td><div class="list-name-tag">
               <?php foreach ($cast_lists as $cast_list) { ?>
-                <span class="name-tag-long"><?php echo $cast_list['ArtistProfile']['name']; ?></span>
+                <span class="name-tag-long">
+                  <a href="<?php echo '/artists/artist_detail/' . $cast_list['EventArtist']['artist_id']; ?>">
+                    <?php echo $cast_list['ArtistProfile']['name']; ?>
+                  </a>
+                </span>
               <?php } ?>
             </div></td></tr>
   </table>
@@ -117,8 +121,10 @@
 <!--h3>参加者</h3>
 
   <table class="detail-list detail-list_event">
-    <tr><td><?php // $user_lists = $event_detail['UserList']; ?>
-            <?php // foreach ($user_lists as $user_list) { ?>
-              <span class="tbl-user_long"><?php // echo $user_list['UserProfile']['handlename']; ?></span>
-            <?php // } ?></td></tr>
+    <tr><td><div class="list-name-tag">
+              <?php // $user_lists = $event_detail['UserList']; ?>
+              <?php // foreach ($user_lists as $user_list) { ?>
+                <span class="name-tag-long"><?php // echo $user_list['UserProfile']['handlename']; ?></span>
+              <?php // } ?>
+            </div></td></tr>
   </table-->

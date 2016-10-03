@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventsDetail'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -51,48 +51,42 @@ class ArtistsController extends AppController
         $this->set('array_kana', $array_kana);
     }
     
-    /*public function place_detail()
+    public function artist_detail($id = null)
     {
-        if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
-            $place_detail = $this->Place->find('first', array(
-                'conditions' => array('and' => array(
-                        'Place.id' => $this->request->params['id'],
-                        'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
-                    ))
-            ));
-            if (!empty($place_detail)) { //データが存在する場合
-                //座席数を取得する
-                $place_detail['Place']['seats'] = $this->Place->getNumberSeats($this->request->params['id']);
-                $this->set('place_detail', $place_detail);
-                /* 会場に紐付くイベント一覧を取得ここから */
-                //参加済のイベント一覧を取得しておく
-/*                $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
-                $event_lists = $this->EventsDetail->find('all', array( //place_detailページのイベント一覧を設定
-                    'conditions' => array(
-                        'and' => array(
-                            'EventsDetail.date >=' => date('Y-m-d'),
-                            'EventsDetail.place_id' => $this->request->params['id'], //eventsページの一覧から会場で更に絞り込み
-                            'or' => array(
-                                array('EventsDetail.user_id' => $this->Auth->user('id')),
-                                array('EventsDetail.id' => $join_lists['id']),
-                                array('Event.publish' => 1) //公開ステータスを追加
-                            )
-                        )
-                    ),
-                    'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
-                ));
-                $this->set('event_lists', $event_lists);
-                /* 会場に紐付くイベント一覧を取得ここまで */
-                
-/*                $this->layout = 'eventer_normal';
-                
-            } else { //データが存在しない場合
-                $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
-                
-                $this->redirect('/places/place_lists/');
-            }
+        if (!$id) {
+            redirect('/artists/artist_lists/');
         }
-    }*/
+        
+        $artist_detail = $this->Artist->find('first', array(
+            'conditions' => array(
+                'Artist.id' => $id
+            )
+        ));
+        if (!$artist_detail) {
+            $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+            
+            redirect('/artists/artist_lists/');
+        }
+        $this->set('artist_detail', $artist_detail);
+        
+        //関連アーティスト
+        $related_artist_lists = [];
+        $this->set('related_artist_lists', $related_artist_lists);
+        
+        //開催予定のイベント
+        $event_artists_lists = $this->EventArtist->find('list', array(
+            'conditions' => array('EventArtist.artist_id' => $id),
+            'fields' => array('EventArtist.events_detail_id')
+        ));
+        $event_lists = $this->EventsDetail->find('all', array(
+            'conditions' => array(
+                'EventsDetail.date >=' => date('Y-m-d'),
+                'EventsDetail.id' => $event_artists_lists
+            ),
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+        ));
+        $this->set('event_lists', $event_lists);
+    }
     
     public function add()
     {

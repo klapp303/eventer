@@ -100,7 +100,7 @@ class EventsController extends AppController
                     ),
                     'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
                 ));
-                //出演者一覧
+                //出演者
                 $cast_lists = $this->EventArtist->find('all', array(
                     'conditions' => array(
                         'EventArtist.events_detail_id' => $event_detail['EventsDetail']['id']
