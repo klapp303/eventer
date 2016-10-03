@@ -26,8 +26,25 @@
     </tr>
     
     <tr>
+      <td><label>画像</label></td>
+      <td><?php echo $this->Form->input('image_name', array('type' => 'text', 'label' => false)); ?></td>
+    </tr>
+    <tr>
+      <td><label>公式サイト</label></td>
+      <td><?php echo $this->Form->input('link_urls', array('type' => 'text', 'label' => false)); ?></td>
+    </tr>
+    <tr>
+      <td><label>関連アーティスト</label></td>
+      <td><?php echo $this->Form->input('related_artists_id', array('type' => 'text', 'label' => false)); ?></td>
+    </tr>
+    
+    <tr>
       <td></td>
       <td><?php echo $this->Form->submit('修正する', array('div' => false, 'class' => 'submit')); ?>　　<span class="txt-alt txt-b">*</span><span class="txt-min">は必須項目</span></td>
     </tr>
     <?php echo $this->Form->end(); ?><!-- form end -->
   </table>
+
+<div class="link-page_artists">
+  <span class="link-page"><?php echo $this->Html->link('⇨ アーティストの詳細に戻る', '/artists/artist_detail/' . $id); ?></span>
+</div>
