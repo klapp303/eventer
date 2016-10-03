@@ -178,7 +178,7 @@ class ArtistsController extends AppController
         }
     }
     
-    /*public function delete($id = null)
+    public function delete($id = null)
     {
         if (empty($id)) {
             throw new NotFoundException(__('存在しないデータです。'));
@@ -187,26 +187,26 @@ class ArtistsController extends AppController
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
             $this->Session->setFlash('ゲストユーザは削除できません。', 'flashMessage');
-            $this->redirect('/places/place_lists/');
+            $this->redirect('/artists/artist_lists/');
         }
         
-        if ($this->request->is('post') and $id > $this->getOptionKey('PLACE_BLOCK_KEY')) { //削除不可に設定したい会場データ
-            $this->Place->Behaviors->enable('SoftDelete');
-            if ($this->Place->delete($id)) {
+        if ($this->request->is('post')) {
+            $this->Artist->Behaviors->enable('SoftDelete');
+            if ($this->Artist->delete($id)) {
                 $this->Session->setFlash('削除しました。', 'flashMessage');
             } else {
                 $this->Session->setFlash('削除できませんでした。', 'flashMessage');
             }
             
-            $this->redirect('/places/place_lists/');
+            $this->redirect('/artists/artist_lists/');
             
         } else {
             $this->Session->setFlash('削除できませんでした。', 'flashMessage');
             
-            $this->redirect('/places/place_lists/');
+            $this->redirect('/artists/artist_lists/');
             
         }
-    }*/
+    }
     
     /*public function search()
     {
