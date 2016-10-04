@@ -1,4 +1,5 @@
 <?php echo $this->Html->css('artists', array('inline' => false)); ?>
+<?php echo $this->Html->script('jquery-tmb', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array(
     'controller' => 'artists',
     'value' => @$search_word,
@@ -10,6 +11,7 @@
   <table class="PlaceAddForm">
     <?php echo $this->Form->create('Artist', array( //使用するModel
         'type' => 'put', //変更はput
+        'enctype' => 'multipart/form-data', //fileアップロードの場合
         'action' => 'edit', //Controllerのactionを指定
         'inputDefaults' => array('div' => '')
     )); ?><!-- form start -->
@@ -27,7 +29,12 @@
     
     <tr>
       <td><label>画像</label></td>
-      <td><?php echo $this->Form->input('image_name', array('type' => 'text', 'label' => false)); ?></td>
+      <td><?php echo $this->Form->input('delete_name', array('type' => 'hidden', 'label' => false, 'value' => $image_name)); ?>
+          <?php if (!$image_name) {
+              $image_name = '../no_image.jpg';
+          } ?>
+          <?php echo $this->Html->image('../files/artist/' . $image_name, array('class' => 'img_artist js-tmb_pre')); ?>
+          <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false)); ?></td>
     </tr>
     <tr>
       <td><label>公式サイト</label></td>

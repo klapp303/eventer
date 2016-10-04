@@ -150,6 +150,7 @@ class ArtistsController extends AppController
             $this->request->data = $this->Artist->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
                 $this->set('id', $id); //viewに渡すために$idをセット
+                $this->set('image_name', $this->request->data['Artist']['image_name']); //viewに渡すためにファイル名をセット
                 //ゲストユーザの場合
                 if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                     $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
@@ -166,6 +167,22 @@ class ArtistsController extends AppController
             }
             $this->Artist->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Artist->validates()) { //validate成功の処理
+                /* ファイルの保存ここから */
+                if ($this->data['Artist']['file']['error'] != 4) { //新しいファイルがある場合
+                    $upload_dir = '../webroot/files/artist/'; //保存するディレクトリ
+                    $upload_pass = $upload_dir . basename($this->data['Artist']['file']['name']);
+                    if (move_uploaded_file($this->data['Artist']['file']['tmp_name'], $upload_pass)) { //ファイルを保存
+                        $this->request->data['Artist']['image_name'] = $this->data['Artist']['file']['name'];
+                        $file = new File(WWW_ROOT . 'files/artist/' . $this->request->data['Artist']['delete_name']); //前のファイルを削除
+                        $file->delete();
+                        $file->close();
+                    } else {
+                        $this->Session->setFlash('画像ファイルに不備があります。', 'flashMessage');
+                        
+                        $this->redirect('/artists/edit/' . $id);
+                    }
+                }
+                /* ファイルの保存ここまで */
                 $this->Artist->save($this->request->data); //validate成功でsave
                 if ($this->Artist->save($id)) {
                     $this->Session->setFlash($this->request->data['Artist']['name'] . ' を修正しました。', 'flashMessage');
