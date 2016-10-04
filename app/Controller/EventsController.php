@@ -179,6 +179,31 @@ class EventsController extends AppController
                 }
 //                $message = ltrim($message, '<br>');
                 $this->Session->setFlash($dataEvent['Event']['title'] . ' の' . $message . ' を登録しました。', 'flashMessage');
+                
+                //event_artistsテーブルに保存
+                $saveDetails = $this->EventsDetail->find('list', array(
+                    'conditions' => array('EventsDetail.event_id' => $saveEvent['Event']['id']),
+                    'fields' => array('EventsDetail.id')
+                ));
+                $dataArtists = [];
+                $array_artists = $this->Artist->find('list', array(
+                    'conditions' => array(),
+                    'fields' => array('Artist.name')
+                ));
+                foreach ($array_artists as $key => $val) {
+                    //イベントタイトルにアーティスト名があれば出演者タグとして登録する
+                    if (strpos($dataEvent['Event']['title'], $val) !== false) {
+                        foreach ($saveDetails as $save_detail_id) {
+                            $dataArtists[] = array(
+                                'event_id' => $saveEvent['Event']['id'],
+                                'events_detail_id' => $save_detail_id,
+                                'artist_id' => $key
+                            );
+                        }
+                    }
+                }
+                $this->EventArtist->saveMany($dataArtists);
+                
             } else {
                 $this->Session->setFlash($dataEvent['Event']['title'] . ' を登録できませんでした。', 'flashMessage');
             }
