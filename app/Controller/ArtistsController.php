@@ -151,6 +151,10 @@ class ArtistsController extends AppController
             if (!empty($this->request->data)) { //データが存在する場合
                 $this->set('id', $id); //viewに渡すために$idをセット
                 $this->set('image_name', $this->request->data['Artist']['image_name']); //viewに渡すためにファイル名をセット
+                /* 公式サイトのデータを整形ここから */
+                $array_link_urls = $this->Artist->getArrayLinkUrls($this->request->data['Artist']['link_urls']);
+                $this->request->data['Artist']['link_urls'] = $array_link_urls; 
+                /* 公式サイトのデータを整形ここまで */
                 //ゲストユーザの場合
                 if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                     $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
@@ -165,6 +169,18 @@ class ArtistsController extends AppController
                 $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
                 $this->redirect('/artists/artist_lists/');
             }
+            /* 公式サイトのデータを整形ここから */
+            $link_url_data = '';
+            foreach ($this->request->data['Artist']['link_urls'] as $val) {
+                if ($val['link_url']) {
+                    $link_url_data = $link_url_data . $val['link_url'] . ',';
+                }
+            }
+            if ($link_url_data) {
+                $link_url_data = rtrim($link_url_data, ',');
+            }
+            $this->request->data['Artist']['link_urls'] = $link_url_data;
+            /* 公式サイトのデータを整形ここまで */
             $this->Artist->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Artist->validates()) { //validate成功の処理
                 /* ファイルの保存ここから */

@@ -32,7 +32,9 @@
     </tr>
     <tr>
       <td><label>公式サイト</label></td>
-      <td><?php echo $this->Form->input('link_urls', array('type' => 'text', 'label' => false)); ?></td>
+      <td><?php echo $this->Form->input('Artist.link_urls.0.link_url', array('type' => 'text', 'label' => false)); ?><br>
+          <?php echo $this->Form->input('Artist.link_urls.1.link_url', array('type' => 'text', 'label' => false)); ?><br>
+          <?php echo $this->Form->input('Artist.link_urls.2.link_url', array('type' => 'text', 'label' => false)); ?></td>
     </tr>
     <tr>
       <td><label>関連アーティスト</label></td>
