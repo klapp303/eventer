@@ -4,7 +4,7 @@
   <div class="tbl-txt_artists">
     <span class="txt-min">追加する際は、既にアーティストが登録されていないか確認してください。</span>
   </div>
-  <table class="PlaceAddForm">
+  <table>
     <?php echo $this->Form->create('Artist', array( //使用するModel
         'type' => 'post', //デフォルトはpost送信
         'action' => 'add', //Controllerのactionを指定

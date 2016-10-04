@@ -150,15 +150,33 @@ class ArtistsController extends AppController
             $this->request->data = $this->Artist->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
                 $this->set('id', $id); //viewに渡すために$idをセット
+                
+                //ゲストユーザの場合
+                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+                    $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
+                }
+                
                 $this->set('image_name', $this->request->data['Artist']['image_name']); //viewに渡すためにファイル名をセット
                 /* 公式サイトのデータを整形ここから */
                 $array_link_urls = $this->Artist->getArrayLinkUrls($this->request->data['Artist']['link_urls']);
                 $this->request->data['Artist']['link_urls'] = $array_link_urls; 
                 /* 公式サイトのデータを整形ここまで */
-                //ゲストユーザの場合
-                if ($this->Auth->user('id') == $GUEST_USER_KEY) {
-                    $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
+                /* 関連アーティストのデータを整形ここから */
+                $array_related_id = $this->Artist->getArrayRelatedArtists($this->request->data['Artist']['related_artists_id']);
+                $this->set('related_lists', $array_related_id);
+                $related_lists = array($id); //自身のidは除外する
+                foreach ($array_related_id as $val) {
+                    $related_lists[] = $val['artist_id'];
                 }
+                $artist_lists = $this->Artist->find('list', array(
+                    'conditions' => array(
+                        'Artist.id !=' => $related_lists
+                    ),
+                    'fields' => array('Artist.name'),
+                    'order' => array('Artist.kana' => 'asc')
+                ));
+                $this->set('artist_lists', $artist_lists);
+                /* 関連アーティストのデータを整形ここまで */
             } else { //データが存在しない場合
                 $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
             }
@@ -169,9 +187,10 @@ class ArtistsController extends AppController
                 $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
                 $this->redirect('/artists/artist_lists/');
             }
+            
             /* 公式サイトのデータを整形ここから */
             $link_url_data = '';
-            foreach ($this->request->data['Artist']['link_urls'] as $val) {
+            foreach (@$this->request->data['Artist']['link_urls'] as $val) {
                 if ($val['link_url']) {
                     $link_url_data = $link_url_data . $val['link_url'] . ',';
                 }
@@ -181,6 +200,16 @@ class ArtistsController extends AppController
             }
             $this->request->data['Artist']['link_urls'] = $link_url_data;
             /* 公式サイトのデータを整形ここまで */
+            /* 関連アーティストのデータを整形ここから */
+            $related_artist_data = '';
+            foreach (@$this->request->data['Artist']['related_artists_id'] as $val) {
+                $related_artist_data = $related_artist_data . $val['artist_id'] . ',';
+            }
+            if ($related_artist_data) {
+                $related_artist_data = rtrim($related_artist_data, ',');
+            }
+            $this->request->data['Artist']['related_artists_id'] = $related_artist_data;
+            /* 関連アーティストのデータを整形ここまで */
             $this->Artist->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Artist->validates()) { //validate成功の処理
                 /* ファイルの保存ここから */
