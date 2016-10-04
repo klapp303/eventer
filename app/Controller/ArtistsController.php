@@ -82,8 +82,26 @@ class ArtistsController extends AppController
         $this->set('artist_detail', $artist_detail);
         
         //開催予定のイベント
+        $artists_id = array($id);
+        /* 関連アーティストの取得ここから */
+        $related_artist_lists = $this->Artist->find('list', array(
+            'conditions' => array(
+                'Artist.related_artists_id !=' => null
+            ),
+            'fields' => array('Artist.related_artists_id')
+        ));
+        foreach ($related_artist_lists as $key => $val) {
+            $array_related_id = $this->Artist->getArrayRelatedArtists($val);
+            foreach ($array_related_id as $related_id) {
+                if ($related_id['artist_id'] == $id) {
+                    $artists_id[] = $key;
+                    continue;
+                }
+            }
+        }
+        /* 関連アーティストの取得ここまで */
         $event_artists_lists = $this->EventArtist->find('list', array(
-            'conditions' => array('EventArtist.artist_id' => $id),
+            'conditions' => array('EventArtist.artist_id' => $artists_id),
             'fields' => array('EventArtist.events_detail_id')
         ));
         $event_lists = $this->EventsDetail->find('all', array(
@@ -197,6 +215,8 @@ class ArtistsController extends AppController
             }
             if ($link_url_data) {
                 $link_url_data = rtrim($link_url_data, ',');
+            } else {
+                $link_url_data = null; //空白で登録させないため
             }
             $this->request->data['Artist']['link_urls'] = $link_url_data;
             /* 公式サイトのデータを整形ここまで */
@@ -207,6 +227,8 @@ class ArtistsController extends AppController
             }
             if ($related_artist_data) {
                 $related_artist_data = rtrim($related_artist_data, ',');
+            } else {
+                $related_artist_data = null; //空白で登録させないため
             }
             $this->request->data['Artist']['related_artists_id'] = $related_artist_data;
             /* 関連アーティストのデータを整形ここまで */
