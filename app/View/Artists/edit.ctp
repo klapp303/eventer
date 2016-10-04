@@ -1,11 +1,5 @@
 <?php echo $this->Html->css('artists', array('inline' => false)); ?>
 <?php echo $this->Html->script('jquery-tmb', array('inline' => false)); ?>
-<?php echo $this->element('searchbox', array(
-    'controller' => 'artists',
-    'value' => @$search_word,
-    'placeholder' => 'アーティスト名 or カナ を入力'
-)); ?>
-
 <h3>出演者タグの編集</h3>
 
   <table class="PlaceAddForm">

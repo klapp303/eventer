@@ -1,10 +1,4 @@
 <?php echo $this->Html->css('artists', array('inline' => false)); ?>
-<?php echo $this->element('searchbox', array(
-    'controller' => 'artists',
-    'value' => @$search_word,
-    'placeholder' => 'アーティスト名 or カナ を入力'
-)); ?>
-
 <h3>出演者タグの登録</h3>
 
   <div class="tbl-txt_artists">

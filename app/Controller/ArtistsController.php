@@ -232,37 +232,4 @@ class ArtistsController extends AppController
             
         }
     }
-    
-    /*public function search()
-    {
-        $this->set('PLACE_BLOCK_KEY', $this->getOptionKey('PLACE_BLOCK_KEY'));
-        
-        if ($this->request->query && $this->request->query['word']) {
-            $search_word = $this->request->query['word'];
-            $this->set(compact('search_word'));
-        } else {
-            $this->redirect('/places/');
-        }
-        
-        $this->Paginator->settings = array(
-            'conditions' => array(
-                array(
-                    'or' => array(
-                        'Place.name LIKE' => '%' . $search_word . '%',
-                        'Place.access LIKE' => '%' . $search_word . '%',
-                    )
-                ),
-                'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
-            )
-        );
-        $place_lists = $this->Paginator->paginate('Place');
-        
-        if (!$place_lists) {
-            $this->Session->setFlash('検索に一致する会場はありません。', 'flashMessage');
-        }
-        
-        $this->set('place_lists', $place_lists);
-        
-        $this->render('place_lists');
-    }*/
 }
