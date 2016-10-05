@@ -776,15 +776,22 @@ class EventsController extends AppController
             throw new NotFoundException(__('存在しないデータです。'));
         }
         
+        //参加済のイベント一覧を取得しておく
+        $join_lists = $this->EventUser->getJoinEntries($user_id);
+        
         $event_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
-                'EventsDetail.user_id' => $user_id,
+                'or' => array(
+                    'EventsDetail.user_id' => $user_id,
+                    'EventsDetail.id' => $join_lists['events_detail_id']
+                ),
                 'EventsDetail.date >=' => date('Y-m-d'),
                 'EventsDetail.deleted !=' => 1
             ),
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
             'contain' => array('Event', 'Place')
         ));
+        
         $json_data = [];
         foreach ($event_lists as $key => $event) {
             $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id']);
