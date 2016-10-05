@@ -396,9 +396,12 @@ class EventsController extends AppController
         }
         $events_detail = $this->EventsDetail->findById($id);
         
-//        if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
-//            $this->redirect('/event/' . $id);
-//        }
+        if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
+            //公開中のイベントでなければredirect
+            if ($events_detail['Event']['publish'] != 1) {
+                $this->redirect('/event/' . $id);
+            }
+        }
         
         $this->set('events_detail', $events_detail);
         $this->set('entry_genres', $this->EntryGenre->find('list'));
