@@ -51,7 +51,7 @@
 
   <?php if (count($event_undecided_lists) > 0) { ?>
     <div class="tbl-event_lists js-hide">
-    <table class="detail-list">
+    <table class="detail-list event-list">
       <tr><th class="tbl-date">開催日</th>
           <th>イベント名</th>
           <th class="tbl-genre">種類<br>
