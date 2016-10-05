@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class BudgetsController extends AppController
 {
-    public $uses = array('EventsDetail', 'EventsEntry'/* , 'EventUser' */); //使用するModel
+    public $uses = array('EventUser', 'EventsDetail', 'EventsEntry'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -54,18 +54,39 @@ class BudgetsController extends AppController
         $this->render('unfixed_lists');
     }
     
-    public function fixed($id = false, $column = false)
+    public function fixed($id = false, $column = false, $join_flg = 0)
     {
         if (empty($id) || empty($column)) {
             throw new NotFoundException(__('存在しないデータです。'));
         }
         
         if ($this->request->is('post')) {
-            $this->EventsEntry->id = $id;
-            if ($this->EventsEntry->savefield($column . '_status', 1)) {
-                $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
+            if ($join_flg == 0) {
+                $this->EventsEntry->id = $id;
+                if ($this->EventsEntry->savefield($column . '_status', 1)) {
+                    $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
+                } else {
+                    $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+                }
+                
+            //参加済のイベントの場合
             } else {
-                $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+                $eventUserData = $this->EventUser->find('first', array(
+                    'conditions' => array(
+                        'EventUser.events_entry_id' => $id,
+                        'EventUser.user_id' => $this->Auth->user('id')
+                    )
+                ));
+                if ($eventUserData) {
+                    $this->EventUser->id = $eventUserData['EventUser']['id'];
+                    if ($this->EventUser->savefield($column . '_status', 1)) {
+                        $this->Session->setFlash('対応済みに変更しました。', 'flashMessage');
+                    } else {
+                        $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+                    }
+                } else {
+                    $this->Session->setFlash('変更できませんでした。', 'flashMessage');
+                }
             }
             
             $this->redirect('/budgets/unfixed_' . $column);
@@ -94,18 +115,39 @@ class BudgetsController extends AppController
         $this->render('unfixed_lists');
     }
     
-    public function reset($id = false, $reset_column = false)
+    public function reset($id = false, $reset_column = false, $join_flg = 0)
     {
         if (empty($id) || empty($reset_column)) {
             throw new NotFoundException(__('存在しないデータです。'));
         }
         
         if ($this->request->is('post')) {
-            $this->EventsEntry->id = $id;
-            if ($this->EventsEntry->savefield($reset_column . '_status', 0)) {
-                $this->Session->setFlash('対応済みを元に戻しました。', 'flashMessage');
+            if ($join_flg == 0) {
+                $this->EventsEntry->id = $id;
+                if ($this->EventsEntry->savefield($reset_column . '_status', 0)) {
+                    $this->Session->setFlash('対応済みを元に戻しました。', 'flashMessage');
+                } else {
+                    $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
+                }
+                
+            //参加済のイベントの場合
             } else {
-                $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
+                $eventUserData = $this->EventUser->find('first', array(
+                    'conditions' => array(
+                        'EventUser.events_entry_id' => $id,
+                        'EventUser.user_id' => $this->Auth->user('id')
+                    )
+                ));
+                if ($eventUserData) {
+                    $this->EventUser->id = $eventUserData['EventUser']['id'];
+                    if ($this->EventUser->savefield($reset_column . '_status', 0)) {
+                        $this->Session->setFlash('対応済みを元に戻しました。', 'flashMessage');
+                    } else {
+                        $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
+                    }
+                } else {
+                    $this->Session->setFlash('元に戻せませんでした。', 'flashMessage');
+                }
             }
             
             $this->redirect('/budgets/reset_status/' . $reset_column);

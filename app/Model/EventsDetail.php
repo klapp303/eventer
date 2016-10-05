@@ -83,26 +83,47 @@ class EventsDetail extends AppModel
             'order' => array('EventsDetail.date' => ($status == 0)? 'asc' : 'desc', 'EventsDetail.time_start' => 'asc')
         ));
         
+        //参加済のイベントで未払いの一覧を取得しておく
+        $this->loadModel('EventUser');
+        $join_lists = $this->EventUser->find('list', array(
+            'conditions' => array(
+                'EventUser.user_id' => $user_id,
+                'EventUser.payment_status' => $status
+            ),
+            'fields' => array('EventUser.events_entry_id')
+        ));
+        
         $this->loadModel('EventsEntry');
         foreach ($event_lists as $key => $event) {
             $entry_lists = $this->EventsEntry->find('all', array(
                 'conditions' => array(
-                    'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
-                    'EventsEntry.user_id' => $user_id,
-                    'EventsEntry.price >' => 0,
-                    array(
-                        'or' => array(
-                            'EventsEntry.payment !=' => 'credit',
-                            'EventsEntry.payment' => null,
-                        )
-                    ),
-                    'EventsEntry.payment_status' => $status,
-                    'EventsEntry.status' => 2,
-                    array(
-                        'or' => array(
-                            'EventsDetail.date >=' => date('Y-m-d'),
-                            'EventsEntry.payment' => 'buy'
+                    'or' => array(
+                        //参加済のイベントで未払いの場合
+                        array(
+                            'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
+                            'EventsEntry.id' => $join_lists,
+                            'EventsEntry.price >' => 0,
+                            'EventsEntry.status' => 2
                         ),
+                        array(
+                            'EventsEntry.events_detail_id' => $event['EventsDetail']['id'],
+                            'EventsEntry.user_id' => $user_id,
+                            'EventsEntry.price >' => 0,
+                            array(
+                                'or' => array(
+                                    'EventsEntry.payment !=' => 'credit',
+                                    'EventsEntry.payment' => null
+                                )
+                            ),
+                            'EventsEntry.payment_status' => $status,
+                            'EventsEntry.status' => 2,
+                            array(
+                                'or' => array(
+                                    'EventsDetail.date >=' => date('Y-m-d'),
+                                    'EventsEntry.payment' => 'buy'
+                                ),
+                            )
+                        )
                     )
                 )
             ));
@@ -113,6 +134,11 @@ class EventsDetail extends AppModel
             } else {
                 unset($event_lists[$key]['EventsEntry']);
                 foreach ($entry_lists as $entry) {
+//                    //参加済のイベントで未払いの場合はflgを立てる
+//                    if ($entry['EventsEntry']['user_id'] != $user_id) {
+//                        
+//                    }
+                    
                     $event_lists[$key]['EventsEntry'][] = $entry['EventsEntry'];
                 }
                 $data['count'] += count($entry_lists);
