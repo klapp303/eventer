@@ -26,7 +26,7 @@ class EventsController extends AppController
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         
         //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -37,7 +37,7 @@ class EventsController extends AppController
                     'EventsDetail.date >=' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id'])
                     )
                 )
             ),
@@ -59,7 +59,7 @@ class EventsController extends AppController
                         'EventsDetail.id' => $this->request->params['id'],
                         'or' => array(
                             array('EventsDetail.user_id' => $this->Auth->user('id')),
-                            array('EventsDetail.id' => $join_lists['id']),
+                            array('EventsDetail.id' => $join_lists['events_detail_id']),
                             array('Event.publish' => 1)
                         ),
                         'EventsDetail.user_id !=' => $GUEST_USER_KEY
@@ -93,7 +93,7 @@ class EventsController extends AppController
                             'EventsDetail.event_id' => $event_detail['EventsDetail']['event_id'],
                             'or' => array(
                                 array('EventsDetail.user_id' => $this->Auth->user('id')),
-                                array('EventsDetail.id' => $join_lists['id']),
+                                array('EventsDetail.id' => $join_lists['events_detail_id']),
                                 array('Event.publish' => 1)
                             )
                         )
@@ -215,7 +215,7 @@ class EventsController extends AppController
     public function edit($id = null)
     {
         //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -226,7 +226,7 @@ class EventsController extends AppController
                     'EventsDetail.date >=' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id'])
                     )
                 )
             ),
@@ -594,7 +594,7 @@ class EventsController extends AppController
     public function past_lists()
     {
         //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         
         $this->Paginator->settings = array(
             'conditions' => array(
@@ -602,7 +602,7 @@ class EventsController extends AppController
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id'])
                     )
                 )
             ),
@@ -622,7 +622,7 @@ class EventsController extends AppController
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-//                        array('EventsDetail.id' => $join_lists['id'])
+//                        array('EventsDetail.id' => $join_lists['events_detail_id'])
                     )
                 )
             ),
@@ -713,7 +713,7 @@ class EventsController extends AppController
 //        }
         
         //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -736,7 +736,7 @@ class EventsController extends AppController
                 array(
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['id']),
+                        array('EventsDetail.id' => $join_lists['events_detail_id']),
 //                        array('Event.publish' => 1)
                     )
                 ),

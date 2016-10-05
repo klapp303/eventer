@@ -14,16 +14,21 @@ class EventUser extends AppModel
             'foreignKey' => 'user_id', //関連付けるためのfield、関連付け先は上記Modelのid
             'fields' => 'handlename' //関連付け先Modelの使用field
         ),
-        'Event' => array(
-            'className' => 'Event', //関連付けるModel
-            'foreignKey' => 'event_id', //関連付けるためのfield、関連付け先は上記Modelのid
+//        'Event' => array(
+//            'className' => 'Event', //関連付けるModel
+//            'foreignKey' => 'event_id', //関連付けるためのfield、関連付け先は上記Modelのid
+////            'fields' => 'title' //関連付け先Modelの使用field
+//        ),
+//        'EventsDetail' => array(
+//            'className' => 'EventsDetail', //関連付けるModel
+//            'foreignKey' => 'events_detail_id', //関連付けるためのfield、関連付け先は上記Modelのid
+////            'fields' => 'title' //関連付け先Modelの使用field
+//        ),
+        'EventsEntry' => array(
+            'className' => 'EventsEntry', //関連付けるModel
+            'foreignKey' => 'events_entry_id', //関連付けるためのfield、関連付け先は上記Modelのid
 //            'fields' => 'title' //関連付け先Modelの使用field
         ),
-        'EventsDetail' => array(
-            'className' => 'EventsDetail', //関連付けるModel
-            'foreignKey' => 'events_detail_id', //関連付けるためのfield、関連付け先は上記Modelのid
-//            'fields' => 'title' //関連付け先Modelの使用field
-        )
     );
     
 //    public $validate = array(
@@ -44,7 +49,8 @@ class EventUser extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function getJoinEvents($user_id = false, $data = ['id' => [], 'list' => []])
+    //参加者をエントリー毎にしたのでこの関数は未使用
+    /*public function getJoinEvents($user_id = false, $data = ['id' => [], 'list' => []])
     {
         //参加済のデータからevent_idを取得
         $event_lists = $this->find('list', array(
@@ -66,8 +72,10 @@ class EventUser extends AppModel
                     'EventUser.events_detail_id' => $event['EventsDetail']['id']
                 )
             ))) {
+                //参加済のイベント
                 $event['EventsDetail']['join_status'] = 1;
             } else {
+                //別日程のイベント
                 $event['EventsDetail']['join_status'] = 0;
             }
         }
@@ -83,6 +91,37 @@ class EventUser extends AppModel
             'fields' => 'EventsDetail.id'
         ));
         $data['id'] = $events_detail_id;
+        
+        return $data;
+    }*/
+    
+    public function getJoinEntries($user_id = false, $data = ['list' => [], 'entry_id' => [], 'events_detail_id' => []])
+    {
+        //参加済のデータからentry_idを取得
+        $array_entry_id = $this->find('list', array(
+            'conditions' => array('EventUser.user_id' => $user_id),
+            'fields' => 'EventUser.events_entry_id'
+        ));
+        $data['entry_id'] = $array_entry_id;
+        
+        //参加済のデータからevents_entriesデータを取得
+        $this->loadModel('EventsEntry');
+        $entry_lists = $this->EventsEntry->find('all', array(
+            'conditions' => array('EventsEntry.id' => $array_entry_id),
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+        ));
+        $data['list'] = $entry_lists;
+        
+        //参加済のデータと紐付くevents_detail_idを取得
+        $array_detail_id = [];
+        $pre_id = 0;
+        foreach ($entry_lists as $val) {
+            if ($pre_id != $val['EventsDetail']['id']) {
+                $array_detail_id[] = $val['EventsDetail']['id'];
+                $pre_id = $val['EventsDetail']['id'];
+            }
+        }
+        $data['events_detail_id'] = $array_detail_id;
         
         return $data;
     }

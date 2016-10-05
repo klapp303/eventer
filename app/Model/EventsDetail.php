@@ -77,7 +77,7 @@ class EventsDetail extends AppModel
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(
-                'EventsDetail.user_id' => $user_id,
+//                'EventsDetail.user_id' => $user_id,
                 'EventsDetail.deleted !=' => 1
             ),
             'order' => array('EventsDetail.date' => ($status == 0)? 'asc' : 'desc', 'EventsDetail.time_start' => 'asc')
@@ -134,7 +134,7 @@ class EventsDetail extends AppModel
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(
-                'EventsDetail.user_id' => $user_id,
+//                'EventsDetail.user_id' => $user_id,
                 'EventsDetail.date >=' => date('Y-m-d'),
                 'EventsDetail.deleted !=' => 1
             ),
@@ -209,7 +209,7 @@ class EventsDetail extends AppModel
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(
-                'EventsDetail.user_id' => $user_id,
+//                'EventsDetail.user_id' => $user_id,
                 'EventsDetail.deleted !=' => 1
             ),
             'order' => array('EventsDetail.date' => ($status == 0)? 'asc' : 'desc', 'EventsDetail.time_start' => 'asc')

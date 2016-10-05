@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist', 'EventArtist', 'EventsDetail'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventUser', 'EventsDetail'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -104,10 +104,19 @@ class ArtistsController extends AppController
             'conditions' => array('EventArtist.artist_id' => $artists_id),
             'fields' => array('EventArtist.events_detail_id')
         ));
+        //参加済のイベント一覧を取得しておく
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         $event_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
-                'EventsDetail.date >=' => date('Y-m-d'),
-                'EventsDetail.id' => $event_artists_lists
+                'and' => array(
+                    'EventsDetail.date >=' => date('Y-m-d'),
+                    'EventsDetail.id' => $event_artists_lists,
+                    'or' => array(
+                        array('EventsDetail.user_id' => $this->Auth->user('id')),
+                        array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('Event.publish' => 1) //公開ステータスを追加
+                    )
+                )
             ),
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         ));

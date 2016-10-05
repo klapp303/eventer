@@ -196,11 +196,7 @@ class EventsEntry extends AppModel
         //参加済のイベントを取得しておく
         if ($user_id) {
             $this->loadModel('EventUser');
-            $join_events = $this->EventUser->getJoinEvents($user_id);
-            $join_lists = $this->find('list', array(
-                'conditions' => array('EventsEntry.events_detail_id' => $join_events['id']),
-                'fields' => 'EventsEntry.id'
-            ));
+            $join_lists = $this->EventUser->getJoinEntries($user_id);
         }
         
         if ($s_date) {
@@ -219,7 +215,7 @@ class EventsEntry extends AppModel
                 'or' => array(
                     //参加済のイベントの場合は開催日時のみ
                     array(
-                        'EventsEntry.id' => $join_lists,
+                        'EventsEntry.id' => $join_lists['entry_id'],
                         'or' => array(
                             array(
                                 'and' => array(

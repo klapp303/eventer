@@ -15,7 +15,8 @@ class TopController extends AppController
     public function index()
     {
         //参加済のイベント一覧を取得しておく
-//        $join_lists = $this->EventUser->getJoinEvents($this->Auth->user('id'));
+//        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        
         //未対応の件数
         $unfixed_payment_lists = $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0);
         $unfixed_sales_lists = $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0);
