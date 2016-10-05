@@ -49,9 +49,10 @@
                                           状態</th>
         <th class="tbl-num" rowspan="2">価格<br>
                                         枚数</th>
-        <?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
+        <th rowspan="2">申込者</th>
+        <?php // if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
           <th class="tbl-act" rowspan="2">action</th>
-        <?php } ?></tr>
+        <?php // } ?></tr>
     <tr><th></th>
         <?php foreach ($entryDateColumn as $key => $column) { ?>
           <th class="tbl-date-min"><?php echo $key; ?></th>
@@ -74,6 +75,7 @@
                                                   break;
                                               }
                                           } ?></td>
+          <td rowspan="2"><?php echo $entry_list['User']['handlename']; ?></td>
           <?php if ($entry_list['EventsEntry']['user_id'] == $userData['id']) { ?>
             <td class="tbl-act" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('修正', '/events/entry_edit/' . $entry_list['EventsEntry']['id']); ?></span>
                                             <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'entry_delete', $entry_list['EventsEntry']['id'], $entry_list['EventsEntry']['events_detail_id']), null, $entry_list['EventsEntry']['title'] . ' を本当に削除しますか'); ?></span>
@@ -92,11 +94,11 @@
     <?php } ?>
   </table>
 
-<?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
+<?php // if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
   <div class="link-page_events">
     <span class="link-page"><?php echo $this->Html->link('⇨ 新しいエントリーの登録はこちら', '/events/entry_add/' . $event_detail['EventsDetail']['id']); ?></span>
   </div>
-<?php } ?>
+<?php // } ?>
 
 <h3>出演者</h3>
 
