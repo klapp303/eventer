@@ -66,11 +66,12 @@
                 <?php } ?>
             </td>
             <td class="tbl-genre"><span class="icon-genre col-event_<?php echo $event_list['EventsDetail']['genre_id']; ?>"><?php echo $event_list['EventGenre']['title']; ?></span><br>
-                                  <?php if ($event_list['EventsDetail']['status'] == 0) {echo '<span class="icon-like">検討中</span>';}
-                                    elseif ($event_list['EventsDetail']['status'] == 1) {echo '<span class="icon-like">申込中</span>';}
-                                    elseif ($event_list['EventsDetail']['status'] == 2) {echo '<span class="icon-true">当選</span>';}
-                                    elseif ($event_list['EventsDetail']['status'] == 3) {echo '<span class="icon-false">落選</span>';}
-                                    elseif ($event_list['EventsDetail']['status'] == 4) {echo '<span class="icon-false">見送り</span>';} ?></td>
+                                  <?php foreach ($eventEntryStatus as $entry_status) {
+                                      if ($entry_status['status'] == $event_list['EventsDetail']['status']) {
+                                          echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                          break;
+                                      }
+                                  } ?></td>
             <td class="tbl-act"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
                                 <?php if ($event_list['EventsDetail']['user_id'] == $userData['id']) { ?>
                                   <br><span class="icon-button"><?php echo $this->Html->link('修正', '/events/edit/' . $event_list['Event']['id']); ?></span>
