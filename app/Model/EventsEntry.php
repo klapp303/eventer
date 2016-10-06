@@ -292,7 +292,24 @@ class EventsEntry extends AppModel
     
     public function getOnlyEntries($user_id = false, $data = ['list' => [], 'events_detail_id' => []])
     {
+        $entry_lists = $this->find('list', array(
+            'conditions' => array(
+                'EventsEntry.user_id' => $user_id
+            ),
+            'fields' => array('EventsEntry.events_detail_id')
+        ));
         
+        $this->loadModel('EventsDetail');
+        $event_lists = $this->EventsDetail->find('list', array(
+            'conditions' => array(
+                'EventsDetail.id' => $entry_lists,
+                //イベント作成者とエントリー登録者が違うもののみ
+                'EventsDetail.user_id !=' => $user_id
+            ),
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
+            'fields' => array('EventsDetail.id')
+        ));
+        $data['events_detail_id'] = $event_lists;
         
         return $data;
     }
