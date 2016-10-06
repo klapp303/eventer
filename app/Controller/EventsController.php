@@ -27,6 +27,8 @@ class EventsController extends AppController
         
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -37,7 +39,8 @@ class EventsController extends AppController
                     'EventsDetail.date >=' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['events_detail_id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                     )
                 )
             ),
@@ -52,7 +55,8 @@ class EventsController extends AppController
         $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
         
-        if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
+        //パラメータにidがあれば詳細ページを表示
+        if (isset($this->request->params['id']) == true) {
             $event_detail = $this->EventsDetail->find('first', array(
                 'conditions' => array(
                     'and' => array(
@@ -60,9 +64,10 @@ class EventsController extends AppController
                         'or' => array(
                             array('EventsDetail.user_id' => $this->Auth->user('id')),
                             array('EventsDetail.id' => $join_lists['events_detail_id']),
+                            array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
                             array('Event.publish' => 1)
                         ),
-                        'EventsDetail.user_id !=' => $GUEST_USER_KEY
+//                        'EventsDetail.user_id !=' => $GUEST_USER_KEY
                     )
                 ),
                 'recursive' => 2
@@ -94,6 +99,7 @@ class EventsController extends AppController
                             'or' => array(
                                 array('EventsDetail.user_id' => $this->Auth->user('id')),
                                 array('EventsDetail.id' => $join_lists['events_detail_id']),
+                                array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
                                 array('Event.publish' => 1)
                             )
                         )
@@ -213,9 +219,11 @@ class EventsController extends AppController
     }
     
     public function edit($id = null)
-    {
+    {   
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -226,7 +234,8 @@ class EventsController extends AppController
                     'EventsDetail.date >=' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['events_detail_id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                     )
                 )
             ),
@@ -385,6 +394,8 @@ class EventsController extends AppController
     
     public function entry_add($id = null)
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
         //エントリーの日付カラムを定義しておく
         $entryDateColumn = $this->EventsEntry->getDateColumn();
         
@@ -399,6 +410,11 @@ class EventsController extends AppController
         if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
             //公開中のイベントでなければredirect
             if ($events_detail['Event']['publish'] != 1) {
+                $this->redirect('/event/' . $id);
+            }
+            
+            //ゲストユーザの場合は自身のイベントのみ
+            if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                 $this->redirect('/event/' . $id);
             }
         }
@@ -598,6 +614,8 @@ class EventsController extends AppController
     {
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
         $this->Paginator->settings = array(
             'conditions' => array(
@@ -605,7 +623,8 @@ class EventsController extends AppController
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['events_detail_id'])
+                        array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                     )
                 )
             ),
@@ -625,7 +644,8 @@ class EventsController extends AppController
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
-//                        array('EventsDetail.id' => $join_lists['events_detail_id'])
+//                        array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                     )
                 )
             ),
@@ -708,15 +728,17 @@ class EventsController extends AppController
     
     public function search()
     {
-//        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
-//        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
-//            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
-//            $this->redirect('/events/');
-//        }
+        if ($this->Auth->user('id') == $GUEST_USER_KEY) {
+            $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
+            $this->redirect('/events/');
+        }
         
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
         //フォームの初期表示数
         $this->set('form_min', 2);
@@ -740,10 +762,11 @@ class EventsController extends AppController
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
                         array('EventsDetail.id' => $join_lists['events_detail_id']),
-//                        array('Event.publish' => 1)
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
+                        array('Event.publish' => 1)
                     )
                 ),
-//                'EventsDetail.user_id !=' => $GUEST_USER_KEY
+                'EventsDetail.user_id !=' => $GUEST_USER_KEY
             ),
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
         );
@@ -778,12 +801,15 @@ class EventsController extends AppController
         
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($user_id);
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
         $event_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
                 'or' => array(
-                    'EventsDetail.user_id' => $user_id,
-                    'EventsDetail.id' => $join_lists['events_detail_id']
+                    array('EventsDetail.user_id' => $user_id),
+                    array('EventsDetail.id' => $join_lists['events_detail_id']),
+                    array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                 ),
                 'EventsDetail.date >=' => date('Y-m-d'),
                 'EventsDetail.deleted !=' => 1

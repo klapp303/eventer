@@ -289,4 +289,11 @@ class EventsEntry extends AppModel
             return $data;
         }
     }
+    
+    public function getOnlyEntries($user_id = false, $data = ['list' => [], 'events_detail_id' => []])
+    {
+        
+        
+        return $data;
+    }
 }

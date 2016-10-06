@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist', 'EventArtist', 'EventUser', 'EventsDetail'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventUser', 'EventsDetail', 'EventsEntry'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -53,6 +53,8 @@ class ArtistsController extends AppController
     
     public function artist_detail($id = null)
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
         if (!$id) {
             redirect('/artists/artist_lists/');
         }
@@ -106,6 +108,8 @@ class ArtistsController extends AppController
         ));
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         $event_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
                 'and' => array(
@@ -114,8 +118,10 @@ class ArtistsController extends AppController
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
                         array('EventsDetail.id' => $join_lists['events_detail_id']),
+                        array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
                         array('Event.publish' => 1) //公開ステータスを追加
-                    )
+                    ),
+                    'EventsDetail.user_id !=' => $GUEST_USER_KEY
                 )
             ),
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')

@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class PlacesController extends AppController
 {
-    public $uses = array('Place', 'Prefecture', 'EventUser', 'Event', 'EventsDetail'); //使用するModel
+    public $uses = array('Place', 'Prefecture', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -44,6 +44,8 @@ class PlacesController extends AppController
     
     public function place_detail()
     {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
         if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
             $place_detail = $this->Place->find('first', array(
                 'conditions' => array('and' => array(
@@ -58,6 +60,8 @@ class PlacesController extends AppController
                 /* 会場に紐付くイベント一覧を取得ここから */
                 //参加済のイベント一覧を取得しておく
                 $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+                //エントリーのみの一覧を取得しておく
+                $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
                 $event_lists = $this->EventsDetail->find('all', array( //place_detailページのイベント一覧を設定
                     'conditions' => array(
                         'and' => array(
@@ -66,8 +70,10 @@ class PlacesController extends AppController
                             'or' => array(
                                 array('EventsDetail.user_id' => $this->Auth->user('id')),
                                 array('EventsDetail.id' => $join_lists['events_detail_id']),
+                                array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
                                 array('Event.publish' => 1) //公開ステータスを追加
-                            )
+                            ),
+                            'EventsDetail.user_id !=' => $GUEST_USER_KEY
                         )
                     ),
                     'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
