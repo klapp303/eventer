@@ -10,6 +10,7 @@
     <title>
       <?php echo 'イベ幸'; ?>
     </title>
+    <?php echo $this->element('twitter_card'); ?>
     <?php
 //    echo $this->Html->meta('icon');
     
