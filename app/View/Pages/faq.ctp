@@ -7,6 +7,11 @@
 //    $sort[$key] = $val['date'];
 //}
 //array_multisort($sort, SORT_DESC, $array_faq);
+//カテゴリー順にソート
+foreach ($array_faq as $key => $val) {
+    $sort[$key] = $val['category_id'];
+}
+array_multisort($sort, SORT_ASC, $array_faq);
 //カテゴリー毎に整形
 foreach ($array_faq as $key => $val) {
     $array_category[$val['category']][$key] = $val;
