@@ -7,9 +7,9 @@ App::uses('Folder', 'Utility'); //フォルダAPI用
 class UsersController extends AppController
 {
     public $uses = array(
-        'User',
-        'EntryGenre', 'Event', 'EventGenre', 'EventUser', 'EventsDetail', 'EventsEntry',
-        'Option', 'Place'
+        'EventUser', 'EventArtist', 'User', 'Option', 'Log',
+        'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre',
+        'Artist', 'Place', 'Prefecture'/*, 'Page'*/
     ); //使用するModel
     
     public function beforeFilter()
@@ -36,6 +36,13 @@ class UsersController extends AppController
         
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
+                //ゲストアカウントのログインログを保存しておく
+                if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+                    $log_data['Log']['user_id'] = $this->Auth->user('id');
+                    $log_data['Log']['log_data'] = 'login';
+                    $this->Log->save($log_data);
+                }
+                
                 /* ログイン時に定期バックアップを判定して作成ここから */
                 $file_pass = '../../backup';
                 $file_name = 'eventer_backup';
@@ -56,9 +63,9 @@ class UsersController extends AppController
                 if ($backup_flg == 1) { //flgがあればバックアップを作成
                     //DBデータを取得する
                     $array_model = array(
-                        'User',
-                        'EntryGenre', 'Event', 'EventGenre', 'EventUser', 'EventsDetail', 'EventsEntry',
-                        'Option', 'Place'
+                        'EventUser', 'EventArtist', 'User', 'Option', 'Log',
+                        'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre',
+                        'Artist', 'Place', 'Prefecture'/*, 'Page'*/
                     );
                     foreach ($array_model as $model) {
                         $this->$model->Behaviors->disable('SoftDelete');
