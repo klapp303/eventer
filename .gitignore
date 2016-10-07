@@ -7,9 +7,10 @@
 /app/Config/myconfig.php
 
 /app/tmp
-/app/backup
 
 /app/webroot/files/artist
+
+/backup
 
 /lib/Cake/Console/Templates/skel/tmp/
 
