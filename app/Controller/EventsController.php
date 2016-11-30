@@ -750,14 +750,19 @@ class EventsController extends AppController
             $this->redirect('/events/');
         }
         
+        //search wordを整形する
+        $search_conditions = $this->Event->searchWordToConditions($search_word);
+        
         $this->Paginator->settings = array(
             'conditions' => array(
                 array(
-                    'or' => array(
-                        'Event.title LIKE' => '%' . $search_word . '%',
-                        'EventsDetail.title LIKE' => '%' . $search_word . '%'
-                    )
+                    'and' => $search_conditions
+//                    'or' => array(
+//                        'Event.title LIKE' => '%' . $search_word . '%',
+//                        'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                    )
                 ),
+                'EventsDetail.date >=' => date('Y-m-d'),
                 array(
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
@@ -768,7 +773,7 @@ class EventsController extends AppController
                 ),
                 'EventsDetail.user_id !=' => $GUEST_USER_KEY
             ),
-            'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->Paginate('EventsDetail');
         foreach ($event_lists as &$event_list) {

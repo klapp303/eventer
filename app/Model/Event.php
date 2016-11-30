@@ -34,4 +34,25 @@ class Event extends AppModel
 //        'title' => array('type' => 'value'),
 //        'status' => array('type' => 'value')
 //    );
+    
+    public function searchWordToConditions($search_word = null)
+    {
+        //全角スペースは半角スペースに変換しておく
+        $search_word = str_replace('　', ' ', $search_word);
+        
+        //and検索
+        $array_word = explode(' ', $search_word);
+        
+        $search_conditions = [];
+        foreach ($array_word as $val) {
+            $search_conditions[] = array(
+                'or' => array(
+                    'Event.title LIKE' => '%' . $val . '%',
+                    'EventsDetail.title LIKE' => '%' . $val . '%'
+                )
+            );
+        }
+        
+        return $search_conditions;
+    }
 }
