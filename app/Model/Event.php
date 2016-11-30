@@ -6,7 +6,7 @@ class Event extends AppModel
 {
     public $useTable = 'events';
     
-    public $actsAs = array('SoftDelete', 'Search.Searchable');
+    public $actsAs = array('SoftDelete'/*, 'Search.Searchable'*/);
     
     public $belongsTo = array(
         'User' => array(
@@ -30,8 +30,8 @@ class Event extends AppModel
         )
     );
     
-    public $filtetArgs = array(
-        'title' => array('type' => 'value'),
-        'status' => array('type' => 'value')
-    );
+//    public $filtetArgs = array(
+//        'title' => array('type' => 'value'),
+//        'status' => array('type' => 'value')
+//    );
 }

@@ -260,8 +260,8 @@ class PlacesController extends AppController
     {
         $this->set('PLACE_BLOCK_KEY', $this->getOptionKey('PLACE_BLOCK_KEY'));
         
-        if ($this->request->query && $this->request->query['word']) {
-            $search_word = $this->request->query['word'];
+        if ($this->request->query && $this->request->query['search_word']) {
+            $search_word = $this->request->query['search_word'];
             $this->set(compact('search_word'));
         } else {
             $this->redirect('/places/');

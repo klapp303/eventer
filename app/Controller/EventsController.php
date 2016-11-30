@@ -743,8 +743,8 @@ class EventsController extends AppController
         //フォームの初期表示数
         $this->set('form_min', 2);
         
-        if ($this->request->query && $this->request->query['word']) {
-            $search_word = $this->request->query['word'];
+        if ($this->request->query && $this->request->query['search_word']) {
+            $search_word = $this->request->query['search_word'];
             $this->set(compact('search_word'));
         } else {
             $this->redirect('/events/');
