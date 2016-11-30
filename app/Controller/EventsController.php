@@ -617,9 +617,26 @@ class EventsController extends AppController
         //エントリーのみの一覧を取得しておく
         $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
+        if ($this->request->query && $this->request->query['search_word']) {
+            $search_word = $this->request->query['search_word'];
+            $this->set(compact('search_word'));
+        } else {
+            $search_word = null;
+        }
+        
+        //search wordを整形する
+        $search_conditions = $this->Event->searchWordToConditions($search_word);
+        
         $this->Paginator->settings = array(
             'conditions' => array(
                 'and' => array(
+                    array(
+                        'and' => $search_conditions
+//                        'or' => array(
+//                            'Event.title LIKE' => '%' . $search_word . '%',
+//                            'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                        )
+                    ),
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
@@ -641,6 +658,13 @@ class EventsController extends AppController
         $event_undecided_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
                 'and' => array(
+                    array(
+                        'and' => $search_conditions
+//                        'or' => array(
+//                            'Event.title LIKE' => '%' . $search_word . '%',
+//                            'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                        )
+                    ),
                     'EventsDetail.date <' => date('Y-m-d'),
                     'or' => array(
                         array('EventsDetail.user_id' => $this->Auth->user('id')),
@@ -692,8 +716,25 @@ class EventsController extends AppController
             $this->redirect('/events/');
         }
         
+        if ($this->request->query && $this->request->query['search_word']) {
+            $search_word = $this->request->query['search_word'];
+            $this->set(compact('search_word'));
+        } else {
+            $search_word = null;
+        }
+        
+        //search wordを整形する
+        $search_conditions = $this->Event->searchWordToConditions($search_word);
+        
         $this->Paginator->settings = array(
             'conditions' => array(
+                array(
+                    'and' => $search_conditions
+//                    'or' => array(
+//                        'Event.title LIKE' => '%' . $search_word . '%',
+//                        'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                    )
+                ),
                 'EventsDetail.date >=' => date('Y-m-d'),
                 'Event.publish' => 1,
                 'EventsDetail.user_id !=' => $GUEST_USER_KEY

@@ -1,5 +1,9 @@
 <?php echo $this->Html->script('jquery-hide', array('inline' => false)); ?>
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
+<?php echo $this->element('searchbox', array(
+    'action' => 'past_lists',
+    'placeholder' => 'イベント名 を入力'
+)); ?>
 <button class="js-show js-hide-button fr cf">未対応のみを表示する</button>
 <button class="js-hide js-show-button fr cf">過去すべてを表示する</button>
 <h3>過去のイベント一覧</h3>

@@ -1,4 +1,8 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
+<?php echo $this->element('searchbox', array(
+    'action' => 'all_lists',
+    'placeholder' => 'イベント名 を入力'
+)); ?>
 <h3>公開されているイベント一覧</h3>
 
 <div class="intro_events">
