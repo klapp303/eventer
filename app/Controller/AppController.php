@@ -32,6 +32,35 @@ class AppController extends Controller
         
         $this->set('userData', $this->Auth->user());
         
+        //メインメニューやパンくずのために定義しておく
+        $array_menu = array(
+            1 => array(
+                'title' => 'about イベ幸',
+                'link' => '/pages/'
+            ),
+            2 => array(
+                'title' => 'イベント管理',
+                'link' => '/events/'
+            ),
+            3 => array(
+                'title' => '収支管理',
+                'link' => '/budgets/'
+            ),
+            4 => array(
+                'title' => '会場一覧',
+                'link' => '/places/place_lists/'
+            ),
+            5 => array(
+                'title' => '出演者タグ',
+                'link' => '/artists/artist_lists/'
+            ),
+            6 => array(
+                'title' => 'ログアウト',
+                'link' => '/users/logout/'
+            )
+        );
+        $this->set('array_menu', $array_menu);
+        
         $this->set('week_lists', array('日', '月', '火', '水', '木', '金', '土'));
         //エントリーの日付カラムを定義しておく
         $this->set('entryDateColumn', $this->EventsEntry->getDateColumn());
