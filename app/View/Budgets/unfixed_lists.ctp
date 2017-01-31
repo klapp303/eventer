@@ -1,22 +1,5 @@
 <?php echo $this->Html->css('budgets', array('inline' => false)); ?>
-<?php //表示する文言を定義しておく
-if (@$column == 'payment') {
-    $object = '未対応の支払い';
-} elseif (@$column == 'sales') {
-    $object = 'チケット余り';
-} elseif (@$column == 'collect') {
-    $object = '未対応の集金';
-} elseif (@$reset_column == 'payment') {
-    $object = '対応済みに確定した支払い';
-} elseif (@$reset_column == 'sales') {
-    $object = '対応済みに確定したチケット余り';
-} elseif (@$reset_column == 'collect') {
-    $object = '対応済みに確定した集金';
-} else {
-    $object = 'エントリー'; //未使用
-}
-?>
-<h3><?php echo $object.'一覧'; ?></h3>
+<h3><?php echo $sub_page; ?></h3>
 
 <div class="intro_budgets">
   <?php if (@$column == 'payment') { ?>
@@ -43,7 +26,7 @@ if (@$column == 'payment') {
     </p>
   <?php } else { ?>
     <p>
-      <?php echo $object; ?>一覧になります。
+      <?php echo $sub_page; ?>になります。
       <?php if (@$reset_column) { ?><br>
         <br>
         戻すボタンを押す事で確定した処理を元に戻す事ができます。

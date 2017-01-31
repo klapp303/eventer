@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
-<h3>よくあるご質問（FAQ）</h3>
+<h3><?php echo $sub_page; ?></h3>
 
 <?php
 //日付順にソート

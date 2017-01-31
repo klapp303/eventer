@@ -8,7 +8,7 @@
   </p>
 </div>
 
-<h3>イベント種類一覧</h3>
+<h3><?php echo $sub_page; ?></h3>
 
   <table class="detail-list">
     <tr><th class="tbl-ico">ジャンル名</th><th>説明</th></tr>

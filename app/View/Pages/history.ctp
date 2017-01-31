@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
-<h3>お知らせ、更新履歴</h3>
+<h3><?php echo $sub_page; ?></h3>
 
 <?php
 //日付順にソート

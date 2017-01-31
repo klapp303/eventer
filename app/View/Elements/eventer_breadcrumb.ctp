@@ -14,6 +14,9 @@ if (mb_substr($request_url, -1) != '/') {
         break;
     } ?>
 <?php } ?>
+<?php if (@$sub_page) {
+    $breadcrumbs[] = array('menu' => $sub_page, 'link' => '#');
+} ?>
 <?php if ($breadcrumbs) { ?>
   <h2 class="breadcrumb cf">
     <ol>
