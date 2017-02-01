@@ -37,7 +37,7 @@
                                  <?php } ?></td>
         <td><?php echo $event_detail['User']['handlename']; ?></td>
         <td><?php foreach ($other_lists as $other_list) { ?>
-              <?php echo $this->Html->link($other_list['EventsDetail']['title'], '/event/' . $other_list['EventsDetail']['id']); ?><br>
+              <?php echo $this->Html->link($other_list['EventsDetail']['title'], '/events/' . $other_list['EventsDetail']['id']); ?><br>
             <?php } ?></td></tr>
   </table>
 

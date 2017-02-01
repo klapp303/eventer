@@ -8,7 +8,7 @@ Router::connect('/', array('controller' => 'Top', 'action' => 'index'));
 /* Router::connect('/pages/*',
   array('controller' => 'Pages', 'action' => 'index')); */
 
-Router::connect('/event/:id', array('controller' => 'Events', 'action' => 'index'), array('id' => '[0-9]+')); //idを数字のみに制限
+Router::connect('/events/:id', array('controller' => 'Events', 'action' => 'index'), array('id' => '[0-9]+')); //idを数字のみに制限
 
 Router::connect('/places/place_detail/:id', array('controller' => 'Places', 'action' => 'place_detail'), array('id' => '[0-9]+')); //idを数字のみに制限
 

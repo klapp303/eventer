@@ -34,6 +34,6 @@
           <td><?php echo $out_list['EventDetail']['UserName']['handlename']; ?></td>
           <td class="tbl-num"><?php echo $out_list['EventDetail']['amount']; ?>円</td>
           <td class="tbl-date"><?php echo $out_list['EventDetail']['payment_end']; ?></td>
-          <td class="tbl-action_out"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $out_list['EventDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
+          <td class="tbl-action_out"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $out_list['EventDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
     <?php } ?>
   </table>

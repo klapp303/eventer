@@ -43,7 +43,7 @@
                 <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
               <?php } ?>
           </td>
-          <td class="tbl-act-min"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
+          <td class="tbl-act-min"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
     <?php } ?>
   </table>
 <?php } else { ?>

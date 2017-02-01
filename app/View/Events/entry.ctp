@@ -82,5 +82,5 @@
   <?php echo $this->Form->end(); ?><!-- form end -->
 
 <div class="link-page_events">
-  <span class="link-page"><?php echo $this->Html->link('⇨ イベント詳細ページに戻る', '/event/' . $events_detail_id); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ イベント詳細ページに戻る', '/events/' . $events_detail_id); ?></span>
 </div>

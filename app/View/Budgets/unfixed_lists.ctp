@@ -81,7 +81,7 @@
               } ?>
             </td>
             <td class="tbl-act <?php echo ($i == count($event_list['EventsEntry']))? '' : 'border-non-act'; ?>">
-              <span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
+              <span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span>
               <?php $join_flg = ($entry_list['user_id'] == $userData['id'])? 0 : 1; ?>
               <?php if (@$column) { ?>
                 <span class="icon-button"><?php echo $this->Form->postLink('確定', array('action' => 'fixed', $entry_list['id'], $column, $join_flg), null, '対応済みに変更しますか'); ?></span>

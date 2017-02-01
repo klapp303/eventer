@@ -33,7 +33,7 @@
                                                       break;
                                                   }
                                               } ?></td>
-            <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $event_list['EventsDetail']['id']); ?></span></td></tr>
+            <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $event_list['EventsDetail']['id']); ?></span></td></tr>
         <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
             <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>
                                        <?php echo date('m/d(' . $week_lists[date('w', strtotime($event_list['EventsDetail']['date']))] . ')', strtotime($event_list['EventsDetail']['date'])); ?>
@@ -87,7 +87,7 @@
                                                       break;
                                                   }
                                               } ?></td>
-            <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/'.$event_list['EventsDetail']['id']); ?></span></td></tr>
+            <td class="tbl-act-min" rowspan="2"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/'.$event_list['EventsDetail']['id']); ?></span></td></tr>
         <tr><td class="tbl-title-min"><span class="title-sub"><?php echo $event_list['EventsEntry']['title']; ?></span></td>
             <td class="tbl-date-min"><?php if ($event_list['EventsDetail']['date']) { ?>
                                        <?php echo date('m/d(' . $week_lists[date('w', strtotime($event_list['EventsDetail']['date']))] . ')', strtotime($event_list['EventsDetail']['date'])); ?>

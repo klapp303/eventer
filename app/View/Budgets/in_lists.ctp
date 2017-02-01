@@ -36,7 +36,7 @@
           <td><?php echo $in_list['UserProfile']['handlename']; ?></td>
           <td class="tbl-num"><?php echo $in_list['EventDetail']['amount']; ?>円</td>
           <td class="tbl-date"><?php echo $in_list['EventDetail']['payment_end']; ?></td>
-          <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/event/' . $in_list['EventDetail']['id'], array('target' => '_blank')); ?></span>
+          <td class="tbl-action"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $in_list['EventDetail']['id'], array('target' => '_blank')); ?></span>
               <br><span class="icon-button"><?php echo $this->Form->postLink('受取', array('action' => 'edit', $in_list['EventUser']['id']), null, '受け取り確認済みに変更しますか'); ?></span>
               <span class="icon-button"><?php echo $this->Form->postLink('削除', array('action' => 'delete', $in_list['EventUser']['id']), null, '本当に削除しますか'); ?></span></td></tr>
     <?php } ?>
