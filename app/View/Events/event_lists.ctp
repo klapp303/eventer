@@ -1,7 +1,7 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array(
-    'controller' => $this->name,
-    'action' => $this->action,
+    'controller' => strtolower($this->name),
+    'action' => strtolower($this->action),
     'params_id' => @$this->params['pass'][0],
     'placeholder' => 'イベント名 を入力'
 )); ?>
