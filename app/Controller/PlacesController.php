@@ -42,20 +42,23 @@ class PlacesController extends AppController
         $this->set('place_lists', $place_lists);
     }
     
-    public function place_detail()
+    public function place_detail($id = null)
     {
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         
-        if (isset($this->request->params['id']) == true) { //パラメータにidがあれば詳細ページを表示
+        if ($id) { //パラメータにidがあれば詳細ページを表示
             $place_detail = $this->Place->find('first', array(
                 'conditions' => array('and' => array(
-                        'Place.id' => $this->request->params['id'],
+                        'Place.id' => $id,
                         'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
                     ))
             ));
             if (!empty($place_detail)) { //データが存在する場合
+                //breadcrumbの設定
+                $this->set('sub_page', $place_detail['Place']['name']);
+                
                 //座席数を取得する
-                $place_detail['Place']['seats'] = $this->Place->getNumberSeats($this->request->params['id']);
+                $place_detail['Place']['seats'] = $this->Place->getNumberSeats($id);
                 $this->set('place_detail', $place_detail);
                 /* 会場に紐付くイベント一覧を取得ここから */
                 //参加済のイベント一覧を取得しておく
@@ -66,7 +69,7 @@ class PlacesController extends AppController
                     'conditions' => array(
                         'and' => array(
                             'EventsDetail.date >=' => date('Y-m-d'),
-                            'EventsDetail.place_id' => $this->request->params['id'], //eventsページの一覧から会場で更に絞り込み
+                            'EventsDetail.place_id' => $id, //eventsページの一覧から会場で更に絞り込み
                             'or' => array(
                                 array('EventsDetail.user_id' => $this->Auth->user('id')),
                                 array('EventsDetail.id' => $join_lists['events_detail_id']),
@@ -98,6 +101,9 @@ class PlacesController extends AppController
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは登録できません。', 'flashMessage');
         }
+        
+        //breadcrumbの設定
+        $this->set('sub_page', '会場の登録');
         
         //都道府県の選択肢用
         $this->set('prefecture_lists', $this->Prefecture->find('list'));
@@ -150,6 +156,9 @@ class PlacesController extends AppController
         if (empty($this->request->data)) {
             $this->request->data = $this->Place->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
+                //breadcrumbの設定
+                $this->set('sub_page', $this->request->data['Place']['name']);
+                
                 $this->set('id', $id); //viewに渡すために$idをセット
                 //ゲストユーザの場合
                 if ($this->Auth->user('id') == $GUEST_USER_KEY) {
@@ -221,6 +230,9 @@ class PlacesController extends AppController
         if ($this->Auth->user('role') < 3) {
             $this->redirect('/places/place_lists/');
         }
+        
+        //breadcrumbの設定
+        $this->set('sub_page', '会場の並び替え');
         
         $PLACE_OTHER_KEY = $this->getOptionKey('PLACE_OTHER_KEY');
         

@@ -9,7 +9,7 @@
           'inputDefaults' => array('div' => '')
       )); ?>
 <?php } else { //登録用 ?>
-  <h3>会場の登録</h3>
+  <h3><?php echo $sub_page; ?></h3>
   
     <table class="PlaceAddForm">
       <?php echo $this->Form->create('Place', array( //使用するModel

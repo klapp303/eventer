@@ -48,7 +48,7 @@ class AppController extends Controller
             ),
             4 => array(
                 'title' => '会場一覧',
-                'link' => '/places/place_lists/'
+                'link' => '/places'
             ),
             5 => array(
                 'title' => '出演者タグ',

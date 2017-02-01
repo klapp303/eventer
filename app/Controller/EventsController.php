@@ -746,15 +746,15 @@ class EventsController extends AppController
     
     public function all_lists()
     {
-        //breadcrumbの設定
-        $this->set('sub_page', '公開されているイベント一覧');
-        
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
             $this->redirect('/events/');
         }
+        
+        //breadcrumbの設定
+        $this->set('sub_page', '公開されているイベント一覧');
         
         if ($this->request->query && $this->request->query['search_word']) {
             $search_word = $this->request->query['search_word'];
