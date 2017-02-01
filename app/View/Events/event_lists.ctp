@@ -1,15 +1,15 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array(
-    'action' => 'all_lists',
+    'action' => $this->action,
     'placeholder' => 'イベント名 を入力'
 )); ?>
 <h3><?php echo $sub_page; ?></h3>
 
-<div class="intro_events">
-  <P>
-    全体公開されているイベントの一覧になります。
-  </P>
-</div>
+<?php if (@$description) { ?>
+  <div class="intro_events">
+    <P><?php echo $description; ?></P>
+  </div>
+<?php } ?>
 
   <?php if (count($event_lists) > 0) { ?>
     <?php echo $this->Paginator->numbers($paginator_option); ?>
@@ -43,11 +43,15 @@
   <?php } else { ?>
     <div class="intro_events">
       <P>
-        公開されているイベントはありません。
+        該当するイベントはありません。
       </P>
     </div>
   <?php } ?>
 
-<div class="link-page_events">
-  <span class="link-page"><?php echo $this->Html->link('⇨ 過去のイベントはこちら', '/events/past_lists/'); ?></span>
-</div>
+<?php if (@$page_link) { ?>
+  <div class="link-page_events">
+    <?php foreach ($page_link as $val) { ?>
+      <span class="link-page"><?php echo $this->Html->link('⇨ ' . $val['title'], $val['url']); ?></span>
+    <?php } ?>
+  </div>
+<?php } ?>

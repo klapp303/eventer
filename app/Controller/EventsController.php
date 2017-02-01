@@ -755,6 +755,12 @@ class EventsController extends AppController
         
         //breadcrumbの設定
         $this->set('sub_page', '公開されているイベント一覧');
+        //ページ説明文の設定
+        $this->set('description', '全体公開されているイベントの一覧になります。');
+        //他ページリンクの設定
+        $this->set('page_link', array(
+            array('title' => '過去のイベントはこちら', 'url' => '/events/past_lists/')
+        ));
         
         if ($this->request->query && $this->request->query['search_word']) {
             $search_word = $this->request->query['search_word'];
@@ -787,6 +793,8 @@ class EventsController extends AppController
 //        }
 //        unset($event_list);
         $this->set(compact('event_lists'));
+        
+        $this->render('event_lists');
     }
     
     public function all_lists_delete($id = null)
