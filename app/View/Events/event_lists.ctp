@@ -1,6 +1,8 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
 <?php echo $this->element('searchbox', array(
+    'controller' => $this->name,
     'action' => $this->action,
+    'params_id' => @$this->params['pass'][0],
     'placeholder' => 'イベント名 を入力'
 )); ?>
 <h3><?php echo $sub_page; ?></h3>
@@ -12,6 +14,9 @@
 <?php } ?>
 
   <?php if (count($event_lists) > 0) { ?>
+    <?php if (@$this->params['pass'][0]) {
+        $this->Paginator->options(array('url' => $this->params['pass'][0]));
+    } ?>
     <?php echo $this->Paginator->numbers($paginator_option); ?>
     
     <table class="detail-list event-list">

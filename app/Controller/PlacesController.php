@@ -300,4 +300,75 @@ class PlacesController extends AppController
         
         $this->render('place_lists');
     }
+    
+    public function event_lists($id = null)
+    {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
+        if ($id) { //パラメータにidがあれば会場データを取得
+            $place_detail = $this->Place->find('first', array(
+                'conditions' => array('and' => array(
+                        'Place.id' => $id,
+                        'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
+                    ))
+            ));
+            if (!empty($place_detail)) { //データが存在する場合
+                //breadcrumbの設定
+                $this->set('sub_page', $place_detail['Place']['name'] . ' のイベント一覧');
+                //ページ説明文の設定
+                $this->set('description', '会場に紐付くイベント一覧です。<br>過去に開催されたものから開催予定のものまであります。');
+                //他ページリンクの設定
+                $this->set('page_link', array(
+                    array('title' => '会場の詳細に戻る', 'url' => '/places/place_detail/' . $place_detail['Place']['id'])
+                ));
+                
+                if ($this->request->query && $this->request->query['search_word']) {
+                    $search_word = $this->request->query['search_word'];
+                    $this->set(compact('search_word'));
+                } else {
+                    $search_word = null;
+                }
+                
+                //search wordを整形する
+                $search_conditions = $this->Event->searchWordToConditions($search_word);
+                
+                /* 会場に紐付くイベント一覧を取得ここから */
+                //参加済のイベント一覧を取得しておく
+                $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+                //エントリーのみの一覧を取得しておく
+                $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
+                $this->Paginator->settings = array(
+                    'conditions' => array(
+                        array(
+                            'and' => $search_conditions
+//                            'or' => array(
+//                                'Event.title LIKE' => '%' . $search_word . '%',
+//                                'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                            )
+                        ),
+//                        'EventsDetail.date >=' => date('Y-m-d'),
+                        'EventsDetail.place_id' => $id, //eventsページの一覧から会場で更に絞り込み
+                        'or' => array(
+                            array('EventsDetail.user_id' => $this->Auth->user('id')),
+                            array('EventsDetail.id' => $join_lists['events_detail_id']),
+                            array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
+                            array('Event.publish' => 1) //公開ステータスを追加
+                        ),
+                        'EventsDetail.user_id !=' => $GUEST_USER_KEY
+                    ),
+                    'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
+                );
+                $event_lists = $this->Paginator->paginate('EventsDetail');
+                $this->set('event_lists', $event_lists);
+                /* 会場に紐付くイベント一覧を取得ここまで */
+                
+                $this->render('/Events/event_lists');
+                
+            } else { //データが存在しない場合
+                $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+                
+                $this->redirect('/places/place_lists/');
+            }
+        }
+    }
 }

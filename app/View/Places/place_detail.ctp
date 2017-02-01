@@ -53,4 +53,8 @@
     </p>
   </div>
 <?php } ?>
+
+<div class="link-page_places">
+  <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/places/event_lists/' . $place_detail['Place']['id']); ?></span>
+</div>
 </div>

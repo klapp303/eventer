@@ -13,7 +13,7 @@ if (@!$button) {
 <div class="searchbox">
   <?php echo $this->Form->create('Search', array( //使用するModel
       'type' => 'get', //デフォルトはpost送信
-      'url' => array('controller' => $controller, 'action' => $action), //Controllerのactionを指定
+      'url' => array('controller' => $controller, 'action' => $action, @$params_id), //Controllerのactionを指定
       'inputDefaults' => array('div' => '')
   )); ?>
   

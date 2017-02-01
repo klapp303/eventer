@@ -74,3 +74,12 @@
   margin-right: 50px;
   margin-bottom: 20px;
 }
+
+/* 詳細ページはレイアウトが崩れるので */
+#event-list_place >.link-page_places {
+  text-align: left;
+  margin-left: 150px;
+}
+#event-list_place >.intro_places {
+  height: 50px;
+}
