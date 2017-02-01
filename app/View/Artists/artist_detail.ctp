@@ -56,5 +56,6 @@
   <?php } ?>
 
 <div class="link-page_artists">
+  <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/artists/event_lists/' . $artist_detail['Artist']['id']); ?></span>
   <span class="link-page"><?php echo $this->Html->link('⇨ アーティストの一覧に戻る', '/artists/artist_lists/'); ?></span>
 </div>

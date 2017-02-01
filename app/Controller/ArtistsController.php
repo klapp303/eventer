@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist', 'EventArtist', 'EventUser', 'EventsDetail', 'EventsEntry'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -319,5 +319,97 @@ class ArtistsController extends AppController
             $this->redirect('/artists/artist_lists/');
             
         }
+    }
+    
+    public function event_lists($id = null)
+    {
+        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        
+        if (!$id) {
+            redirect('/artists/artist_lists/');
+        }
+        
+        $artist_detail = $this->Artist->find('first', array(
+            'conditions' => array(
+                'Artist.id' => $id
+            )
+        ));
+        if (!$artist_detail) {
+            $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+            
+            redirect('/artists/artist_lists/');
+        }
+        
+        //breadcrumbの設定
+        $this->set('sub_page', $artist_detail['Artist']['name'] . ' のイベント一覧');
+        //ページ説明文の設定
+        $this->set('description', 'アーティストに紐付くイベント一覧です。<br>過去に開催されたものから開催予定のものまであります。');
+        //他ページリンクの設定
+        $this->set('page_link', array(
+            array('title' => 'アーティストの詳細に戻る', 'url' => '/artists/artist_detail/' . $artist_detail['Artist']['id'])
+        ));
+        
+        if ($this->request->query && $this->request->query['search_word']) {
+            $search_word = $this->request->query['search_word'];
+            $this->set(compact('search_word'));
+        } else {
+            $search_word = null;
+        }
+        
+        //search wordを整形する
+        $search_conditions = $this->Event->searchWordToConditions($search_word);
+        
+        //開催予定のイベント
+        $artists_id = array($id);
+        /* 関連アーティストの取得ここから */
+        $related_artist_lists = $this->Artist->find('list', array(
+            'conditions' => array(
+                'Artist.related_artists_id !=' => null
+            ),
+            'fields' => array('Artist.related_artists_id')
+        ));
+        foreach ($related_artist_lists as $key => $val) {
+            $array_related_id = $this->Artist->getArrayRelatedArtists($val);
+            foreach ($array_related_id as $related_id) {
+                if ($related_id['artist_id'] == $id) {
+                    $artists_id[] = $key;
+                    continue;
+                }
+            }
+        }
+        /* 関連アーティストの取得ここまで */
+        $event_artists_lists = $this->EventArtist->find('list', array(
+            'conditions' => array('EventArtist.artist_id' => $artists_id),
+            'fields' => array('EventArtist.events_detail_id')
+        ));
+        //参加済のイベント一覧を取得しておく
+        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
+        //エントリーのみの一覧を取得しておく
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
+        $this->Paginator->settings = array(
+            'conditions' => array(
+                array(
+                    'and' => $search_conditions
+//                    'or' => array(
+//                        'Event.title LIKE' => '%' . $search_word . '%',
+//                        'EventsDetail.title LIKE' => '%' . $search_word . '%'
+//                    )
+                ),
+//                'EventsDetail.date >=' => date('Y-m-d'),
+                'EventsDetail.id' => $event_artists_lists, //eventsページの一覧からアーティストで更に絞り込み
+                'or' => array(
+                    array('EventsDetail.user_id' => $this->Auth->user('id')),
+                    array('EventsDetail.id' => $join_lists['events_detail_id']),
+                    array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
+                    array('Event.publish' => 1) //公開ステータスを追加
+                ),
+                'EventsDetail.user_id !=' => $GUEST_USER_KEY
+            ),
+            'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
+        );
+        $event_lists = $this->Paginator->paginate('EventsDetail');
+        $this->set('event_lists', $event_lists);
+        
+        $this->render('/Events/event_lists');
     }
 }
