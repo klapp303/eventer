@@ -48,11 +48,11 @@ class AppController extends Controller
             ),
             4 => array(
                 'title' => '会場一覧',
-                'link' => '/places'
+                'link' => '/places/'
             ),
             5 => array(
                 'title' => '出演者タグ',
-                'link' => '/artists/artist_lists/'
+                'link' => '/artists/'
             ),
             6 => array(
                 'title' => 'ログアウト',

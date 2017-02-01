@@ -69,6 +69,9 @@ class ArtistsController extends AppController
             
             redirect('/artists/artist_lists/');
         }
+        
+        //breadcrumbの設定
+        $this->set('sub_page', $artist_detail['Artist']['name']);
         //画像
         if ($artist_detail['Artist']['image_name']) {
             $artist_detail['Artist']['alt_name'] = $artist_detail['Artist']['name'];
@@ -188,6 +191,9 @@ class ArtistsController extends AppController
                 if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                     $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
                 }
+                
+                //breadcrumbの設定
+                $this->set('sub_page', $this->request->data['Artist']['name']);
                 
                 $this->set('image_name', $this->request->data['Artist']['image_name']); //viewに渡すためにファイル名をセット
                 /* 公式サイトのデータを整形ここから */
