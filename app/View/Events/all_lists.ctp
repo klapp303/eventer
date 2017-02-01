@@ -3,7 +3,7 @@
     'action' => 'all_lists',
     'placeholder' => 'イベント名 を入力'
 )); ?>
-<h3>公開されているイベント一覧</h3>
+<h3><?php echo $sub_page; ?></h3>
 
 <div class="intro_events">
   <P>

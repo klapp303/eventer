@@ -83,6 +83,14 @@ class EventsController extends AppController
                 
                 $this->set('PLACE_OTHER_KEY', $this->getOptionKey('PLACE_OTHER_KEY'));
                 
+                //breadcrumbの設定
+                if ($event_detail['Event']['title'] == $event_detail['EventsDetail']['title']) {
+                    $event_name = $event_detail['Event']['title'];
+                } else {
+                    $event_name = $event_detail['Event']['title'] . ' ' . $event_detail['EventsDetail']['title'];
+                }
+                $this->set('sub_page', $event_name);
+//                echo'<pre>';print_r($event_detail);echo'</pre>';
                 //エントリー一覧
                 $entry_lists = $this->EventsEntry->find('all', array(
                     'conditions' => array(
@@ -254,6 +262,8 @@ class EventsController extends AppController
             $this->request->data = $this->Event->findById($id); //postデータがなければ$idからデータを取得
             if (!empty($this->request->data)) { //データが存在する場合
                 if ($this->request->data['Event']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
+                    //breadcrumbの設定
+                    $this->set('sub_page', $this->request->data['Event']['title']);
                     foreach ($this->request->data['EventsDetail'] as &$events_detail) {
                         if ($events_detail['time_open'] == null) {
                             $events_detail['time_open_null'] = 1;
@@ -419,6 +429,14 @@ class EventsController extends AppController
             }
         }
         
+        //breadcrumbの設定
+        if ($events_detail['Event']['title'] == $events_detail['EventsDetail']['title']) {
+            $event_name = $events_detail['Event']['title'];
+        } else {
+            $event_name = $events_detail['Event']['title'] . ' ' . $events_detail['EventsDetail']['title'];
+        }
+        $this->set('sub_page', $event_name);
+        
         $this->set('events_detail', $events_detail);
         $this->set('entry_genres', $this->EntryGenre->find('list'));
         $this->set('events_detail_id', $id);
@@ -461,6 +479,14 @@ class EventsController extends AppController
             $this->set('events_detail_id', $this->request->data['EventsEntry']['events_detail_id']);
             if (!empty($this->request->data)) { //データが存在する場合
                 if ($this->request->data['EventsEntry']['user_id'] == $this->Auth->user('id')) { //データの作成者とログインユーザが一致する場合
+                    //breadcrumbの設定
+                    if ($this->request->data['Event']['title'] == $this->request->data['EventsDetail']['title']) {
+                        $event_name = $this->request->data['Event']['title'];
+                    } else {
+                        $event_name = $this->request->data['Event']['title'] . ' ' . $this->request->data['EventsDetail']['title'];
+                    }
+                    $this->set('sub_page', $event_name);
+                    
                     foreach ($entryDateColumn as $column) {
                         if ($this->request->data['EventsEntry'][$column] == null) {
                             $this->request->data['EventsEntry'][$column . '_null'] = 1;
@@ -534,6 +560,14 @@ class EventsController extends AppController
         if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
             $this->redirect('/event/' . $id);
         }
+        
+        //breadcrumbの設定
+        if ($events_detail['Event']['title'] == $events_detail['EventsDetail']['title']) {
+            $event_name = $events_detail['Event']['title'];
+        } else {
+            $event_name = $events_detail['Event']['title'] . ' ' . $events_detail['EventsDetail']['title'];
+        }
+        $this->set('sub_page', $event_name);
         
         $this->set('events_detail', $events_detail);
         $this->set('events_detail_id', $id);
@@ -612,6 +646,9 @@ class EventsController extends AppController
     
     public function past_lists()
     {
+        //breadcrumbの設定
+        $this->set('sub_page', '過去のイベント一覧');
+        
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
         //エントリーのみの一覧を取得しておく
@@ -709,6 +746,9 @@ class EventsController extends AppController
     
     public function all_lists()
     {
+        //breadcrumbの設定
+        $this->set('sub_page', '公開されているイベント一覧');
+        
         $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {

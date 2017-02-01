@@ -6,7 +6,7 @@
 )); ?>
 <button class="js-show js-hide-button fr cf">未対応のみを表示する</button>
 <button class="js-hide js-show-button fr cf">過去すべてを表示する</button>
-<h3>過去のイベント一覧</h3>
+<h3><?php echo $sub_page; ?></h3>
 
 <div class="intro_events">
   <P>
