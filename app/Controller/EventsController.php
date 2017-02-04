@@ -420,12 +420,12 @@ class EventsController extends AppController
         if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
             //公開中のイベントでなければredirect
             if ($events_detail['Event']['publish'] != 1) {
-                $this->redirect('/event/' . $id);
+                $this->redirect('/events/' . $id);
             }
             
             //ゲストユーザの場合は自身のイベントのみ
             if ($this->Auth->user('id') == $GUEST_USER_KEY) {
-                $this->redirect('/event/' . $id);
+                $this->redirect('/events/' . $id);
             }
         }
         
@@ -461,7 +461,7 @@ class EventsController extends AppController
                 $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' の入力に不備があります。', 'flashMessage');
             }
             
-            $this->redirect('/event/' . $this->request->data['EventsEntry']['events_detail_id']);
+            $this->redirect('/events/' . $this->request->data['EventsEntry']['events_detail_id']);
         }
         
         $this->render('entry');
@@ -523,7 +523,7 @@ class EventsController extends AppController
                 $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' の入力に不備があります。', 'flashMessage');
             }
             
-            $this->redirect('/event/' . $this->request->data['EventsEntry']['events_detail_id']);
+            $this->redirect('/events/' . $this->request->data['EventsEntry']['events_detail_id']);
         }
         
         $this->render('entry');
@@ -543,7 +543,7 @@ class EventsController extends AppController
                 $this->Session->setFlash('削除できませんでした。', 'flashMessage');
             }
             
-            $this->redirect('/event/' . $events_detail_id);
+            $this->redirect('/events/' . $events_detail_id);
         }
     }
     
@@ -558,7 +558,7 @@ class EventsController extends AppController
         $events_detail = $this->EventsDetail->findById($id);
         
         if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
-            $this->redirect('/event/' . $id);
+            $this->redirect('/events/' . $id);
         }
         
         //breadcrumbの設定
@@ -638,7 +638,7 @@ class EventsController extends AppController
                 $this->Session->setFlash('出演者を登録しました。', 'flashMessage');
             }
             
-            $this->redirect('/event/' . $id);
+            $this->redirect('/events/' . $id);
         }
         
         $this->render('artist');
