@@ -68,6 +68,8 @@ class AppController extends Controller
         $this->set('eventEntryStatus', $this->EventsEntry->getEntryStatus());
         //イベントのpaymentを定義しておく
         $this->set('eventPaymentStatus', $this->EventsEntry->getPaymentStatus());
+        //イベントで登録できる年の最小値を取得しておく
+        $this->set('minYearKey', $this->getOptionKey('MIN_YEAR_KEY'));
         
         //paginatorのオプションを定義しておく
         $paginator_option = array(

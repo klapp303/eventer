@@ -56,7 +56,7 @@
               'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '' : (($i == 0)? '' : 'disabled'))); ?>
               <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>' : ''; ?></td></tr>
       <tr><td class="event-add-label">開催日</td>
-          <td class="event-add-input"><?php echo $this->Form->input('EventsDetail.' . $i . '.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y') +1, 'minYear' => 2015, 'class' => 'sub_area_' . $i,
+          <td class="event-add-input"><?php echo $this->Form->input('EventsDetail.' . $i . '.date', array('type' => 'date', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y') +1, 'minYear' => $minYearKey, 'class' => 'sub_area_' . $i,
               'disabled' => (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI']) && @$requestData['EventsDetail'][$i]['title'])? '' : (($i == 0)? '' : 'disabled'))); ?>
               <?php echo ($i == 0)? '<span class="txt-alt txt-b">*</span>' : ''; ?></td></tr>
       <tr><td class="event-add-label">開場時刻</td>

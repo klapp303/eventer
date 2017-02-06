@@ -39,7 +39,7 @@
     
     <?php foreach ($entryDateColumn as $key => $column) { ?>
       <tr><td><?php echo $key; ?></td>
-          <td><?php echo $this->Form->input('EventsEntry.' . $column, array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y') +1, 'minYear' => 2015, 'timeFormat' => 24, 'class' => $column,
+          <td><?php echo $this->Form->input('EventsEntry.' . $column, array('type' => 'datetime', 'label' => false, 'dateFormat' => 'YMD', 'monthNames' => false, 'separator' => '/', 'maxYear' => date('Y') +1, 'minYear' => $minYearKey, 'timeFormat' => 24, 'class' => $column,
               'disabled' => (preg_match('#/events/entry_edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsEntry'][$column.'_null'] == 1)? 'disabled' : '') : 'disabled')); ?>
               <?php echo $this->Form->input('EventsEntry.' . $column . '_null', array('type' => 'checkbox', 'label' => false, 'class' => $column . '_null',
               'checked' => (preg_match('#/events/entry_edit/#', $_SERVER['REQUEST_URI']))? ((@$requestData['EventsEntry'][$column . '_null'] == 1)? 'checked' : '') : 'checked')); ?><span class="txt-min">なし</span></td></tr>
