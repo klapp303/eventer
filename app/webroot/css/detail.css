@@ -154,7 +154,7 @@
   text-align: center;
 }
 .tbl-ico {
-  width: 70px;
+  width: 80px;
   text-align: center;
 }
 .tbl-act {
@@ -171,8 +171,8 @@
 /* 検索box */
 .searchbox {
   position: absolute;
-  margin-left: 590px;
-  margin-top: 170px;
+    top: 290px;
+    left: 612px;
   text-align: center;
 }
 

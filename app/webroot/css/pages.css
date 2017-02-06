@@ -1,7 +1,6 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_pages {
-  height: 80px;
   margin-left: 20px;
 }
 .intro_pages >p {

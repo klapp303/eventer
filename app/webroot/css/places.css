@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* コンテンツ説明文用 */
 .intro_places {
-  height: 150px;
+  min-height: 150px;
   margin-left: 20px;
 }
 .intro_places >p {
@@ -78,7 +78,7 @@
 /* 詳細ページはレイアウトが崩れるので */
 #event-list_place >.link-page_places {
   text-align: left;
-  margin-left: 150px;
+  margin-left: 130px;
 }
 #event-list_place >.intro_places {
   height: 50px;

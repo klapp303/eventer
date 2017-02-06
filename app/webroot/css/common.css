@@ -1,4 +1,7 @@
 @charset "utf-8";
+p {
+  font-size: 90%;
+}
 .txt-b {
   font-weight: bold;
 }
@@ -88,6 +91,7 @@ body {
   background-color: #efffff;
   color: #000000;
   width: 760px;
+  min-height: 200px;
   margin: 30px 20px 10px 20px;
   text-align: left;
 }

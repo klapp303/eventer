@@ -1,3 +1,10 @@
+<script>
+    $(document).ready(
+        function() {
+            $('#menu_side').css('margin-bottom', '70px');
+        }
+    );
+</script>
 <?php
 //searchboxのデフォルト設定
 if (@!$controller) {

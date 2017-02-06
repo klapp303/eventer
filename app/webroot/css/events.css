@@ -29,19 +29,15 @@
 }
 
 /* イベント登録フォーム用 */
-#EventAddForm >label,
-#EventEditForm >label {
-  margin-left: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+.event-add-form {
+  float: left;
+  max-width: 280px;
 }
-#EventAddForm >input, #EventAddForm >select,
-#EventEditForm >input, #EventEditForm >select {
-  margin-bottom: 10px;
+.event-add-label {
+  width: 80px;
 }
-#EventAddForm >.submit,
-#EventEditForm >.submit {
-  margin: 10px 20px;
+.event-add-input >input, .event-add-input >select {
+  max-width: 170px;
 }
 
 /* 参加者登録フォーム用 */
