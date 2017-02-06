@@ -34,7 +34,7 @@
     <label>公開設定</label>
     <?php echo $this->Form->input('Event.publish', array('type' => 'select', 'label' => false, 'options' => array(1 => '公開', 0 => '非公開'))); ?><span class="txt-alt txt-b">*</span><br>
     <span class="txt-min">登録が1つの場合、イベント名（全体）と（各公演）は同じで構いません。</span>
-    <button type="button" class="js-insert">イベント名をコピー</button>
+    <button type="button" class="js-insert event-copy-button">イベント名をコピー</button>
   </div>
   
   <?php $form_max = 10;//フォーム数の最大を設定 ?>

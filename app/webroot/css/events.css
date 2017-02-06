@@ -39,6 +39,9 @@
 .event-add-input >input, .event-add-input >select {
   max-width: 170px;
 }
+.event-copy-button {
+  font-size: 80%;
+}
 
 /* 参加者登録フォーム用 */
 .form-user_events,
