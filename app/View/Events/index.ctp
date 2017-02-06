@@ -33,7 +33,7 @@
     <?php echo $this->Form->input('Event.title', array('type' => 'text', 'label' => false, 'size' => 25, 'placeholder' => '例）竹達彩奈 2ndALツアー', 'class' => 'js-insert_data')); ?><span class="txt-alt txt-b">*</span>
     <label>公開設定</label>
     <?php echo $this->Form->input('Event.publish', array('type' => 'select', 'label' => false, 'options' => array(1 => '公開', 0 => '非公開'))); ?><span class="txt-alt txt-b">*</span><br>
-    <span class="txt-min">登録が1つだけの場合は、イベント名（全体）と（各公演）は同じで構いません。</span>
+    <span class="txt-min">登録が1つの場合、イベント名（全体）と（各公演）は同じで構いません。</span>
     <button type="button" class="js-insert">イベント名をコピー</button>
   </div>
   
