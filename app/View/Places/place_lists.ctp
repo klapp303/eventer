@@ -5,7 +5,7 @@
     'placeholder' => '会場名 or 最寄り駅 を入力'
 )); ?>
 
-<div class="intro_places">
+<div class="intro intro_places">
   <P>
     追加する際は、既に会場が登録されていないか確認してください。<br>
   </P>

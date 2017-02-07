@@ -1,7 +1,7 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
 <h3>イベ幸って？</h3>
 
-<div class="intro_pages">
+<div class="intro">
   <p>
     ライブやイベントによく行く作者が、申し込みや入金を忘れないようにと<br>
     イベントの日程やチケット、申込方法を一元管理するために作ったWebアプリです。<br>

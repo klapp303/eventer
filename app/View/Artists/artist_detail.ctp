@@ -48,7 +48,7 @@
       <?php } ?>
     </table>
   <?php } else { ?>
-    <div class="intro_artists">
+    <div class="intro">
       <p>
         開催予定のイベントはありません。
       </p>

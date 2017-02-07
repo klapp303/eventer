@@ -2,12 +2,7 @@
 /* コンテンツ説明文用 */
 .intro_events {
   height: 100px;
-  margin-left: 20px;
   margin-bottom: 80px;
-}
-.intro_events >p {
-  margin-right: 20px;
-  margin-bottom: 30px;
 }
 
 /* イベント詳細用 */

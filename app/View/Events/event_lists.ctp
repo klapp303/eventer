@@ -8,7 +8,7 @@
 <h3><?php echo $sub_page; ?></h3>
 
 <?php if (@$description) { ?>
-  <div class="intro_events">
+  <div class="intro intro_events">
     <P><?php echo $description; ?></P>
   </div>
 <?php } ?>
@@ -46,7 +46,7 @@
     
     <?php echo $this->Paginator->numbers($paginator_option); ?>
   <?php } else { ?>
-    <div class="intro_events">
+    <div class="intro">
       <P>
         該当するイベントはありません。
       </P>

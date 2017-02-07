@@ -1,7 +1,7 @@
 <?php echo $this->Html->css('budgets', array('inline' => false)); ?>
 <h3><?php echo $sub_page; ?></h3>
 
-<div class="intro_budgets">
+<div class="intro intro_budgets">
   <?php if (@$column == 'payment') { ?>
     <p>
       当選しているイベントでクレジットカード決済ではないエントリー一覧になります。<br>
@@ -94,7 +94,7 @@
     <?php } ?>
   </table>
 <?php } else { ?>
-  <div class="intro_budgets">
+  <div class="intro">
     <p>
       現在、<?php echo (@$reset_column)? '元に戻せる' : '該当する'; ?>イベントはありません。
     </p>
@@ -102,7 +102,7 @@
 <?php } ?>
 
 <?php if ($unfixed_lists['count'] > $BUDGET_LIMIT_KEY) { ?>
-  <span class="txt-sub_budgets txt-min">※最大<?php echo $BUDGET_LIMIT_KEY; ?>件まで表示されます。</span>
+  <span class="txt-min txt_unfixed_lists">※最大<?php echo $BUDGET_LIMIT_KEY; ?>件まで表示されます。</span>
 <?php } ?>
 
 <div class="link-page_budgets">

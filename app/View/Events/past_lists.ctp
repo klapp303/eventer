@@ -8,7 +8,7 @@
 <button class="js-hide js-show-button fr cf">過去すべてを表示する</button>
 <h3><?php echo $sub_page; ?></h3>
 
-<div class="intro_events">
+<div class="intro intro_events">
   <P>
     過去に行われたイベントの一覧になります。<br>
     <br>
@@ -86,7 +86,7 @@
     </table>
     </div>
   <?php } else { ?>
-    <div class="intro_events js-hide">
+    <div class="intro js-hide">
       <P>
         未対応のイベントはありません。
       </P>

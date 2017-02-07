@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
-<div class="intro_pages">
+<div class="intro">
   <p>
     イベントのジャンル説明一覧です。<br>
     ざっくりとした分類ですので、細かい判断は登録者が行ってください。<br>

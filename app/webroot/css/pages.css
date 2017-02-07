@@ -1,13 +1,4 @@
 @charset "utf-8";
-/* コンテンツ説明文用 */
-.intro_pages {
-  margin-left: 20px;
-}
-.intro_pages >p {
-  margin-right: 20px;
-  margin-bottom: 30px;
-}
-
 /* ページリンク用 */
 .link-page_pages {
   margin: 20px 50px 50px 40px;

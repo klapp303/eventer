@@ -197,6 +197,15 @@
   -moz-border-radius: 20px;
 }
 
+/* コンテンツ説明文用 */
+.intro {
+  margin-left: 20px;
+}
+.intro >p {
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+
 /* ページリンク */
 .link-page a {
   font-size: 15px;

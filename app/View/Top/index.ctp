@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('top', array('inline' => false)); ?>
-<div class="intro_top">
+<div class="intro intro_top">
   <table class="detail-list-min">
     <tr><td class="tbl-intro_top">未対応の支払いが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_payment_lists['count'] . '件', '/budgets/unfixed_payment/'); ?></td><td>あります。</td></tr>
     <tr><td class="tbl-intro_top">未対応のチケット余りが</td><td class="tbl-num_top"><?php echo $this->Html->link($unfixed_sales_lists['count'] . '件', '/budgets/unfixed_sales/'); ?></td><td>あります。</td></tr>
@@ -49,7 +49,7 @@
       <?php } ?>
   </table>
   <?php } else { ?>
-    <div class="intro_top">
+    <div class="intro">
       <p>
         本日の予定はありません。
       </p>
@@ -108,7 +108,7 @@
       <?php } ?>
     </table>
   <?php } else { ?>
-    <div class="intro_top">
+    <div class="intro">
       <p>
         直近の予定はありません。
       </p>

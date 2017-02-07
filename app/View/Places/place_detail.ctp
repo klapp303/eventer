@@ -49,7 +49,7 @@
     <?php } ?>
   </table>
 <?php } else { ?>
-  <div class="intro_places">
+  <div class="intro">
     <p>
       開催予定のイベントはありません。
     </p>

@@ -1,6 +1,6 @@
 <!-- 未使用 -->
 <?php echo $this->Html->css('budgets', array('inline' => false)); ?>
-<div class="intro_budgets">
+<div class="intro">
   <p>
     支払い確認のフラグが立っていない支出一覧です。<br>
     基本的にステータス、フラグ管理はイベント作成者によります。

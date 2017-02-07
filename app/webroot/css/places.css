@@ -2,14 +2,6 @@
 /* コンテンツ説明文用 */
 .intro_places {
   min-height: 150px;
-  margin-left: 20px;
-}
-.intro_places >p {
-  margin-right: 20px;
-  margin-bottom: 30px;
-}
-.intro_places >label {
-  margin-right: 20px;
 }
 
 /* 会場一覧用 */

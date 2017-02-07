@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
-<div class="intro_pages">
+<div class="intro">
   <p>
     このWebサービスは個人によって制作、管理されています。<br>
     要望や不具合のお問い合わせは下記メールアドレス、もしくはTwitterにどうぞ。

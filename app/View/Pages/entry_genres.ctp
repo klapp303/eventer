@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('pages', array('inline' => false)); ?>
-<div class="intro_pages">
+<div class="intro">
   <p>
     イベントへのエントリー方法（申込方法）のジャンル説明一覧です。<br>
     <br>

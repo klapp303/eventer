@@ -1,6 +1,6 @@
 <!-- 未使用 -->
 <?php echo $this->Html->css('budgets', array('inline' => false)); ?>
-<div class="intro_budgets">
+<div class="intro">
   <p>
     受け取り確認のフラグが立っていない収入一覧です。<br>
     <span class="icon-button">受取</span>のボタンからフラグを立てて管理できます。<br>

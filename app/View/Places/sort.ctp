@@ -2,7 +2,7 @@
 <?php echo $this->Html->script('http://code.jquery.com/ui/1.11.3/jquery-ui.js', array('inline' => false)); ?>
 <h3><?php echo $sub_page; ?></h3>
 
-<div class="intro_places">
+<div class="intro intro_places">
   <P>
     ドラッグ&ドロップでイベント登録時の会場リストを並び替える事ができます。<br>
     ここでの並び順はイベント登録時の会場選択肢の並び順にも反映されます。<br>
