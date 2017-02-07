@@ -84,8 +84,6 @@ class PlacesController extends AppController
                 $this->set('event_lists', $event_lists);
                 /* 会場に紐付くイベント一覧を取得ここまで */
                 
-                $this->layout = 'eventer_normal';
-                
             } else { //データが存在しない場合
                 $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
                 
