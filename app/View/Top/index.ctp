@@ -20,7 +20,7 @@
           <th class="tbl-act-min">action</th></tr>
       
       <?php foreach ($event_today_lists as $event_list) { ?>
-        <tr><td class="title-main" colspan="4">
+        <tr><td class="title-main txt-b" colspan="4">
               <?php echo $event_list['Event']['title']; ?>
               <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
                 <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
@@ -74,7 +74,7 @@
           <th class="tbl-act-min">action</th></tr>
       
       <?php foreach ($event_current_lists as $event_list) { ?>
-        <tr><td class="title-main" colspan="<?php echo count($entryDateColumn) +2; ?>">
+        <tr><td class="title-main txt-b" colspan="<?php echo count($entryDateColumn) +2; ?>">
               <?php echo $event_list['Event']['title']; ?>
               <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
                 <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
