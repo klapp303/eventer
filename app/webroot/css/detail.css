@@ -226,6 +226,27 @@
 .link-page a:active {
   color: #000000;
 }
+.link-left {
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+.link-left >.link-page {
+  margin-right: 10px;
+}
+.link-right {
+  text-align: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+.link-right >.link-page {
+  margin-left: 10px;
+}
+.link-center {
+  width: 760px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 /* ボタンアイコン */
 .icon-button {

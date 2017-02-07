@@ -18,6 +18,6 @@
     <tr><th>action</th><td class="tbl-ico"><span class="icon-button"><?php echo $this->Form->postLink('変更する', array('action' => 'edit', $user_detail['User']['id'])); ?></span></td></tr>
   </table>
 
-<div class="link-page_users">
+<div class="link-left">
   <span class="link-page"><?php echo $this->Form->postLink('⇨ パスワード変更はこちら', array('action' => 'pw_edit', $user_detail['User']['id'])); ?></span>
 </div>

@@ -174,7 +174,7 @@
   
   <?php echo $this->Paginator->numbers($paginator_option + array('paramType' => 'querystring')); ?>
 
-<div class="link-page_events">
+<div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ 公開されている全てのイベントはこちら', '/events/all_lists/'); ?></span>
   <span class="link-page"><?php echo $this->Html->link('⇨ 過去のイベントはこちら', '/events/past_lists/'); ?></span>
 </div>

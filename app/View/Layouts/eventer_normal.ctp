@@ -40,7 +40,7 @@
       </div>
       
       <div id="content">
-        <?php echo $this->element('eventer_breadcrumb'); ?>
+        <?php // echo $this->element('eventer_breadcrumb'); ?>
         <?php echo $this->Flash->render(); ?>
         
         <?php echo $this->fetch('content'); ?>

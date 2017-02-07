@@ -68,10 +68,10 @@
 </div>
 
 <?php if (!$userData) { ?>
-  <div class="link-users-add">
+  <div class="link-center">
     <span class="link-page"><?php echo $this->Html->link('⇨ 実際に登録して使ってみる', '/users/add/'); ?></span>
   </div>
-  <div class="link-users-add">
+  <div class="link-center">
     <span class="link-page"><?php echo $this->Html->link('⇨ ゲストアカウントでログインしてみる', '/users/login/?user=' . urlencode($guest_name) . '&pass=' . urlencode($guest_password)); ?></span>
   </div>
 <?php } ?>

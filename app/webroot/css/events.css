@@ -63,16 +63,6 @@
   margin-left: 40px;
 }
 
-/* ページリンク用 */
-.link-page_events {
-  text-align: right;
-  margin-right: 50px;
-  margin-bottom: 20px;
-}
-.link-page {
-  margin-left: 40px;
-}
-
 /* 公開されているイベント一覧ページ用 */
 .name-min_events {
   display: block;

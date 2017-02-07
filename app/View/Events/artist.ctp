@@ -32,7 +32,7 @@
   
   <?php echo $this->Form->end(); ?><!-- form end -->
 
-<div class="link-page_events">
+<div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ イベント詳細ページに戻る', '/events/' . $events_detail_id); ?></span>
 </div>
 

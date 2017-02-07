@@ -38,6 +38,6 @@
     </div>
   <?php } ?>
 
-<div class="link-page_events">
+<div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ 公開されている全てのイベントはこちら', '/events/all_lists/'); ?></span>
 </div>

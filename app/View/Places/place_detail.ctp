@@ -33,6 +33,6 @@
 
   <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>
 
-<div class="link-page_places">
+<div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/places/event_lists/' . $place_detail['Place']['id']); ?></span>
 </div>

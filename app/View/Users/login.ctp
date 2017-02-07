@@ -38,9 +38,10 @@
     <?php echo $this->Form->end(); ?><!-- form end -->
   </table>
 
-<div class="link-page_users">
+<div class="link-left">
   <span class="link-page"><?php echo $this->Html->link('⇨ 新規登録はこちら', '/users/add/'); ?></span>
 </div>
-<div class="link-page_users">
+<div class="link-left">
   <span class="link-page"><?php echo $this->Html->link('⇨ パスワードを忘れた場合はこちら', '/users/pw_renew/'); ?></span>
 </div>
+<div class="cf" style="margin-bottom: 20px;"></div>

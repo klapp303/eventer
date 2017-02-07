@@ -103,7 +103,7 @@
   <span class="txt-min txt_unfixed_lists">※最大<?php echo $BUDGET_LIMIT_KEY; ?>件まで表示されます。</span>
 <?php } ?>
 
-<div class="link-page_budgets">
+<div class="link-right">
   <?php if (@$column) { ?>
     <span class="link-page"><?php echo $this->Html->link('⇨ 対応済みに確定したイベントを戻す', '/budgets/reset_status/' . $column); ?></span>
   <?php } elseif (@$reset_column) { ?>

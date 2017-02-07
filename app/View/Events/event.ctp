@@ -94,7 +94,7 @@
   </table>
 
 <?php // if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
-  <div class="link-page_events">
+  <div class="link-right">
     <span class="link-page"><?php echo $this->Html->link('⇨ 新しいエントリーの登録はこちら', '/events/entry_add/' . $event_detail['EventsDetail']['id']); ?></span>
   </div>
 <?php // } ?>
@@ -114,7 +114,7 @@
   </table>
 
 <?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']) { ?>
-  <div class="link-page_events">
+  <div class="link-right">
     <span class="link-page"><?php echo $this->Html->link('⇨ 出演者の管理はこちら', '/events/cast/' . $event_detail['EventsDetail']['id']); ?></span>
   </div>
 <?php } ?>

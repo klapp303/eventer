@@ -4,7 +4,7 @@
   <table class="detail-list-min">
     <tr><th>アーティスト名</th>
         <th>公式サイト</th></tr>
-    <tr><td><?php echo $artist_detail['Artist']['name']; ?>
+    <tr><td><?php echo $artist_detail['Artist']['name']; ?><br>
             <span class="txt-min">（<?php echo $artist_detail['Artist']['kana']; ?>）</span>
         </td>
         <td><?php foreach ($artist_detail['Artist']['link_urls'] as $val) { ?>
@@ -22,7 +22,7 @@
             </div></td></tr>
   </table>
 
-<div class="link-page_artists">
+<div class="link-right">
   <?php if ($userData['role'] >= 3) { ?>
     <span class="link-page"><?php echo $this->Html->link('⇨ アーティスト情報を追加、修正する', '/artists/edit/' . $artist_detail['Artist']['id']); ?></span>
   <?php } ?>
@@ -33,7 +33,7 @@
 
   <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>
 
-<div class="link-page_artists">
+<div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/artists/event_lists/' . $artist_detail['Artist']['id']); ?></span>
   <span class="link-page"><?php echo $this->Html->link('⇨ アーティストの一覧に戻る', '/artists/artist_lists/'); ?></span>
 </div>

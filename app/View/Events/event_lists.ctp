@@ -23,7 +23,7 @@
   <?php echo $this->Paginator->numbers($paginator_option); ?>
 
 <?php if (@$page_link) { ?>
-  <div class="link-page_events">
+  <div class="link-right">
     <?php foreach ($page_link as $val) { ?>
       <span class="link-page"><?php echo $this->Html->link('⇨ ' . $val['title'], $val['url']); ?></span>
     <?php } ?>

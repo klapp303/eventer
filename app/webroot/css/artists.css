@@ -48,14 +48,6 @@
   width: 720px;
 }
 
-/* ページリンク用 */
-.link-page_artists {
-  text-align: right;
-  margin-top: 40px;
-  margin-right: 50px;
-  margin-bottom: 20px;
-}
-
 /* アーティスト詳細ページ用 */
 .img_artist {
   width: 150px;
