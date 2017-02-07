@@ -47,10 +47,10 @@ class EventsController extends AppController
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->paginate('EventsDetail');
-        foreach ($event_lists as &$event_list) {
-            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
         }
-        unset($event_list);
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
         $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
@@ -250,10 +250,10 @@ class EventsController extends AppController
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->paginate('EventsDetail');
-        foreach ($event_lists as &$event_list) {
-            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
         }
-        unset($event_list);
         $event_genres = $this->EventGenre->find('list'); //プルダウン選択肢用
         $place_lists = $this->Place->find('list', array('conditions' => array('Place.id !=' => 5))); //プルダウン選択肢用
         $this->set(compact('event_lists', 'event_genres', 'place_lists'));
@@ -685,10 +685,10 @@ class EventsController extends AppController
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->paginate('EventsDetail');
-        foreach ($event_lists as &$event_list) {
-            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
         }
-        unset($event_list);
         $this->set(compact('event_lists'));
         
         //未対応のイベント
@@ -713,13 +713,13 @@ class EventsController extends AppController
             'order' => array('date' => 'asc', 'EventsDetail.time_start' => 'asc')
         ));
         $excKey = array();
-        foreach ($event_undecided_lists as $key => &$event_list) {
-            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
-            if (!$event_list['EventsDetail']['status'] == 0) { //検討中以外は除く
+        //イベントのstatusを取得
+        foreach ($event_undecided_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+            if (!$event_lists[$key]['EventsDetail']['status'] == 0) { //検討中以外は対応済みなので除く
                 array_push($excKey, $key);
             }
         }
-        unset($event_list);
         foreach ($excKey as $key) {
             unset($event_undecided_lists[$key]);
         }
@@ -788,10 +788,10 @@ class EventsController extends AppController
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->paginate('EventsDetail');
-//        foreach ($event_lists as &$event_list) {
-//            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
-//        }
-//        unset($event_list);
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+        }
         $this->set(compact('event_lists'));
         
         $this->render('event_lists');
@@ -865,10 +865,10 @@ class EventsController extends AppController
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->Paginate('EventsDetail');
-        foreach ($event_lists as &$event_list) {
-            $event_list['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $event_list) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
         }
-        unset($event_list);
         
         if (!$event_lists) {
             $this->Session->setFlash('検索に一致するイベントはありません。', 'flashMessage');

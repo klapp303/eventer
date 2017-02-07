@@ -30,20 +30,9 @@
   margin-left: 108px;
 }
 
-/* イベント一覧用 */
-#event-list_place { /* floatによるレイアウト崩れを防ぐ */
-  min-height: 400px;
-}
-.event-list_place {
-  width: 390px;
-  margin-bottom: 20px;
-}
-
-.tbl-date {
-  width: 70px;
-}
-.tbl-action_place {
-  width: 55px;
+/* googlemap用 */
+#map {
+  margin-left: 20px;
 }
 
 /* 会場ソート一覧用 */
@@ -65,13 +54,4 @@
   text-align: right;
   margin-right: 50px;
   margin-bottom: 20px;
-}
-
-/* 詳細ページはレイアウトが崩れるので */
-#event-list_place >.link-page_places {
-  text-align: left;
-  margin-left: 130px;
-}
-#event-list_place >.intro_places {
-  height: 50px;
 }

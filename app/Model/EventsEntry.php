@@ -104,6 +104,16 @@ class EventsEntry extends AppModel
     
     public function getEventStatus($id = false, $status = -1)
     {
+        //イベントのデータを取得しておく
+        $this->loadModel('EventsDetail');
+        $event_data = $this->EventsDetail->find('first', array('conditions' => array('EventsDetail.id' => $id)));
+        
+        //データの作成者とログインユーザが一致しない場合
+        $user_id = AuthComponent::user(['id']);
+        if ($event_data['EventsDetail']['user_id'] != $user_id) {
+            return $status; //status = -1 を返す
+        }
+        
         $entry_lists = $this->find('all', array(
             'conditions' => array(
                 'EventsEntry.events_detail_id' => $id
@@ -143,10 +153,6 @@ class EventsEntry extends AppModel
         
         //エントリーが無い場合
         if (!$entry_lists) {
-            $this->loadModel('EventsDetail');
-            $event_data = $this->EventsDetail->find('first', array(
-                'conditions' => array('EventsDetail.id' => $id)
-            ));
             if ($event_data['EventsDetail']['date'] < date('Y-m-d')) { //過去のイベントは見送り
                 $status = 4;
             } else { //未来のイベントは検討中

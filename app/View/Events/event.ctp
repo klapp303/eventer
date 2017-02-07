@@ -45,8 +45,7 @@
 
   <table class="detail-list">
     <tr><th colspan="<?php echo count($entryDateColumn)+1; ?>">エントリー名</th>
-        <th class="tbl-genre" rowspan="2">種類<br>
-                                          状態</th>
+        <th class="tbl-genre" rowspan="2">status</th>
         <th class="tbl-num" rowspan="2">価格<br>
                                         枚数</th>
         <th rowspan="2">申込者</th>

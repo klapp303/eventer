@@ -31,29 +31,7 @@
 
 <h3>開催予定のイベント</h3>
 
-  <?php if ($event_lists) { ?>
-    <table class="event-list event-list_artist">
-      <tr><th class="tbl-date">開催日</th>
-          <th>イベント名</th>
-          <th class="tbl-act-min">action</th></tr>
-      
-      <?php foreach ($event_lists as $event_list) { ?>
-        <tr><td class="tbl-date"><?php echo date('Y/m/d(' . $week_lists[date('w', strtotime($event_list['EventsDetail']['date']))] . ')', strtotime($event_list['EventsDetail']['date'])); ?></td>
-            <td><?php echo $event_list['Event']['title']; ?>
-                <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
-                  <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
-                <?php } ?>
-            </td>
-            <td class="tbl-act-min"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
-      <?php } ?>
-    </table>
-  <?php } else { ?>
-    <div class="intro">
-      <p>
-        開催予定のイベントはありません。
-      </p>
-    </div>
-  <?php } ?>
+  <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>
 
 <div class="link-page_artists">
   <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/artists/event_lists/' . $artist_detail['Artist']['id']); ?></span>

@@ -64,8 +64,3 @@
 .tbl-name-tag_artists {
   vertical-align: top;
 }
-
-/* 開催予定のイベント用 */
-.event-list_artist {
-  margin-bottom: -20px !important;
-}

@@ -15,8 +15,7 @@
           <th class="tbl-date-min">開演日時</th>
           <th>予定</th>
           <th class="tbl-date-min">日時</th>
-          <th class="tbl-genre">種類<br>
-                                状態</th>
+          <th class="tbl-genre">status</th>
           <th class="tbl-act-min">action</th></tr>
       
       <?php foreach ($event_today_lists as $event_list) { ?>
@@ -50,9 +49,7 @@
   </table>
   <?php } else { ?>
     <div class="intro">
-      <p>
-        本日の予定はありません。
-      </p>
+      <p>本日の予定はありません。</p>
     </div>
   <?php } ?>
 
@@ -69,8 +66,7 @@
           <?php foreach ($entryDateColumn as $key => $column) { ?>
             <th class="tbl-date-min"><?php echo $key; ?></th>
           <?php } ?>
-          <th class="tbl-genre">種類<br>
-                                状態</th>
+          <th class="tbl-genre">status</th>
           <th class="tbl-act-min">action</th></tr>
       
       <?php foreach ($event_current_lists as $event_list) { ?>
@@ -109,8 +105,6 @@
     </table>
   <?php } else { ?>
     <div class="intro">
-      <p>
-        直近の予定はありません。
-      </p>
+      <p>直近の予定はありません。</p>
     </div>
   <?php } ?>

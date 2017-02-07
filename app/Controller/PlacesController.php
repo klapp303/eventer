@@ -81,6 +81,10 @@ class PlacesController extends AppController
                     ),
                     'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
                 ));
+                //イベントのstatusを取得
+                foreach ($event_lists as $key => $event_list) {
+                    $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+                }
                 $this->set('event_lists', $event_lists);
                 /* 会場に紐付くイベント一覧を取得ここまで */
                 
@@ -357,6 +361,10 @@ class PlacesController extends AppController
                     'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
                 );
                 $event_lists = $this->Paginator->paginate('EventsDetail');
+                //イベントのstatusを取得
+                foreach ($event_lists as $key => $event_list) {
+                    $event_lists[$key]['EventsDetail']['status'] = $this->EventsEntry->getEventStatus($event_list['EventsDetail']['id']);
+                }
                 $this->set('event_lists', $event_lists);
                 /* 会場に紐付くイベント一覧を取得ここまで */
                 

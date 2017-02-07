@@ -18,7 +18,7 @@
   </table>
 
 <?php if ($place_detail['Place']['latitude'] && $place_detail['Place']['longitude']) { ?>
-  <div id="map" class="fr cf">
+  <div id="map">
   <?php //GoogleMapオプション
   $map_options = array(
       'latitude' => $place_detail['Place']['latitude'],
@@ -29,34 +29,10 @@
   </div>
 <?php } ?>
 
-<div id="<?php echo (@$map_options)? 'event-list_place' : ''; ?>">
 <h3>開催予定のイベント</h3>
 
-<?php if ($event_lists) { ?>
-  <table class="event-list event-list_place">
-    <tr><th class="tbl-date">開催日</th>
-        <th>イベント名</th>
-        <th class="tbl-act-min">action</th></tr>
-    
-    <?php foreach ($event_lists as $event_list) { ?>
-      <tr><td class="tbl-date"><?php echo date('Y/m/d(' . $week_lists[date('w', strtotime($event_list['EventsDetail']['date']))] . ')', strtotime($event_list['EventsDetail']['date'])); ?></td>
-          <td><?php echo $event_list['Event']['title']; ?>
-              <?php if ($event_list['Event']['title'] != $event_list['EventsDetail']['title']) { ?><br>
-                <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
-              <?php } ?>
-          </td>
-          <td class="tbl-act-min"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $event_list['EventsDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
-    <?php } ?>
-  </table>
-<?php } else { ?>
-  <div class="intro">
-    <p>
-      開催予定のイベントはありません。
-    </p>
-  </div>
-<?php } ?>
+  <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>
 
 <div class="link-page_places">
   <span class="link-page"><?php echo $this->Html->link('⇨ すべてのイベント一覧を確認する', '/places/event_lists/' . $place_detail['Place']['id']); ?></span>
-</div>
 </div>

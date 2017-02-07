@@ -95,9 +95,7 @@
   </table>
 <?php } else { ?>
   <div class="intro">
-    <p>
-      現在、<?php echo (@$reset_column)? '元に戻せる' : '該当する'; ?>イベントはありません。
-    </p>
+    <p>現在、<?php echo (@$reset_column)? '元に戻せる' : '該当する'; ?>イベントはありません。</p>
   </div>
 <?php } ?>
 
