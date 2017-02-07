@@ -40,6 +40,7 @@
 
 /* パンくずリスト */
 .breadcrumb {
+  max-width: 600px;
   margin: -10px 0 5px -20px;
 }
 .breadcrumb >ol {
