@@ -1,10 +1,12 @@
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
+<?php echo $this->Html->script('jquery-tmb', array('inline' => false)); ?>
 <?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
   <h3>会場の修正</h3>
   
     <table class="PlaceAddForm">
       <?php echo $this->Form->create('Place', array( //使用するModel
-          'type' => 'put', //変更はput
+//          'type' => 'put', //変更はput
+          'enctype' => 'multipart/form-data', //fileアップロードの場合
           'action' => 'edit', //Controllerのactionを指定
           'inputDefaults' => array('div' => '')
       )); ?>
@@ -13,7 +15,8 @@
   
     <table class="PlaceAddForm">
       <?php echo $this->Form->create('Place', array( //使用するModel
-          'type' => 'post', //デフォルトはpost送信
+//          'type' => 'post', //デフォルトはpost送信
+          'enctype' => 'multipart/form-data', //fileアップロードの場合
           'action' => 'add', //Controllerのactionを指定
           'inputDefaults' => array('div' => '')
       )); ?>
@@ -53,6 +56,17 @@
     <tr>
       <td><label>経度</label></td>
       <td><?php echo $this->Form->input('longitude', array('type' => 'text', 'label' => false, 'placeholder' => '例）139.7660838')); ?><span class="txt-min">（GoogleMapに使用）</span></td>
+    </tr>
+    <tr>
+      <td><label>座席図</label></td>
+      <td><?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
+              <?php echo $this->Form->input('delete_name', array('type' => 'hidden', 'label' => false, 'value' => $image_name)); ?>
+              <?php if (!$image_name) {
+                  $image_name = '../no_image.jpg';
+              } ?>
+              <?php echo $this->Html->image('../files/place/' . $image_name, array('class' => 'tmb-display js-tmb_pre')); ?>
+          <?php } ?>
+          <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false)); ?></td>
     </tr>
     
     <tr>

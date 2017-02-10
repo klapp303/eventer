@@ -126,6 +126,19 @@ class PlacesController extends AppController
             
             $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Place->validates()) { //validate成功の処理
+                /* ファイルの保存ここから */
+                if ($this->data['Place']['file']['error'] != 4) { //新しいファイルがある場合
+                    $upload_dir = '../webroot/files/place/'; //保存するディレクトリ
+                    $upload_pass = $upload_dir . basename($this->data['Place']['file']['name']);
+                    if (move_uploaded_file($this->data['Place']['file']['tmp_name'], $upload_pass)) { //ファイルを保存
+                        $this->request->data['Place']['seat_name'] = $this->data['Place']['file']['name'];
+                    } else {
+                        $this->Session->setFlash('画像ファイルに不備があります。', 'flashMessage');
+                        
+                        $this->redirect('/places/place_lists/');
+                    }
+                }
+                /* ファイルの保存ここまで */
                 $this->Place->save($this->request->data); //validate成功でsave
                 if ($this->Place->save($this->request->data)) {
                     $this->Session->setFlash('登録しました。', 'flashMessage');
@@ -162,6 +175,7 @@ class PlacesController extends AppController
                 $this->set('sub_page', $this->request->data['Place']['name']);
                 
                 $this->set('id', $id); //viewに渡すために$idをセット
+                $this->set('image_name', $this->request->data['Place']['seat_name']); //viewに渡すためにファイル名をセット
                 //ゲストユーザの場合
                 if ($this->Auth->user('id') == $GUEST_USER_KEY) {
                     $this->Session->setFlash('ゲストユーザは修正できません。', 'flashMessage');
@@ -178,6 +192,22 @@ class PlacesController extends AppController
             }
             $this->Place->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Place->validates()) { //validate成功の処理
+                /* ファイルの保存ここから */
+                if ($this->data['Place']['file']['error'] != 4) { //新しいファイルがある場合
+                    $upload_dir = '../webroot/files/place/'; //保存するディレクトリ
+                    $upload_pass = $upload_dir . basename($this->data['Place']['file']['name']);
+                    if (move_uploaded_file($this->data['Place']['file']['tmp_name'], $upload_pass)) { //ファイルを保存
+                        $this->request->data['Place']['seat_name'] = $this->data['Place']['file']['name'];
+                        $file = new File(WWW_ROOT . 'files/place/' . $this->request->data['Place']['delete_name']); //前のファイルを削除
+                        $file->delete();
+                        $file->close();
+                    } else {
+                        $this->Session->setFlash('画像ファイルに不備があります。', 'flashMessage');
+                        
+                        $this->redirect('/places/place_lists/');
+                    }
+                }
+                /* ファイルの保存ここまで */
                 $this->Place->save($this->request->data); //validate成功でsave
                 if ($this->Place->save($id)) {
                     $this->Session->setFlash('修正しました。', 'flashMessage');
