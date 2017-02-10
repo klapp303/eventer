@@ -27,7 +27,7 @@
           <?php if (!$image_name) {
               $image_name = '../no_image.jpg';
           } ?>
-          <?php echo $this->Html->image('../files/artist/' . $image_name, array('class' => 'img_artist js-tmb_pre')); ?>
+          <?php echo $this->Html->image('../files/artist/' . $image_name, array('class' => 'tmb-display js-tmb_pre')); ?>
           <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false)); ?></td>
     </tr>
     <tr>

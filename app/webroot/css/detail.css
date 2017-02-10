@@ -197,7 +197,7 @@
   -moz-border-radius: 20px;
 }
 
-/* コンテンツ説明文用 */
+/* コンテンツ説明文 */
 .intro {
   margin-left: 20px;
 }
@@ -387,7 +387,12 @@
   background: #d8d8d8;
 }
 
-/* nameタグ一覧用 */
+/* 画像サムネイル */
+.tmb-display {
+  width: 150px;
+}
+
+/* nameタグ一覧 */
 .list-name-tag {
   line-height: 1.8em;
 }

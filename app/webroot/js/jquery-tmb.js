@@ -17,7 +17,7 @@ jQuery(function($) {
             //画像表示
             var reader = new FileReader();
             reader.onload = function() {
-                var img_src = $('<img class="img_artist">').attr('src', reader.result);
+                var img_src = $('<img class="tmb-display">').attr('src', reader.result);
                 $('.tmb-image').html(img_src);
             };
             reader.readAsDataURL(file);

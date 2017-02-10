@@ -11,7 +11,7 @@
               <a href="<?php echo $val['link_url']; ?>" target="_blank"><?php echo $val['link_url']; ?></a><br>
             <?php } ?></td></tr>
     
-    <tr><td rowspan="2"><?php echo $this->Html->image('../files/artist/' . $artist_detail['Artist']['image_name'], array('alt' => $artist_detail['Artist']['alt_name'], 'class' => 'img_artist')); ?></td>
+    <tr><td rowspan="2"><?php echo $this->Html->image('../files/artist/' . $artist_detail['Artist']['image_name'], array('alt' => $artist_detail['Artist']['alt_name'], 'class' => 'tmb-display')); ?></td>
         <th>関連アーティスト</th></tr>
     <tr><td class="tbl-name-tag_artists"><div class="list-name-tag">
               <?php foreach ($artist_detail['Artist']['related_artists'] as $val) { ?>
