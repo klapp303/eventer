@@ -1,4 +1,5 @@
 <?php echo $this->Html->script('http://maps.googleapis.com/maps/api/js?sensor=false', array('inline' => false)); ?>
+<?php echo $this->Html->script('jquery-image_drag', array('inline' => false)); ?>
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
 <h3>会場詳細</h3>
 
@@ -17,17 +18,29 @@
         <?php } ?></td></tr>
   </table>
 
-<?php if ($place_detail['Place']['latitude'] && $place_detail['Place']['longitude']) { ?>
-  <div id="map">
-  <?php //GoogleMapオプション
-  $map_options = array(
-      'latitude' => $place_detail['Place']['latitude'],
-      'longitude' => $place_detail['Place']['longitude'],
-      'windowText' => $place_detail['Place']['name']
-  ); ?>
-    <?php echo $this->GoogleMap->map($map_options); ?>
-  </div>
-<?php } ?>
+<div class="cf">
+  <?php if ($place_detail['Place']['latitude'] && $place_detail['Place']['longitude']) { ?>
+    <div id="map" class="fl">
+    <?php //GoogleMapオプション
+    $map_options = array(
+        'latitude' => $place_detail['Place']['latitude'],
+        'longitude' => $place_detail['Place']['longitude'],
+        'windowText' => $place_detail['Place']['name']
+    ); ?>
+      <?php echo $this->GoogleMap->map($map_options); ?>
+    </div>
+  <?php } ?>
+  
+  <?php if ($place_detail['Place']['seat_name']) { ?>
+    <div id="seat" class="fr">
+    <script> //ImageDragオプション
+        $(function() {
+            imageDrag('#seat', '<?php echo $place_detail['Place']['seat_name']; ?>');
+        });
+    </script>
+    </div>
+  <?php } ?>
+</div>
 
 <h3>開催予定のイベント</h3>
 

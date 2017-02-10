@@ -30,9 +30,19 @@
   margin-left: 108px;
 }
 
-/* googlemap用 */
+/* GoogleMap用 */
 #map {
   margin-left: 20px;
+}
+/* ImageDrag用 */
+#seat {
+  width: 350px;
+  height: 350px;
+/*  overflow: hidden;*/
+  margin-left: 20px;
+  cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
 }
 
 /* 会場ソート一覧用 */
