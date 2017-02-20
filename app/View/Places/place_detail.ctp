@@ -39,6 +39,9 @@
         });
     </script>
     </div>
+    <div class="link-page_place-seat">
+      <span class="link-page"><?php echo $this->Html->link('⇨ 座席画像を確認する', '/files/place/' . $place_detail['Place']['seat_name'], array('target' => 'blank')); ?></span>
+    </div>
   <?php } ?>
 </div>
 
