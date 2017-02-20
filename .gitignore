@@ -9,6 +9,7 @@
 /app/tmp
 
 /app/webroot/files/artist
+/app/webroot/files/place
 
 /backup
 
