@@ -160,6 +160,13 @@ class EventsEntry extends AppModel
             }
         }
         
+        //イベント自体が見送りの場合
+        $this->loadModel('EventStatus');
+        $event_detail_status = $this->EventStatus->checkEventsDetailStatus($event_data['EventsDetail']['id']);
+        if ($event_detail_status) {
+            $status = $event_detail_status;
+        }
+        
         return $status;
     }
     

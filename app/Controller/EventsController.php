@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController
 {
-    public $uses = array('EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Artist'); //使用するModel
+    public $uses = array('EventArtist', 'EventUser', 'EventStatus', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Artist'); //使用するModel
     
     public $components = array('Paginator', 'Search.Prg');
     
@@ -91,6 +91,9 @@ class EventsController extends AppController
                 }
                 $this->set('sub_page', $event_name);
 //                echo'<pre>';print_r($event_detail);echo'</pre>';
+                //イベント自体の見送り判定
+                $event_detail_status = $this->EventStatus->checkEventsDetailStatus($event_detail['EventsDetail']['id']);
+                $this->set('event_detail_status', $event_detail_status);
                 //エントリー一覧
                 $entry_lists = $this->EventsEntry->find('all', array(
                     'conditions' => array(
@@ -399,6 +402,59 @@ class EventsController extends AppController
             }
             
             $this->redirect('/events/');
+        }
+    }
+    
+    public function event_skip($id = null)
+    {
+        if ($this->request->is('post')) {
+            $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+            
+            if (empty($id)) {
+                throw new NotFoundException(__('存在しないデータです。'));
+            }
+            $events_detail = $this->EventsDetail->findById($id);
+            
+            if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
+                //公開中のイベントでなければredirect
+                if ($events_detail['Event']['publish'] != 1) {
+                    $this->redirect('/events/' . $id);
+                }
+            }
+            if (!$events_detail) {
+                $this->Session->setFlash('データが見つかりませんでした。', 'flashMessage');
+                $this->redirect('/events/' . $id);
+            }
+            
+            //現在のステータスを取得
+            $events_detail_status = $this->EventStatus->checkEventsDetailStatus($events_detail['EventsDetail']['id'], 'ARRAY');
+            //既に見送るの場合はステータスを戻す
+            if (@$events_detail_status['EventStatus']['status'] == 4) {
+//                $this->Eventstatus->Behaviors->enable('SoftDelete');
+                if ($this->EventStatus->delete($events_detail_status['EventStatus']['id'])) {
+//                $this->EventStatus->id = $events_detail_status['EventStatus']['id'];
+//                if ($this->EventStatus->saveField('status', 0)) {
+                    $this->Session->setFlash('イベントのstatusを戻しました。', 'flashMessage');
+                } else {
+                    $this->Session->setFlash('イベントのstatusを戻せませんでした。', 'flashMessage');
+                }
+                
+            //それ以外はステータスを見送るに変更する
+            } else {
+                $save_data[] = array(
+                    'event_id' => $events_detail['Event']['id'],
+                    'events_detail_id' => $id,
+                    'user_id' => $this->Auth->user('id'),
+                    'status' => 4
+                );
+                if ($this->EventStatus->saveMany($save_data)) {
+                    $this->Session->setFlash('イベントのstatusを見送りに変更しました。', 'flashMessage');
+                } else {
+                    $this->Session->setFlash('イベントのstatusを変更できませんでした。', 'flashMessage');
+                }
+            }
+            
+            $this->redirect('/events/' . $id);
         }
     }
     

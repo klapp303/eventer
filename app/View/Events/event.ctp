@@ -20,14 +20,19 @@
 
   <table class="detail-list detail-list_event">
     <tr><th class="tbl-date">開催日時</th>
-        <th class="tbl-ico">種類</th>
+        <th class="tbl-ico">status</th>
         <th class="tbl-ico-long">公開設定</th>
         <th>作成者</th>
         <th>別日程</th></tr>
     <tr><td class="tbl-date"><?php echo date('Y/m/d(' . $week_lists[date('w', strtotime($event_detail['EventsDetail']['date']))] . ')', strtotime($event_detail['EventsDetail']['date'])); ?><br>
                              開場　<?php echo ($event_detail['EventsDetail']['time_open'])? date('H:i', strtotime($event_detail['EventsDetail']['time_open'])) : ''; ?><br>
                              開演　<?php echo ($event_detail['EventsDetail']['time_start'])? date('H:i', strtotime($event_detail['EventsDetail']['time_start'])) : ''; ?></td>
-        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['EventsDetail']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span></td>
+        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_detail['EventsDetail']['genre_id']; ?>"><?php echo $event_detail['EventGenre']['title']; ?></span><br>
+                            <?php if ($event_detail_status == 4) { ?>
+                              <span class="icon-false">見送り</span>
+                            <?php } else { ?>
+                              <span class="icon-safe">登録中</span>
+                            <?php } ?></td>
         <td class="tbl-ico-long"><?php if ($event_detail['Event']['publish'] == 0) { ?>
                                    <span class="icon-false">非公開</span>
                                  <?php } elseif ($event_detail['Event']['publish'] == 1) { ?>
@@ -40,6 +45,14 @@
               <?php echo $this->Html->link($other_list['EventsDetail']['title'], '/events/' . $other_list['EventsDetail']['id']); ?><br>
             <?php } ?></td></tr>
   </table>
+
+<div class="link-right">
+  <?php if ($event_detail_status == 4) { ?>
+    <span class="link-page"><?php echo $this->Form->postLink('⇨ 見送ったイベントを戻す', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを戻しますか'); ?></span>
+  <?php } else { ?>
+    <span class="link-page"><?php echo $this->Form->postLink('⇨ イベントを見送る', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを見送りに変更しますか'); ?></span>
+  <?php } ?>
+</div>
 
 <h3>エントリー一覧</h3>
 
