@@ -216,7 +216,11 @@ class EventsDetail extends AppModel
                     }
                 }
                 //日時が被っているイベントがない場合
-                unset($event_lists[$key]);
+                $this->loadModel('EventStatus');
+                $events_detail_status = $this->EventStatus->checkEventsDetailStatus($event['EventsDetail']['id']);
+                if ($events_detail_status != 4) {
+                    unset($event_lists[$key]); //イベント自体を見送ってなければunset
+                }
             }
         }
         
