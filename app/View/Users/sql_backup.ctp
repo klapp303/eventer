@@ -1,8 +1,8 @@
 <?php echo 'SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";'; ?>
 
 
-<?php foreach ($array_model as $model) { ?>
-<?php if (@${$model . '_datas'}) { ?>
+<?php foreach ($array_model as $model): ?>
+<?php if (@${$model . '_datas'}): ?>
 INSERT INTO `<?php echo ${$model . '_tbl'}; ?>` (<?php
     $count_column = count(${$model . '_datas'}[0][$model]);
     foreach (${$model . '_datas'}[0][$model] as $column => $data) {
@@ -54,5 +54,5 @@ foreach (${$model.'_datas'} as $data) {
 ?>
 
 
-<?php } ?>
-<?php } ?>
+<?php endif; ?>
+<?php endforeach; ?>

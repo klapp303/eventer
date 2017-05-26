@@ -13,16 +13,16 @@
   
   <table>
     <tr><td><select name="cast-lists" size="15" style="width:200px;" multiple="multiple">
-          <?php foreach ($cast_lists as $cast_list) { ?>
-            <option value="<?php echo $cast_list['EventArtist']['artist_id']; ?>"><?php echo $cast_list['ArtistProfile']['name']; ?></option>
-          <?php } ?>
+          <?php foreach ($cast_lists as $cast_list): ?>
+          <option value="<?php echo $cast_list['EventArtist']['artist_id']; ?>"><?php echo $cast_list['ArtistProfile']['name']; ?></option>
+          <?php endforeach; ?>
         </select></td>
         <td><button type="button" class="artist-add-button"><< 追加する</button><br><br>
             <button type="button" class="cast-delete-button">>> 削除する</button></td>
         <td><select name="artist-lists" size="15" style="width:200px;" multiple="multiple">
-          <?php foreach ($artist_lists as $artist_list) { ?>
-            <option value="<?php echo $artist_list['Artist']['id']; ?>"><?php echo $artist_list['Artist']['name']; ?></option>
-          <?php } ?>
+          <?php foreach ($artist_lists as $artist_list): ?>
+          <option value="<?php echo $artist_list['Artist']['id']; ?>"><?php echo $artist_list['Artist']['name']; ?></option>
+          <?php endforeach; ?>
         </select></td></tr>
   </table>
   

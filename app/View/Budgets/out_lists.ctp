@@ -21,19 +21,19 @@
         <th class="tbl-date">入金<br>締切日<?php echo $this->Paginator->sort('EventUser.payment_end', '▼'); ?></th>
         <th class="tbl-action_out">action</th></tr>
     
-    <?php foreach ($out_lists as $out_list) { ?>
-      <tr><td class="tbl-date"><?php echo $out_list['EventDetail']['date']; ?></td>
-          <td><?php echo $out_list['EventDetail']['title']; ?></td>
-          <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $out_list['EventDetail']['genre_id']; ?>"><?php echo $out_list['EventDetail']['EventGenre']['title']; ?></span><br>
-                              <?php foreach ($eventEntryStatus as $entry_status) {
-                                  if ($entry_status['status'] == $out_list['EventDetail']['status']) {
-                                      echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
-                                      break;
-                                  }
-                              } ?></td>
-          <td><?php echo $out_list['EventDetail']['UserName']['handlename']; ?></td>
-          <td class="tbl-num"><?php echo $out_list['EventDetail']['amount']; ?>円</td>
-          <td class="tbl-date"><?php echo $out_list['EventDetail']['payment_end']; ?></td>
-          <td class="tbl-action_out"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $out_list['EventDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
-    <?php } ?>
+    <?php foreach ($out_lists as $out_list): ?>
+    <tr><td class="tbl-date"><?php echo $out_list['EventDetail']['date']; ?></td>
+        <td><?php echo $out_list['EventDetail']['title']; ?></td>
+        <td class="tbl-ico"><span class="icon-genre col-event_<?php echo $out_list['EventDetail']['genre_id']; ?>"><?php echo $out_list['EventDetail']['EventGenre']['title']; ?></span><br>
+                            <?php foreach ($eventEntryStatus as $entry_status) {
+                                if ($entry_status['status'] == $out_list['EventDetail']['status']) {
+                                    echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
+                                    break;
+                                }
+                            } ?></td>
+        <td><?php echo $out_list['EventDetail']['UserName']['handlename']; ?></td>
+        <td class="tbl-num"><?php echo $out_list['EventDetail']['amount']; ?>円</td>
+        <td class="tbl-date"><?php echo $out_list['EventDetail']['payment_end']; ?></td>
+        <td class="tbl-action_out"><span class="icon-button"><?php echo $this->Html->link('詳細', '/events/' . $out_list['EventDetail']['id'], array('target' => '_blank')); ?></span></td></tr>
+    <?php endforeach; ?>
   </table>

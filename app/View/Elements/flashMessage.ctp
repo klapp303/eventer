@@ -1,3 +1,1 @@
-<p class="flash-msg">
-  <?php echo $message; ?>
-</p>
+<p class="flash-msg"><?php echo $message; ?></p>

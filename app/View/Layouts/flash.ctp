@@ -7,9 +7,9 @@
     <?php echo $this->Html->charset(); ?>
     <title><?php echo $pageTitle; ?></title>
     <?php
-    if (Configure::read('debug') == 0):
+    if (Configure::read('debug') == 0) {
         echo sprintf('<meta http-equiv="Refresh" content="%s;url=%s" />', $pause, $url);
-    endif;
+    }
     ?>
     <style><!--
       P { text-align:center; font:bold 1.1em sans-serif }

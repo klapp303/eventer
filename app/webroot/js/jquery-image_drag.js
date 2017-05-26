@@ -28,9 +28,9 @@ function imageDragMain(divName, imgUrl, IMG_W, IMG_H) {
     if ((IMG_W - DIV_W) /2 > 0) x = (IMG_W - DIV_W) /2;
     
     $(divName).css({
-        backgroundImage : 'url(' + imgUrl + ')',
-        backgroundRepeat : 'no-repeat',
-        backgroundPosition : 'top'
+        backgroundImage: 'url(' + imgUrl + ')',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'top'
         
     //画像がクリックされた時にイベントを開始
     }).mousedown(function(e) {

@@ -13,8 +13,8 @@
   <table class="detail-list">
     <tr><th class="tbl-ico">ジャンル名</th><th>説明</th></tr>
     
-    <?php foreach ($event_genre_lists as $event_genre_list) { ?>
-      <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_genre_list['EventGenre']['id']; ?>"><?php echo $event_genre_list['EventGenre']['title']; ?></span></td>
-          <td><?php echo $event_genre_list['EventGenre']['description']; ?></td></tr>
-    <?php } ?>
+    <?php foreach ($event_genre_lists as $event_genre_list): ?>
+    <tr><td class="tbl-ico"><span class="icon-genre col-event_<?php echo $event_genre_list['EventGenre']['id']; ?>"><?php echo $event_genre_list['EventGenre']['title']; ?></span></td>
+        <td><?php echo $event_genre_list['EventGenre']['description']; ?></td></tr>
+    <?php endforeach; ?>
   </table>

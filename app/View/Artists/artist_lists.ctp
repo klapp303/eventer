@@ -31,39 +31,39 @@
 
 <h3>出演者タグ一覧</h3>
 
-  <?php foreach ($array_kana as $key => $val) { ?>
-    <table class="list_artists list_artists_<?php echo $key; ?>" style="display:<?php echo ($key == 0)? 'block' : 'none'; ?>;">
-      <tr><?php foreach ($array_kana as $key_2 => $kana) { ?>
-            <td class="list-tab_artists list-tab_<?php echo $key_2; ?> <?php echo ($key_2 == $key)? 'list-tab-active_artists' : ''; ?>">
-              <span class="<?php echo ($key_2 == $key)? 'txt-b' : ''; ?>"><?php echo $kana['name']; ?></span>
-            </td>
-          <?php } ?><td class="list-tab-non_artists"></td></tr>
-      
-      <tr><td colspan="9" class="list-body_artists">
-        <div class="list-name-tag">
-          <?php if (${'artist_lists_' . $key}) { ?>
-            <?php foreach (${'artist_lists_' . $key} as $artist) { ?>
-              <span class="name-tag-long">
-                <a href="<?php echo '/artists/artist_detail/' . $artist['Artist']['id']; ?>">
-                  <?php echo $artist['Artist']['name']; ?></a>
-              </span>
-            <?php } ?>
-          <?php } else { ?>
-            <p>登録されている出演者タグはありません。</p>
-          <?php } ?>
-        </div>
-      </td></tr>
-    </table>
-  <?php } ?>
+  <?php foreach ($array_kana as $key => $val): ?>
+  <table class="list_artists list_artists_<?php echo $key; ?>" style="display:<?php echo ($key == 0)? 'block' : 'none'; ?>;">
+    <tr><?php foreach ($array_kana as $key_2 => $kana): ?>
+        <td class="list-tab_artists list-tab_<?php echo $key_2; ?> <?php echo ($key_2 == $key)? 'list-tab-active_artists' : ''; ?>">
+          <span class="<?php echo ($key_2 == $key)? 'txt-b' : ''; ?>"><?php echo $kana['name']; ?></span>
+        </td>
+        <?php endforeach; ?><td class="list-tab-non_artists"></td></tr>
+    
+    <tr><td colspan="9" class="list-body_artists">
+      <div class="list-name-tag">
+        <?php if (${'artist_lists_' . $key}): ?>
+          <?php foreach (${'artist_lists_' . $key} as $artist): ?>
+          <span class="name-tag-long">
+            <a href="<?php echo '/artists/artist_detail/' . $artist['Artist']['id']; ?>">
+              <?php echo $artist['Artist']['name']; ?></a>
+          </span>
+          <?php endforeach; ?>
+        <?php else: ?>
+        <p>登録されている出演者タグはありません。</p>
+        <?php endif; ?>
+      </div>
+    </td></tr>
+  </table>
+  <?php endforeach; ?>
 
-<?php foreach ($array_kana as $key => $val) { ?>
-  <script>
-      jQuery(function($) {
-          var key = <?php echo $key; ?>;
-          $('.list-tab_' + key).click(function() {
-              $('.list_artists').hide();
-              $('.list_artists_' + key).show();
-          });
-      });
-  </script>
-<?php } ?>
+<?php foreach ($array_kana as $key => $val): ?>
+<script>
+    jQuery(function($) {
+        var key = <?php echo $key; ?>;
+        $('.list-tab_' + key).click(function() {
+            $('.list_artists').hide();
+            $('.list_artists_' + key).show();
+        });
+    });
+</script>
+<?php endforeach; ?>

@@ -42,16 +42,16 @@
     <tr>
       <td><label>関連アーティスト</label></td>
       <td><select name="related-lists" size="15" style="width:200px;" multiple="multiple">
-            <?php foreach ($related_lists as $related_list) { ?>
-              <option value="<?php echo $related_list['artist_id']; ?>"><?php echo $related_list['name']; ?></option>
-            <?php } ?>
+            <?php foreach ($related_lists as $related_list): ?>
+            <option value="<?php echo $related_list['artist_id']; ?>"><?php echo $related_list['name']; ?></option>
+            <?php endforeach; ?>
           </select></td>
       <td><button type="button" class="artist-add-button"><< 追加する</button><br><br>
           <button type="button" class="related-delete-button">>> 削除する</button></td>
       <td><select name="artist-lists" size="15" style="width:200px;" multiple="multiple">
-            <?php foreach ($artist_lists as $key => $val) { ?>
-              <option value="<?php echo $key; ?>"><?php echo $val; ?></option>
-            <?php } ?>
+            <?php foreach ($artist_lists as $key => $val): ?>
+            <option value="<?php echo $key; ?>"><?php echo $val; ?></option>
+            <?php endforeach; ?>
           </select></td>
     </tr>
     

@@ -1,32 +1,32 @@
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
 <?php echo $this->Html->script('jquery-tmb', array('inline' => false)); ?>
-<?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
-  <h3>会場の修正</h3>
-  
-    <table class="PlaceAddForm">
-      <?php echo $this->Form->create('Place', array( //使用するModel
-//          'type' => 'put', //変更はput
-          'enctype' => 'multipart/form-data', //fileアップロードの場合
-          'action' => 'edit', //Controllerのactionを指定
-          'inputDefaults' => array('div' => '')
-      )); ?>
-<?php } else { //登録用 ?>
-  <h3><?php echo $sub_page; ?></h3>
-  
-    <table class="PlaceAddForm">
-      <?php echo $this->Form->create('Place', array( //使用するModel
-//          'type' => 'post', //デフォルトはpost送信
-          'enctype' => 'multipart/form-data', //fileアップロードの場合
-          'action' => 'add', //Controllerのactionを指定
-          'inputDefaults' => array('div' => '')
-      )); ?>
-<?php } ?><!-- form start -->
+<?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])): //編集用 ?>
+<h3>会場の修正</h3>
 
-  <?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
-    <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
-  <?php } else { //登録用 ?>
-    <?php echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
-  <?php } ?>
+  <table class="PlaceAddForm">
+    <?php echo $this->Form->create('Place', array( //使用するModel
+//        'type' => 'put', //変更はput
+        'enctype' => 'multipart/form-data', //fileアップロードの場合
+        'action' => 'edit', //Controllerのactionを指定
+        'inputDefaults' => array('div' => '')
+    )); ?>
+<?php else: //登録用 ?>
+<h3><?php echo $sub_page; ?></h3>
+
+  <table class="PlaceAddForm">
+    <?php echo $this->Form->create('Place', array( //使用するModel
+//        'type' => 'post', //デフォルトはpost送信
+        'enctype' => 'multipart/form-data', //fileアップロードの場合
+        'action' => 'add', //Controllerのactionを指定
+        'inputDefaults' => array('div' => '')
+    )); ?>
+<?php endif; ?><!-- form start -->
+
+  <?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])): //編集用 ?>
+  <?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $id)); ?>
+  <?php else: //登録用 ?>
+  <?php echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $userData['id'])); ?>
+  <?php endif; ?>
 
     <tr>
       <td><label>会場名</label></td>
@@ -59,13 +59,13 @@
     </tr>
     <tr>
       <td><label>座席図</label></td>
-      <td><?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])) { //編集用 ?>
-              <?php echo $this->Form->input('delete_name', array('type' => 'hidden', 'label' => false, 'value' => $image_name)); ?>
-              <?php if (!$image_name) {
-                  $image_name = '../no_image.jpg';
-              } ?>
-              <?php echo $this->Html->image('../files/place/' . $image_name, array('class' => 'tmb-display js-tmb_pre')); ?>
-          <?php } ?>
+      <td><?php if (preg_match('#/places/edit/#', $_SERVER['REQUEST_URI'])): //編集用 ?>
+          <?php echo $this->Form->input('delete_name', array('type' => 'hidden', 'label' => false, 'value' => $image_name)); ?>
+          <?php if (!$image_name) {
+              $image_name = '../no_image.jpg';
+          } ?>
+          <?php echo $this->Html->image('../files/place/' . $image_name, array('class' => 'tmb-display js-tmb_pre')); ?>
+          <?php endif; ?>
           <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false)); ?></td>
     </tr>
     

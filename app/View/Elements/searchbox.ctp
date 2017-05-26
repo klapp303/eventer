@@ -1,9 +1,7 @@
 <script>
-    $(document).ready(
-        function() {
-            $('#menu_side').css('margin-bottom', '70px');
-        }
-    );
+    jQuery(function($) {
+        $('#menu_side').css('margin-bottom', '70px');
+    });
 </script>
 <?php
 //searchboxのデフォルト設定

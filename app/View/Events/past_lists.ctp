@@ -9,12 +9,12 @@
 <h3><?php echo $sub_page; ?></h3>
 
 <div class="intro intro_events">
-  <P>
+  <p>
     過去に行われたイベントの一覧になります。<br>
     <br>
     右上のボタンから当落見送りの結果が登録されていないイベントのみを<br>
     表示する事ができます。
-  </P>
+  </p>
 </div>
 
   <div class="js-show">
@@ -25,18 +25,18 @@
   <?php echo $this->Paginator->numbers($paginator_option); ?>
   </div>
 
-  <?php if (count($event_undecided_lists) > 0) { ?>
-    <div class="tbl-event_lists js-hide">
-      <?php echo $this->element('eventer_eventlist', array(
-          'event_lists' => $event_undecided_lists,
-          'paginator' => false
-      )); ?>
-    </div>
-  <?php } else { ?>
-    <div class="intro js-hide">
-      <P>未対応のイベントはありません。</P>
-    </div>
-  <?php } ?>
+  <?php if (count($event_undecided_lists) > 0): ?>
+  <div class="tbl-event_lists js-hide">
+    <?php echo $this->element('eventer_eventlist', array(
+        'event_lists' => $event_undecided_lists,
+        'paginator' => false
+    )); ?>
+  </div>
+  <?php else: ?>
+  <div class="intro js-hide">
+    <p>未対応のイベントはありません。</p>
+  </div>
+  <?php endif; ?>
 
 <div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ 公開されている全てのイベントはこちら', '/events/all_lists/'); ?></span>

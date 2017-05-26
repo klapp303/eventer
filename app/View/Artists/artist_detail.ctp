@@ -7,25 +7,25 @@
     <tr><td><?php echo $artist_detail['Artist']['name']; ?><br>
             <span class="txt-min">（<?php echo $artist_detail['Artist']['kana']; ?>）</span>
         </td>
-        <td><?php foreach ($artist_detail['Artist']['link_urls'] as $val) { ?>
-              <a href="<?php echo $val['link_url']; ?>" target="_blank"><?php echo $val['link_url']; ?></a><br>
-            <?php } ?></td></tr>
+        <td><?php foreach ($artist_detail['Artist']['link_urls'] as $val): ?>
+            <a href="<?php echo $val['link_url']; ?>" target="_blank"><?php echo $val['link_url']; ?></a><br>
+            <?php endforeach; ?></td></tr>
     
     <tr><td rowspan="2"><?php echo $this->Html->image('../files/artist/' . $artist_detail['Artist']['image_name'], array('alt' => $artist_detail['Artist']['alt_name'], 'class' => 'tmb-display')); ?></td>
         <th>関連アーティスト</th></tr>
     <tr><td class="tbl-name-tag_artists"><div class="list-name-tag">
-              <?php foreach ($artist_detail['Artist']['related_artists'] as $val) { ?>
-                <span class="name-tag-long">
-                  <a href="/artists/artist_detail/<?php echo $val['artist_id']; ?>"><?php echo $val['name']; ?></a>
-                </span>
-              <?php } ?>
+              <?php foreach ($artist_detail['Artist']['related_artists'] as $val): ?>
+              <span class="name-tag-long">
+                <a href="/artists/artist_detail/<?php echo $val['artist_id']; ?>"><?php echo $val['name']; ?></a>
+              </span>
+              <?php endforeach; ?>
             </div></td></tr>
   </table>
 
 <div class="link-right">
-  <?php if ($userData['role'] >= 3) { ?>
-    <span class="link-page"><?php echo $this->Html->link('⇨ アーティスト情報を追加、修正する', '/artists/edit/' . $artist_detail['Artist']['id']); ?></span>
-  <?php } ?>
+  <?php if ($userData['role'] >= 3): ?>
+  <span class="link-page"><?php echo $this->Html->link('⇨ アーティスト情報を追加、修正する', '/artists/edit/' . $artist_detail['Artist']['id']); ?></span>
+  <?php endif; ?>
   <span class="link-page"><?php echo $this->Form->postLink('⇨ アーティストを削除する', array('action' => 'delete', $artist_detail['Artist']['id']), null, $artist_detail['Artist']['name'] . ' を本当に削除しますか'); ?></span>
 </div>
 

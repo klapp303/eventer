@@ -24,46 +24,40 @@ unset($val);
 
 <ul class="list_faq_link">
   <?php $i = 0; ?>
-  <?php foreach ($array_category as $title => $category) { ?>
-    <?php $i++; ?>
-    <li><a href="#category_<?php echo $i; ?>"><?php echo $title; ?></a></li>
-  <?php } ?>
+  <?php foreach ($array_category as $title => $category): ?>
+  <?php $i++; ?>
+  <li><a href="#category_<?php echo $i; ?>"><?php echo $title; ?></a></li>
+  <?php endforeach; ?>
 </ul>
 
 <?php $i = 0; ?>
 <?php $number = 0; ?>
-<?php foreach ($array_category as $title => $category) { ?>
-  <?php $i++; ?>
-  <h4 id="category_<?php echo $i; ?>"><?php echo $i . '. ' . $title; ?></h4>
+<?php foreach ($array_category as $title => $category): ?>
+<?php $i++; ?>
+<h4 id="category_<?php echo $i; ?>"><?php echo $i . '. ' . $title; ?></h4>
 
-  <?php foreach ($category as $key => $faq) { ?>
-    <?php $number++; ?>
-    <div class="body_faq">
-      <p id="question_<?php echo $number; ?>" class="body_question">
-        <span class="txt-b">Q<?php echo $key +1; ?></span><br>
-        <?php echo $faq['question']; ?>
-      </p>
-      
-      <p id="answer_<?php echo $number; ?>" style="display: none;">
-        <span class="txt-b">A<?php echo $key +1; ?></span><br>
-        <?php echo $faq['answer']; ?>
-      </p>
-      
-      <?php if ($number < count($array_faq)) { ?>
-        <hr>
-      <?php } ?>
-    </div>
+  <?php foreach ($category as $key => $faq): ?>
+  <?php $number++; ?>
+  <div class="body_faq">
+    <p id="question_<?php echo $number; ?>" class="body_question">
+      <span class="txt-b">Q<?php echo $key +1; ?></span><br>
+      <?php echo $faq['question']; ?>
+    </p>
+    
+    <p id="answer_<?php echo $number; ?>" style="display: none;">
+      <span class="txt-b">A<?php echo $key +1; ?></span><br>
+      <?php echo $faq['answer']; ?>
+    </p>
+    
+    <?php echo ($number < count($array_faq))? '<hr>' : ''; ?>
+  </div>
   <script>
       jQuery(function($) {
           var number = <?php echo json_encode($number, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
-          $(function() {
-              $('#question_' + number).click(
-                  function() {
-                      $('#answer_' + number).toggle();
-                  }
-              );
+          $('#question_' + number).click(function() {
+                  $('#answer_' + number).toggle();
           });
       });
   </script>
-  <?php } ?>
-<?php } ?>
+  <?php endforeach; ?>
+<?php endforeach; ?>

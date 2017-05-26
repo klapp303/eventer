@@ -7,11 +7,11 @@
 )); ?>
 <h3><?php echo $sub_page; ?></h3>
 
-<?php if (@$description) { ?>
-  <div class="intro intro_events">
-    <P><?php echo $description; ?></P>
-  </div>
-<?php } ?>
+<?php if (@$description): ?>
+<div class="intro intro_events">
+  <P><?php echo $description; ?></P>
+</div>
+<?php endif; ?>
 
   <?php if (@$this->params['pass'][0]) {
       $this->Paginator->options(array('url' => $this->params['pass'][0]));
@@ -22,10 +22,10 @@
   
   <?php echo $this->Paginator->numbers($paginator_option); ?>
 
-<?php if (@$page_link) { ?>
-  <div class="link-right">
-    <?php foreach ($page_link as $val) { ?>
-      <span class="link-page"><?php echo $this->Html->link('⇨ ' . $val['title'], $val['url']); ?></span>
-    <?php } ?>
-  </div>
-<?php } ?>
+<?php if (@$page_link): ?>
+<div class="link-right">
+  <?php foreach ($page_link as $val): ?>
+  <span class="link-page"><?php echo $this->Html->link('⇨ ' . $val['title'], $val['url']); ?></span>
+  <?php endforeach; ?>
+</div>
+<?php endif; ?>
