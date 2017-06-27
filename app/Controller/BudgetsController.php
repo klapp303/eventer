@@ -19,7 +19,7 @@ class BudgetsController extends AppController
         $this->layout = 'eventer_fullwidth';
 //        $this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
         
-        $this->set('BUDGET_LIMIT_KEY', $this->getOptionKey('BUDGET_LIMIT_KEY'));
+        $this->set('BUDGET_LIMIT_KEY', $this->Option->getOptionKey('BUDGET_LIMIT_KEY'));
     }
     
     public function index()
@@ -33,7 +33,7 @@ class BudgetsController extends AppController
         $this->set('sub_page', '未対応の支払い一覧');
         
         $this->set('column', 'payment');
-        $BUDGET_LIMIT_KEY = $this->getOptionKey('BUDGET_LIMIT_KEY');
+        $BUDGET_LIMIT_KEY = $this->Option->getOptionKey('BUDGET_LIMIT_KEY');
         $this->set('unfixed_lists', $this->EventsDetail->getUnfixedPayment($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
         
         $this->render('unfixed_lists');
@@ -45,7 +45,7 @@ class BudgetsController extends AppController
         $this->set('sub_page', '未対応のチケット余り一覧');
         
         $this->set('column', 'sales');
-        $BUDGET_LIMIT_KEY = $this->getOptionKey('BUDGET_LIMIT_KEY');
+        $BUDGET_LIMIT_KEY = $this->Option->getOptionKey('BUDGET_LIMIT_KEY');
         $this->set('unfixed_lists', $this->EventsDetail->getUnfixedSales($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
         
         $this->render('unfixed_lists');
@@ -57,7 +57,7 @@ class BudgetsController extends AppController
         $this->set('sub_page', '未対応の集金一覧');
         
         $this->set('column', 'collect');
-        $BUDGET_LIMIT_KEY = $this->getOptionKey('BUDGET_LIMIT_KEY');
+        $BUDGET_LIMIT_KEY = $this->Option->getOptionKey('BUDGET_LIMIT_KEY');
         $this->set('unfixed_lists', $this->EventsDetail->getUnfixedCollect($this->Auth->user('id'), 0, $BUDGET_LIMIT_KEY));
         
         $this->render('unfixed_lists');
@@ -109,7 +109,7 @@ class BudgetsController extends AppController
         }
         
         $this->set('reset_column', $column);
-        $BUDGET_LIMIT_KEY = $this->getOptionKey('BUDGET_LIMIT_KEY');
+        $BUDGET_LIMIT_KEY = $this->Option->getOptionKey('BUDGET_LIMIT_KEY');
         if ($column == 'payment') {
             //breadcrumbの設定
             $this->set('sub_page', '対応済みに確定した支払い一覧');

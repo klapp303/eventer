@@ -28,4 +28,17 @@ class Option extends AppModel
 //            'message' => '金額を正しく入力してください。'
 //        )
 //    );
+    
+    public function getOptionKey($key_title = false, $key = 0)
+    {
+        $option = $this->find('first', array( //オプション値を取得
+            'conditions' => array('Option.title' => $key_title),
+            'fields' => 'Option.key'
+        ));
+        if ($option) {
+            $key = $option['Option']['key'];
+        }
+        
+        return $key;
+    }
 }

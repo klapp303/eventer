@@ -44,7 +44,7 @@ class TopController extends AppController
         $this->set('event_today_lists', $event_today_lists);
         
         //直近の予定
-        $CURRENT_EVENT_KEY = $this->getOptionKey('CURRENT_EVENT_KEY');
+        $CURRENT_EVENT_KEY = $this->Option->getOptionKey('CURRENT_EVENT_KEY');
         $event_current_lists = $this->EventsEntry->searchEntryDate($this->Auth->user('id'), date('Y-m-d', strtotime('1 day')), date('Y-m-d', strtotime($CURRENT_EVENT_KEY . ' day')));
         foreach ($event_current_lists as $key => $event) {
             if ($event['EventsEntry']['status'] == 3 || $event['EventsEntry']['status'] == 4) { //落選 or 見送りならば表示しない

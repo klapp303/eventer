@@ -23,7 +23,7 @@ class EventsController extends AppController
     
     public function index()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
@@ -81,7 +81,7 @@ class EventsController extends AppController
                     }
                 }
                 
-                $this->set('PLACE_OTHER_KEY', $this->getOptionKey('PLACE_OTHER_KEY'));
+                $this->set('PLACE_OTHER_KEY', $this->Option->getOptionKey('PLACE_OTHER_KEY'));
                 
                 //breadcrumbの設定
                 if ($event_detail['Event']['title'] == $event_detail['EventsDetail']['title']) {
@@ -408,7 +408,7 @@ class EventsController extends AppController
     public function event_skip($id = null)
     {
         if ($this->request->is('post')) {
-            $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+            $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
             
             if (empty($id)) {
                 throw new NotFoundException(__('存在しないデータです。'));
@@ -460,7 +460,7 @@ class EventsController extends AppController
     
     public function entry_add($id = null)
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         //エントリーの日付カラムを定義しておく
         $entryDateColumn = $this->EventsEntry->getDateColumn();
@@ -802,7 +802,7 @@ class EventsController extends AppController
     
     public function all_lists()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');
@@ -873,7 +873,7 @@ class EventsController extends AppController
     
     public function search()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは閲覧できません。', 'flashMessage');

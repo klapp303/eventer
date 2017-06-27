@@ -28,11 +28,11 @@ class PlacesController extends AppController
     
     public function place_lists()
     {
-        $this->set('PLACE_BLOCK_KEY', $this->getOptionKey('PLACE_BLOCK_KEY'));
+        $this->set('PLACE_BLOCK_KEY', $this->Option->getOptionKey('PLACE_BLOCK_KEY'));
         
         $this->Paginator->settings = array(
             'limit' => 20,
-            'conditions' => array('Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY')) //その他の会場は除外する
+            'conditions' => array('Place.id >' => $this->Option->getOptionKey('PLACE_OTHER_KEY')) //その他の会場は除外する
         );
         $place_lists = $this->Paginator->paginate('Place');
         //座席数を取得する
@@ -44,13 +44,13 @@ class PlacesController extends AppController
     
     public function place_detail($id = null)
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         if ($id) { //パラメータにidがあれば詳細ページを表示
             $place_detail = $this->Place->find('first', array(
                 'conditions' => array('and' => array(
                         'Place.id' => $id,
-                        'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
+                        'Place.id >' => $this->Option->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
                     ))
             ));
             if (!empty($place_detail)) { //データが存在する場合
@@ -98,7 +98,7 @@ class PlacesController extends AppController
     
     public function add()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは登録できません。', 'flashMessage');
@@ -110,7 +110,7 @@ class PlacesController extends AppController
         //都道府県の選択肢用
         $this->set('prefecture_lists', $this->Prefecture->find('list'));
         
-        $PLACE_OTHER_KEY = $this->getOptionKey('PLACE_OTHER_KEY');
+        $PLACE_OTHER_KEY = $this->Option->getOptionKey('PLACE_OTHER_KEY');
         
         if ($this->request->is('post')) {
             //ゲストユーザの場合
@@ -163,7 +163,7 @@ class PlacesController extends AppController
             $this->redirect('/places/place_lists/');
         }
         
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         //都道府県の選択肢用
         $this->set('prefecture_lists', $this->Prefecture->find('list'));
@@ -234,12 +234,12 @@ class PlacesController extends AppController
         }
         
         //ゲストユーザの場合
-        if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+        if ($this->Auth->user('id') == $this->Option->getOptionKey('GUEST_USER_KEY')) {
             $this->Session->setFlash('ゲストユーザは削除できません。', 'flashMessage');
             $this->redirect('/places/place_lists/');
         }
         
-        if ($this->request->is('post') and $id > $this->getOptionKey('PLACE_BLOCK_KEY')) { //削除不可に設定したい会場データ
+        if ($this->request->is('post') and $id > $this->Option->getOptionKey('PLACE_BLOCK_KEY')) { //削除不可に設定したい会場データ
             $this->Place->Behaviors->enable('SoftDelete');
             if ($this->Place->delete($id)) {
                 $this->Session->setFlash('削除しました。', 'flashMessage');
@@ -266,7 +266,7 @@ class PlacesController extends AppController
         //breadcrumbの設定
         $this->set('sub_page', '会場の並び替え');
         
-        $PLACE_OTHER_KEY = $this->getOptionKey('PLACE_OTHER_KEY');
+        $PLACE_OTHER_KEY = $this->Option->getOptionKey('PLACE_OTHER_KEY');
         
         if (!$this->request->is('post')) {
             $place_lists = $this->Place->find('all', array(
@@ -302,7 +302,7 @@ class PlacesController extends AppController
     
     public function search()
     {
-        $this->set('PLACE_BLOCK_KEY', $this->getOptionKey('PLACE_BLOCK_KEY'));
+        $this->set('PLACE_BLOCK_KEY', $this->Option->getOptionKey('PLACE_BLOCK_KEY'));
         
         if ($this->request->query && $this->request->query['search_word']) {
             $search_word = $this->request->query['search_word'];
@@ -319,7 +319,7 @@ class PlacesController extends AppController
                         'Place.access LIKE' => '%' . $search_word . '%',
                     )
                 ),
-                'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
+                'Place.id >' => $this->Option->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
             )
         );
         $place_lists = $this->Paginator->paginate('Place');
@@ -335,13 +335,13 @@ class PlacesController extends AppController
     
     public function event_lists($id = null)
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         if ($id) { //パラメータにidがあれば会場データを取得
             $place_detail = $this->Place->find('first', array(
                 'conditions' => array('and' => array(
                         'Place.id' => $id,
-                        'Place.id >' => $this->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
+                        'Place.id >' => $this->Option->getOptionKey('PLACE_OTHER_KEY') //その他の会場は除外する
                     ))
             ));
             if (!empty($place_detail)) { //データが存在する場合

@@ -47,12 +47,12 @@ class AppController extends Controller
                 'link' => '/budgets/'
             ),
             4 => array(
-                'title' => '会場一覧',
-                'link' => '/places/'
+                'title' => 'アーティスト一覧',
+                'link' => '/artists/'
             ),
             5 => array(
-                'title' => '出演者タグ',
-                'link' => '/artists/'
+                'title' => '会場一覧',
+                'link' => '/places/'
             ),
             6 => array(
                 'title' => 'ログアウト',
@@ -69,7 +69,7 @@ class AppController extends Controller
         //イベントのpaymentを定義しておく
         $this->set('eventPaymentStatus', $this->EventsEntry->getPaymentStatus());
         //イベントで登録できる年の最小値を取得しておく
-        $this->set('minYearKey', $this->getOptionKey('MIN_YEAR_KEY'));
+        $this->set('minYearKey', $this->Option->getOptionKey('MIN_YEAR_KEY'));
         
         //paginatorのオプションを定義しておく
         $paginator_option = array(
@@ -79,18 +79,5 @@ class AppController extends Controller
             'last' => '＞' //最終ページへのリンク
         );
         $this->set('paginator_option', $paginator_option);
-    }
-    
-    public function getOptionKey($key_title = false, $key = 0)
-    {
-        $option = $this->Option->find('first', array( //オプション値を取得
-            'conditions' => array('Option.title' => $key_title),
-            'fields' => 'Option.key'
-        ));
-        if ($option) {
-            $key = $option['Option']['key'];
-        }
-        
-        return $key;
     }
 }

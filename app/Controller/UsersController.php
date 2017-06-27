@@ -37,7 +37,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 //ゲストアカウントのログインログを保存しておく
-                if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+                if ($this->Auth->user('id') == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                     $log_data['Log']['user_id'] = $this->Auth->user('id');
                     $log_data['Log']['log_data'] = 'login';
                     $this->Log->save($log_data);
@@ -102,7 +102,7 @@ class UsersController extends AppController
                 /* ログイン時に定期バックアップを判定して作成ここまで */
                 
                 //ゲストユーザはTOPページにリダイレクト
-                if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+                if ($this->Auth->user('id') == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                     $this->redirect('/');
                     
                 //それ以外は最後のページにリダイレクト
@@ -194,13 +194,13 @@ class UsersController extends AppController
             $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
             
             //ゲストユーザの場合
-            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+            if ($id == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                 $this->Session->setFlash('ゲストユーザの情報は変更できません。', 'flashMessage');
             }
             
         } else {
             //ゲストユーザの場合
-            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+            if ($id == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                 $this->Session->setFlash('ゲストユーザの情報は変更できません。', 'flashMessage');
                 $this->redirect('/user/' . $id);
             }
@@ -239,13 +239,13 @@ class UsersController extends AppController
             $this->set('id', $this->request->data['User']['id']); //viewに渡すために$idをセット
             
             //ゲストユーザの場合
-            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+            if ($id == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                 $this->Session->setFlash('ゲストユーザのパスワードは変更できません。', 'flashMessage');
             }
             
         } else {
             //ゲストユーザの場合
-            if ($id == $this->getOptionKey('GUEST_USER_KEY')) {
+            if ($id == $this->Option->getOptionKey('GUEST_USER_KEY')) {
                 $this->Session->setFlash('ゲストユーザのパスワードは変更できません。', 'flashMessage');
                 $this->redirect('/user/' . $id);
             }
@@ -287,7 +287,7 @@ class UsersController extends AppController
             $data = $this->User->find('first', array(
                 'conditions' => array(
                     'User.username' => $this->request->data['User']['username'],
-                    'User.id >' => $this->getOptionKey('USER_CARBON_KEY')
+                    'User.id >' => $this->Option->getOptionKey('USER_CARBON_KEY')
                 )
             ));
             if ($data) {

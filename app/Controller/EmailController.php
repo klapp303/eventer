@@ -20,7 +20,7 @@ class EmailController extends AppController
     public function schedule_send($id = null)
     {
         if ($this->request->is('post')) {
-            if ($id <= $this->getOptionKey('USER_CARBON_KEY')) {
+            if ($id <= $this->Option->getOptionKey('USER_CARBON_KEY')) {
                 $this->Session->setFlash('メール送信のできないユーザです。', 'flashMessage');
                 
                 $this->redirect('/');
