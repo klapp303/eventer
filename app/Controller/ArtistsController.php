@@ -53,8 +53,6 @@ class ArtistsController extends AppController
     
     public function artist_detail($id = null)
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
-        
         if (!$id) {
             redirect('/artists/artist_lists/');
         }
@@ -87,46 +85,9 @@ class ArtistsController extends AppController
         $this->set('artist_detail', $artist_detail);
         
         //開催予定のイベント
-        $artists_id = array($id);
-        /* 関連アーティストの取得ここから */
-        $related_artist_lists = $this->Artist->find('list', array(
-            'conditions' => array(
-                'Artist.related_artists_id !=' => null
-            ),
-            'fields' => array('Artist.related_artists_id')
-        ));
-        foreach ($related_artist_lists as $key => $val) {
-            $array_related_id = $this->Artist->getArrayRelatedArtists($val);
-            foreach ($array_related_id as $related_id) {
-                if ($related_id['artist_id'] == $id) {
-                    $artists_id[] = $key;
-                    continue;
-                }
-            }
-        }
-        /* 関連アーティストの取得ここまで */
-        $event_artists_lists = $this->EventArtist->find('list', array(
-            'conditions' => array('EventArtist.artist_id' => $artists_id),
-            'fields' => array('EventArtist.events_detail_id')
-        ));
-        //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
-        //エントリーのみの一覧を取得しておく
-        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
+        $conditions = $this->Artist->getEventsConditionsFromArtist($id);
         $event_lists = $this->EventsDetail->find('all', array(
-            'conditions' => array(
-                'and' => array(
-                    'EventsDetail.date >=' => date('Y-m-d'),
-                    'EventsDetail.id' => $event_artists_lists,
-                    'or' => array(
-                        array('EventsDetail.user_id' => $this->Auth->user('id')),
-                        array('EventsDetail.id' => $join_lists['events_detail_id']),
-                        array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
-                        array('Event.publish' => 1) //公開ステータスを追加
-                    ),
-                    'EventsDetail.user_id !=' => $GUEST_USER_KEY
-                )
-            ),
+            'conditions' => $conditions,
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
         ));
         //イベントのstatusを取得
@@ -138,7 +99,7 @@ class ArtistsController extends AppController
     
     public function add()
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         //ゲストユーザの場合
         if ($this->Auth->user('id') == $GUEST_USER_KEY) {
             $this->Session->setFlash('ゲストユーザは登録できません。', 'flashMessage');
@@ -184,7 +145,7 @@ class ArtistsController extends AppController
             $this->redirect('/artists/artist_lists/');
         }
         
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
+        $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         
         if (empty($this->request->data)) {
             $this->request->data = $this->Artist->findById($id); //postデータがなければ$idからデータを取得
@@ -302,7 +263,7 @@ class ArtistsController extends AppController
         }
         
         //ゲストユーザの場合
-        if ($this->Auth->user('id') == $this->getOptionKey('GUEST_USER_KEY')) {
+        if ($this->Auth->user('id') == $this->Option->getOptionKey('GUEST_USER_KEY')) {
             $this->Session->setFlash('ゲストユーザは削除できません。', 'flashMessage');
             $this->redirect('/artists/artist_lists/');
         }
@@ -327,8 +288,6 @@ class ArtistsController extends AppController
     
     public function event_lists($id = null)
     {
-        $GUEST_USER_KEY = $this->getOptionKey('GUEST_USER_KEY');
-        
         if (!$id) {
             redirect('/artists/artist_lists/');
         }
@@ -363,52 +322,10 @@ class ArtistsController extends AppController
         //search wordを整形する
         $search_conditions = $this->Event->searchWordToConditions($search_word);
         
-        //開催予定のイベント
-        $artists_id = array($id);
-        /* 関連アーティストの取得ここから */
-        $related_artist_lists = $this->Artist->find('list', array(
-            'conditions' => array(
-                'Artist.related_artists_id !=' => null
-            ),
-            'fields' => array('Artist.related_artists_id')
-        ));
-        foreach ($related_artist_lists as $key => $val) {
-            $array_related_id = $this->Artist->getArrayRelatedArtists($val);
-            foreach ($array_related_id as $related_id) {
-                if ($related_id['artist_id'] == $id) {
-                    $artists_id[] = $key;
-                    continue;
-                }
-            }
-        }
-        /* 関連アーティストの取得ここまで */
-        $event_artists_lists = $this->EventArtist->find('list', array(
-            'conditions' => array('EventArtist.artist_id' => $artists_id),
-            'fields' => array('EventArtist.events_detail_id')
-        ));
-        //参加済のイベント一覧を取得しておく
-        $join_lists = $this->EventUser->getJoinEntries($this->Auth->user('id'));
-        //エントリーのみの一覧を取得しておく
-        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
+        //アーティストに紐付くイベント
+        $conditions = $this->Artist->getEventsConditionsFromArtist($id, $search_conditions, true);
         $this->Paginator->settings = array(
-            'conditions' => array(
-                array(
-                    'and' => $search_conditions
-//                    'or' => array(
-//                        'Event.title LIKE' => '%' . $search_word . '%',
-//                        'EventsDetail.title LIKE' => '%' . $search_word . '%'
-//                    )
-                ),
-//                'EventsDetail.date >=' => date('Y-m-d'),
-                'EventsDetail.id' => $event_artists_lists, //eventsページの一覧からアーティストで更に絞り込み
-                'or' => array(
-                    array('EventsDetail.user_id' => $this->Auth->user('id')),
-                    array('EventsDetail.id' => $join_lists['events_detail_id']),
-                    array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
-                    array('Event.publish' => 1) //公開ステータスを追加
-                ),
-                'EventsDetail.user_id !=' => $GUEST_USER_KEY
-            ),
+            'conditions' => $conditions,
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')
         );
         $event_lists = $this->Paginator->paginate('EventsDetail');
