@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('artists', array('inline' => false)); ?>
-<h3>出演者タグの登録</h3>
+<h3>アーティストの登録</h3>
 
   <div class="tbl-txt_artists">
     <span class="txt-min">追加する際は、既にアーティストが登録されていないか確認してください。</span>
@@ -29,7 +29,7 @@
   <?php echo $this->Form->end(); ?><!-- form end -->
 </table>
 
-<h3>出演者タグ一覧</h3>
+<h3>アーティスト一覧</h3>
 
   <?php foreach ($array_kana as $key => $val): ?>
   <table class="list_artists list_artists_<?php echo $key; ?>" style="display:<?php echo ($key == 0)? 'block' : 'none'; ?>;">
