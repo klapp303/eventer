@@ -29,6 +29,16 @@
   <span class="link-page"><?php echo $this->Form->postLink('⇨ アーティストを削除する', array('action' => 'delete', $artist_detail['Artist']['id']), null, $artist_detail['Artist']['name'] . ' を本当に削除しますか'); ?></span>
 </div>
 
+<h3>イベント参加データ</h3>
+  <table class="detail-list">
+    <tr><th>参加数</th><th>申込数</th><th>当選率</th><th>頻度</th><th>前回</th></tr>
+    <tr><td><?php echo $event_report['count']['join']; ?> 件</td>
+        <td><?php echo $event_report['count']['entry']; ?> 件</td>
+        <td><?php echo $event_report['per_win']; ?> %</td>
+        <td><?php echo $event_report['span']['rating']; ?> days</td>
+        <td><?php echo $event_report['span']['current']; ?> days</td></tr>
+  </table>
+
 <h3>開催予定のイベント</h3>
 
   <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>

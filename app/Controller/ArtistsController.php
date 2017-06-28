@@ -84,6 +84,15 @@ class ArtistsController extends AppController
         unset($artist_detail['Artist']['related_artists_id']);
         $this->set('artist_detail', $artist_detail);
         
+        //イベント参加データ
+        $conditions = $this->Artist->getEventsConditionsFromArtist($id, false, true);
+        $event_all_lists = $this->EventsDetail->find('all', array(
+            'conditions' => $conditions,
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+        ));
+        $event_report = $this->EventsEntry->formatEventsReport($event_all_lists);
+        $this->set('event_report', $event_report);
+        
         //開催予定のイベント
         $conditions = $this->Artist->getEventsConditionsFromArtist($id);
         $event_lists = $this->EventsDetail->find('all', array(

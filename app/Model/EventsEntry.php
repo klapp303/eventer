@@ -326,4 +326,101 @@ class EventsEntry extends AppModel
         
         return $data;
     }
+    
+    public function formatEventsReport($event_lists = false, $report = array())
+    {
+        //イベントのstatusを取得
+        foreach ($event_lists as $key => $val) {
+            $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id']);
+        }
+        
+        //イベントデータを算出
+        //全てのイベント
+        $count_all = count($event_lists);
+        //申込んだイベント
+        foreach ($event_lists as $key => $val) {
+            if ($val['EventsDetail']['status'] == 0 || $val['EventsDetail']['status'] == 4) {
+                unset($event_lists[$key]);
+            }
+        }
+        $count_entry = count($event_lists);
+        //当落の出たイベント
+        foreach ($event_lists as $key => $val) {
+            if ($val['EventsDetail']['status'] == 1) {
+                unset($event_lists[$key]);
+            }
+        }
+        $count_confirm = count($event_lists);
+        //当選したイベント
+        foreach ($event_lists as $key => $val) {
+            if ($val['EventsDetail']['status'] == 3) {
+                unset($event_lists[$key]);
+            }
+        }
+        $count_win = count($event_lists);
+        //参加したイベント
+        foreach ($event_lists as $key => $val) {
+            if ($val['EventsDetail']['date'] >= date('Y-m-d')) {
+                unset($event_lists[$key]);
+            }
+        }
+        $count_join = count($event_lists);
+        //最初のイベント
+        $event_lists = array_merge($event_lists);
+        $event_first = @$event_lists[0];
+        //最新のイベント
+        $event_lists = array_reverse($event_lists);
+        $event_latest = @$event_lists[0];
+        
+        //イベントレポートを作成
+        //登録数
+        $report['count']['all'] = $count_all;
+        //参加数
+        $report['count']['join'] = $count_join;
+        //申込数
+        $report['count']['entry'] = $count_entry;
+        //当選率
+        if ($count_entry) {
+            $report['per_win'] = round($count_win / $count_entry, 3) * 100;
+        } else {
+            $report['per_win'] = 0;
+        }
+        /* イベント頻度はここから */
+        //参加したイベントが存在しない場合は算出しない
+        if (count($event_lists) == 0) {
+            $report['span']['current'] = 0;
+            $report['span']['rating'] = 0;
+        //参加したイベントがある場合
+        } else {
+            //同じ日のイベントは一つとして計算
+            foreach ($event_lists as $key => $val) {
+                if ($key == 0) {
+                    $pre_date = $val['EventsDetail']['date'];
+                    continue;
+                }
+                if ($val['EventsDetail']['date'] == $pre_date) {
+                    unset($event_lists[$key]);
+                }
+                $pre_date = $val['EventsDetail']['date'];
+            }
+            //参加したイベントが一つだけの場合
+            if (count($event_lists) == 1) {
+                $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
+                $latest_time = $latest_time /60 /60 /24;
+                $report['span']['current'] = $latest_time;
+                $report['span']['rating'] = 0;
+            //参加したイベントが複数ある場合
+            } else {
+                $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
+                $latest_day = $latest_time /60 /60 /24;
+                $report['span']['current'] = $latest_day;
+                $first_time = strtotime(date('Y-m-d')) - strtotime($event_first['EventsDetail']['date']);
+                $first_day = $first_time /60 /60 /24;
+                $report['span']['rating'] = round($first_day / count($event_lists), 1);
+            }
+        }
+        /* イベント履歴、頻度はここまで */
+        
+        return $report;
+    }
 }
