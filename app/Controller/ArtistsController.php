@@ -300,6 +300,11 @@ class ArtistsController extends AppController
         //breadcrumbの設定
         $this->set('sub_page', 'イベント参加データ一覧');
         
+        //イベント参加データ一覧ページ用のオプション値を取得
+        $this->loadModel('Option');
+        $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
+        $this->set('ARTIST_COMPARE_KEY', $ARTIST_COMPARE_KEY);
+        
         //アーティスト一覧を取得して
         $artist_lists = $this->Artist->find('all', array(
             'order' => array('Artist.kana' => 'asc')
@@ -315,6 +320,7 @@ class ArtistsController extends AppController
             //mode = light で登録数10以上のみ取得
             $event_report = $this->EventsEntry->formatEventsReport($event_lists, 'light');
             if ($event_report) {
+                $event_report['id'] = $val['Artist']['id'];
                 $event_report['name'] = $val['Artist']['name'];
                 $event_report['kana'] = $val['Artist']['kana'];
                 $event_reports[$val['Artist']['id']] = $event_report;
@@ -337,6 +343,12 @@ class ArtistsController extends AppController
             } else {
                 array_multisort($sort_reports, SORT_DESC, $event_reports);
             }
+        } else {
+            //デフォルトは参加数の降順
+            foreach ($event_reports as $key => $val) {
+                $sort_reports[$key] = $val['count_join'];
+            }
+            array_multisort($sort_reports, SORT_DESC, $event_reports);
         }
         
         $this->set('event_reports', $event_reports);

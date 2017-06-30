@@ -329,6 +329,10 @@ class EventsEntry extends AppModel
     
     public function formatEventsReport($event_lists = false, $mode = 'full', $report = array())
     {
+        //イベント参加データ一覧ページ用のオプション値を取得
+        $this->loadModel('Option');
+        $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
+        
         //イベントのstatusを取得
         foreach ($event_lists as $key => $val) {
             $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id']);
@@ -337,10 +341,6 @@ class EventsEntry extends AppModel
         //イベントデータを算出
         //全てのイベント
         $count_all = count($event_lists);
-        //軽量版の場合はデータ数が少ないものを計算しない
-        if ($mode == 'light' && $count_all < 10) {
-            return false;
-        }
         //申込んだイベント
         foreach ($event_lists as $key => $val) {
             if ($val['EventsDetail']['status'] == 0 || $val['EventsDetail']['status'] == 4) {
@@ -348,6 +348,10 @@ class EventsEntry extends AppModel
             }
         }
         $count_entry = count($event_lists);
+        //軽量版の場合はデータ数が少ないものを計算しない
+        if ($mode == 'light' && $count_entry < $ARTIST_COMPARE_KEY) {
+            return false;
+        }
         //当落の出たイベント
         foreach ($event_lists as $key => $val) {
             if ($val['EventsDetail']['status'] == 1) {

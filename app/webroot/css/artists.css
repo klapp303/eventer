@@ -1,5 +1,5 @@
 @charset "utf-8";
-/* 出演者タグ登録フォーム用 */
+/* アーティスト登録フォーム用 */
 .ArtistAddForm >tbody >tr >td >label,
 .ArtistEditForm >tbody >tr >td >label {
   margin-left: 20px;
@@ -20,7 +20,7 @@
   margin-bottom: 15px;
 }
 
-/* 出演者タグ一覧用 */
+/* アーティスト一覧用 */
 .list-tab_artists {
   text-align: center;
   border-style: solid;
@@ -51,4 +51,9 @@
 /* アーティスト詳細ページ用 */
 .tbl-name-tag_artists {
   vertical-align: top;
+}
+
+/* イベント参加データ一覧用 */
+.intro_compare {
+  margin-bottom: 60px;
 }

@@ -49,7 +49,7 @@
           </span>
           <?php endforeach; ?>
         <?php else: ?>
-        <p>登録されている出演者タグはありません。</p>
+        <p>登録されているアーティストはありません。</p>
         <?php endif; ?>
       </div>
     </td></tr>
@@ -67,3 +67,7 @@
     });
 </script>
 <?php endforeach; ?>
+
+<div class="link-right">
+  <span class="link-page"><?php echo $this->Html->link('⇨ イベント参加データ一覧はこちら', '/artists/compare_lists/'); ?></span>
+</div>

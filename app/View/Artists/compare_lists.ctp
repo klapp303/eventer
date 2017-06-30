@@ -1,9 +1,10 @@
-<?php // echo $this->Html->css('artists', array('inline' => false)); ?>
-<h3>イベント参加データ</h3>
-
-  <table class="detail-list-min">
-    
-  </table>
+<?php echo $this->Html->css('artists', array('inline' => false)); ?>
+<div class="intro intro_compare">
+  <p>
+    イベントによく参加しているアーティストの、イベント参加データ一覧です。<br>
+    イベント申込数が、<?php echo $ARTIST_COMPARE_KEY; ?>件以上のアーティストのみ表示しています。
+  </p>
+</div>
 
 <h3>イベント参加データ一覧</h3>
   <table class="detail-list">
@@ -16,7 +17,7 @@
         <th>前回<a href="<?php echo $paginator_url; ?>sort:span_current/direction:asc">▼</a></th></tr>
     
     <?php foreach ($event_reports as $event_report): ?>
-    <tr><td><?php echo $event_report['name']; ?></td>
+    <tr><td><a href="/artists/artist_detail/<?php echo $event_report['id']; ?>" target="_blank"><?php echo $event_report['name']; ?></a></td>
         <td><?php echo $event_report['count_join']; ?> 件</td>
         <td><?php echo $event_report['count_entry']; ?> 件</td>
         <td><?php echo $event_report['per_win']; ?> %</td>

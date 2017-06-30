@@ -1,6 +1,6 @@
 <?php echo $this->Html->css('artists', array('inline' => false)); ?>
 <?php echo $this->Html->script('jquery-tmb', array('inline' => false)); ?>
-<h3>出演者タグの編集</h3>
+<h3>アーティストの編集</h3>
 
   <table>
     <?php echo $this->Form->create('Artist', array( //使用するModel
