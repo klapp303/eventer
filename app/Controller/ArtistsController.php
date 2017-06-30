@@ -27,7 +27,7 @@ class ArtistsController extends AppController
     
     public function artist_lists()
     {
-        //出演者タグは多いのでカナの行毎に取得しておく
+        //アーティストタグは多いのでカナの行毎に取得しておく
         $array_kana = array(
             array('name' => 'ア行', 'from' => 'ア', 'to' => 'カ'),
             array('name' => 'カ行', 'from' => 'カ', 'to' => 'サ'),
@@ -293,6 +293,53 @@ class ArtistsController extends AppController
             $this->redirect('/artists/artist_lists/');
             
         }
+    }
+    
+    public function compare_lists()
+    {
+        //breadcrumbの設定
+        $this->set('sub_page', 'イベント参加データ一覧');
+        
+        //アーティスト一覧を取得して
+        $artist_lists = $this->Artist->find('all', array(
+            'order' => array('Artist.kana' => 'asc')
+        ));
+        //紐付くイベントデータを取得する
+        $event_reports = array();
+        foreach ($artist_lists as $val) {
+            $conditions = $this->Artist->getEventsConditionsFromArtist($val['Artist']['id'], false, true);
+            $event_lists = $this->EventsDetail->find('all', array(
+                'conditions' => $conditions,
+                'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+            ));
+            //mode = light で登録数10以上のみ取得
+            $event_report = $this->EventsEntry->formatEventsReport($event_lists, 'light');
+            if ($event_report) {
+                $event_report['name'] = $val['Artist']['name'];
+                $event_report['kana'] = $val['Artist']['kana'];
+                $event_reports[$val['Artist']['id']] = $event_report;
+            }
+        }
+        
+        //paginatorは独自に設定する
+        $params = $this->params['named'];
+        if (@$params['sort']) {
+            $sort = $params['sort'];
+            if (@$params['direction']) {
+                $direction = $params['direction'];
+            }
+            //ソートを実行
+            foreach ($event_reports as $key => $val) {
+                $sort_reports[$key] = $val[$sort];
+            }
+            if ($direction == 'asc') {
+                array_multisort($sort_reports, SORT_ASC, $event_reports);
+            } else {
+                array_multisort($sort_reports, SORT_DESC, $event_reports);
+            }
+        }
+        
+        $this->set('event_reports', $event_reports);
     }
     
     public function event_lists($id = null)

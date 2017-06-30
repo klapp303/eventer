@@ -83,7 +83,7 @@ class Artist extends AppModel
         return $array_related_artists;
     }
     
-    public function getEventsConditionsFromArtist($id = false, $search_conditions = false, $date_all = false)
+    public function getEventsConditionsFromArtist($id = false, $search_conditions = false, $date_all = false, $date_from = false, $date_to = '2038-01-19')
     {
         //ユーザIDを取得
         $user_id = AuthComponent::user(['id']);
@@ -130,10 +130,10 @@ class Artist extends AppModel
         
         //過去のイベントも取得する場合
         if ($date_all) {
-            $date_conditions = $MIN_YEAR_KEY . '-01-01';
+            $date_from = $MIN_YEAR_KEY . '-01-01';
         //過去のイベントは取得しない場合
         } else {
-            $date_conditions = date('Y-m-d');
+            $date_from = date('Y-m-d');
         }
         
         //events_details用のconditionsを整形
@@ -145,7 +145,8 @@ class Artist extends AppModel
 //                    'EventsDetail.title LIKE' => '%' . $search_word . '%'
 //                )
             ),
-            'EventsDetail.date >=' => $date_conditions,
+            'EventsDetail.date >=' => $date_from,
+            'EventsDetail.date <=' => $date_to,
             'EventsDetail.id' => $event_artists_lists, //eventsページの一覧からアーティストで更に絞り込み
             'or' => array(
                 array('EventsDetail.user_id' => $user_id),

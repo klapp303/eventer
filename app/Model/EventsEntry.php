@@ -327,7 +327,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function formatEventsReport($event_lists = false, $report = array())
+    public function formatEventsReport($event_lists = false, $mode = 'full', $report = array())
     {
         //イベントのstatusを取得
         foreach ($event_lists as $key => $val) {
@@ -337,6 +337,10 @@ class EventsEntry extends AppModel
         //イベントデータを算出
         //全てのイベント
         $count_all = count($event_lists);
+        //軽量版の場合はデータ数が少ないものを計算しない
+        if ($mode == 'light' && $count_all < 10) {
+            return false;
+        }
         //申込んだイベント
         foreach ($event_lists as $key => $val) {
             if ($val['EventsDetail']['status'] == 0 || $val['EventsDetail']['status'] == 4) {
@@ -374,11 +378,11 @@ class EventsEntry extends AppModel
         
         //イベントレポートを作成
         //登録数
-        $report['count']['all'] = $count_all;
+        $report['count_all'] = $count_all;
         //参加数
-        $report['count']['join'] = $count_join;
+        $report['count_join'] = $count_join;
         //申込数
-        $report['count']['entry'] = $count_entry;
+        $report['count_entry'] = $count_entry;
         //当選率
         if ($count_entry) {
             $report['per_win'] = round($count_win / $count_entry, 3) * 100;
@@ -388,8 +392,8 @@ class EventsEntry extends AppModel
         /* イベント頻度はここから */
         //参加したイベントが存在しない場合は算出しない
         if (count($event_lists) == 0) {
-            $report['span']['current'] = 0;
-            $report['span']['rating'] = 0;
+            $report['span_current'] = 0;
+            $report['span_rating'] = 0;
         //参加したイベントがある場合
         } else {
             //同じ日のイベントは一つとして計算
@@ -407,16 +411,16 @@ class EventsEntry extends AppModel
             if (count($event_lists) == 1) {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
                 $latest_time = $latest_time /60 /60 /24;
-                $report['span']['current'] = $latest_time;
-                $report['span']['rating'] = 0;
+                $report['span_current'] = $latest_time;
+                $report['span_rating'] = 0;
             //参加したイベントが複数ある場合
             } else {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
                 $latest_day = $latest_time /60 /60 /24;
-                $report['span']['current'] = $latest_day;
+                $report['span_current'] = $latest_day;
                 $first_time = strtotime(date('Y-m-d')) - strtotime($event_first['EventsDetail']['date']);
                 $first_day = $first_time /60 /60 /24;
-                $report['span']['rating'] = round($first_day / count($event_lists), 1);
+                $report['span_rating'] = round($first_day / count($event_lists), 1);
             }
         }
         /* イベント履歴、頻度はここまで */
