@@ -83,7 +83,7 @@ class Artist extends AppModel
         return $array_related_artists;
     }
     
-    public function getEventsConditionsFromArtist($id = false, $search_conditions = false, $date_all = false, $date_from = false, $date_to = '2038-01-19')
+    public function getEventsConditionsFromArtist($id = null, $search_conditions = false, $date_all = false, $date_from = null, $date_to = '2038-01-19')
     {
         //ユーザIDを取得
         $user_id = AuthComponent::user(['id']);

@@ -63,7 +63,7 @@ class BudgetsController extends AppController
         $this->render('unfixed_lists');
     }
     
-    public function fixed($id = false, $column = false, $join_flg = 0)
+    public function fixed($id = null, $column = null, $join_flg = 0)
     {
         if (empty($id) || empty($column)) {
             throw new NotFoundException(__('存在しないデータです。'));
@@ -102,7 +102,7 @@ class BudgetsController extends AppController
         }
     }
     
-    public function reset_status($column = false)
+    public function reset_status($column = null)
     {
         if (empty($column)) {
             throw new NotFoundException(__('存在しないデータです。'));
@@ -133,7 +133,7 @@ class BudgetsController extends AppController
         $this->render('unfixed_lists');
     }
     
-    public function reset($id = false, $reset_column = false, $join_flg = 0)
+    public function reset($id = null, $reset_column = null, $join_flg = 0)
     {
         if (empty($id) || empty($reset_column)) {
             throw new NotFoundException(__('存在しないデータです。'));

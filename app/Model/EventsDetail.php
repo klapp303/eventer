@@ -73,7 +73,7 @@ class EventsDetail extends AppModel
         return $results;
     }
     
-    public function getUnfixedPayment($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
+    public function getUnfixedPayment($user_id = null, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(
@@ -156,7 +156,7 @@ class EventsDetail extends AppModel
         return $data;
     }
     
-    public function getUnfixedSales($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
+    public function getUnfixedSales($user_id = null, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(
@@ -235,7 +235,7 @@ class EventsDetail extends AppModel
         return $data;
     }
     
-    public function getUnfixedCollect($user_id = false, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
+    public function getUnfixedCollect($user_id = null, $status = 0, $limit = 20, $data = ['list' => [], 'count' => 0])
     {
         $event_lists = $this->find('all', array(
             'conditions' => array(

@@ -937,7 +937,7 @@ class EventsController extends AppController
         $this->render('index');
     }
     
-    public function schedule($user_id = false)
+    public function schedule($user_id = null)
     {
         if (empty($user_id)) {
             throw new NotFoundException(__('存在しないデータです。'));

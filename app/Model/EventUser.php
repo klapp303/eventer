@@ -50,7 +50,7 @@ class EventUser extends AppModel
 //    );
     
     //参加者をエントリー毎にしたのでこの関数は未使用
-    /*public function getJoinEvents($user_id = false, $data = ['id' => [], 'list' => []])
+    /*public function getJoinEvents($user_id = null, $data = ['id' => [], 'list' => []])
     {
         //参加済のデータからevent_idを取得
         $event_lists = $this->find('list', array(
@@ -95,7 +95,7 @@ class EventUser extends AppModel
         return $data;
     }*/
     
-    public function getJoinEntries($user_id = false, $data = ['list' => [], 'entry_id' => [], 'events_detail_id' => []])
+    public function getJoinEntries($user_id = null, $data = ['list' => [], 'entry_id' => [], 'events_detail_id' => []])
     {
         //参加済のデータからentry_idを取得
         $array_entry_id = $this->find('list', array(

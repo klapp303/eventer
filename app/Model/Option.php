@@ -29,7 +29,7 @@ class Option extends AppModel
 //        )
 //    );
     
-    public function getOptionKey($key_title = false, $key = 0)
+    public function getOptionKey($key_title = null, $key = 0)
     {
         $option = $this->find('first', array( //オプション値を取得
             'conditions' => array('Option.title' => $key_title),

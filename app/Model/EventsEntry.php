@@ -68,7 +68,7 @@ class EventsEntry extends AppModel
         return $results;
     }
     
-    public function getEntryStatus($data = false)
+    public function getEntryStatus()
     {
         //エントリーのstatusを定義
         $data = array(
@@ -102,7 +102,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function getEventStatus($id = false, $status = -1, $publish = false)
+    public function getEventStatus($id = null, $status = -1, $publish = false)
     {
         //イベントのデータを取得しておく
         $this->loadModel('EventsDetail');
@@ -170,7 +170,7 @@ class EventsEntry extends AppModel
         return $status;
     }
     
-    public function getPaymentStatus($data = false)
+    public function getPaymentStatus()
     {
         //エントリーのstatusを定義
         $data = array(
@@ -204,7 +204,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function searchEntryDate($user_id = false, $s_date = false, $e_date = false, $join_lists = [])
+    public function searchEntryDate($user_id = null, $s_date = null, $e_date = null, $join_lists = [])
     {
         //参加済のイベントを取得しておく
         if ($user_id) {
@@ -303,7 +303,7 @@ class EventsEntry extends AppModel
         }
     }
     
-    public function getOnlyEntries($user_id = false, $data = ['list' => [], 'events_detail_id' => []])
+    public function getOnlyEntries($user_id = null, $data = ['list' => [], 'events_detail_id' => []])
     {
         $entry_lists = $this->find('list', array(
             'conditions' => array(
@@ -327,7 +327,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function formatEventsReport($event_lists = false, $mode = 'full', $report = array())
+    public function formatEventsReport($event_lists = false, $mode = 'full', $report = [])
     {
         //イベント参加データ一覧ページ用のオプション値を取得
         $this->loadModel('Option');
