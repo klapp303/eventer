@@ -431,15 +431,13 @@ class EventsEntry extends AppModel
                 
                 //直近10イベント分だけの頻度も算出しておく
                 if (count($event_lists) < 10) {
-                    $event_tenth = end($event_lists);
-                    $tenth_count = count($event_tenth);
+                    $report['span_tenth'] = $report['span_rating'];
                 } else {
                     $event_tenth = $event_lists[9];
-                    $tenth_count = 10;
+                    $tenth_time = strtotime(date('Y-m-d')) - strtotime($event_tenth['EventsDetail']['date']);
+                    $tenth_day = $tenth_time /60 /60 /24;
+                    $report['span_tenth'] = round($tenth_day / 10, 1);
                 }
-                $tenth_time = strtotime(date('Y-m-d')) - strtotime($event_tenth['EventsDetail']['date']);
-                $tenth_day = $tenth_time /60 /60 /24;
-                $report['span_tenth'] = round($tenth_day / $tenth_count, 1);
             }
         }
         /* イベント履歴、頻度はここまで */
