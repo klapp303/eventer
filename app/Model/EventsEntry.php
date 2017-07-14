@@ -398,6 +398,7 @@ class EventsEntry extends AppModel
         if (count($event_lists) == 0) {
             $report['span_current'] = 0;
             $report['span_rating'] = 0;
+            $report['span_tenth'] = 0;
         //参加したイベントがある場合
         } else {
             //同じ日のイベントは一つとして計算
@@ -411,12 +412,14 @@ class EventsEntry extends AppModel
                 }
                 $pre_date = $val['EventsDetail']['date'];
             }
+            $event_lists = array_merge($event_lists);
             //参加したイベントが一つだけの場合
             if (count($event_lists) == 1) {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
                 $latest_time = $latest_time /60 /60 /24;
                 $report['span_current'] = $latest_time;
                 $report['span_rating'] = 0;
+                $report['span_tenth'] = 0;
             //参加したイベントが複数ある場合
             } else {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
@@ -425,9 +428,22 @@ class EventsEntry extends AppModel
                 $first_time = strtotime(date('Y-m-d')) - strtotime($event_first['EventsDetail']['date']);
                 $first_day = $first_time /60 /60 /24;
                 $report['span_rating'] = round($first_day / count($event_lists), 1);
+                
+                //直近10イベント分だけの頻度も算出しておく
+                if (count($event_lists) < 10) {
+                    $event_tenth = end($event_lists);
+                    $tenth_count = count($event_tenth);
+                } else {
+                    $event_tenth = $event_lists[9];
+                    $tenth_count = 10;
+                }
+                $tenth_time = strtotime(date('Y-m-d')) - strtotime($event_tenth['EventsDetail']['date']);
+                $tenth_day = $tenth_time /60 /60 /24;
+                $report['span_tenth'] = round($tenth_day / $tenth_count, 1);
             }
         }
         /* イベント履歴、頻度はここまで */
+//        echo'<pre>';print_r($report);echo'</pre>';exit;
         
         return $report;
     }
