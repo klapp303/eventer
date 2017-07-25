@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <td><label>パスワード</label></td>
-      <td><?php echo $this->Form->input('password', array('type' => 'text', 'label' => false, 'value' => @$guest_password)); ?></td>
+      <td><?php echo $this->Form->input('password', array('type' => 'password', 'label' => false, 'value' => @$guest_password)); ?></td>
     </tr>
     
     <tr>

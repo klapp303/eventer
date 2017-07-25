@@ -14,7 +14,7 @@
     
     <tr>
       <td><label>新しいパスワード</label></td>
-      <td><?php echo $this->Form->input('password', array('type' => 'text', 'label' => false, 'value' => '')); ?><span class="txt-alt txt-b">*</span><span class="txt-min">（半角英数のみ）</span></td>
+      <td><?php echo $this->Form->input('password', array('type' => 'password', 'label' => false, 'value' => '')); ?><span class="txt-alt txt-b">*</span><span class="txt-min">（半角英数のみ）</span></td>
     </tr>
     
     <tr>
