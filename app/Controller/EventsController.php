@@ -937,7 +937,7 @@ class EventsController extends AppController
         $this->render('index');
     }
     
-    public function schedule($user_id = null)
+    public function schedule($user_id = null, $mode = false)
     {
         if (empty($user_id)) {
             throw new NotFoundException(__('存在しないデータです。'));
@@ -954,6 +954,17 @@ class EventsController extends AppController
         //エントリーのみの一覧を取得しておく
         $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
         
+        //mode = allならば全てのイベントを取得
+        if ($mode == 'all') {
+            $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
+            $date_from = $MIN_YEAR_KEY . '-01-01';
+            $order = 'desc';
+        //それ以外は未来のイベントのみ取得
+        } else {
+            $date_from = date('Y-m-d');
+            $order = 'asc';
+        }
+        
         $event_lists = $this->EventsDetail->find('all', array(
             'conditions' => array(
                 'or' => array(
@@ -961,10 +972,10 @@ class EventsController extends AppController
                     array('EventsDetail.id' => $join_lists['events_detail_id']),
                     array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                 ),
-                'EventsDetail.date >=' => date('Y-m-d'),
+                'EventsDetail.date >=' => $date_from,
                 'EventsDetail.deleted !=' => 1
             ),
-            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
+            'order' => array('EventsDetail.date' => $order, 'EventsDetail.time_start' => $order),
             'contain' => array('Event', 'Place')
         ));
         
