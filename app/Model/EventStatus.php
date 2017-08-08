@@ -29,7 +29,7 @@ class EventStatus extends AppModel
 //        )
 //    );
     
-    public function checkEventsDetailStatus($id = null, $mode = null, $status = false)
+    public function checkEventsDetailStatus($id = null, $mode = null, $user_id = false, $status = false)
     {
         if ($mode == 'ARRAY') {
             $status = array();

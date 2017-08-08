@@ -102,7 +102,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function getEventStatus($id = null, $status = -1, $publish = false)
+    public function getEventStatus($id = null, $status = -1, $publish_id = false)
     {
         //イベントのデータを取得しておく
         $this->loadModel('EventsDetail');
@@ -110,7 +110,10 @@ class EventsEntry extends AppModel
         
         //データの作成者とログインユーザが一致しない場合
         $user_id = AuthComponent::user(['id']);
-        if ($event_data['EventsDetail']['user_id'] != $user_id && $publish == false) {
+        if (!$user_id && $publish_id) {
+            $user_id = $publish_id;
+        }
+        if ($event_data['EventsDetail']['user_id'] != $user_id) {
             return $status; //status = -1 を返す
         }
         
@@ -162,7 +165,7 @@ class EventsEntry extends AppModel
         
         //イベント自体が見送りの場合
         $this->loadModel('EventStatus');
-        $event_detail_status = $this->EventStatus->checkEventsDetailStatus($event_data['EventsDetail']['id']);
+        $event_detail_status = $this->EventStatus->checkEventsDetailStatus($event_data['EventsDetail']['id'], null, $user_id);
         if ($event_detail_status) {
             $status = $event_detail_status;
         }
