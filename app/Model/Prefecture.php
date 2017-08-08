@@ -6,7 +6,7 @@ class Prefecture extends AppModel
 {
     public $useTable = 'prefectures';
     
-    public $actsAs = array(/*'SoftDelete'*/);
+//    public $actsAs = array('SoftDelete');
     
 //    public $validate = array(
 //        'title' => array(

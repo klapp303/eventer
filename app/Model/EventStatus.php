@@ -6,7 +6,7 @@ class EventStatus extends AppModel
 {
     public $useTable = 'event_status';
     
-    public $actsAs = array(/* 'SoftDelete' */); //関連テーブルのデータを取得されるので物理削除する
+//    public $actsAs = array('SoftDelete'); //関連テーブルのデータを取得されるので物理削除する
     
 //    public $belongsTo = array(
 //        'SamplesGenre' => array(
