@@ -1,4 +1,7 @@
 <?php
+/**
+ * cd /home/yumea/www/eventer/app; /usr/local/bin/php /home/yumea/www/eventer/app/Console/cake.php email
+ */
 
 App::uses('CakeEmail', 'Network/Email'); //CakeEmaiilの利用、分けて記述
 
