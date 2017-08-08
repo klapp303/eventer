@@ -38,7 +38,9 @@ class EventStatus extends AppModel
             return $status;
         }
         
-        $user_id = AuthComponent::user(['id']);
+        if (!$user_id) {
+            $user_id = AuthComponent::user(['id']);
+        }
         $eventStatus = $this->find('first', array(
             'conditions' => array(
                 'EventStatus.events_detail_id' => $id,
