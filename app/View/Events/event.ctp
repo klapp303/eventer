@@ -46,14 +46,6 @@
             <?php endforeach; ?></td></tr>
   </table>
 
-<div class="link-right">
-  <?php if ($event_detail_status == 4): ?>
-  <span class="link-page"><?php echo $this->Form->postLink('⇨ 見送ったイベントを戻す', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを戻しますか'); ?></span>
-  <?php else: ?>
-  <span class="link-page"><?php echo $this->Form->postLink('⇨ イベントを見送る', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを見送りに変更しますか'); ?></span>
-  <?php endif; ?>
-</div>
-
 <h3>エントリー一覧</h3>
 
   <table class="detail-list">
@@ -111,6 +103,16 @@
   <span class="link-page"><?php echo $this->Html->link('⇨ 新しいエントリーの登録はこちら', '/events/entry_add/' . $event_detail['EventsDetail']['id']); ?></span>
 </div>
 <?php // endif; ?>
+
+<?php if (empty($entry_lists)): ?>
+<div class="link-right">
+  <?php if ($event_detail_status == 4): ?>
+  <span class="link-page"><?php echo $this->Form->postLink('⇨ 見送ったイベントを戻す', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを戻しますか'); ?></span>
+  <?php else: ?>
+  <span class="link-page"><?php echo $this->Form->postLink('⇨ イベントを見送る', array('action' => 'event_skip', $event_detail['EventsDetail']['id']), null, 'イベントのstatusを見送りに変更しますか'); ?></span>
+  <?php endif; ?>
+</div>
+<?php endif; ?>
 
 <h3>出演者</h3>
 
