@@ -967,6 +967,15 @@ class EventsController extends AppController
         
         $json_data = [];
         foreach ($event_lists as $key => $event) {
+            //出演者の取得
+            if ($mode == 'all') {
+                $cast_lists = $this->EventArtist->getCastList($event['EventsDetail']['id']);
+                $cast_data = array();
+                foreach ($cast_lists as $cast) {
+                    $cast_data[] = $cast['ArtistProfile']['name'];
+                }
+            }
+            //イベントステータスの取得
             $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], -1, $user_id);
             if ($status == 3 || $status == 4) { //落選、見送りの場合は除く
                 unset($event_lists[$key]);
@@ -981,6 +990,9 @@ class EventsController extends AppController
                 $json_data['schedule'][$key]['time_start'] = $event['EventsDetail']['time_start'];
                 $json_data['schedule'][$key]['place'] = $event['Place']['name'];
                 $json_data['schedule'][$key]['status'] = $status;
+                if ($mode == 'all') {
+                    $json_data['schedule'][$key]['cast'] = $cast_data;
+                }
             }
         }
         $json_data['schedule'] = array_merge($json_data['schedule']); //キーの振り直し
