@@ -219,7 +219,9 @@ class EventsController extends AppController
                         }
                     }
                 }
-                $this->EventArtist->saveMany($dataArtists);
+                if (!empty($dataArtists)) {
+                    $this->EventArtist->saveMany($dataArtists);
+                }
                 
             } else {
                 $this->Session->setFlash($dataEvent['Event']['title'] . ' を登録できませんでした。', 'flashMessage');
