@@ -118,16 +118,7 @@ class EventsController extends AppController
                     'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
                 ));
                 //出演者
-                $cast_lists = $this->EventArtist->find('all', array(
-                    'conditions' => array(
-                        'EventArtist.events_detail_id' => $event_detail['EventsDetail']['id']
-                    ),
-                    'order' => array('ArtistProfile.kana' => 'asc')
-                ));
-                foreach ($cast_lists as $key => $val) {
-                    unset($cast_lists[$key]['Event']);
-                    unset($cast_lists[$key]['EventsDetail']);
-                }
+                $cast_lists = $this->EventArtist->getCastList($event_detail['EventsDetail']['id']);
                 $this->set(compact('event_detail', 'entry_lists', 'other_lists', 'cast_lists'));
                 
                 $this->render('event');
@@ -631,16 +622,9 @@ class EventsController extends AppController
         $this->set('events_detail_id', $id);
         
         //出演者一覧の取得
-        $cast_lists = $this->EventArtist->find('all', array(
-            'conditions' => array(
-                'EventArtist.events_detail_id' => $id
-            ),
-            'order' => array('ArtistProfile.kana' => 'asc')
-        ));
+        $cast_lists = $this->EventArtist->getCastList($id);
         $array_cast = [];
         foreach ($cast_lists as $key => $val) {
-            unset($cast_lists[$key]['Event']);
-            unset($cast_lists[$key]['EventsDetail']);
             $array_cast[$val['EventArtist']['id']] = $val['EventArtist']['artist_id']; //登録済み出演者のIDを取得しておく
         }
         //アーティスト一覧の取得

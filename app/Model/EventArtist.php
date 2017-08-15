@@ -44,6 +44,22 @@ class EventArtist extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
+    public function getCastList($events_detail_id = null, $data = [])
+    {
+        $data = $this->find('all', array(
+            'conditions' => array(
+                'EventArtist.events_detail_id' => $events_detail_id
+            ),
+            'order' => array('ArtistProfile.kana' => 'asc')
+        ));
+        foreach ($data as $key => $val) {
+            unset($data[$key]['Event']);
+            unset($data[$key]['EventsDetail']);
+        }
+        
+        return $data;
+    }
+    
     public function checkExistData($events_detail_id = null, $artist_id = null)
     {
         if (!$events_detail_id || !$artist_id) {
