@@ -123,7 +123,7 @@ class EventsController extends AppController
                 //セットリスト
                 $setlist = $this->EventSetlist->find('all', array(
                     'conditions' => array('EventSetlist.events_detail_id' => $event_detail['EventsDetail']['id']),
-                    'order' => array('EventSetlist.sort' => 'asc')
+//                    'order' => array('EventSetlist.sort' => 'asc')
                 ));
                 $this->set('setlist', $setlist);
                 
@@ -728,7 +728,7 @@ class EventsController extends AppController
         if (empty($this->request->data)) {
             $setlist = $this->EventSetlist->find('all', array(
                 'conditions' => array('EventSetlist.events_detail_id' => $id),
-                'order' => array('EventSetlist.sort' => 'asc')
+//                'order' => array('EventSetlist.sort' => 'asc')
             ));
             if ($setlist) {
                 foreach ($setlist as $key => $val) {
