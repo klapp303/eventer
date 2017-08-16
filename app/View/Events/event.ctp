@@ -134,6 +134,24 @@
 </div>
 <?php endif; ?>
 
+<h3>セットリスト</h3>
+
+  <table class="detail-list detail-list_event">
+    <?php $i = 1; ?>
+    <?php foreach ($setlist as $music): ?>
+    <tr><td class="tbl-num"><?php echo sprintf('%02d', $i); ?>.</td>
+        <td class="tbl-title_setlist"><?php echo $music['EventSetlist']['title']; ?></td>
+        <td class="tbl-name_setlist"><?php echo $music['ArtistProfile']['name']; ?></td></tr>
+    <?php $i++; ?>
+    <?php endforeach; ?>
+  </table>
+
+<?php if ($event_detail['EventsDetail']['user_id'] == $userData['id']): ?>
+<div class="link-right">
+  <span class="link-page"><?php echo $this->Html->link('⇨ セットリストの管理はこちら', '/events/setlist/' . $event_detail['EventsDetail']['id']); ?></span>
+</div>
+<?php endif; ?>
+
 <!--h3>参加者</h3>
 
   <table class="detail-list detail-list_event">

@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class EventsController extends AppController
 {
-    public $uses = array('EventArtist', 'EventUser', 'EventStatus', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Artist'); //使用するModel
+    public $uses = array('EventArtist', 'EventUser', 'EventStatus', 'EventSetlist', 'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre', 'User', 'Place', 'Artist'); //使用するModel
     
     public $components = array('Paginator', 'Search.Prg');
     
@@ -120,6 +120,12 @@ class EventsController extends AppController
                 //出演者
                 $cast_lists = $this->EventArtist->getCastList($event_detail['EventsDetail']['id']);
                 $this->set(compact('event_detail', 'entry_lists', 'other_lists', 'cast_lists'));
+                //セットリスト
+                $setlist = $this->EventSetlist->find('all', array(
+                    'conditions' => array('EventSetlist.events_detail_id' => $event_detail['EventsDetail']['id']),
+                    'order' => array('EventSetlist.sort' => 'asc')
+                ));
+                $this->set('setlist', $setlist);
                 
                 $this->render('event');
                 
@@ -684,6 +690,85 @@ class EventsController extends AppController
         }
         
         $this->render('artist');
+    }
+    
+    public function setlist($id = null)
+    {
+        if (empty($id)) {
+            if (empty($this->request->data)) {
+                throw new NotFoundException(__('存在しないデータです。'));
+            } else {
+                $id = $this->request->data['Event']['events_detail_id'];
+            }
+        }
+        $events_detail = $this->EventsDetail->findById($id);
+        $this->set('events_detail', $events_detail);
+        
+        if ($events_detail['EventsDetail']['user_id'] != $this->Auth->user('id')) { //データの作成者とログインユーザが一致しない場合
+            $this->redirect('/events/' . $id);
+        }
+        
+        //breadcrumbの設定
+        if ($events_detail['Event']['title'] == $events_detail['EventsDetail']['title']) {
+            $event_name = $events_detail['Event']['title'];
+        } else {
+            $event_name = $events_detail['Event']['title'] . ' ' . $events_detail['EventsDetail']['title'];
+        }
+        $this->set('sub_page', $event_name);
+        
+        //出演者一覧の取得
+        $cast_lists = $this->EventArtist->getCastList($id);
+        $array_cast = [];
+        foreach ($cast_lists as $key => $val) {
+            $array_cast[$val['EventArtist']['artist_id']] = $val['ArtistProfile']['name'];
+        }
+        $this->set('array_cast', $array_cast);
+        
+        //セットリストの取得
+        if (empty($this->request->data)) {
+            $setlist = $this->EventSetlist->find('all', array(
+                'conditions' => array('EventSetlist.events_detail_id' => $id),
+                'order' => array('EventSetlist.sort' => 'asc')
+            ));
+            if ($setlist) {
+                foreach ($setlist as $key => $val) {
+                    $this->request->data['EventSetlist'][$key] = $val['EventSetlist'];
+                }
+            }
+            
+        //event_setlistテーブルに保存
+        } else {
+            //データの整形
+            $saveData = $this->request->data;
+            $delete_id = [];
+            foreach ($saveData['EventSetlist'] as $key => $val) {
+                $saveData['EventSetlist'][$key]['event_id'] = $saveData['Event']['event_id'];
+                $saveData['EventSetlist'][$key]['events_detail_id'] = $saveData['Event']['events_detail_id'];
+                $saveData['EventSetlist'][$key]['user_id'] = $this->Auth->user('id');
+                //nullデータは保存しない
+                if (!$val['title']) {
+                    unset($saveData['EventSetlist'][$key]);
+                    //登録済みのデータを後で削除するため
+                    if (@$val['id']) {
+                        $delete_id[] = $val['id'];
+                    }
+                }
+            }
+            $this->EventSetlist->set($saveData['EventSetlist']); //データをModelに渡してvalidate
+            if ($this->EventSetlist->validates()) { //validate成功の処理
+                if ($this->EventSetlist->saveAll($saveData['EventSetlist'])) { //validate成功でsave
+                    //登録済みのnullデータは削除
+                    $this->EventSetlist->deleteAll(array('EventSetlist.id' => $delete_id), false);
+                    $this->Session->setFlash('セットリストを登録しました。', 'flashMessage');
+                    
+                    $this->redirect('/events/' . $id);
+                } else {
+                    $this->Session->setFlash('セットリストを登録できませんでした。', 'flashMessage');
+                }
+            } else { //validate失敗の処理
+                $this->Session->setFlash('セットリストの入力に不備があります。', 'flashMessage');
+            }
+        }
     }
     
     public function past_lists()

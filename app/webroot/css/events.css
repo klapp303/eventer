@@ -13,6 +13,12 @@
   top: 220px;
   left: 640px;*/
 }
+.tbl-title_setlist {
+  width: 350px;
+}
+.tbl-name_setlist {
+  width: 250px;
+}
 
 .detail-list_event {
   margin-bottom: 40px!important;
