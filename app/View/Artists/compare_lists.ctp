@@ -6,6 +6,15 @@
   </p>
 </div>
 
+<button type="button" class="update-button_compare fr cf" onclick="compare_lists_update()">データを更新する</button>
+<script>
+    function compare_lists_update() {
+        if (confirm('イベント参加データ一覧を更新しますか？') == true) {
+            location.href = "/artists/compare_lists_update/";
+        }
+    }
+</script>
+
 <h3>イベント参加データ一覧</h3>
   <table class="detail-list">
     <?php $paginator_url = '/' . $this->params['controller'] . '/' . $this->params['action'] . '/'; ?>

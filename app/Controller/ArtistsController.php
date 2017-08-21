@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist', 'EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'JsonData'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -301,31 +301,15 @@ class ArtistsController extends AppController
         $this->set('sub_page', 'イベント参加データ一覧');
         
         //イベント参加データ一覧ページ用のオプション値を取得
-        $this->loadModel('Option');
         $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
         $this->set('ARTIST_COMPARE_KEY', $ARTIST_COMPARE_KEY);
         
-        //アーティスト一覧を取得して
-        $artist_lists = $this->Artist->find('all', array(
-            'order' => array('Artist.kana' => 'asc')
+        //イベント参加データ一覧を取得
+        $json_data = $this->JsonData->find('first', array(
+            'conditions' => array('JsonData.title' => 'artists_compare_lists'),
+            'fields' => 'JsonData.json_data'
         ));
-        //紐付くイベントデータを取得する
-        $event_reports = array();
-        foreach ($artist_lists as $val) {
-            $conditions = $this->Artist->getEventsConditionsFromArtist($val['Artist']['id'], false, true);
-            $event_lists = $this->EventsDetail->find('all', array(
-                'conditions' => $conditions,
-                'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
-            ));
-            //mode = light で登録数10以上のみ取得
-            $event_report = $this->EventsEntry->formatEventsReport($event_lists, 'light');
-            if ($event_report) {
-                $event_report['id'] = $val['Artist']['id'];
-                $event_report['name'] = $val['Artist']['name'];
-                $event_report['kana'] = $val['Artist']['kana'];
-                $event_reports[$val['Artist']['id']] = $event_report;
-            }
-        }
+        $event_reports = json_decode($json_data['JsonData']['json_data'], true);
         
         //paginatorは独自に設定する
         $params = $this->params['named'];
@@ -343,15 +327,22 @@ class ArtistsController extends AppController
             } else {
                 array_multisort($sort_reports, SORT_DESC, $event_reports);
             }
-        } else {
-            //デフォルトは参加数の降順
-            foreach ($event_reports as $key => $val) {
-                $sort_reports[$key] = $val['count_join'];
-            }
-            array_multisort($sort_reports, SORT_DESC, $event_reports);
         }
         
         $this->set('event_reports', $event_reports);
+    }
+    
+    public function compare_lists_update()
+    {
+        $result = $this->JsonData->saveComparelistJson();
+        
+        if ($result == true) {
+            $this->Session->setFlash('イベント参加データ一覧を更新しました。', 'flashMessage');
+        } else {
+            $this->Session->setFlash('イベント参加データ一覧を更新できませんでした。', 'flashMessage');
+        }
+        
+        $this->redirect('/artists/compare_lists');
     }
     
     public function event_lists($id = null)

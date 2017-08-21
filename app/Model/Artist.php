@@ -159,4 +159,37 @@ class Artist extends AppModel
         
         return $conditions;
     }
+    
+    public function getComparelist($mode = 'light', $data = [])
+    {
+        //アーティスト一覧を取得して
+        $artist_lists = $this->find('all', array(
+            'order' => array('Artist.kana' => 'asc')
+        ));
+        //紐付くイベントデータを取得する
+        $this->loadModel('EventsDetail');
+        $this->loadModel('EventsEntry');
+        foreach ($artist_lists as $val) {
+            $conditions = $this->getEventsConditionsFromArtist($val['Artist']['id'], false, true);
+            $event_lists = $this->EventsDetail->find('all', array(
+                'conditions' => $conditions,
+                'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+            ));
+            //mode = light で登録数件数が少ないものは取得しない
+            $event_report = $this->EventsEntry->formatEventsReport($event_lists, $mode);
+            if ($event_report) {
+                $event_report['id'] = $val['Artist']['id'];
+                $event_report['name'] = $val['Artist']['name'];
+                $event_report['kana'] = $val['Artist']['kana'];
+                $data[$val['Artist']['id']] = $event_report;
+            }
+        }
+        //参加数の降順に並び替え
+        foreach ($data as $key => $val) {
+            $sorts[$key] = $val['count_join'];
+        }
+        array_multisort($sorts, SORT_DESC, $data);
+        
+        return $data;
+    }
 }
