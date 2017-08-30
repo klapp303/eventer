@@ -308,6 +308,11 @@ class EventsDetail extends AppModel
         $a_place = $event['Place']['Prefecture']['state'];
         $b_place = $other_event['Place']['Prefecture']['state'];
         
+        //同じイベントの場合は被りなし
+        if ($event['EventsDetail']['event_id'] == $other_event['EventsDetail']['event_id']) {
+            return false;
+        }
+        
         //開催日が違う場合は被りなし
         if ($event['EventsDetail']['date'] != $other_event['EventsDetail']['date']) {
             return false;
