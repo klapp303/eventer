@@ -37,3 +37,9 @@
 .tbl-prof_user >tbody >tr >th {
   width: 250px;
 }
+.tbl-ico-prof {
+  white-space: nowrap;
+}
+.tbl-ico-prof >span {
+  margin-right: 10px;
+}

@@ -15,9 +15,13 @@
         <td><span class="txt-min">現在は</span> 配信する <span class="txt-min">です</span></td>
         <?php endif; ?>
     </tr>
-    <tr><th>action</th><td class="tbl-ico"><span class="icon-button"><?php echo $this->Form->postLink('変更する', array('action' => 'edit', $user_detail['User']['id'])); ?></span></td></tr>
+    <tr><th>action</th>
+        <td class="tbl-ico tbl-ico-prof">
+          <span class="icon-button"><?php echo $this->Form->postLink('ユーザ情報の変更', array('action' => 'edit', $user_detail['User']['id'])); ?></span>
+          <span class="icon-button"><?php echo $this->Form->postLink('パスワードの変更', array('action' => 'pw_edit', $user_detail['User']['id'])); ?></span>
+        </td></tr>
   </table>
 
-<div class="link-left">
-  <span class="link-page"><?php echo $this->Form->postLink('⇨ パスワード変更はこちら', array('action' => 'pw_edit', $user_detail['User']['id'])); ?></span>
+<div class="link-right">
+  <span class="link-page"><?php echo $this->Html->link('⇨ 参加データの分析はこちら', '#'); ?></span>
 </div>
