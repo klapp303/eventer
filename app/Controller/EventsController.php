@@ -1023,7 +1023,7 @@ class EventsController extends AppController
         //参加済のイベント一覧を取得しておく
         $join_lists = $this->EventUser->getJoinEntries($user_id);
         //エントリーのみの一覧を取得しておく
-        $entry_only_lists = $this->EventsEntry->getOnlyEntries($this->Auth->user('id'));
+        $entry_only_lists = $this->EventsEntry->getOnlyEntries($user_id);
         
         //mode = allならば全てのイベントを取得
         if ($mode == 'all') {
