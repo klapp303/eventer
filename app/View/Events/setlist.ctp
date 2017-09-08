@@ -21,7 +21,7 @@
   <table>
     <tr><td></td><td>曲名</td><td>アーティスト名</td></tr>
     
-    <?php $form_min = 25;//フォーム数の最小を設定 ?>
+    <?php $form_min = 30;//フォーム数の最小を設定 ?>
     <?php for ($i = 0; $i < $form_min *2; $i++): ?>
     <?php echo $this->Form->input('EventSetlist.' . $i . '.id', array('type' => 'hidden')); ?>
     <tr class="<?php echo ($i < $form_min)? '' : 'setlist-add-form'; ?>" style="display: <?php echo ($i < $form_min)? 'table-row' : 'none'; ?>;">
