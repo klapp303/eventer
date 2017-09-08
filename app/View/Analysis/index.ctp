@@ -13,13 +13,11 @@
 
   <table class="detail-list">
     <tr><th>年</th>
-        <th>参加数</th>
-        <th>前年比</th></tr>
+        <th>参加数</th></tr>
     
     <?php foreach ($event_year_lists as $year => $events): ?>
     <tr><td><?php echo $events['analysis']['year']; ?></td>
-        <td><?php echo $events['analysis']['count']; ?></td>
-        <td></td></tr>
+        <td><?php echo $events['analysis']['count']; ?></td></tr>
     <?php endforeach; ?>
   </table>
 
@@ -28,16 +26,14 @@
   <table class="detail-list">
     <tr><th></th>
         <th>アーティスト</th>
-        <th>参加数</th>
-        <th>割合</th></tr>
+        <th>参加数</th></tr>
     
     <?php $i = 1; ?>
     <?php foreach ($event_artist_lists as $artist => $events): ?>
       <?php if ($i <= 10): ?>
       <tr><td><?php echo $i; ?></td>
           <td><?php echo $events['analysis']['artist']['name']; ?></td>
-          <td><?php echo $events['analysis']['count']; ?></td>
-          <td></td></tr>
+          <td><?php echo $events['analysis']['count']; ?></td></tr>
       <?php $i++; ?>
       <?php endif; ?>
     <?php endforeach; ?>
@@ -48,8 +44,7 @@
   <table class="detail-list">
     <tr><th></th>
         <th>会場</th>
-        <th>参加数</th>
-        <th>割合</th></tr>
+        <th>参加数</th></tr>
     
     <?php $i = 1; ?>
     <?php foreach ($event_place_lists as $place => $events): ?>
@@ -57,8 +52,7 @@
         <?php if (strpos($events['analysis']['place'], 'その他') === false): ?>
         <tr><td><?php echo $i; ?></td>
             <td><?php echo $events['analysis']['place']; ?></td>
-            <td><?php echo $events['analysis']['count']; ?></td>
-            <td></td></tr>
+            <td><?php echo $events['analysis']['count']; ?></td></tr>
         <?php $i++; ?>
         <?php endif; ?>
       <?php endif; ?>
@@ -71,8 +65,7 @@
     <tr><th></th>
         <th>楽曲</th>
         <th>アーティスト</th>
-        <th>参加数</th>
-        <th>割合</th></tr>
+        <th>参加数</th></tr>
     
     <?php $i = 1; ?>
     <?php foreach ($event_music_lists as $music => $events): ?>
@@ -80,8 +73,7 @@
       <tr><td><?php echo $i; ?></td>
           <td><?php echo $events['analysis']['music']['title']; ?></td>
           <td><?php echo $events['analysis']['music']['artist']; ?></td>
-          <td><?php echo $events['analysis']['count']; ?></td>
-          <td></td></tr>
+          <td><?php echo $events['analysis']['count']; ?></td></tr>
       <?php $i++; ?>
       <?php endif; ?>
     <?php endforeach; ?>
