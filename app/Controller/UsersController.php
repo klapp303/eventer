@@ -9,7 +9,8 @@ class UsersController extends AppController
     public $uses = array(
         'EventUser', 'EventArtist', 'User', 'Option', 'Log',
         'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre',
-        'Artist', 'Place', 'Prefecture'/*, 'Page'*/
+        'EventSetlist', 'EventStatus', 'Artist', 'Place', 'Prefecture',
+        'JsonData'/*, 'Analysis', 'Page'*/
     ); //使用するModel
     
     public function beforeFilter()
@@ -65,7 +66,8 @@ class UsersController extends AppController
                     $array_model = array(
                         'EventUser', 'EventArtist', 'User', 'Option', 'Log',
                         'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre',
-                        'Artist', 'Place', 'Prefecture'/*, 'Page'*/
+                        'EventSetlist', 'EventStatus', 'Artist', 'Place', 'Prefecture',
+                        'JsonData'/*, 'Analysis', 'Page'*/
                     );
                     foreach ($array_model as $model) {
                         $this->$model->Behaviors->disable('SoftDelete');
