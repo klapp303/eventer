@@ -9,7 +9,7 @@ class PagesController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
         $this->Auth->allow('about');
     }
     
@@ -24,7 +24,7 @@ class PagesController extends AppController
         $this->set('sub_page', '詳しい機能と使い方');
         
         if (!$this->Auth->user()) {
-            $this->layout = 'eventer_normal';
+            $this->layout = 'eventer_simple';
             
             //ゲストアカウント情報を取得
             $guest_user = $this->User->find('first', array(

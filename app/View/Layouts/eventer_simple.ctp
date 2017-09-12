@@ -10,6 +10,7 @@
     <title>
       <?php echo 'イベ幸'; ?>
     </title>
+    <?php echo $this->element('twitter_card'); ?>
     <?php
 //    echo $this->Html->meta('icon');
     
@@ -20,8 +21,7 @@
     
     echo $this->Html->script(array(
         'jquery-1.11.3.min',
-        'jquery-migrate-1.2.1.min',
-        'jquery-move_top'
+        'jquery-migrate-1.2.1.min'
     ));
     
     echo $this->fetch('meta');
@@ -39,16 +39,8 @@
         <?php echo $this->element('eventer_header'); ?>
       </div>
       
-      <div id="menu_side">
-        <?php echo $this->element('eventer_menu'); ?>
-      </div>
-      
-      <div id="move_top">
-        <?php echo $this->element('move_top'); ?>
-      </div>
-      
       <div id="content">
-        <?php echo $this->element('eventer_breadcrumb'); ?>
+        <?php // echo $this->element('eventer_breadcrumb'); ?>
         <?php echo $this->Flash->render(); ?>
         
         <?php echo $this->fetch('content'); ?>

@@ -15,7 +15,7 @@ class UsersController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->layout = 'eventer_normal';
+        $this->layout = 'eventer_simple';
         // ユーザ自身による登録とログアウトを許可する
         $this->Auth->allow('add', 'logout', 'pw_renew');
 //        $this->User->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
@@ -130,7 +130,7 @@ class UsersController extends AppController
                 ));
                 $this->set('user_detail', $user_detail);
                 
-                $this->layout = 'eventer_fullwidth';
+                $this->layout = 'eventer_normal';
                 $this->render('user');
             }
             
@@ -184,7 +184,7 @@ class UsersController extends AppController
     
     public function edit($id = null)
     {
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
         
         if (empty($this->request->data)) {
             if (!$this->request->is('post')) { //post送信でない場合
@@ -227,7 +227,7 @@ class UsersController extends AppController
     
     public function pw_edit($id = null)
     {
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
         
         $login_data = $this->Session->read('Auth.User'); //予めセッション情報を取得
         

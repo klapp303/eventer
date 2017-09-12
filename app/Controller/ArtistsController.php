@@ -16,7 +16,7 @@ class ArtistsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
 //        $this->Place->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
     }
     

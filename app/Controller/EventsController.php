@@ -16,7 +16,7 @@ class EventsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
         $this->Auth->allow('schedule');
 //        $this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
     }

@@ -16,7 +16,7 @@ class BudgetsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->layout = 'eventer_fullwidth';
+        $this->layout = 'eventer_normal';
 //        $this->Sample->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
         
         $this->set('BUDGET_LIMIT_KEY', $this->Option->getOptionKey('BUDGET_LIMIT_KEY'));
