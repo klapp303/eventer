@@ -153,8 +153,8 @@ class Artist extends AppModel
             'or' => array(
                 array('EventsDetail.user_id' => $user_id),
                 array('EventsDetail.id' => $join_lists['events_detail_id']),
-                array('EventsDetail.id' => $entry_only_lists['events_detail_id']),
-                array('Event.publish' => 1) //公開ステータスを追加
+                array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
+//                array('Event.publish' => 1) //公開ステータスを追加
             ),
             'EventsDetail.user_id !=' => $GUEST_USER_KEY
         );
