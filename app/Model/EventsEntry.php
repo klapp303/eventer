@@ -102,14 +102,16 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function getEventStatus($id = null, $status = -1, $publish_id = false)
+    public function getEventStatus($id = null, $status = -1, $publish_id = false, $user_id = null)
     {
         //イベントのデータを取得しておく
         $this->loadModel('EventsDetail');
         $event_data = $this->EventsDetail->find('first', array('conditions' => array('EventsDetail.id' => $id)));
         
         //データの作成者とログインユーザが一致しない場合
-        $user_id = AuthComponent::user(['id']);
+        if (!$user_id) {
+            $user_id = AuthComponent::user(['id']);
+        }
         if (!$user_id && $publish_id) {
             $user_id = $publish_id;
         }
@@ -330,7 +332,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function formatEventsReport($event_lists = false, $mode = 'full', $report = [])
+    public function formatEventsReport($event_lists = false, $mode = 'full', $user_id = null, $report = [])
     {
         //イベント参加データ一覧ページ用のオプション値を取得
         $this->loadModel('Option');
@@ -338,7 +340,7 @@ class EventsEntry extends AppModel
         
         //イベントのstatusを取得
         foreach ($event_lists as $key => $val) {
-            $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id']);
+            $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id'], -1, false, $user_id);
         }
         
         //イベントデータを算出

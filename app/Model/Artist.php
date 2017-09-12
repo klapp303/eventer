@@ -178,7 +178,7 @@ class Artist extends AppModel
                 'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
             ));
             //mode = light で登録数件数が少ないものは取得しない
-            $event_report = $this->EventsEntry->formatEventsReport($event_lists, $mode);
+            $event_report = $this->EventsEntry->formatEventsReport($event_lists, $mode, $user_id);
             if ($event_report) {
                 $event_report['id'] = $val['Artist']['id'];
                 $event_report['name'] = $val['Artist']['name'];
