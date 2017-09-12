@@ -83,10 +83,12 @@ class Artist extends AppModel
         return $array_related_artists;
     }
     
-    public function getEventsConditionsFromArtist($id = null, $search_conditions = false, $date_all = false, $date_from = null, $date_to = '2038-01-19')
+    public function getEventsConditionsFromArtist($id = null, $user_id = null, $search_conditions = false, $date_all = false, $date_from = null, $date_to = '2038-01-19')
     {
         //ユーザIDを取得
-        $user_id = AuthComponent::user(['id']);
+        if (!$user_id) {
+            $user_id = AuthComponent::user(['id']);
+        }
         $this->loadModel('Option');
         $GUEST_USER_KEY = $this->Option->getOptionKey('GUEST_USER_KEY');
         $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
@@ -160,7 +162,7 @@ class Artist extends AppModel
         return $conditions;
     }
     
-    public function getComparelist($mode = 'light', $data = [])
+    public function getComparelist($mode = 'light', $user_id = null, $data = [])
     {
         //アーティスト一覧を取得して
         $artist_lists = $this->find('all', array(
@@ -170,7 +172,7 @@ class Artist extends AppModel
         $this->loadModel('EventsDetail');
         $this->loadModel('EventsEntry');
         foreach ($artist_lists as $val) {
-            $conditions = $this->getEventsConditionsFromArtist($val['Artist']['id'], false, true);
+            $conditions = $this->getEventsConditionsFromArtist($val['Artist']['id'], $user_id, false, true);
             $event_lists = $this->EventsDetail->find('all', array(
                 'conditions' => $conditions,
                 'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')

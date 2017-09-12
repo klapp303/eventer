@@ -85,7 +85,7 @@ class ArtistsController extends AppController
         $this->set('artist_detail', $artist_detail);
         
         //イベント参加データ
-        $conditions = $this->Artist->getEventsConditionsFromArtist($id, false, true);
+        $conditions = $this->Artist->getEventsConditionsFromArtist($id, false, false, true);
         $event_all_lists = $this->EventsDetail->find('all', array(
             'conditions' => $conditions,
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
@@ -382,7 +382,7 @@ class ArtistsController extends AppController
         $search_conditions = $this->Event->searchWordToConditions($search_word);
         
         //アーティストに紐付くイベント
-        $conditions = $this->Artist->getEventsConditionsFromArtist($id, $search_conditions, true);
+        $conditions = $this->Artist->getEventsConditionsFromArtist($id, false, $search_conditions, true);
         $this->Paginator->settings = array(
             'conditions' => $conditions,
             'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'asc')

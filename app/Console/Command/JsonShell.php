@@ -7,7 +7,7 @@
 
 class JsonShell extends AppShell
 {
-    public $uses = array('JsonData'); //使用するModel
+    public $uses = array('JsonData', 'User'); //使用するModel
     
     public function startup()
     {
@@ -19,7 +19,13 @@ class JsonShell extends AppShell
         $this->out('function starts');
         
         //イベント参加データ一覧を更新
-        $this->JsonData->saveComparelistJson();
+        $users = $this->User->find('list', array(
+            'conditions' => array('User.id !=' => array(1, 2)),
+            'fields' => 'User.id'
+        ));
+        foreach ($users as $user_id) {
+            $this->JsonData->saveComparelistJson($user_id);
+        }
         
         $this->out('function completed');
     }
