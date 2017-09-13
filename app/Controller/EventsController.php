@@ -17,7 +17,7 @@ class EventsController extends AppController
     {
         parent::beforeFilter();
         $this->layout = 'eventer_normal';
-        $this->Auth->allow('schedule');
+        $this->Auth->allow('schedule', 'event_info');
 //        $this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
     }
     
