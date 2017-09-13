@@ -45,7 +45,7 @@ class JsonData extends AppModel
             $user_id = AuthComponent::user(['id']);
         }
         
-        //イベント参加データ一覧をJSONデータで取得
+        //JSONデータに変換
         $json_str = json_encode($data);
         $error_flg = 0;
         
