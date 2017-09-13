@@ -57,11 +57,11 @@ class Place extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function getNumberSeats($id = null)
+    public function getNumberSeats($place_id = null)
     {
         //キャパから座席数を計算
         $place_data = $this->find('first', array(
-            'conditions' => array('Place.id' => $id)
+            'conditions' => array('Place.id' => $place_id)
         ));
         if (@!$place_data['Place']['capacity']) {
             return false;

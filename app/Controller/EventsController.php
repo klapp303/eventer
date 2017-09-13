@@ -1061,7 +1061,7 @@ class EventsController extends AppController
                 }
             }
             //イベントステータスの取得
-            $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], -1, $user_id);
+            $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], $user_id);
             if ($status == 3 || $status == 4) { //落選、見送りの場合は除く
                 unset($event_lists[$key]);
             } else {

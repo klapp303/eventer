@@ -32,6 +32,11 @@ class Analysis extends AppModel
     //ユーザに紐付く全てのイベントを取得
     public function getEventData($user_id = null)
     {
+        //ユーザIDを取得
+        if (!$user_id) {
+            $user_id = AuthComponent::user(['id']);
+        }
+        
         //参加済のイベント一覧を取得しておく
         $this->loadModel('EventUser');
         $join_lists = $this->EventUser->getJoinEntries($user_id);
@@ -66,7 +71,7 @@ class Analysis extends AppModel
             }
             $event_lists[$key]['Artist'] = $cast_data;
             //イベントステータスの取得
-            $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], -1, $user_id);
+            $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], $user_id);
             $event_lists[$key]['EventsDetail']['status'] = $status;
         }
         

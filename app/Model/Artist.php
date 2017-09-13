@@ -83,7 +83,7 @@ class Artist extends AppModel
         return $array_related_artists;
     }
     
-    public function getEventsConditionsFromArtist($id = null, $user_id = null, $search_conditions = false, $date_all = false, $date_from = null, $date_to = '2038-01-19')
+    public function getEventsConditionsFromArtist($artist_id = null, $user_id = null, $search_conditions = false, $date_all = false, $date_from = null, $date_to = '2038-01-19')
     {
         //ユーザIDを取得
         if (!$user_id) {
@@ -94,7 +94,7 @@ class Artist extends AppModel
         $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
         
         //アーティストIDを取得
-        $artists_id = array($id);
+        $array_artists_id = array($artist_id);
         //関連アーティストも取得しておく
         $this->loadModel('Artist');
         $related_artist_lists = $this->Artist->find('list', array(
@@ -106,8 +106,8 @@ class Artist extends AppModel
         foreach ($related_artist_lists as $key => $val) {
             $array_related_id = $this->Artist->getArrayRelatedArtists($val);
             foreach ($array_related_id as $related_id) {
-                if ($related_id['artist_id'] == $id) {
-                    $artists_id[] = $key;
+                if ($related_id['artist_id'] == $artist_id) {
+                    $array_artists_id[] = $key;
                     continue;
                 }
             }
@@ -116,7 +116,7 @@ class Artist extends AppModel
         //アーティストIDから登録されたイベントを取得
         $this->loadModel('EventArtist');
         $event_artists_lists = $this->EventArtist->find('list', array(
-            'conditions' => array('EventArtist.artist_id' => $artists_id),
+            'conditions' => array('EventArtist.artist_id' => $array_artists_id),
             'fields' => array('EventArtist.events_detail_id')
         ));
         //参加済のイベント一覧を取得しておく

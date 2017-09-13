@@ -102,7 +102,7 @@ class EventsEntry extends AppModel
         return $data;
     }
     
-    public function getEventStatus($id = null, $status = -1, $publish_id = false, $user_id = null)
+    public function getEventStatus($id = null, $user_id = null, $status = -1)
     {
         //イベントのデータを取得しておく
         $this->loadModel('EventsDetail');
@@ -111,9 +111,6 @@ class EventsEntry extends AppModel
         //データの作成者とログインユーザが一致しない場合
         if (!$user_id) {
             $user_id = AuthComponent::user(['id']);
-        }
-        if (!$user_id && $publish_id) {
-            $user_id = $publish_id;
         }
         if ($event_data['EventsDetail']['user_id'] != $user_id) {
             return $status; //status = -1 を返す
@@ -211,11 +208,13 @@ class EventsEntry extends AppModel
     
     public function searchEntryDate($user_id = null, $s_date = null, $e_date = null, $join_lists = [])
     {
-        //参加済のイベントを取得しておく
-        if ($user_id) {
-            $this->loadModel('EventUser');
-            $join_lists = $this->EventUser->getJoinEntries($user_id);
+        //ユーザIDを収録
+        if (!$user_id) {
+            $user_id = AuthComponent::user(['id']);
         }
+        //参加済のイベントを取得しておく
+        $this->loadModel('EventUser');
+        $join_lists = $this->EventUser->getJoinEntries($user_id);
         
         if ($s_date) {
             $s_date = date('Y-m-d 00:00:00', strtotime($s_date));
@@ -340,7 +339,7 @@ class EventsEntry extends AppModel
         
         //イベントのstatusを取得
         foreach ($event_lists as $key => $val) {
-            $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id'], -1, false, $user_id);
+            $event_lists[$key]['EventsDetail']['status'] = $this->getEventStatus($val['EventsDetail']['id'], $user_id);
         }
         
         //イベントデータを算出

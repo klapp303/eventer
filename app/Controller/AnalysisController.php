@@ -15,7 +15,7 @@ class AnalysisController extends AppController
     public function index($mode = false)
     {
         //ユーザに紐付く全てのイベントを取得
-        $event_lists = $this->Analysis->getEventData($this->Auth->user('id'));
+        $event_lists = $this->Analysis->getEventData();
         
         //イベント数
         $count_event = 0;
