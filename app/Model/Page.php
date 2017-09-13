@@ -128,6 +128,13 @@ class Page extends AppModel
                     'セットリスト情報を追加'
                 ]
             ],
+            12 => [
+                'date' => '2017-09-13',
+                'title' => 'ver3.6にアップデート',
+                'sub' => [
+                    'イベント参加データ分析のページを追加'
+                ]
+            ]
         ];
         
         return $data;
