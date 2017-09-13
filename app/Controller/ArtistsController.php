@@ -313,6 +313,12 @@ class ArtistsController extends AppController
             'fields' => 'JsonData.json_data'
         ));
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
+        //データの下限で整形
+        foreach ($event_reports as $key => $val) {
+            if ($val['count_entry'] < $ARTIST_COMPARE_KEY) {
+                unset($event_reports[$key]);
+            }
+        }
         
         //paginatorは独自に設定する
         $params = $this->params['named'];
