@@ -304,9 +304,12 @@ class ArtistsController extends AppController
         $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
         $this->set('ARTIST_COMPARE_KEY', $ARTIST_COMPARE_KEY);
         
-        //イベント参加データ一覧を取得
+        //アーティスト別イベント参加データ一覧を取得
         $json_data = $this->JsonData->find('first', array(
-            'conditions' => array('JsonData.title' => 'artists_compare_lists'),
+            'conditions' => array(
+                'JsonData.title' => 'artists_compare_lists',
+                'JsonData.user_id' => $this->Auth->user('id')
+            ),
             'fields' => 'JsonData.json_data'
         ));
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
@@ -334,9 +337,9 @@ class ArtistsController extends AppController
     
     public function compare_lists_update()
     {
-        $result = $this->JsonData->saveComparelistJson();
-        
-        if ($result == true) {
+        //アーティスト別イベント参加データ一覧を更新
+        $compare_lists = $this->Artist->getComparelist(false, $this->Auth->user('id'));
+        if ($this->JsonData->saveDataJson($compare_lists, 'artists_compare_lists')) {
             $this->Session->setFlash('イベント参加データ一覧を更新しました。', 'flashMessage');
         } else {
             $this->Session->setFlash('イベント参加データ一覧を更新できませんでした。', 'flashMessage');

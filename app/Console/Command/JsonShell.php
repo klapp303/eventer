@@ -7,7 +7,7 @@
 
 class JsonShell extends AppShell
 {
-    public $uses = array('JsonData', 'User'); //使用するModel
+    public $uses = array('JsonData', 'User', 'Artist'); //使用するModel
     
     public function startup()
     {
@@ -24,7 +24,9 @@ class JsonShell extends AppShell
             'fields' => 'User.id'
         ));
         foreach ($users as $user_id) {
-            $this->JsonData->saveComparelistJson($user_id);
+            //アーティスト別イベント参加データ一覧を更新
+            $compare_lists = $this->Artist->getComparelist(false, $user_id);
+            $this->JsonData->saveDataJson($compare_lists, 'artists_compare_lists', $user_id);
         }
         
         $this->out('function completed');

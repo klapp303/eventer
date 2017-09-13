@@ -34,23 +34,25 @@ class JsonData extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function saveComparelistJson($user_id = null)
+    public function saveDataJson($data = false, $title = null, $user_id = null)
     {
+        if (!$data || !$title) {
+            return false;
+        }
+        
         //ユーザIDを取得
         if (!$user_id) {
             $user_id = AuthComponent::user(['id']);
         }
         
         //イベント参加データ一覧をJSONデータで取得
-        $this->loadModel('Artist');
-        $compare_lists = $this->Artist->getComparelist(false, $user_id);
-        $json_str = json_encode($compare_lists);
+        $json_str = json_encode($data);
         $error_flg = 0;
         
         //既にデータがあるかどうかを判断して…
         $existData = $this->find('first', array(
             'conditions' => array(
-                'JsonData.title' => 'artists_compare_lists',
+                'JsonData.title' => $title,
                 'JsonData.user_id' => $user_id
             ),
             'fields' => 'JsonData.id'
@@ -74,7 +76,7 @@ class JsonData extends AppModel
         } else {
             $saveData = [
                 'JsonData' => [
-                    'title' => 'artists_compare_lists',
+                    'title' => $title,
                     'user_id' => $user_id,
                     'error_flg' => $error_flg
                 ]
