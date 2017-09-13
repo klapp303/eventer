@@ -1087,4 +1087,67 @@ class EventsController extends AppController
         $this->set('json_data', $json_data);
         $this->set('_serialize', 'json_data');
     }
+    
+    public function event_info($user_id = null, $artist_name = null, $mode = false)
+    {
+        if (empty($artist_name) || empty($user_id)) {
+            throw new NotFoundException(__('存在しないデータです。'));
+        }
+        $artist_data = $this->Artist->find('first', array(
+            'conditions' => array('Artist.name' => urldecode($artist_name))
+        ));
+        if (!$artist_data) {
+            throw new NotFoundException(__('存在しないデータです。'));
+        }
+        
+        if ($mode == 'all') {
+            $date_all = true;
+        } else {
+            $date_all = false;
+        }
+        
+        //アーティストに紐付くイベント
+        $conditions = $this->Artist->getEventsConditionsFromArtist($artist_data['Artist']['id'], $user_id, false, $date_all);
+        $event_lists = $this->EventsDetail->find('all', array(
+            'conditions' => $conditions,
+            'order' => array('EventsDetail.date' => 'desc', 'EventsDetail.time_start' => 'desc')
+        ));
+        $json_data = [];
+        foreach ($event_lists as $key => $event) {
+            //出演者の取得
+            $cast_lists = $this->EventArtist->getCastList($event['EventsDetail']['id']);
+            $cast_data = array();
+            foreach ($cast_lists as $cast) {
+                $cast_data[] = $cast['ArtistProfile']['name'];
+            }
+            //セットリストの取得
+            $setlist = $this->EventSetlist->find('all', array(
+                'conditions' => array('EventSetlist.events_detail_id' => $event['EventsDetail']['id'])
+            ));
+            $setlist_data = array();
+            foreach ($setlist as $music) {
+                $setlist_data[] = array(
+                    'title' => $music['EventSetlist']['title'],
+                    'artist' => $music['ArtistProfile']['name']
+                );
+            }
+            //データの整形
+            $json_data['events'][$key]['event_id'] = $event['Event']['id'];
+            $json_data['events'][$key]['detail_id'] = $event['EventsDetail']['id'];
+            $json_data['events'][$key]['event_title'] = $event['Event']['title'];
+            $json_data['events'][$key]['detail_title'] = $event['EventsDetail']['title'];
+            $json_data['events'][$key]['date'] = $event['EventsDetail']['date'];
+            $json_data['events'][$key]['time_open'] = $event['EventsDetail']['time_open'];
+            $json_data['events'][$key]['time_start'] = $event['EventsDetail']['time_start'];
+            $json_data['events'][$key]['place'] = $event['Place']['name'];
+            $json_data['events'][$key]['cast'] = $cast_data;
+            $json_data['events'][$key]['setlist'] = $setlist_data;
+        }
+//        $json_data['events'] = array_merge($json_data['events']); //キーの振り直し
+//        echo'<pre>';print_r($json_data);echo'</pre>';exit;
+        
+        $this->viewClass = 'Json';
+        $this->set('json_data', $json_data);
+        $this->set('_serialize', 'json_data');
+    }
 }
