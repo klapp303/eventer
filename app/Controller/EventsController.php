@@ -17,7 +17,7 @@ class EventsController extends AppController
     {
         parent::beforeFilter();
         $this->layout = 'eventer_normal';
-        $this->Auth->allow('schedule', 'event_info');
+        $this->Auth->allow('schedule', 'event_setlist', 'event_info');
 //        $this->Event->Behaviors->disable('SoftDelete'); //SoftDeleteのデータも取得する
     }
     
@@ -1008,6 +1008,7 @@ class EventsController extends AppController
         $this->render('index');
     }
     
+    //イベントスケジュール用
     public function schedule($user_id = null, $mode = false)
     {
         if (empty($user_id)) {
@@ -1088,6 +1089,31 @@ class EventsController extends AppController
         $this->set('_serialize', 'json_data');
     }
     
+    //セットリストの取得はデータが大きくなるので別にする
+    public function event_setlist($user_id = null, $events_detail_id = null)
+    {
+        if (empty($events_detail_id) || empty($user_id)) {
+            throw new NotFoundException(__('存在しないデータです。'));
+        }
+        //セットリストの取得
+        $setlist = $this->EventSetlist->find('all', array(
+            'conditions' => array('EventSetlist.events_detail_id' => $events_detail_id)
+        ));
+        $setlist_data = array();
+        foreach ($setlist as $music) {
+            $setlist_data[] = array(
+                'title' => $music['EventSetlist']['title'],
+                'artist' => $music['ArtistProfile']['name']
+            );
+        }
+//        echo'<pre>';print_r($setlist_data);echo'</pre>';exit;
+        
+        $this->viewClass = 'Json';
+        $this->set('json_data', $setlist_data);
+        $this->set('_serialize', 'json_data');
+    }
+    
+    //声優イベント最新情報用
     public function event_info($user_id = null, $artist_name = null, $mode = false)
     {
         if (empty($artist_name) || empty($user_id)) {
