@@ -1110,7 +1110,11 @@ class EventsController extends AppController
         
         $this->viewClass = 'Json';
         $this->set('json_data', $setlist_data);
-        $this->set('_serialize', 'json_data');
+//        $this->set('_serialize', 'json_data');
+        $this->set(array(
+            '_serialize' => 'json_data',
+            '_jsonp' => true
+        ));
     }
     
     //声優イベント最新情報用
