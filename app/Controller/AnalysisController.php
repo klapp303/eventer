@@ -12,7 +12,7 @@ class AnalysisController extends AppController
         $this->layout = 'eventer_normal';
     }
     
-    public function index($mode = false)
+    public function index()
     {
         //ユーザ別イベント参加分析データを取得
         $json_data = $this->JsonData->find('first', array(
@@ -22,38 +22,21 @@ class AnalysisController extends AppController
             )
         ));
         $event_lists = json_decode($json_data['JsonData']['json_data'], true);
+        if ($this->Session->check('Auth.analysis')) {
+            $this->Session->delete('Auth.analysis');
+        }
+        $this->Session->write('Auth.analysis', $event_lists);
         
         //イベント数
-        $count_event = 0;
-        $count_entry = 0;
-        $count_join = 0;
-        foreach ($event_lists as $event) {
-            $count_event++;
-            if ($event['EventsDetail']['status'] == 0) { //検討中
-                
-            }
-            if ($event['EventsDetail']['status'] == 1) { //申込中
-                $count_entry++;
-            }
-            if ($event['EventsDetail']['status'] == 2) { //当選
-                $count_entry++;
-                $count_join++;
-            }
-            if ($event['EventsDetail']['status'] == 3) { //落選
-                $count_entry++;
-            }
-            if ($event['EventsDetail']['status'] == 4) { //見送り
-                
-            }
-        }
-        $this->set(compact('count_event', 'count_entry', 'count_join'));
+        $event_counts = $this->Analysis->countEventFromEventList($event_lists);
+        $this->set(compact('event_counts'));
         
         //イベント参加データ
         $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
         $event_artist_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
         $event_place_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
         $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music');
-        $this->set(compact('event_lists', 'event_year_lists', 'event_artist_lists', 'event_place_lists', 'event_music_lists'));
+        $this->set(compact('event_year_lists', 'event_artist_lists', 'event_place_lists', 'event_music_lists'));
     }
     
     public function update()
@@ -67,5 +50,85 @@ class AnalysisController extends AppController
         }
         
         $this->redirect('/analysis/index');
+    }
+    
+    public function detail()
+    {
+        //ユーザ別イベント参加分析データを取得
+        if ($this->Session->check('Auth.analysis')) {
+            $event_lists = $this->Session->read('Auth.analysis');
+        } else {
+            $json_data = $this->JsonData->find('first', array(
+                'conditions' => array(
+                    'JsonData.title' => 'analysis_lists',
+                    'JsonData.user_id' => $this->Auth->user('id')
+                )
+            ));
+            $event_lists = json_decode($json_data['JsonData']['json_data'], true);
+            $this->Session->write('Auth.analysis', $event_lists);
+        }
+        
+        //パラメータで詳細ページの表示を分ける
+        if (isset($this->params->query['year']) == true) {
+            $year = $this->params->query['year'];
+            $mode = 'year';
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
+            $event_lists = array();
+            //任意の年のみを取得
+            if (@$format_event_lists[$year . '年']) {
+                $event_lists = $format_event_lists[$year . '年'];
+                unset($event_lists['analysis']);
+            }
+            
+        } elseif (isset($this->params->query['artist']) == true) {
+            $artist = $this->params->query['artist'];
+            $mode = 'artist';
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
+            $event_lists = array();
+            foreach ($format_event_lists as $key => $val) {
+                if ($val['analysis']['artist']['id'] == $artist) {
+                    $event_lists = $format_event_lists[$key];
+                    unset($event_lists['analysis']);
+                }
+            }
+            
+        } elseif (isset($this->params->query['place']) == true) {
+            $place = $this->params->query['place'];
+            $mode = 'place';
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
+            $event_lists = array();
+            foreach ($format_event_lists as $key => $val) {
+                if ($key == $place) {
+                    $event_lists = $format_event_lists[$key];
+                    unset($event_lists['analysis']);
+                }
+            }
+               
+        } else {
+            throw new NotFoundException(__('存在しないデータです。'));
+        }
+        $this->set('mode', $mode);
+        
+        //イベント数
+        $event_counts = $this->Analysis->countEventFromEventList($event_lists);
+        $this->set(compact('event_counts'));
+        
+        //イベント参加データ
+        if ($mode == 'year') {
+            $event_artist_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
+            $event_place_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
+            $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music');
+        } elseif ($mode == 'artist') {
+            $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
+            $event_place_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
+            $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music');
+        } elseif ($mode == 'place') {
+            $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
+            $event_artist_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
+            $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music');
+        }
+        $this->set(compact('event_year_lists', 'event_artist_lists', 'event_place_lists', 'event_music_lists'));
+        
+        $this->render('index');
     }
 }

@@ -23,5 +23,5 @@
   </table>
 
 <div class="link-right">
-  <span class="link-page"><?php echo $this->Html->link('⇨ イベント参加データの分析はこちら', '/analysis/index'); ?></span>
+  <span class="link-page"><?php echo $this->Html->link('⇨ イベント参加データの分析はこちら', '/analysis/'); ?></span>
 </div>

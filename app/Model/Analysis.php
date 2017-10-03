@@ -78,9 +78,38 @@ class Analysis extends AppModel
         return $event_lists;
     }
     
+    public function countEventFromEventList($event_lists = false, $event_counts = ['event' => 0, 'entry' => 0, 'join' => 0])
+    {
+        foreach ($event_lists as $event) {
+            $event_counts['event']++;
+            if ($event['EventsDetail']['status'] == 0) { //検討中
+                
+            }
+            if ($event['EventsDetail']['status'] == 1) { //申込中
+                $event_counts['entry']++;
+            }
+            if ($event['EventsDetail']['status'] == 2) { //当選
+                $event_counts['entry']++;
+                $event_counts['join']++;
+            }
+            if ($event['EventsDetail']['status'] == 3) { //落選
+                $event_counts['entry']++;
+            }
+            if ($event['EventsDetail']['status'] == 4) { //見送り
+                
+            }
+        }
+        
+        return $event_counts;
+    }
+    
     //モード毎の配列に整形、$mode = year, artist, place, music
     public function formatEventListToArray($event_lists = false, $mode = false, $options = false, $data = [])
     {
+        if (!$event_lists) {
+            return $data;
+        }
+        
         //オプションの設定
         //statusは配列で指定、なければ 当選 = 2 のみ
         if ($options['status']) {
