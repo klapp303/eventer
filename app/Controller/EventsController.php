@@ -1048,7 +1048,7 @@ class EventsController extends AppController
                 'EventsDetail.deleted !=' => 1
             ),
             'order' => array('EventsDetail.date' => $order, 'EventsDetail.time_start' => $order),
-            'contain' => array('Event', 'Place')
+            'contain' => array('Event', 'EventGenre', 'Place')
         ));
         
         $json_data = [];
@@ -1074,6 +1074,7 @@ class EventsController extends AppController
                 $json_data['schedule'][$key]['date'] = $event['EventsDetail']['date'];
                 $json_data['schedule'][$key]['time_open'] = $event['EventsDetail']['time_open'];
                 $json_data['schedule'][$key]['time_start'] = $event['EventsDetail']['time_start'];
+                $json_data['schedule'][$key]['genre'] = $event['EventGenre']['title'];
                 $json_data['schedule'][$key]['place'] = $event['Place']['name'];
                 $json_data['schedule'][$key]['status'] = $status;
                 if ($mode == 'all') {
