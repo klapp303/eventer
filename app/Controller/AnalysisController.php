@@ -72,7 +72,7 @@ class AnalysisController extends AppController
         if (isset($this->params->query['year']) == true) {
             $year = $this->params->query['year'];
             $mode = 'year';
-            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'year', array('status' => array(0, 1, 2, 3, 4)));
             $event_lists = array();
             //任意の年のみを取得
             if (@$format_event_lists[$year . '年']) {
@@ -83,7 +83,7 @@ class AnalysisController extends AppController
         } elseif (isset($this->params->query['artist']) == true) {
             $artist = $this->params->query['artist'];
             $mode = 'artist';
-            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist', array('status' => array(0, 1, 2, 3, 4)));
             $event_lists = array();
             foreach ($format_event_lists as $key => $val) {
                 if ($val['analysis']['artist']['id'] == $artist) {
@@ -95,7 +95,7 @@ class AnalysisController extends AppController
         } elseif (isset($this->params->query['place']) == true) {
             $place = $this->params->query['place'];
             $mode = 'place';
-            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
+            $format_event_lists = $this->Analysis->formatEventListToArray($event_lists, 'place', array('status' => array(0, 1, 2, 3, 4)));
             $event_lists = array();
             foreach ($format_event_lists as $key => $val) {
                 if ($key == $place) {
