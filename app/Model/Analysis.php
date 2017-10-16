@@ -112,10 +112,16 @@ class Analysis extends AppModel
         
         //オプションの設定
         //statusは配列で指定、なければ 当選 = 2 のみ
-        if ($options['status']) {
+        if (@$options['status']) {
             $array_status = $options['status'];
         } else {
             $array_status = array(2);
+        }
+        //artistの指定があればconditionに追加するため
+        if (@$options['artist']) {
+            $conditions_artist = array('EventSetlist.artist_id' => $options['artist']);
+        } else {
+            $conditions_artist = array();
         }
         
         //モード指定がなければデフォルトに戻す
@@ -215,7 +221,10 @@ class Analysis extends AppModel
             foreach ($event_lists as $key => $event) {
                 if (in_array($event['EventsDetail']['status'], $array_status)) {
                     $setlist = $this->EventSetlist->find('all', array(
-                        'conditions' => array('EventSetlist.events_detail_id' => $event['EventsDetail']['id'])
+                        'conditions' => array(
+                            'EventSetlist.events_detail_id' => $event['EventsDetail']['id'],
+                            $conditions_artist
+                        )
                     ));
                     //楽曲ごとに整形
                     foreach ($setlist as $key2 => $music) {

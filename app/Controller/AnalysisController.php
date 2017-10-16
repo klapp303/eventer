@@ -121,7 +121,7 @@ class AnalysisController extends AppController
         } elseif ($mode == 'artist') {
             $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
             $event_place_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
-            $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music');
+            $event_music_lists = $this->Analysis->formatEventListToArray($event_lists, 'music', array('artist' => $artist));
         } elseif ($mode == 'place') {
             $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
             $event_artist_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
