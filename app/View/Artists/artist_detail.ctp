@@ -37,9 +37,9 @@
         <td><?php echo $event_report['all']['count_entry']; ?> (<?php echo $event_report['oneman']['count_entry']; ?>) 件</td>
         <td><?php echo $event_report['all']['per_win']; ?> (<?php echo $event_report['oneman']['per_win']; ?>) %</td></tr>
     <tr><th>頻度</th><th>直近頻度</th><th>前回</th></tr>
-    <tr><td><?php echo $event_report['all']['span']['rating']; ?> (<?php echo $event_report['oneman']['span']['rating']; ?>) days</td>
-        <td><?php echo $event_report['all']['span']['tenth']; ?> (<?php echo $event_report['oneman']['span']['tenth']; ?>) days</td>
-        <td><?php echo $event_report['all']['span']['current']; ?> (<?php echo $event_report['oneman']['span']['current']; ?>) days</td></tr>
+    <tr><td><?php echo $event_report['all']['span_rating']; ?> (<?php echo $event_report['oneman']['span_rating']; ?>) days</td>
+        <td><?php echo $event_report['all']['span_tenth']; ?> (<?php echo $event_report['oneman']['span_tenth']; ?>) days</td>
+        <td><?php echo $event_report['all']['span_current']; ?> (<?php echo $event_report['oneman']['span_current']; ?>) days</td></tr>
   </table>
 
   <div class="intro">

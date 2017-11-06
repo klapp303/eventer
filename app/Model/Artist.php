@@ -162,12 +162,10 @@ class Artist extends AppModel
         return $conditions;
     }
     
-    public function getComparelist($mode = 'light', $user_id = null, $data = [])
+    public function getComparelist($user_id = null, $data = [])
     {
         //アーティスト一覧を取得して
-        $artist_lists = $this->find('all', array(
-            'order' => array('Artist.kana' => 'asc')
-        ));
+        $artist_lists = $this->find('all');
         //紐付くイベントデータを取得する
         $this->loadModel('EventsDetail');
         $this->loadModel('EventsEntry');
@@ -177,18 +175,17 @@ class Artist extends AppModel
                 'conditions' => $conditions,
                 'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
             ));
-            //mode = light で登録数件数が少ないものは取得しない
-            $event_report = $this->EventsEntry->formatEventsReport($event_lists, $mode, $user_id);
+            $event_report = $this->EventsEntry->formatEventsReport($event_lists, $val['Artist']['id'], $user_id);
             if ($event_report) {
-                $event_report['id'] = $val['Artist']['id'];
-                $event_report['name'] = $val['Artist']['name'];
-                $event_report['kana'] = $val['Artist']['kana'];
+                $event_report['Artist']['id'] = $val['Artist']['id'];
+                $event_report['Artist']['name'] = $val['Artist']['name'];
+                $event_report['Artist']['kana'] = $val['Artist']['kana'];
                 $data[$val['Artist']['id']] = $event_report;
             }
         }
         //参加数の降順に並び替え
         foreach ($data as $key => $val) {
-            $sorts[$key] = $val['count_join'];
+            $sorts[$key] = $val['all']['count_join'];
         }
         array_multisort($sorts, SORT_DESC, $data);
         

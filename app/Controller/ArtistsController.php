@@ -365,23 +365,22 @@ class ArtistsController extends AppController
             'fields' => 'JsonData.json_data'
         ));
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
-        //データの下限で整形
+        //データの下限を設定
         foreach ($event_reports as $key => $val) {
-            if ($val['count_join'] < $ARTIST_COMPARE_KEY) {
+            if ($val['all']['count_join'] < $ARTIST_COMPARE_KEY) {
                 unset($event_reports[$key]);
             }
         }
         
         //paginatorは独自に設定する
         $params = $this->params['named'];
-        if (@$params['sort']) {
+        if (@$params['sort'] && @$params['direction']) {
             $sort = $params['sort'];
-            if (@$params['direction']) {
-                $direction = $params['direction'];
-            }
+            $array_sort = explode('_', $sort, 2);
+            $direction = $params['direction'];
             //ソートを実行
             foreach ($event_reports as $key => $val) {
-                $sort_reports[$key] = $val[$sort];
+                $sort_reports[$key] = $val[$array_sort[0]][$array_sort[1]];
             }
             if ($direction == 'asc') {
                 array_multisort($sort_reports, SORT_ASC, $event_reports);
@@ -396,7 +395,7 @@ class ArtistsController extends AppController
     public function compare_lists_update()
     {
         //アーティスト別イベント参加データ一覧を更新
-        $compare_lists = $this->Artist->getComparelist(false, $this->Auth->user('id'));
+        $compare_lists = $this->Artist->getComparelist($this->Auth->user('id'));
         if ($this->JsonData->saveDataJson($compare_lists, 'artists_compare_lists')) {
             $this->Session->setFlash('イベント参加データ一覧を更新しました。', 'flashMessage');
         } else {

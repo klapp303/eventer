@@ -333,10 +333,6 @@ class EventsEntry extends AppModel
     
     public function formatEventsReport($event_lists = false, $artist_id = null, $user_id = null, $report = [])
     {
-        //イベント参加データ一覧ページ用のオプション値を取得
-        $this->loadModel('Option');
-        $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
-        
         //イベントのstatusとcastを取得
         $this->loadModel('EventArtist');
         foreach ($event_lists as $key => $val) {
@@ -410,14 +406,14 @@ class EventsEntry extends AppModel
             $report['oneman']['per_win'] = round($report['oneman']['count_win'] / ($report['oneman']['count_win'] + $report['oneman']['count_reject']), 3) * 100;
         }
         //イベント頻度
-        $report['all']['span'] = $this->getEventsSpan($event_join_lists);
-        $report['oneman']['span'] = $this->getEventsSpan($oneman_join_lists);
+        $report['all'] += $this->getEventsSpan($event_join_lists);
+        $report['oneman'] += $this->getEventsSpan($oneman_join_lists);
 //        echo'<pre>';print_r($report);echo'</pre>';exit;
         
         return $report;
     }
     
-    public function getEventsSpan($event_lists = false, $span = ['current' => 0, 'rating' => 0, 'tenth' => 0])
+    public function getEventsSpan($event_lists = false, $span = ['span_current' => 0, 'span_rating' => 0, 'span_tenth' => 0])
     {
         if (count($event_lists) > 0) {
             //最初の参加イベントと最新の参加イベントを取得しておく
@@ -442,26 +438,26 @@ class EventsEntry extends AppModel
             if (count($event_lists) == 1) {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
                 $latest_time = $latest_time /60 /60 /24;
-                $span['current'] = $latest_time;
-                $span['rating'] = 0;
-                $span['tenth'] = 0;
+                $span['span_current'] = $latest_time;
+                $span['span_rating'] = 0;
+                $span['span_tenth'] = 0;
             //参加したイベントが複数ある場合
             } else {
                 $latest_time = strtotime(date('Y-m-d')) - strtotime($event_latest['EventsDetail']['date']);
                 $latest_day = $latest_time /60 /60 /24;
-                $span['current'] = $latest_day;
+                $span['span_current'] = $latest_day;
                 $first_time = strtotime(date('Y-m-d')) - strtotime($event_first['EventsDetail']['date']);
                 $first_day = $first_time /60 /60 /24;
-                $span['rating'] = round($first_day / count($event_lists), 1);
+                $span['span_rating'] = round($first_day / count($event_lists), 1);
                 
                 //直近10イベント分だけの頻度も算出しておく
                 if (count($event_lists) < 10) {
-                    $span['tenth'] = $span['rating'];
+                    $span['span_tenth'] = $span['span_rating'];
                 } else {
                     $event_tenth = $event_lists[9];
                     $tenth_time = strtotime(date('Y-m-d')) - strtotime($event_tenth['EventsDetail']['date']);
                     $tenth_day = $tenth_time /60 /60 /24;
-                    $span['tenth'] = round($tenth_day / 10, 1);
+                    $span['span_tenth'] = round($tenth_day / 10, 1);
                 }
             }
         }
