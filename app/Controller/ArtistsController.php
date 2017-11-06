@@ -352,10 +352,6 @@ class ArtistsController extends AppController
         //breadcrumbの設定
         $this->set('sub_page', 'イベント参加データ一覧');
         
-        //イベント参加データ一覧ページ用のオプション値を取得
-        $ARTIST_COMPARE_KEY = $this->Option->getOptionKey('ARTIST_COMPARE_KEY');
-        $this->set('ARTIST_COMPARE_KEY', $ARTIST_COMPARE_KEY);
-        
         //アーティスト別イベント参加データ一覧を取得
         $json_data = $this->JsonData->find('first', array(
             'conditions' => array(
@@ -365,9 +361,9 @@ class ArtistsController extends AppController
             'fields' => 'JsonData.json_data'
         ));
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
-        //データの下限を設定
+        //ワンマンに複数参加したアーティストだけ表示する
         foreach ($event_reports as $key => $val) {
-            if ($val['all']['count_join'] < $ARTIST_COMPARE_KEY) {
+            if ($val['oneman']['count_join'] < 2) {
                 unset($event_reports[$key]);
             }
         }

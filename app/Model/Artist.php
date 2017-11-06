@@ -185,7 +185,7 @@ class Artist extends AppModel
         }
         //参加数の降順に並び替え
         foreach ($data as $key => $val) {
-            $sorts[$key] = $val['all']['count_join'];
+            $sorts[$key] = $val['oneman']['count_join'];
         }
         array_multisort($sorts, SORT_DESC, $data);
         
