@@ -18,7 +18,7 @@
 <h3>イベント参加データ一覧</h3>
   <table class="detail-list">
     <?php $paginator_url = '/' . $this->params['controller'] . '/' . $this->params['action'] . '/'; ?>
-    <tr><th class="tbl-artist_compare">アーティスト名<a href="<?php echo $paginator_url; ?>sort:kana/direction:asc">▼</a></th>
+    <tr><th class="tbl-artist_compare">アーティスト</th>
         <th>参加数<a href="<?php echo $paginator_url; ?>sort:count_join/direction:desc">▼</a></th>
         <th>申込数<a href="<?php echo $paginator_url; ?>sort:count_entry/direction:desc">▼</a></th>
         <th>当選率<a href="<?php echo $paginator_url; ?>sort:per_win/direction:desc">▼</a></th>

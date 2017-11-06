@@ -315,7 +315,7 @@ class ArtistsController extends AppController
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
         //データの下限で整形
         foreach ($event_reports as $key => $val) {
-            if ($val['count_entry'] < $ARTIST_COMPARE_KEY) {
+            if ($val['count_join'] < $ARTIST_COMPARE_KEY) {
                 unset($event_reports[$key]);
             }
         }
