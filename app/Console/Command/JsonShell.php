@@ -27,7 +27,7 @@ class JsonShell extends AppShell
             $analysis_lists = $this->Analysis->getEventData($user_id);
             $this->JsonData->saveDataJson($analysis_lists, 'analysis_lists', $user_id);
             //アーティスト別イベント参加データ一覧を更新
-            $compare_lists = $this->Artist->getComparelist(false, $user_id);
+            $compare_lists = $this->Artist->getComparelist($user_id);
             $this->JsonData->saveDataJson($compare_lists, 'artists_compare_lists', $user_id);
         }
         
