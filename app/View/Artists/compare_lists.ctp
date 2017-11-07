@@ -22,18 +22,18 @@
         <th>参加数<a href="<?php echo $paginator_url; ?>sort:all_count_join/direction:desc">▼</a></th>
         <th>ﾜﾝﾏﾝ数<a href="<?php echo $paginator_url; ?>sort:oneman_count_join/direction:desc">▼</a></th>
         <th>当選率<a href="<?php echo $paginator_url; ?>sort:all_per_win/direction:desc">▼</a></th>
+        <th>ﾜﾝﾏﾝ率<a href="<?php echo $paginator_url; ?>sort:oneman_per_win/direction:desc">▼</a></th>
         <th>頻度<a href="<?php echo $paginator_url; ?>sort:all_span_rating/direction:asc">▼</a></th>
-        <th>直近頻度<a href="<?php echo $paginator_url; ?>sort:all_span_tenth/direction:asc">▼</a></th>
-        <th>前回<a href="<?php echo $paginator_url; ?>sort:all_span_current/direction:asc">▼</a></th></tr>
+        <th>直近頻度<a href="<?php echo $paginator_url; ?>sort:all_span_tenth/direction:asc">▼</a></th></tr>
     
     <?php foreach ($event_reports as $event_report): ?>
     <tr><td class="tbl-artist_compare"><a href="/artists/artist_detail/<?php echo $event_report['Artist']['id']; ?>" target="_blank"><?php echo $event_report['Artist']['name']; ?></a></td>
         <td><?php echo $event_report['all']['count_join']; ?> 件</td>
         <td><?php echo $event_report['oneman']['count_join']; ?> 件</td>
         <td><?php echo $event_report['all']['per_win']; ?> %</td>
+        <td><?php echo $event_report['oneman']['per_win']; ?> %</td>
         <td><?php echo $event_report['all']['span_rating']; ?> days</td>
-        <td><?php echo $event_report['all']['span_tenth']; ?> days</td>
-        <td><?php echo $event_report['all']['span_current']; ?> days</td></tr>
+        <td><?php echo $event_report['all']['span_tenth']; ?> days</td></tr>
     <?php endforeach; ?>
   </table>
 
