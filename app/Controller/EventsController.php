@@ -1061,6 +1061,17 @@ class EventsController extends AppController
                     $cast_data[] = $cast['ArtistProfile']['name'];
                 }
             }
+            //セットリストの取得
+            $setlist = $this->EventSetlist->find('all', array(
+                'conditions' => array('EventSetlist.events_detail_id' => $event['EventsDetail']['id'])
+            ));
+            $setlist_data = array();
+            foreach ($setlist as $music) {
+                $setlist_data[] = array(
+                    'title' => $music['EventSetlist']['title'],
+                    'artist' => $music['ArtistProfile']['name']
+                );
+            }
             //イベントステータスの取得
             $status = $this->EventsEntry->getEventStatus($event['EventsDetail']['id'], $user_id);
             if ($status == 3 || $status == 4) { //落選、見送りの場合は除く
@@ -1079,6 +1090,7 @@ class EventsController extends AppController
                 $json_data['schedule'][$key]['status'] = $status;
                 if ($mode == 'all') {
                     $json_data['schedule'][$key]['cast'] = $cast_data;
+                    $json_data['schedule'][$key]['setlist'] = $setlist_data;
                 }
             }
         }
