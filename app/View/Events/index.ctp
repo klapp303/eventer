@@ -68,7 +68,7 @@
       });
   </script>
   
-  <?php $form_max = 10; //フォーム数の最大を設定 ?>
+  <?php $form_max = 20; //フォーム数の最大を設定 ?>
   <?php for ($i = 0; $i < $form_max; $i++): ?>
     <?php if (preg_match('#/events/edit/#', $_SERVER['REQUEST_URI'])): //編集用 ?>
     <?php echo $this->Form->input('EventsDetail.' . $i . '.id', array('type' => 'hidden')); ?>
