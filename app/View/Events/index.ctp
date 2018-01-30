@@ -177,7 +177,7 @@
       jQuery(function($) {
           //postする時にフォームがどこまで追加されていたかを取得しておく
           $('#event-post-button').click(function() {
-              for (var i = 0; i < 10; i++) {
+              for (var i = 0; i < <?php echo $form_max; ?>; i++) {
                   var display = $('#event-add-form_' + i).css('display');
                   if (display == 'none') {
                       $('<input>').attr({
