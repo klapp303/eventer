@@ -721,6 +721,11 @@ class EventsController extends AppController
         $array_cast = [];
         foreach ($cast_lists as $key => $val) {
             $array_cast[$val['EventArtist']['artist_id']] = $val['ArtistProfile']['name'];
+            //関連アーティストも取得しておく
+            $related_artists = $this->Artist->getArrayRelatedArtists($val['ArtistProfile']['related_artists_id']);
+            foreach ($related_artists as $val2) {
+                $array_cast[$val2['artist_id']] = $val2['name'];
+            }
         }
         $this->set('array_cast', $array_cast);
         

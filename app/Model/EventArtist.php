@@ -12,7 +12,7 @@ class EventArtist extends AppModel
         'ArtistProfile' => array(
             'className' => 'Artist', //関連付けるModel
             'foreignKey' => 'artist_id', //関連付けるためのfield、関連付け先は上記Modelのid
-            'fields' => 'name' //関連付け先Modelの使用field
+            'fields' => array('name', 'related_artists_id') //関連付け先Modelの使用field
         ),
         'Event' => array(
             'className' => 'Event', //関連付けるModel
