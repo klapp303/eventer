@@ -719,15 +719,29 @@ class EventsController extends AppController
         //出演者一覧の取得
         $cast_lists = $this->EventArtist->getCastList($id);
         $array_cast = [];
+        $array_cast_id = [];
         foreach ($cast_lists as $key => $val) {
             $array_cast[$val['EventArtist']['artist_id']] = $val['ArtistProfile']['name'];
+            $array_cast_id[] = $val['EventArtist']['artist_id']; //予測変換用
             //関連アーティストも取得しておく
             $related_artists = $this->Artist->getArrayRelatedArtists($val['ArtistProfile']['related_artists_id']);
             foreach ($related_artists as $val2) {
                 $array_cast[$val2['artist_id']] = $val2['name'];
+                $array_cast_id[] = $val2['artist_id']; //予測変換用
             }
         }
         $this->set('array_cast', $array_cast);
+        //予測変換用に登録済みの楽曲データも取得しておく
+        $music_data = $this->EventSetlist->find('all', array(
+            'conditions' => array('EventSetlist.artist_id' => $array_cast_id),
+            'fields' => array('DISTINCT EventSetlist.title'),
+            'order' => array('EventSetlist.title' => 'ASC')
+        ));
+        $music_lists = [];
+        foreach ($music_data as $val) { //クォーテーションはjsでエラーになるので
+            $music_lists[] = str_replace(array("'", '"'), '', $val['EventSetlist']['title']);
+        }
+        $this->set('music_lists', json_encode($music_lists));
         
         //セットリストの取得
         if (empty($this->request->data)) {

@@ -1,4 +1,6 @@
 <?php echo $this->Html->css('events', array('inline' => false)); ?>
+<?php echo $this->Html->css('jquery-ui.min.css', array('inline' => false)); ?>
+<?php echo $this->Html->script('jquery-ui.min.js', array('inline' => false)); ?>
 <h3>セットリストの管理</h3>
 
   <?php if (!empty($this->request->data)): //編集用 ?>
@@ -26,7 +28,7 @@
     <?php echo $this->Form->input('EventSetlist.' . $i . '.id', array('type' => 'hidden')); ?>
     <tr class="<?php echo ($i < $form_min)? '' : 'setlist-add-form'; ?>" style="display: <?php echo ($i < $form_min)? 'table-row' : 'none'; ?>;">
       <td><?php echo sprintf('%02d', $i +1) . '.'; ?></td>
-      <td><?php echo $this->Form->input('EventSetlist.' . $i . '.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true : false, 'size' => 30)); ?></td>
+      <td><?php echo $this->Form->input('EventSetlist.' . $i . '.title', array('type' => 'text', 'label' => false, 'required' => ($i == 0)? true : false, 'class' => 'setlist_title', 'size' => 30)); ?></td>
       <?php $array_cast = ['' => ''] + $array_cast; ?>
       <td><?php echo $this->Form->input('EventSetlist.' . $i . '.artist_id', array('type' => 'select', 'label' => false, 'options' => $array_cast, 'style' => 'width: 200px;')); ?></td>
     </tr>
@@ -49,6 +51,17 @@
               $('.setlist-add-form').hide();
               $('#setlist-add-button').show();
               $('#setlist-remove-button').hide();
+          });
+          
+          //autocomplete
+          $(function() {
+              var data = JSON.parse('<?php echo $music_lists; ?>');
+              $('.setlist_title').autocomplete({
+                  source : data,
+                  autoFocus : true,
+                  delay : 500,
+                  minLength : 3
+              });
           });
       });
   </script>
