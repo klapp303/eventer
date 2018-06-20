@@ -51,7 +51,7 @@ class EmailShell extends AppShell
             //イベントの予定があればメールを送信
             if ($event_lists) {
 //                $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
-                $email = new CakeEmail('gmail');
+                $email = new CakeEmail('sakura');
                 $email->to($user['User']['username'])
                     ->subject('【イベ幸】イベント予定のお知らせ')
                     ->template('event_schedule', 'eventer_mail')
