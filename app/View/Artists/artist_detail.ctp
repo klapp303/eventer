@@ -46,6 +46,10 @@
     <p class="txt-min">※()内はワンマンイベントのみからの算出。</p>
   </div>
 
+<div class="link-right">
+  <span class="link-page"><?php echo $this->Html->link('⇨ イベント参加データの分析を確認する', '/analysis/detail?artist=' . $artist_detail['Artist']['id']); ?></span>
+</div>
+
 <h3>開催予定のイベント</h3>
 
   <?php echo $this->element('eventer_eventlist', array('paginator' => false)); ?>
