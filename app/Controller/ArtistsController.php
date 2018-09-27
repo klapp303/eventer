@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class ArtistsController extends AppController
 {
-    public $uses = array('Artist', 'EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'JsonData'); //使用するModel
+    public $uses = array('Artist', 'EventArtist', 'EventUser', 'Event', 'EventsDetail', 'EventsEntry', 'Favorite', 'JsonData'); //使用するModel
     
     public $components = array('Paginator');
     
@@ -361,9 +361,16 @@ class ArtistsController extends AppController
             'fields' => 'JsonData.json_data'
         ));
         $event_reports = json_decode($json_data['JsonData']['json_data'], true);
+        //お気に入り登録アーティストを取得しておく
+        $favorites = $this->Favorite->find('list', array(
+            'conditions' => array(
+                'Favorite.user_id' => $this->Auth->user('id')
+            ),
+            'fields' => array('Favorite.artist_id')
+        ));
         //ワンマンに複数参加したアーティストだけ表示する
         foreach ($event_reports as $key => $val) {
-            if ($val['oneman']['count_join'] < 2) {
+            if ($val['oneman']['count_join'] < 2 && in_array($val['Artist']['id'], $favorites) == false) {
                 unset($event_reports[$key]);
             }
         }
