@@ -227,6 +227,7 @@ class EventsEntry extends AppModel
             $e_date = date('Y-m-d 23:59:59');
         }
         
+        $this->Behaviors->load('Containable');
         $entry_lists = $this->find('all', array(
             'conditions' => array(
                 'or' => array(
@@ -282,7 +283,13 @@ class EventsEntry extends AppModel
                 ),
                 'EventsDetail.deleted !=' => 1
             ),
-            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc')
+            'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
+            'contain' => array(
+                'Event',
+                'EventsDetail',
+                'User',
+                'EntryGenre' => array('EntryCost', 'EntryRule')
+            )
         ));
         
         return $entry_lists;
