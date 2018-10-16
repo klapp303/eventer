@@ -25,7 +25,8 @@
           <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
           <?php endif; ?>
         </td>
-        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
+        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-rule_<?php echo $event_list['EntryGenre']['entry_rule_id']; ?>"><?php echo $event_list['EntryGenre']['EntryRule']['title']; ?></span><br>
+                                          <span class="icon-genre col-cost_<?php echo $event_list['EntryGenre']['entry_cost_id']; ?>"><?php echo $event_list['EntryGenre']['EntryCost']['title']; ?></span><br>
                                           <?php foreach ($eventEntryStatus as $entry_status) {
                                               if ($entry_status['status'] == $event_list['EventsEntry']['status']) {
                                                   echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
@@ -76,7 +77,8 @@
           <span class="title-sub"><?php echo $event_list['EventsDetail']['title']; ?></span>
           <?php endif; ?>
         </td>
-        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $event_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $event_list['EntryGenre']['title']; ?></span><br>
+        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-rule_<?php echo $event_list['EntryGenre']['entry_rule_id']; ?>"><?php echo $event_list['EntryGenre']['EntryRule']['title']; ?></span><br>
+                                          <span class="icon-genre col-cost_<?php echo $event_list['EntryGenre']['entry_cost_id']; ?>"><?php echo $event_list['EntryGenre']['EntryCost']['title']; ?></span><br>
                                           <?php foreach ($eventEntryStatus as $entry_status) {
                                               if ($entry_status['status'] == $event_list['EventsEntry']['status']) {
                                                   echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
