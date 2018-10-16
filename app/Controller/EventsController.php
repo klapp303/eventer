@@ -95,11 +95,18 @@ class EventsController extends AppController
                 $event_detail_status = $this->EventStatus->checkEventsDetailStatus($event_detail['EventsDetail']['id']);
                 $this->set('event_detail_status', $event_detail_status);
                 //エントリー一覧
+                $this->EventsEntry->Behaviors->load('Containable');
                 $entry_lists = $this->EventsEntry->find('all', array(
                     'conditions' => array(
                         'EventsEntry.events_detail_id' => $event_detail['EventsDetail']['id']
                     ),
-                    'order' => array('EventsEntry.date_start' => 'asc')
+                    'order' => array('EventsEntry.date_start' => 'asc'),
+                    'contain' => array(
+                        'Event',
+                        'EventsDetail',
+                        'User',
+                        'EntryGenre' => array('EntryCost', 'EntryRule')
+                    )
                 ));
                 //別日程
                 $other_lists = $this->EventsDetail->find('all', array(
@@ -493,7 +500,7 @@ class EventsController extends AppController
         $this->set('sub_page', $event_name);
         
         $this->set('events_detail', $events_detail);
-        $this->set('entry_genres', $this->EntryGenre->find('list'));
+        $this->set('entry_genres', $this->EntryGenre->find('list', array('order' => array('EntryGenre.sort' => 'asc'))));
         $this->set('events_detail_id', $id);
         
         if ($this->request->is('post')) {

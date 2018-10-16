@@ -27,7 +27,7 @@ class EventsEntry extends AppModel
         'EntryGenre' => array(
             'className' => 'EntryGenre', //関連付けるModel
             'foreignKey' => 'entries_genre_id', //関連付けるためのfield、関連付け先は上記Modelのid
-            'fields' => 'title' //関連付け先Modelの使用field
+            'fields' => array('title', 'entry_cost_id', 'entry_rule_id', 'entry_system_id') //関連付け先Modelの使用field
         )
     );
     

@@ -359,32 +359,46 @@
 .col-event_5 { /* 即売会 */
   background: #ffff00;
 }
+.col-event_6 { /* その他 */
+  background: #d8d8d8;
+}
 
-.col-entry_1 { /* FC先行 */
-  background: #fe2e9a;
+.col-rule_1 { /* 全員当選 */
+  background: #d8d8d8;
 }
-.col-entry_2 { /* メディア先行 */
-  background: #fe2e64;
-}
-.col-entry_3 { /* e+（イープラス） */
-  background: #f5a9e1;
-}
-.col-entry_4 { /* Loppi（ローチケ） */
+.col-rule_2 { /* Web抽選 */
   background: #58d3f7;
 }
-.col-entry_5 { /* チケットぴあ */
-  background: #58acfa;
+.col-rule_3 { /* Web先着 */
+  background: #819ff7;
 }
-.col-entry_6 { /* その他会員サイト */
-  background: #faac58;
+.col-rule_4 { /* 店舗抽選 */
+  background: #f5a9e1;
 }
-.col-entry_7 { /* その他サイト */
+.col-rule_5 { /* 店舗先着 */
+  background: #fe2e64;
+}
+.col-rule_6 { /* ハガキ抽選 */
   background: #ffff00;
 }
-
-.col-event_6,
-.col-entry_8 { /* その他 */
+.col-rule_7 { /* 買取 */
   background: #d8d8d8;
+}
+
+.col-cost_1 { /* なし */
+  background: #d8d8d8;
+}
+.col-cost_2 { /* FanClub */
+  background: #ffff00;
+}
+.col-cost_3 { /* Single */
+  background: #58d3f7;
+}
+.col-cost_4 { /* Album,Book */
+  background: #819ff7;
+}
+.col-cost_5 { /* BD,DVD,Game */
+  background: #fe2e64;
 }
 
 /* 画像サムネイル */

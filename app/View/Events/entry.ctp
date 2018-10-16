@@ -34,6 +34,8 @@
         <td><?php echo $this->Form->input('EventsEntry.entries_genre_id', array('type' => 'select', 'label' => false, 'options' => $entry_genres)); ?><span class="txt-alt txt-b">*</span></td></tr>
     <tr><td>価格</td>
         <td><?php echo $this->Form->input('EventsEntry.price', array('type' => 'text', 'label' => false, 'size' => 18)); ?>円</td></tr>
+    <tr><td>席数</td>
+        <td><?php echo $this->Form->input('EventsEntry.seat', array('type' => 'text', 'label' => false, 'size' => 18)); ?>席</td></tr>
     <tr><td>枚数</td>
         <td><?php echo $this->Form->input('EventsEntry.number', array('type' => 'text', 'label' => false, 'size' => 18)); ?>枚</td></tr>
     

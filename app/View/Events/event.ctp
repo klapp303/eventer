@@ -52,6 +52,7 @@
     <tr><th colspan="<?php echo count($entryDateColumn) +1; ?>">エントリー名</th>
         <th class="tbl-genre" rowspan="2">status</th>
         <th class="tbl-num" rowspan="2">価格<br>
+                                        席数<br>
                                         枚数</th>
         <th rowspan="2">申込者</th>
         <?php // if ($event_detail['EventsDetail']['user_id'] == $userData['id']): ?>
@@ -64,7 +65,8 @@
     
     <?php foreach ($entry_lists as $entry_list): ?>
     <tr><td colspan="<?php echo count($entryDateColumn) +1; ?>"><?php echo $entry_list['EventsEntry']['title']; ?></td>
-        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-entry_<?php echo $entry_list['EventsEntry']['entries_genre_id']; ?>"><?php echo $entry_list['EntryGenre']['title']; ?></span><br>
+        <td class="tbl-genre" rowspan="2"><span class="icon-genre col-rule_<?php echo $entry_list['EntryGenre']['entry_rule_id']; ?>"><?php echo $entry_list['EntryGenre']['EntryRule']['title']; ?></span><br>
+                                          <span class="icon-genre col-cost_<?php echo $entry_list['EntryGenre']['entry_cost_id']; ?>"><?php echo $entry_list['EntryGenre']['EntryCost']['title']; ?></span><br>
                                           <?php foreach ($eventEntryStatus as $entry_status) {
                                               if ($entry_status['status'] == $entry_list['EventsEntry']['status']) {
                                                   echo '<span class="icon-' . $entry_status['class'] . '">' . $entry_status['name'] . '</span>';
@@ -72,6 +74,7 @@
                                               }
                                           } ?></td>
         <td class="tbl-num" rowspan="2"><?php echo $entry_list['EventsEntry']['price']; ?>円<br>
+                                        <?php echo $entry_list['EventsEntry']['seat']; ?>席<br>
                                         <?php echo $entry_list['EventsEntry']['number']; ?>枚<br>
                                         <?php foreach ($eventPaymentStatus as $payment_status) {
                                             if ($payment_status['status'] == $entry_list['EventsEntry']['payment']) {

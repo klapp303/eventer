@@ -178,19 +178,19 @@ class EventsDetail extends AppModel
                     'EventsEntry.status' => 2
                 )
             ));
-            //イベント毎の当選枚数を計算
-            $event['number'] = 0;
+            //イベント毎の当選数を計算
+            $event['seat'] = 0;
             foreach ($entry_lists as $entry) {
-                $event['number'] += $entry['EventsEntry']['number'];
+                $event['seat'] += $entry['EventsEntry']['seat'];
             }
-            //当選枚数が0枚ならばリストから削除
-            if ($event['number'] == 0) {
+            //当選数が0ならばリストから削除
+            if ($event['seat'] == 0) {
                 unset($event_lists[$key]);
-                //当選枚数が1枚ならば当選したエントリーを残す
-            } elseif ($event['number'] == 1) {
+                //当選数が1ならば当選したエントリーを残す
+            } elseif ($event['seat'] == 1) {
                 unset($event_lists[$key]['EventsEntry']);
                 $event_lists[$key]['EventsEntry'][] = $entry_lists[0]['EventsEntry'];
-                //当選枚数が2枚以上ならば当選したエントリーのみ残してcountに加算
+                //当選数が2以上ならば当選したエントリーのみ残してcountに加算
             } else {
                 unset($event_lists[$key]['EventsEntry']);
                 foreach ($entry_lists as $entry) {
@@ -201,9 +201,9 @@ class EventsDetail extends AppModel
         }
         unset($event);
         
-        //当選枚数が1枚のイベントの日時が被っていないかを判定
+        //当選数が1のイベントの日時が被っていないかを判定
         foreach ($event_lists as $key => $event) {
-            if ($event['number'] == 1) {
+            if ($event['seat'] == 1) {
                 foreach ($event_lists as $other_key => $other_event) {
                     if ($key == $other_key) {
                         continue; //自身のイベントとは比較しない

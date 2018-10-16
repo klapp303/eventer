@@ -52,7 +52,7 @@ class PagesController extends AppController
         $this->set('sub_page', 'エントリー方法一覧');
         
         $entry_genre_lists = $this->EntryGenre->find('all', array(
-            'order' => array('EntryGenre.id' => 'asc')
+            'order' => array('EntryGenre.sort' => 'asc')
         ));
         $this->set('entry_genre_lists', $entry_genre_lists);
     }

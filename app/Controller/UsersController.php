@@ -8,7 +8,8 @@ class UsersController extends AppController
 {
     public $uses = array(
         'EventUser', 'EventArtist', 'User', 'Option', 'Log',
-        'Event', 'EventsDetail', 'EventsEntry', 'EventGenre', 'EntryGenre',
+        'Event', 'EventsDetail', 'EventsEntry', 'EventGenre',
+        'EntryGenre', 'EntryCost', 'EntryRule', 'EntrySystem',
         'EventSetlist', 'EventStatus', 'Artist', 'Place', 'Prefecture',
         'JsonData'/*, 'Analysis', 'Page'*/
     ); //使用するModel

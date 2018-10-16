@@ -41,6 +41,7 @@
       <th class="tbl-date-min">開演日時</th>
       <th class="tbl-date-min">入金締切</th>
       <th class="tbl-num_budgets">価格<br>
+                                  席数<br>
                                   枚数</th>
       <th class="tbl-act">action</th></tr>
   
@@ -72,6 +73,7 @@
         </td>
         <td class="tbl-num_budgets <?php echo ($i == count($event_list['EventsEntry']))? '' : 'border-non'; ?>">
           <?php echo $entry_list['price']; ?>円<br>
+          <?php echo $entry_list['seat']; ?>席<br>
           <?php echo $entry_list['number']; ?>枚<br>
           <?php foreach ($eventPaymentStatus as $payment_status) {
               if ($payment_status['status'] == $entry_list['payment']) {
