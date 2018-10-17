@@ -123,8 +123,8 @@ class EventsEntry extends AppModel
         ));
         foreach ($entry_lists as $key => $entry_list) {
             if ($entry_list['EventsEntry']['status'] == 2) { //当選がある場合
-                //当選枚数が1枚で売却している場合
-                if ($entry_list['EventsEntry']['number'] == 1 && $entry_list['EventsEntry']['sales_status'] == 1) {
+                //当選数が1で売却している場合
+                if ($entry_list['EventsEntry']['seat'] == 1 && $entry_list['EventsEntry']['sales_status'] == 1) {
                     if ($status != 1) {
                         $status = -2; //申込中がなければstatusを上書き（下で書き換える）
                     }
@@ -148,7 +148,7 @@ class EventsEntry extends AppModel
             }
         }
         
-        //当選枚数が1枚で売却している場合はstatusを書き換える
+        //当選数が1で売却している場合はstatusを書き換える
         if ($status == -2) {
             $status = 4;
         }
