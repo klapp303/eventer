@@ -30,11 +30,22 @@ class Analysis extends AppModel
 //    );
     
     //ユーザに紐付く全てのイベントを取得
-    public function getEventData($user_id = null)
+    public function getEventData($user_id = null, $year = null)
     {
         //ユーザIDを取得
         if (!$user_id) {
             $user_id = AuthComponent::user(['id']);
+        }
+        
+        //年を取得
+        if (!$year) {
+            $this->loadModel('Option');
+            $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
+            $min_year = $MIN_YEAR_KEY;
+            $max_year = date('Y');
+        } else {
+            $min_year = $year;
+            $max_year = $year;
         }
         
         //参加済のイベント一覧を取得しておく
@@ -52,10 +63,17 @@ class Analysis extends AppModel
                     array('EventsDetail.id' => $join_lists['events_detail_id']),
                     array('EventsDetail.id' => $entry_only_lists['events_detail_id'])
                 ),
+                'EventsDetail.date >=' => $min_year . '-01-01',
+                'EventsDetail.date <=' => $max_year . '-12-31',
                 'EventsDetail.deleted !=' => 1
             ),
             'order' => array('EventsDetail.date' => 'asc', 'EventsDetail.time_start' => 'asc'),
-            'contain' => array('Event', 'Place')
+            'contain' => array(
+                'Event',
+                'EventGenre',
+                'Place',
+                'EventsEntry' => array('EntryGenre')
+            )
         ));
         
         $this->loadModel('EventArtist');

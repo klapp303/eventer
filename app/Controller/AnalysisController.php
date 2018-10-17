@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class AnalysisController extends AppController
 {
-    public $uses = array('JsonData', 'Analysis'); //使用するModel
+    public $uses = array('JsonData', 'Analysis', 'Option'); //使用するModel
     
     public function beforeFilter()
     {
@@ -41,12 +41,20 @@ class AnalysisController extends AppController
     
     public function update()
     {
-        //ユーザ別イベント参加分析データを更新
-        $analysis_lists = $this->Analysis->getEventData();
-        if ($this->JsonData->saveDataJson($analysis_lists, 'analysis_lists')) {
+        //年ごとにデータを分ける
+        $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
+        $error_flg = 0;
+        for ($year = $MIN_YEAR_KEY; $year <= date('Y'); $year++) {
+            //ユーザ別イベント参加分析データを更新
+            $analysis_lists = $this->Analysis->getEventData(false, $year);
+            if (!$this->JsonData->saveDataJson($analysis_lists, 'analysis_lists', false, $year)) {
+                $error_flg = 1;
+            }
+        }
+        if ($error_flg == 0) {
             $this->Session->setFlash('イベント参加データを更新しました。', 'flashMessage');
         } else {
-            $this->Session->setFlash('イベント参加データを更新できませんでした。', 'flashMessage');
+            $this->Session->setFlash('イベント参加データを正常に更新できませんでした。', 'flashMessage');
         }
         
         $this->redirect('/analysis/index');

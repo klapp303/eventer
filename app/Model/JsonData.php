@@ -34,7 +34,7 @@ class JsonData extends AppModel
 //        'title' => array('type' => 'value')
 //    );
     
-    public function saveDataJson($data = false, $title = null, $user_id = null)
+    public function saveDataJson($data = false, $title = null, $user_id = null, $year = null)
     {
         if (!$data || !$title) {
             return false;
@@ -53,7 +53,8 @@ class JsonData extends AppModel
         $existData = $this->find('first', array(
             'conditions' => array(
                 'JsonData.title' => $title,
-                'JsonData.user_id' => $user_id
+                'JsonData.user_id' => $user_id,
+                'JsonData.year' => $year
             ),
             'fields' => 'JsonData.id'
         ));
@@ -78,6 +79,7 @@ class JsonData extends AppModel
                 'JsonData' => [
                     'title' => $title,
                     'user_id' => $user_id,
+                    'year' => $year,
                     'error_flg' => $error_flg
                 ]
             ];

@@ -7,7 +7,7 @@
 
 class JsonShell extends AppShell
 {
-    public $uses = array('JsonData', 'User', 'Analysis', 'Artist'); //使用するModel
+    public $uses = array('JsonData', 'User', 'Analysis', 'Artist', 'Option'); //使用するModel
     
     public function startup()
     {
@@ -22,10 +22,13 @@ class JsonShell extends AppShell
             'conditions' => array('User.id !=' => array(1, 2)),
             'fields' => 'User.id'
         ));
+        $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
         foreach ($users as $user_id) {
             //ユーザ別イベント参加分析データを更新
-            $analysis_lists = $this->Analysis->getEventData($user_id);
-            $this->JsonData->saveDataJson($analysis_lists, 'analysis_lists', $user_id);
+            for ($year = $MIN_YEAR_KEY; $year <= date('Y'); $year++) {
+                $analysis_lists = $this->Analysis->getEventData($user_id, $year);
+                $this->JsonData->saveDataJson($analysis_lists, 'analysis_lists', $user_id, $year);
+            }
             //アーティスト別イベント参加データ一覧を更新
             $compare_lists = $this->Artist->getComparelist($user_id);
             $this->JsonData->saveDataJson($compare_lists, 'artists_compare_lists', $user_id);
