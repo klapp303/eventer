@@ -11,14 +11,40 @@
 <?php endif; ?>
 
 <div class="intro">
-  <p class="txt-min">※各イベント参加数には当選した将来のイベントも含まれます。</p>
+  <p class="txt-min">
+    ※各イベント参加数には当選した将来のイベントも含まれます。<br>
+    　（）内は前年比。
+  </p>
 </div>
 
-<table class="detail-list-min">
-  <tr><td>イベント登録数</td><td><?php echo $event_counts['event']; ?> 件</td></tr>
-  <tr><td>イベント応募数</td><td><?php echo $event_counts['entry']; ?> 件</td></tr>
-  <tr><td>イベント参加数</td><td><?php echo $event_counts['join']; ?> 件</td></tr>
-</table>
+<h3><?php echo date('Y'); ?>年</h3>
+
+  <table class="detail-list-min">
+    <tr><td>イベント登録数</td>
+        <td><?php echo $event_counts['event']; ?> 件
+            （<?php echo (($pre['event'] >=0)? '+' : '-') . $pre['event']; ?>）</td></tr>
+    <tr><td>イベント応募数</td>
+        <td><?php echo $event_counts['entry']; ?> 件
+            （<?php echo (($pre['entry'] >=0)? '+' : '-') . $pre['entry']; ?>）</td></tr>
+    <tr><td>イベント参加数</td>
+        <td><?php echo $event_counts['join']; ?> 件
+            （<?php echo (($pre['join'] >=0)? '+' : '-') . $pre['join']; ?>）</td></tr>
+    <tr><td>　　内ライブ</td>
+        <td><?php echo $event_counts['live']; ?> 件
+            （<?php echo (($pre['live'] >=0)? '+' : '-') . $pre['live']; ?>）</td>
+        <td><?php echo $event_counts['percent']['live']; ?>%
+            （<?php echo (($pre['percent']['live'] >=0)? '+' : '-') . $pre['percent']['live']; ?>）</td></tr>
+    <tr><td>　　内リリイベ</td>
+        <td><?php echo $event_counts['release']; ?> 件
+            （<?php echo (($pre['release'] >=0)? '+' : '-') . $pre['release']; ?>）</td>
+        <td><?php echo $event_counts['percent']['release']; ?>%
+            （<?php echo (($pre['percent']['release'] >=0)? '+' : '-') . $pre['percent']['release']; ?>）</td></tr>
+    <tr><td>　　内トーク</td>
+        <td><?php echo $event_counts['talk']; ?> 件
+            （<?php echo (($pre['talk'] >=0)? '+' : '-') . $pre['talk']; ?>）</td>
+        <td><?php echo $event_counts['percent']['talk']; ?>%
+            （<?php echo (($pre['percent']['talk'] >=0)? '+' : '-') . $pre['percent']['talk']; ?>）</td></tr>
+  </table>
 
 <?php if (@$mode != 'year'): ?>
 <h3>年別イベント参加データ</h3>

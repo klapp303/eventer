@@ -96,7 +96,7 @@ class Analysis extends AppModel
         return $event_lists;
     }
     
-    public function countEventFromEventList($event_lists = false, $event_counts = ['event' => 0, 'entry' => 0, 'join' => 0])
+    public function countEventFromEventList($event_lists = false, $event_counts = ['event' => 0, 'entry' => 0, 'join' => 0, 'live' => 0, 'release' => 0, 'talk' => 0])
     {
         foreach ($event_lists as $event) {
             $event_counts['event']++;
@@ -109,6 +109,15 @@ class Analysis extends AppModel
             if ($event['EventsDetail']['status'] == 2) { //当選
                 $event_counts['entry']++;
                 $event_counts['join']++;
+                if ($event['EventsDetail']['genre_id'] == 1) {
+                    $event_counts['live']++;
+                }
+                if ($event['EventsDetail']['genre_id'] == 2) {
+                    $event_counts['release']++;
+                }
+                if ($event['EventsDetail']['genre_id'] == 3) {
+                    $event_counts['talk']++;
+                }
             }
             if ($event['EventsDetail']['status'] == 3) { //落選
                 $event_counts['entry']++;

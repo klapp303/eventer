@@ -12,26 +12,74 @@ class AnalysisController extends AppController
         $this->layout = 'eventer_normal';
     }
     
-    public function index()
+    public function index($year = false)
     {
-        //ユーザ別イベント参加分析データを取得
+        $MIN_YEAR_KEY = $this->Option->getOptionKey('MIN_YEAR_KEY');
+        if (!$year) {
+            $year = date('Y');
+        }
+        if ($year < $MIN_YEAR_KEY || $year > date('Y')) {
+            $this->redirect('/analysis/index');
+        }
+        
+        //ユーザ別イベント参加データを取得
         $json_data = $this->JsonData->find('first', array(
             'conditions' => array(
                 'JsonData.title' => 'analysis_lists',
-                'JsonData.user_id' => $this->Auth->user('id')
+                'JsonData.user_id' => $this->Auth->user('id'),
+                'JsonData.year' => $year
             )
         ));
-        $event_lists = json_decode($json_data['JsonData']['json_data'], true);
-        if ($this->Session->check('Auth.analysis')) {
-            $this->Session->delete('Auth.analysis');
+        if (!$json_data) {
+            $this->Session->setFlash('イベント参加データが見つかりませんでした。', 'flashMessage');
+            $event_lists = array();
+        } else {
+            $event_lists = json_decode($json_data['JsonData']['json_data'], true);
         }
-        $this->Session->write('Auth.analysis', $event_lists);
-        
+//        if ($this->Session->check('Auth.analysis')) {
+//            $this->Session->delete('Auth.analysis');
+//        }
+//        $this->Session->write('Auth.analysis', $event_lists);
+//        echo'<pre>';print_r($event_lists);echo'</pre>';exit;
         //イベント数
         $event_counts = $this->Analysis->countEventFromEventList($event_lists);
+        $event_counts['percent']['live'] = @round($event_counts['live'] / $event_counts['join'] *100, 1);
+        $event_counts['percent']['release'] = @round($event_counts['release'] / $event_counts['join'] *100, 1);
+        $event_counts['percent']['talk'] = @round($event_counts['talk'] / $event_counts['join'] *100, 1);
         $this->set(compact('event_counts'));
         
-        //イベント参加データ
+        //前年のイベント参加データも取得しておく
+        $json_data = $this->JsonData->find('first', array(
+            'conditions' => array(
+                'JsonData.title' => 'analysis_lists',
+                'JsonData.user_id' => $this->Auth->user('id'),
+                'JsonData.year' => $year -1
+            )
+        ));
+        if (!$json_data) {
+            $pre_event_lists = array();
+        } else {
+            $pre_event_lists = json_decode($json_data['JsonData']['json_data'], true);
+        }
+        $pre_event_counts = $this->Analysis->countEventFromEventList($pre_event_lists);
+        $pre_event_counts['percent']['live'] = @round($pre_event_counts['live'] / $pre_event_counts['join'] *100, 1);
+        $pre_event_counts['percent']['release'] = @round($pre_event_counts['release'] / $pre_event_counts['join'] *100, 1);
+        $pre_event_counts['percent']['talk'] = @round($pre_event_counts['talk'] / $pre_event_counts['join'] *100, 1);
+        
+        //前年比
+        $pre = array();
+        $pre['event'] = $event_counts['event'] - $pre_event_counts['event'];
+        $pre['entry'] = $event_counts['entry'] - $pre_event_counts['entry'];
+        $pre['join'] = $event_counts['join'] - $pre_event_counts['join'];
+        $pre['live'] = $event_counts['live'] - $pre_event_counts['live'];
+        $pre['release'] = $event_counts['release'] - $pre_event_counts['release'];
+        $pre['talk'] = $event_counts['talk'] - $pre_event_counts['talk'];
+        $pre['percent']['live'] = $event_counts['percent']['live'] - $pre_event_counts['percent']['live'];
+        $pre['percent']['release'] = $event_counts['percent']['release'] - $pre_event_counts['percent']['release'];
+        $pre['percent']['talk'] = $event_counts['percent']['talk'] - $pre_event_counts['percent']['talk'];
+        $this->set(compact('pre'));
+        
+        //TODO 各イベント参加データβ版
         $event_year_lists = $this->Analysis->formatEventListToArray($event_lists, 'year');
         $event_artist_lists = $this->Analysis->formatEventListToArray($event_lists, 'artist');
         $event_place_lists = $this->Analysis->formatEventListToArray($event_lists, 'place');
