@@ -1114,6 +1114,7 @@ class EventsController extends AppController
                 $json_data['schedule'][$key]['genre'] = $event['EventGenre']['title'];
                 $json_data['schedule'][$key]['place'] = $event['Place']['name'];
                 $json_data['schedule'][$key]['status'] = $status;
+                $json_data['schedule'][$key]['publish'] = $event['Event']['publish'];
                 if ($mode == 'all') {
                     $json_data['schedule'][$key]['cast'] = $cast_data;
                     $json_data['schedule'][$key]['setlist'] = $setlist_data;
