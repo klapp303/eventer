@@ -535,7 +535,7 @@ class EventsController extends AppController
         $entryDateColumn = $this->EventsEntry->getDateColumn();
         
         if (empty($this->request->data)) {
-            $this->set('entry_genres', $this->EntryGenre->find('list'));
+            $this->set('entry_genres', $this->EntryGenre->find('list', array('order' => array('EntryGenre.sort' => 'asc'))));
             
             $this->request->data = $this->EventsEntry->findById($id); //postデータがなければ$idからデータを取得
             $this->set('events_detail_id', $this->request->data['EventsEntry']['events_detail_id']);
