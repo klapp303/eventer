@@ -60,7 +60,7 @@
     $max = 5; //表示順位
     $limit = 10; //表示最大数
     ?>
-    <?php foreach ($event_artist_lists as $artist => $events): ?>
+    <?php foreach ($event_artist_lists as $events): ?>
       <?php
       //参加数が1以下のデータは除外する
       if ($events['analysis']['count'] <=1) {
@@ -124,5 +124,9 @@
 <?php if ($year != date('Y')): ?>
 <div class="link-right">
   <span class="link-page"><?php echo $this->Html->link('⇨ イベント参加データの分析TOPに戻る', '/analysis/'); ?></span>
+</div>
+<?php else: ?>
+<div class="link-right">
+  <span class="link-page"><?php echo $this->Html->link('⇨ 全イベント参加データの分析', '/analysis/total/'); ?></span>
 </div>
 <?php endif; ?>

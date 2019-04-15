@@ -175,4 +175,58 @@ class AnalysisController extends AppController
             $this->set(compact('artist', 'event_counts', 'artist_event_counts'));
         }
     }
+    
+    public function total()
+    {
+        //ユーザ別イベント参加分析データを取得
+        $json_data = $this->JsonData->find('all', array(
+            'conditions' => array(
+                'JsonData.title' => 'analysis_lists',
+                'JsonData.user_id' => $this->Auth->user('id')
+            )
+        ));
+        $event_lists = array();
+        foreach ($json_data as $data) {
+            $event_lists[$data['JsonData']['year']] = json_decode($data['JsonData']['json_data'], true);
+        }
+        //年度別データをトータルデータに整形
+        $total_event_lists = [];
+        foreach ($event_lists as $val) {
+            foreach ($val as $val2) {
+                $total_event_lists[] = $val2;
+            }
+        }
+        
+        //イベント数
+        $event_counts = $this->Analysis->countEventFromEventList($total_event_lists);
+        $event_counts['percent']['live'] = @round($event_counts['live'] / $event_counts['join'] *100, 1);
+        $event_counts['percent']['release'] = @round($event_counts['release'] / $event_counts['join'] *100, 1);
+        $event_counts['percent']['talk'] = @round($event_counts['talk'] / $event_counts['join'] *100, 1);
+        $this->set(compact('event_counts'));
+        
+        //アーティスト別イベント参加データ
+        $event_artist_lists = $this->Analysis->formatEventListToArray($total_event_lists, 'artist');
+//        echo'<pre>';print_r($event_artist_lists);echo'</pre>';exit;
+        $favorite_lists = $this->Favorite->find('list', array(
+            'conditions' => array(
+                'Favorite.user_id' => $this->Auth->user('id'),
+                'Favorite.deleted' => 0
+            ),
+            'fields' => 'artist_id'
+        ));
+        $this->set(compact('event_artist_lists', 'favorite_lists'));
+        
+        //楽曲別イベント参加データ
+        $event_music_lists = $this->Analysis->formatEventListToArray($total_event_lists, 'music');
+        $this->set(compact('event_music_lists'));
+        
+        //会場別イベント参加データ
+        $event_place_lists = $this->Analysis->formatEventListToArray($total_event_lists, 'place');
+        foreach ($event_place_lists as $key => $val) {
+            if (strpos($key, 'その他') !== false) {
+                unset($event_place_lists[$key]);
+            }
+        }
+        $this->set(compact('event_place_lists'));
+    }
 }
