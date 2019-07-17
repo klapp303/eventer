@@ -176,6 +176,34 @@ class AnalysisController extends AppController
         }
     }
     
+    public function music()
+    {
+        //ユーザ別イベント参加分析データを取得
+        $json_data = $this->JsonData->find('all', array(
+            'conditions' => array(
+                'JsonData.title' => 'analysis_lists',
+                'JsonData.user_id' => $this->Auth->user('id')
+            )
+        ));
+        $event_lists = array();
+        foreach ($json_data as $data) {
+            $event_lists[$data['JsonData']['year']] = json_decode($data['JsonData']['json_data'], true);
+        }
+        //年度別データをトータルデータに整形
+        $total_event_lists = [];
+        foreach ($event_lists as $val) {
+            foreach ($val as $val2) {
+                $total_event_lists[] = $val2;
+            }
+        }
+        
+        //楽曲別イベント参加データ
+        $event_music_lists = $this->Analysis->formatEventListToArray($total_event_lists, 'music');
+        $this->set(compact('event_music_lists'));
+        
+        echo'<meta charset="utf-8" /><pre>';print_r($event_music_lists);echo'</pre>';exit;
+    }
+    
     public function total()
     {
         //ユーザ別イベント参加分析データを取得
