@@ -44,8 +44,7 @@
         <?php if (${'artist_lists_' . $key}): ?>
           <?php foreach (${'artist_lists_' . $key} as $artist): ?>
           <span class="name-tag-long">
-            <a href="<?php echo '/artists/artist_detail/' . $artist['Artist']['id']; ?>">
-              <?php echo $artist['Artist']['name']; ?></a>
+            <?php echo $this->Html->link($artist['Artits']['name'], '/artists/artist_detail/' . $artist['Artist']['id']); ?>
           </span>
           <?php endforeach; ?>
         <?php else: ?>
