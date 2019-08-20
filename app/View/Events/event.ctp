@@ -123,9 +123,7 @@
     <tr><td><div class="list-name-tag">
               <?php foreach ($cast_lists as $cast_list): ?>
               <span class="name-tag-long">
-                <a href="<?php echo '/artists/artist_detail/' . $cast_list['EventArtist']['artist_id']; ?>">
-                  <?php echo $cast_list['ArtistProfile']['name']; ?>
-                </a>
+                <?php echo $this->Html->link($cast_list['ArtistProfile']['name'], '/artists/artist_detail/' . $cast_list['EventArtist']['artist_id']); ?>
               </span>
               <?php endforeach; ?>
             </div></td></tr>
