@@ -139,7 +139,7 @@ class PlacesController extends AppController
                     }
                 }
                 /* ファイルの保存ここまで */
-                $this->Place->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->Place->save($this->request->data)) {
                     $this->Session->setFlash('登録しました。', 'flashMessage');
                 } else {
@@ -208,7 +208,7 @@ class PlacesController extends AppController
                     }
                 }
                 /* ファイルの保存ここまで */
-                $this->Place->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->Place->save($id)) {
                     $this->Session->setFlash('修正しました。', 'flashMessage');
                 } else {

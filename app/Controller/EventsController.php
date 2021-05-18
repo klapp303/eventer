@@ -149,7 +149,8 @@ class EventsController extends AppController
             $dataEvent['Event'] = $this->request->data['Event'];
             $this->Event->set($dataEvent); //postデータをModelに渡してvalidate
             if ($this->Event->validates()) { //validate成功の処理
-                if ($this->Event->save($dataEvent)) { //validate成功でsave
+                //validate成功でsave
+                if ($this->Event->save($dataEvent)) {
 //                    $this->Session->setFlash('登録しました。', 'flashMessage');
                 } else {
                     $this->Session->setFlash($dataEvent['Event']['title'] . ' を登録できませんでした。', 'flashMessage');
@@ -304,7 +305,8 @@ class EventsController extends AppController
             $dataEvent['Event'] = $this->request->data['Event'];
             $this->Event->set($dataEvent); //postデータをModelに渡してvalidate
             if ($this->Event->validates()) { //validate成功の処理
-                if ($this->Event->save($dataEvent)) { //validate成功でsave
+                //validate成功でsave
+                if ($this->Event->save($dataEvent)) {
                     //$this->Session->setFlash('登録しました。', 'flashMessage');
                 } else {
                     $this->Session->setFlash($dataEvent['Event']['title'] . ' を修正できませんでした。', 'flashMessage');
@@ -352,7 +354,8 @@ class EventsController extends AppController
                     $this->redirect('/events/');
                 }
             }
-            if ($this->EventsDetail->saveMany($dataDetails['EventsDetail'])) { //validate成功でsave
+            //validate成功でsave
+            if ($this->EventsDetail->saveMany($dataDetails['EventsDetail'])) {
                 //開演日時に変更があればevents_entriesテーブルを更新
                 foreach ($dataDetails['EventsDetail'] as $dataDetail) {
                     if ($dataDetail['time_start']) {
@@ -514,7 +517,8 @@ class EventsController extends AppController
             /* データをテーブルの構造に合わせて加工ここまで */
             $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
             if ($this->EventsEntry->validates()) { //validate成功の処理
-                if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave
+                //validate成功でsave
+                if ($this->EventsEntry->save($this->request->data)) {
                     $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' を登録しました。', 'flashMessage');
                 } else {
                     $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' を登録できませんでした。', 'flashMessage');
@@ -576,7 +580,8 @@ class EventsController extends AppController
             /* データをテーブルの構造に合わせて加工ここまで */
             $this->EventsEntry->set($this->request->data); //postデータをModelに渡してvalidate
             if ($this->EventsEntry->validates()) { //validate成功の処理
-                if ($this->EventsEntry->save($this->request->data)) { //validate成功でsave
+                //validate成功でsave
+                if ($this->EventsEntry->save($this->request->data)) {
                     $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' を修正しました。', 'flashMessage');
                 } else {
                     $this->Session->setFlash($this->request->data['EventsEntry']['title'] . ' を修正できませんでした。', 'flashMessage');
@@ -782,7 +787,8 @@ class EventsController extends AppController
             }
             $this->EventSetlist->set($saveData['EventSetlist']); //データをModelに渡してvalidate
             if ($this->EventSetlist->validates()) { //validate成功の処理
-                if ($this->EventSetlist->saveAll($saveData['EventSetlist'])) { //validate成功でsave
+                //validate成功でsave
+                if ($this->EventSetlist->saveAll($saveData['EventSetlist'])) {
                     //登録済みのnullデータは削除
                     $this->EventSetlist->deleteAll(array('EventSetlist.id' => $delete_id), false);
                     $this->Session->setFlash('セットリストを登録しました。', 'flashMessage');

@@ -132,7 +132,7 @@ class ArtistsController extends AppController
             
             $this->Artist->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->Artist->validates()) { //validate成功の処理
-                $this->Artist->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->Artist->save($this->request->data)) {
                     $this->Session->setFlash($this->request->data['Artist']['name'] . ' を登録しました。', 'flashMessage');
                 } else {
@@ -245,7 +245,7 @@ class ArtistsController extends AppController
                     }
                 }
                 /* ファイルの保存ここまで */
-                $this->Artist->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->Artist->save($id)) {
                     $this->Session->setFlash($this->request->data['Artist']['name'] . ' を修正しました。', 'flashMessage');
                     

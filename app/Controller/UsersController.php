@@ -157,7 +157,7 @@ class UsersController extends AppController
             /* 新規登録時の初期値を設定ここまで */
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
-                $this->User->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->User->save($this->request->data)) {
                     $this->Session->setFlash('登録完了です。登録されたメールアドレスに登録情報を送りました。', 'flashMessage');
                     //save成功でメール送信
@@ -210,7 +210,7 @@ class UsersController extends AppController
             
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
-                $this->User->save($this->request->data); //validate成功でsave
+                //validate成功でsave
                 if ($this->User->save($id)) {
                     $this->Session->setFlash('変更しました。', 'flashMessage');
                     //セッションのuser情報を更新する
@@ -254,7 +254,8 @@ class UsersController extends AppController
             }
             $this->User->set($this->request->data); //postデータがあればModelに渡してvalidate
             if ($this->User->validates()) { //validate成功の処理
-                $this->User->id = $id; //validate成功でsave
+                //validate成功でsave
+                $this->User->id = $id;
                 $this->User->saveField('password', $this->request->data['User']['password']);
                 if ($this->User->save($id)) {
                     $this->Session->setFlash('変更しました。', 'flashMessage');
