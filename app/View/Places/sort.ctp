@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('places', array('inline' => false)); ?>
-<?php echo $this->Html->script('http://code.jquery.com/ui/1.11.3/jquery-ui.js', array('inline' => false)); ?>
+<?php echo $this->Html->script('https://code.jquery.com/ui/1.11.3/jquery-ui.js', array('inline' => false)); ?>
 <h3><?php echo $sub_page; ?></h3>
 
 <div class="intro intro_places">
